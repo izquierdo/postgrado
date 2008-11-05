@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+
+% Para codigo bonito
+\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+
+\newcommand{\algoritmo}[2]
+{
+{
+  \singlespace
+  \begin{algorithm}[h]
+    \caption{#1}
+    \begin{algorithmic}[1]
+      #2
+    \end{algorithmic}
+  \end{algorithm}
+}
+}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\lstset{mathescape=true}
+
+\begin{document}
+
+% Título
+
+\title{Tarea de recuperación de Teoría de Algoritmos}
+\author{Daniel Izquierdo \\ \#08-86809}
+\date{23 de octubre de 2008}
+
+\maketitle
+
+% Pregunta 1
+%\section{}
+
+Para demostrar que $(C,\Gamma)$ es una matroide basta demostrar que
+
+\begin{itemize}
+ \item $C$ es un conjunto finito.
+ \item $\Gamma$ es un conjunto de subconjuntos de C hereditario. Es decir,
+ 
+ $$
+ (x \in \Gamma \Rightarrow x \subseteq C) \wedge (B \in \Gamma \wedge A \subseteq B \Rightarrow A \in \Gamma)
+ $$
+
+ \item Si $A \in \Gamma$, $B \in \Gamma$ y $|A| < |B|$, entonces existe $x \in B - A$ tal que
+ $A \bigcup \{x\} \in \Gamma$.
+\end{itemize}
+
+Las dos primeras condiciones siguen de la definición de una estructura combinatoria
+vista en clases. %Para demostrar que la tercera condición se cumple, voy a suponer al
+%absurdo que no se cumple y llegar a una contradicción.
+
+
+Supongamos al absurdo que la tercera condición no se cumple.
+Si se cumple lo descrito en el enunciado, entonces si tenemos una función de costos $c$ tal que
+
+$$
+x \in C \Rightarrow c(x) = -1
+$$
+
+tendremos al final del algoritmo que $F$ es el conjunto de menor costo en $\Gamma$.
+Sean $A, B$ conjuntos tales que $A \in \Gamma$, $B \in \Gamma$ y $|A| < |B|$.
+$A \bigcup B$ debe pertenecer
+a $\Gamma$ porque $F$ es el conjunto de menor costo en $\Gamma$ y, por lo tanto, contiene
+los elementos de $A$ y $B$.
+Todos los subconjuntos de $A \bigcup B$ también deben pertenecer a $\Gamma$. Llamemos $D$ al conjunto resultante de
+quitar de $A \bigcup B$ todos los elementos de $B$ menos uno (se puede porque $|B| > |A| \geq 0$). Entonces $D$ es subconjunto
+de $A \bigcup B$ y pertenece a $\Gamma$. Además, $D = A \bigcup \{x\}$ para algún $x \in B$.
+
+Esto contradice la suposición inicial de que la tercera condición no se cumple. En conclusión, $(C,\Gamma)$ es una 
+matroide.
+
+
+%Como todos los elementos de C
+%tienen el mismo costo negativo, la elección del menor elemento de $C^*$ en el algoritmo
+%del enunciado es no
+%determinística. Luego de $|A|$ iteraciones en el algoritmo, es posible tener que $F = A$
+%ya que $A \in \Gamma$ y el algoritmo puede haber elegido únicamente elementos de A hasta ese
+%momento. Como $c(A)>c(B)$, el algoritmo no puede haber terminado ya que $A$ no es el elemento
+%de menor costo en $\Gamma$ (porque por lo menos $B$ tiene menor costo). Entonces va a agregar
+%algún otro elemento de $C^*$.
+
+\end{document}

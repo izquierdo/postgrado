@@ -1,0 +1,414 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+
+% Para codigo bonito
+\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+
+\newcommand{\algoritmo}[2]
+{
+{
+  \singlespace
+  \begin{algorithm}[h]
+    \caption{#1}
+    \begin{algorithmic}[1]
+      #2
+    \end{algorithmic}
+  \end{algorithm}
+}
+}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\lstset{mathescape=true}
+
+\begin{document}
+
+% Título
+
+\title{Tarea 1 de Teoría de Algoritmos}
+\author{Daniel Izquierdo \\ \#08-86809}
+\date{9 de octubre de 2008}
+
+\maketitle
+
+% Pregunta 1
+\section{}
+
+\begin{align*}
+ & (n+\alpha)^{n+\beta} \\
+ = & \\
+ & n^{n+\beta} * (1+\frac{\alpha}{n})^{n+\beta} \\
+ = & \\
+ & n^{n+\beta} * e^{lg (1+\frac{\alpha}{n})^{n+\beta}} \\
+ = & \\
+ & n^{n+\beta} * e^{(n+\beta) * lg (1+\frac{\alpha}{n})} \\
+ = & \\
+ & n^{n+\beta} * e^{(n+\beta) * (\frac{\alpha}{n} - \frac{\alpha^2}{2n^2}+O(n^{-3})}) \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha-\frac{\alpha^2}{2n}+n*O(n^{-3})+\frac{\alpha\beta}{n}-\frac{\alpha^2\beta}{2n^2}+\beta*O(n^{-3})} \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha-\frac{\alpha^2}{2n}+O(n^{-2})+\frac{\alpha\beta}{n}-\frac{\alpha^2\beta}{2n^2}+O(n^{-3})} \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha-\frac{\alpha^2}{2n}+O(n^{-2})+\frac{\alpha\beta}{n}-\frac{\alpha^2\beta}{2n^2}} \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha-\frac{\alpha^2}{2n}+\frac{\alpha\beta}{n}+O(n^{-2})} \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha} * e^{-\frac{\alpha^2}{2n}+\frac{\alpha\beta}{n}+O(n^{-2})} \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha} * (1-\frac{\alpha^2}{2n}+\frac{\alpha\beta}{n}+O(n^{-2}) + O(n^2)) \\
+ = & \\
+ & n^{n+\beta} * e^{\alpha} * (1+\alpha(\beta-\frac{1}{2}\alpha)n^{-1}+O(n^{2})) \\
+\end{align*}
+
+
+% Pregunta 2
+\section{}
+
+La longitud de la representación de un entero en binario o decimal es logarítmica con
+respecto a su magnitud, pero en palabras de un computador es la longitud entre el tamaño
+de la palabra. Es este factor el que hace la diferencia al usar algoritmos exponenciales.
+
+% Pregunta 3
+\section{}
+
+Para el análisis del algoritmo descrito en el libro tomo la suma
+
+\begin{equation}
+ C(n-1,k-1) + C(n-1,k)
+\end{equation}
+
+como barómetro. En todos los casos excepto los base se realiza esa suma.
+La función $t(n)$ a calcular se define de manera recursiva.
+En el caso en que $n = 0$, obligatoriamente se mantiene que $k = 0$ ya que
+tenemos $0 \leq k \leq n$. El algoritmo retorna una respuesta sin realizar otro
+cálculo. En caso contrario, el algoritmo realiza dos llamadas recursivas que
+toman --en el peor caso-- tiempo $t(n-1)$. Luego realiza una suma
+en tiempo constante. Entonces,
+
+$$
+ t(n) = \left\{ \begin{array}{ll}
+ 0 & \textrm{si $n = 0$} \\
+ 2*t(n-1)+1 & \textrm{si $n > 0$}
+ \end{array} \right.
+$$
+
+La solución a esta recurrencia es dada en el ejemplo {\bf 4.7.6} del libro, y es
+
+\begin{equation}
+ t(n) = 2^n-1
+\end{equation}
+
+Por lo tanto,
+
+\begin{equation}
+t(n) = \Theta(2^n)
+\end{equation}
+
+% Pregunta 4
+\section{}
+
+Decir que $q$ es el cociente de la divisón entera de $A$ entre $B$ y $r$ es el
+resto de la división entera de $A$ entre $B$ es equivalente a decir que:
+
+\begin{align*}
+ A = q*B + r \wedge 0 \leq r < b
+\end{align*}
+
+La última instrucción del programa es una asignación. Tenemos:
+
+\begin{align*}
+ & wp.(r \leftarrow A-q*B).(A=q*B+r \wedge 0 \leq r < B) \\
+ \equiv & <\text{precondición más débil de la asignación}> \\
+ & (A=q*B+r \wedge 0 \leq r < b)[r := A-q*B] \\
+ \equiv & <\text{sustitución}> \\
+ & A=q*B+(A-q*B) \wedge 0 \leq (A-q*B) < B \\
+ \equiv & <\text{aritmética}> \\
+ & true \wedge 0 \leq (A-q*B) < B \\
+ \equiv & <\text{true es neutro de } \wedge> \\
+ & 0 \leq (A-q*B) < B \\
+ \equiv & <\text{definición de } \leq \text{ y } <> \\
+ & 0 \leq A-q*B \wedge A-q*B < B
+\end{align*}
+
+Llamemos $P$ a este resultado. Entonces $P$ es la postcondición que debe ser
+satisfecha por el ciclo \texttt{while} para
+que el programa sea correcto. Si defino la invariante $Inv$ y la cota $Bound$
+del ciclo
+
+\begin{eqnarray*}
+ Inv & \equiv & A - q*B \geq 0 \\
+ Bound & \equiv & A-q*B \\
+\end{eqnarray*}
+
+y tenemos el guardia $B$ definido
+
+\begin{align*}
+ B \equiv A-(q+1)*B \geq 0
+\end{align*}
+
+entonces debo demostrar lo siguiente, suponiendo que $X$ es alguna constante y
+$A$ y $B$ son enteros:
+
+\begin{eqnarray}
+ \label{divmod:init} \text{\{} A \geq 0 \wedge B > 0 \text{\}} q \leftarrow 0 \text{\{}Inv\text{\}} & & \\
+ \label{divmod:inv} \text{\{} Inv \wedge B \text{\}} q \leftarrow q + 1 \text{\{}Inv\text{\}} & & \\
+ \label{divmod:final} Inv \wedge \neg B \Rightarrow P & & \\
+ \label{divmod:bounddecr} \text{\{} Inv \wedge X = Bound \text{\}} q \leftarrow q + 1 \text{\{} Bound < X \text{\}} & & \\
+ \label{divmod:boundnn} Inv \Rightarrow Bound \geq 0 & & 
+\end{eqnarray}
+
+Empiezo con el predicado \ref{divmod:init}:
+
+\begin{align*}
+ & wp.(q \leftarrow 0).Inv \\
+ \equiv & <\text{precondición más débil de la asignación}> \\
+ & Inv[q := 0] \\
+ \equiv & <\text{definición de } Inv \text{ y sustitución}> \\
+ & A - 0*B \geq 0 \\
+ \equiv & <\text{aritmética}> \\
+ & A \geq 0 \\
+ \Leftarrow & <P \wedge Q \Rightarrow P> \\
+ & A \geq 0 \wedge B > 0 \\
+ \therefore & <\text{relación entre tripletas de Hoare y precondición más débil}> \\
+ & \text{\{} A \geq 0 \wedge B > 0 \text{\}} q \leftarrow 0 \text{\{}Inv\text{\}}
+\end{align*}
+
+Luego demuestro el predicado \ref{divmod:inv}:
+
+\begin{align*}
+ & wp.(q \leftarrow q + 1).Inv \\
+ \equiv & <\text{precondición más débil de la asignación}> \\
+ & Inv[q := q + 1] \\
+ \equiv & <\text{definición de } Inv \text{ y sustitución}> \\
+ & A-(q+1)*B \geq 0 \\
+ \equiv & <\text{definición de } B> \\
+ & B \\
+ \Leftarrow & <P \wedge Q \Rightarrow P> \\
+ & Inv \wedge B \\
+ \therefore & <\text{relación entre tripletas de Hoare y precondición más débil}> \\
+ & \text{\{} Inv \wedge B \text{\}} q \leftarrow q + 1 \text{\{}Inv\text{\}}
+\end{align*}
+
+Continúo con el predicado \ref{divmod:final}:
+
+\begin{align*}
+ & Inv \wedge \neg B \\
+ \equiv & <\text{definiciones de } Inv \text{ y de } B \text{ y aritmética}> \\
+ & A - q*B \geq 0 \wedge \neg (A \geq (q+1)*B) \\
+ \equiv & <\text{negación de } \geq> \\
+ & A - q*B \geq 0 \wedge A < (q+1)*B \\
+ \equiv & <\text{aritmética}> \\
+ & A - q*B \geq 0 \wedge A - q*B < B \\
+ \equiv & <\text{definición de P}> \\
+ & P
+\end{align*}
+
+Queda comprobar la terminación del algoritmo. Por una parte,
+si suponemos $Inv \wedge X = Bound = A-q*B$, entonces
+
+\begin{align*}
+ & wp.(q \leftarrow q + 1).(Bound < X) \\
+ \equiv & <\text{precondición más débil de la asignación}> \\
+ & (Bound < X)[q := q + 1] \\
+ \equiv & <\text{definición de Bound y sustitución}> \\
+ & A-(q+1)*B < X \\
+ \Leftarrow & <\text{aritmética y suposición } X = Bound = A-q*B> \\
+ & A-q*B-B < A-q*B \\
+ \equiv & <\text{aritmética}> \\
+ & 0 < B \\
+ \Leftarrow & <\text{suposición } Inv> \\
+ & true
+\end{align*}
+
+con lo que queda demostrado el predicado \ref{divmod:bounddecr}. El predicado
+\ref{divmod:boundnn} sigue trivialmente a partir de las definiciones de $Inv$ y
+$Bound$.
+
+% Pregunta 5
+\section{}
+
+Llamaré \texttt{convertir} al algoritmo que presento para convertir un arreglo 
+en un heap binario. El algoritmo utiliza un procedimiento auxiliar llamado
+\texttt{heapify}. Es igual al descrito en el ``Introduction to Algorithms'' de
+Cormen y otros. Suponemos que $tamano(A)$ es el tamaño del heap $A$, y
+escribimos
+
+\algoritmo{heapify(A,i)}
+{
+\STATE $l \leftarrow 2*i$
+\STATE $r \leftarrow 2*i+1$
+\IF {$l \leq tamano(A) \wedge A[l] < A[i]$}
+\STATE $maspequeno \leftarrow l$
+\ELSE
+\STATE $maspequeno \leftarrow i$
+\ENDIF
+\IF {$r \leq tamano(A) \wedge A[r] < A[maspequeno]$}
+\STATE $maspequeno \leftarrow r$
+\ENDIF
+\IF {$maspequeno \neq i$}
+\STATE intercambiar A[i] con A[masgrande]
+\STATE heapify(A, masgrande)
+\ENDIF
+}
+
+\algoritmo{convertir(A)}
+{
+\STATE $tamano(A) \leftarrow longitud [A]$
+\FOR {$i \leftarrow piso(longitud[A]/2)$ hasta $1$}
+\STATE heapify(A, i)
+\ENDFOR
+}
+
+El procedimiento \texttt{heapify} toma un nodo del árbol formado en el arreglo
+y tiene como precondición que sus dos hijos sean raíces de un heap. Ejecutar el
+procedimiento tiene como resultado que el valor del nodo dado ``descienda''
+por el árbol
+hasta una posición tal que se preserve la propiedad de heap. Si el valor es
+mayor
+que el menor de sus hijos, se intercambian sus posiciones y se continúa sobre
+la posición del nodo que está descendiendo. Al final, el árbol termina
+cumpliendo la propiedad de heap a partir del nodo dado.
+
+Los
+elementos en la segunda mitad del arreglo dado representan árboles de un sólo
+nodo, por lo que cumplen la propiedad del heap.
+\texttt{convertir} trabaja sobre la primera mitad del arreglo de derecha a
+izquierda, llamando a \texttt{heapify} sobre cada nodo visto. \texttt{heapify}
+funciona porque cada nodo a la derecha del nodo que se está viendo ya es un heap
+por llamadas previas a \texttt{heapify}. Al final, hacer \texttt{heapify} sobre
+el primer elemento del arreglo asegura que esté organizado como un heap.
+
+Definimos la altura de un nodo de un heap como el número de lados a recorrer
+desde ese nodo hasta la hoja del heap más cercana y la altura del heap como la
+altura de su raíz. Se puede demostrar que la altura de un heap con $n$ elementos
+tiene altura $\lfloor lg n\rfloor$ y que un heap cualquiera tiene como máximo
+$\lceil n / 2^{h+1} \rceil$ nodos con altura $h$. Por otra parte,
+\texttt{heapify} toma tiempo $O(h)$ para trabajar sobre un árbol de altura $h$.
+Además, \texttt{convertir} realiza $n/2 = O(n)$ llamadas a \texttt{heapify}
+sobre un arreglo de tamaño $n$.
+
+Por todo esto, el tiempo de ejecución de \texttt{convertir} está acotado por la
+siguiente fórmula suponiendo que $n$ es potencia de $2$:
+
+\begin{align*}
+ & \sum_{h=0}^{lg n} \frac{n}{2^{h+1}} O(h) \\
+ = & <\text{aritmética, propiedades de O(f(n))}> \\
+ & O(n \sum_{h=0}^{lg n} \frac{h}{2^{h}})
+\end{align*}
+
+Usando la ecuación {\bf A.8} del Cormen, tenemos
+
+\begin{align*}
+ \sum_{h=0}^{\infty} \frac{h}{2^h} = 2 \\
+\end{align*}
+
+Esto acota el tiempo de ejecución de \texttt{convertir}:
+
+\begin{align*}
+ O(n \sum_{h=0}^{lg n} \frac{h}{2^{h}}) &= O(n \sum_{h=0}^{\infty} \frac{h}{2^h}) \\
+ &= O(n) \\
+\end{align*}
+
+Sabemos que $n$ es uniforme. Además,
+
+\begin{equation}
+ \sum_{h=0}^{lg n} \frac{n}{2^{h+1}} O(h) \\
+\end{equation}
+
+es no decreciente sobre $n$ porque es una suma de términos positivos cuyo
+rango aumenta al aumentar $n$. Entonces, por la regla de la suavidad, el tiempo
+de ejecución de \texttt{convertir} es $O(n)$.
+
+% Pregunta 6
+\section{}
+
+La estrucura de datos cola tiene dos operaciones: \texttt{encolar} y
+\texttt{desencolar}. Para implementar una cola con dos pilas $S_1$ y $S_2$,
+añado una operación auxiliar \texttt{mudar}. Para una cola $Q$, voy a llamar a
+sus dos pilas $Q.S_1$ y $Q.S_2$. Supongo que nunca se ejecuta
+\texttt{desencolar} sobre una cola vacía (lo cual es un error), y defino
+entonces:
+
+\begin{lstlisting}
+encolar(Q, x) = empilar(Q.$S_1$, x)
+
+desencolar(Q) = si vacia(Q.$S_2$)
+                    mudar(Q.$S_1$, Q.$S_2$)
+                return desempilar(Q.$S_2$)
+
+mudar(Q.$S_1$, Q.$S_2$) = mientras $\neg$vacia(Q.$S_1$)
+                              x $\leftarrow$ desempilar(Q.$S_1$)
+                              empilar(Q.$S_2$, x)
+\end{lstlisting}
+
+Ahora hago un análisis del costo en tiempo amortizado de las operaciones
+\texttt{encolar} y \texttt{desencolar} para verificar que ambas son $O(1)$. Para
+ello utilizo el método del potencial. Defino la función potencial $\Phi$ para
+una cola $Q$ como 
+
+\[\Phi(Q) = 3 * \#(Q.S_1) + \#(Q.S_2)\]
+
+donde
+
+\[\#(S)\]
+
+es el número de elementos en la pila $S$. Es claro que, como el número de
+elementos en una pila es no negativo, $\Phi$ es no negativo. Entonces, si $Q_0$
+es una pila recién creada y $Q_i$ es la misma pila luego de haberle aplicado
+alguna secuencia de operaciones, tenemos
+
+\begin{align*}
+\Phi(Q_i) &\geq 0 \\
+          &= \Phi(Q_0)
+\end{align*}
+
+Así, $\Phi$ cumple esa propiedad necesaria del método del potencial. Ahora
+calculo el costo amortizado $\hat{c}_i$ de las operaciones que definí:
+
+\begin{itemize}
+ \item \texttt{encolar($Q$, $x$)}:
+ Realizamos una operación de inserción en una pila y el potencial de la
+ estructura aumenta en 3.
+ \begin{align*}
+  \hat{c}_{i+1} &= c_{i+1} + \Phi(D_{i+1}) - \Phi(D_i) \\
+          &= 1 + (3 + \Phi(D_i)) - \Phi(D_i) \\
+          &= 1 + 3 \\
+          &= 4
+ \end{align*}
+
+ \item \texttt{mudar($Q.S_1$, $Q.S_2$)}:
+ Si $Q.S_1$ tiene $k$ elementos, entonces realizamos $k$ operaciones de
+ desempilar sobre $Q.S_1$ y $k$ operaciones de empilar sobre $Q.S_2$. Eliminar
+ $k$ elementos de $Q.S_1$ hace que el potencial disminuya en $3*k$ y agregarlos
+ a $Q.S_2$ hace que aumente en $k$. Entonces,
+ \begin{align*}
+  \hat{c}_{i+1} &= c_{i+1} + \Phi(D_{i+1}) - \Phi(D_i) \\
+                &= k + k + \Phi(D_{i+1}) - \Phi(D_i) \\
+                &= 2*k + (k - 3*k + \Phi(D_i)) - \Phi(D_i) \\
+                &= 0
+ \end{align*}
+
+ \item \texttt{desencolar($Q$)}: Si $Q.S_2$ no tiene elementos, realizamos la
+ la operación \texttt{mudar} --cuyo costo amortizado es $0$-- y estamos en el
+ caso en que sí tiene. Cuando $Q.S_2$ tiene al menos un elemento, realizamos una
+ operación de \texttt{desempilar} y el potencial de la estructura disminuye en
+ $1$.
+ \begin{align*}
+  \hat{c}_{i+1} &= c_{i+1} + \Phi(D_{i+1}) - \Phi(D_i) \\
+                &= 1 + (\Phi(D_i) -1) - \Phi(D_i) \\
+                &= 0
+ \end{align*}
+
+\end{itemize}
+
+En conclusión, tenemos una estructura de datos cola implementada con dos pilas
+y cuyas operaciones tienen costo amortizado $O(1)$.
+
+\end{document}
