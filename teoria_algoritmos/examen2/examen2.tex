@@ -146,4 +146,34 @@ procedure tabla(n, inicio)
 
 \end{itemize}
 
+% Pregunta 3
+\section{}
+
+\renewcommand{\labelenumi}{(\alph{enumi})}
+
+
+\begin{enumerate}
+ \item El costo promedio en comparaciones a realizar es
+
+$$
+0,1 + (0,25+0,3)*2 + (0,2+0,05+0,05+0,05)*3 = 2,25
+$$
+
+El costo del árbol en la figura 8.8 del libro es menor y, por lo tanto, mejor.
+
+ \item
+
+Para construir un arbol con un conjunto de elementos se elige el elemento con mayor probabilidad
+de ser accedido y se coloca como raíz. Su sub-árbol izquierdo es el resultado de aplicar el algoritmo
+sobre el subconjunto del conjunto original formado por los elementos menores a la raíz. El derecho es el
+resultado
+de aplicar el algoritmo sobre el subconjunto de elementos mayores a la raíz. En caso de que alguno
+de los conjuntos sea vacío, entonces el resultado para ese sub-árbol es una hoja.
+
+ \item
+\end{enumerate}
+
+% Pregunta 4
+\section{}
+
 \end{document}
