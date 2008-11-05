@@ -26,10 +26,12 @@
 
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
 
-\lstset{mathescape=true}
+\lstset{mathescape=true,frame=single}
+
+\newcommand{\asig}{\ensuremath{\leftarrow}}
+\renewcommand{\lstlistingname}{Listado} %listings en español
 
 \begin{document}
-
 % Título
 
 \title{Tarea 2 de Teoría de Algoritmos}
@@ -41,6 +43,107 @@
 % Pregunta 1
 \section{}
 
-test
+% Pregunta 2
+\section{}
+
+En ambos casos, el algoritmo
+devuelve la matriz $partidos$ donde $partidos[d][c]$
+es el competidor contra el cual
+jugará el competidor $c$ en el día $d$. Si
+$partidos[d][c] = 0$, el competidor $c$ no juega el día $d$. Supongo que
+$matriz(n,m)$ devuelve una matriz de tamaño $n x m$ con todas las casillas
+inicializadas en cero. También supongo que tengo los siguientes procedimientos disponibles
+como ayuda:
+
+\begin{lstlisting}
+procedure horizontal(M1[1..n][1..m1]; M2[1..n][1..m2])
+  resultado $\asig matriz(n,m1+m2)$
+
+  for i $\asig 1$ to n do
+    for j $\asig 1$ to $m1$ do
+      resultado[i][j] $\asig M1[i][j]$
+ 
+    for j $\asig 1$ to $m2$ do
+      resultado[i][m1+j] $\asig M2[i][j]$
+
+  return resultado
+
+procedure vertical(M1[1..n1][1..m1]; M2[1..n2][1..m2])
+  resultado $\asig matriz(n,m1+m2)$
+
+  for j $\asig 1$ to $m$ do
+    for i $\asig 1$ to $n1$ do
+      resultado[i][j] $\asig M1[i][j]$
+ 
+    for i $\asig 1$ to $n2$ do
+      resultado[n1+i][j] $\asig M2[i][j]$
+
+  return resultado
+\end{lstlisting}
+
+\begin{itemize}
+
+\item Caso $n$ potencia de dos:
+
+No considero los problemas de tamaño $1$ por no tener sentido un torneo con $1$ equipo y de $0$
+días de duración. Para resolver el problema creo el procedimiento auxiliar $tabla$ donde
+$tabla(n, inicio)$ es un torneo válido para los $n$ jugadores $inicio, inicio+1, ..., inicio+n-1$.
+Entonces la solución del problema es igual a $tabla(n, 1)$.
+
+El algoritmo divide un problema de tamaño $n$ en dos sub-problemas
+de tamaño $n/2$, lo cual se puede hacer por ser $n$ potencia de dos. El caso base $n = 2$
+se resuelve en un sólo día con un sólo partido donde los dos competidores juegan entre sí.
+En el caso recursivo, tengo dos sub-problemas $T_1$ y $T_2$, donde $T_1$ es un torneo de $n/2-1$ días
+de duración para los primeros $n/2$ jugadores y $T_2$ para los últimos $n/2$ jugadores. Tras resolver
+recursivamente ambos sub-problemas debo unir los resultados para obtener la solución. Observo que ningún
+jugador que aparece en $T_1$ aparece en $T_2$ y vice-versa. Por lo tanto puedo agregar $n/2-1$ juegos
+asignando juegos entre cada jugador $x$ del primer sub-problema y los contrincantes asignados a $x+n/2$
+en el segundo sub-problema. Eso se logra con la matriz
+
+$$
+\left[
+\begin{array}{cc}
+T_1 & T_2 \\
+T_2 & T_1 \\
+\end{array}
+\right]
+$$
+
+De esta manera me queda un torneo con $n/2-2$ juegos. Se puede ver que sólo faltan los juegos
+entre $x$ y $x+n/2$ con $x$ en $T_1$, ya que $x+n/2$ no aparece como contrincante de sí mismo
+en $T_2$. Entonces puedo agregar en el último día del torneo todos los juegos con esa forma para
+obtener un resultado válido de $n/2-1$ días. El algoritmo se puede observar en el listado
+\ref{alg:ejercicio3}.
+
+\begin{lstlisting}[float,caption={Solución al ejercicio 3},label=alg:ejercicio3]
+procedure torneo(n)
+  return tabla(n, 1)
+
+procedure tabla(n, inicio)
+  if n = 2 do
+    partidos[1][inicio] $\asig inicio+1$
+    partidos[1][inicio+1] $\asig inicio$
+    return partidos
+
+  m1 $\asig tabla(n/2, inicio)$
+  m2 $\asig tabla(n/2, inicio+(n/2))$
+
+  vi $\asig vertical(m1, m2)$
+  vd $\asig vertical(m2, m1)$
+
+  piso $\asig matriz(1,n)$
+
+  for i $\asig 1$ to $n / 2$ do
+    piso[1][i] $\asig i+(n/2)$
+    piso[1][$i+(n/2)$] $\asig i$
+
+  total $\asig horizontal(vi, vd)$
+
+  return $vertical(total, piso)$
+\end{lstlisting}
+
+\item Caso $n > 1$:
+
+\end{itemize}
 
 \end{document}
