@@ -33,6 +33,7 @@
 \renewcommand{\lstlistingname}{Listado} %listings en español
 
 \begin{document}
+
 % Título
 
 \title{Tarea 2 de Teoría de Algoritmos}
@@ -44,14 +45,35 @@
 % Pregunta 1
 \section{}
 
-\begin{lstlisting}[float,caption={Solución al ejercicio 1},label=alg:ejercicio1]
+La siguiente es una versión iterativa del algoritmo:
+
+\begin{lstlisting}[caption={Solución al ejercicio 1},label=alg:ejercicio1]
 procedure buscar(A[1$\ldots$N], X)
     $i \asig 1$
-    $j \asig 2$
+    $j \asig 1$
 
-    for $k \asig 1$ to $N$ do
-        
+    while true do
+        if $i \geq N+1$
+            return false
+
+        if $j \geq N+1$
+            return false
+
+        if A[i]+A[j]=X do
+            return (i,j)
+
+        if(A[i]+A[j]>X) do
+            i $\asig$ i+1
+            j $\asig$ j-1
+        else do
+            j $\asig$ j+1
 \end{lstlisting}
+
+Es $O(N)$ porque siempre $i$ se incrementa y $j$ se decrementa o $j$ se incrementa en uno, y ambas
+variables empiezan en $1$ y no crecen más allá de $N+1$. En un arreglo con elementos repetidos
+el algoritmo no funcionaría, porque en el paso en que se hace $j $\asig$ j-1$ habría que
+retroceder posiblemente hasta el principio. No es posible hacer el algoritmo $O(N)$ en un
+arreglo con elementos repetidos.
 
 % Pregunta 2
 \section{}
