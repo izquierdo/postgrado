@@ -145,6 +145,40 @@ procedure tabla(n, inicio)
 
 \item Caso $n > 1$:
 
+El caso base $n = 2$
+se resuelve en un sólo día con un sólo partido donde los dos competidores juegan entre sí.
+Cuando $n$ es impar agrego un jugador ficticio nuevo y resuelvo el problema
+para los $n+1$ jugadores, lo que me dará una solución de $(n+1)-1 = n$ jugadores
+(porque $n+1$ es par). Considero entonces que los juegos entre un jugador original
+y el jugador ficticio son días libres para dicho jugador original. Me queda
+entonces por resolver el caso en que $n$ es par, lo cual voy a suponer de ahora en
+adelante.
+
+Supongamos que debo organizar el torneo para los $n$ jugadores a partir del jugador $inicio$.
+Si $n/2$ es par, entonces el resultado de los sub-problemas $<inicio,inicio+1,\ldots,inicio+n/2-1>$
+y $<inicio+n/2,inicio+n/2+1,\ldots,inicio+n-1>$ no contiene jugadores con días libres ya que es
+posible organizarlos en $n/2-1$ días. En ese caso, y de manera análoga a la unión de sub-problemas
+hecha en el caso de $n$ potencia de dos, si $T_1$ es solución del primer sub-problema y $T_2$ del segundo,
+puedo organizar $n/2-2$ juegos de la siguiente manera:
+
+$$
+\left[
+\begin{array}{cc}
+T_1 & T_2 \\
+T_2 & T_1 \\
+\end{array}
+\right]
+$$
+
+Al igual que ocurrió con el caso de las potencias de 2, sólo quedan por agregar
+los juegos en los que un jugador $x$ del primer sub-problema
+juega con el jugador $x+n/2$. Esto añade un día de juegos y nos queda el torneo
+completo en $n/2-1$ días.
+
+Resta por ver qué pasa cuando $n/2$ es impar. Si $T_1$ es solución del primer sub-problem
+ y $T_2$ del segundo, tenemos que $T_1$ y $T_2$ van a tener $n/2$ días cada uno, y en cada
+día aparece un jugador libre (porque $n$ es impar).
+
 \end{itemize}
 
 % Pregunta 3
