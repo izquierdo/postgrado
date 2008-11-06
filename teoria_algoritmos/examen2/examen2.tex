@@ -256,7 +256,7 @@ for i $\asig 1$ to $n$ do
 
     for j $\asig i+1$ to $n$ do
         suma $\asig suma + p_j$
-        S[i][j] $\asig suma$
+        $S_{i,j} \asig suma$
 \end{lstlisting}
 
 En el algoritmo encontramos dos ciclos, uno dentro de otro, ambos realizando $O(n)$ operaciones. Entonces
@@ -272,38 +272,70 @@ C_{i,j} = (\text{{\bf min} } k : i \leq k \leq j : C_{i,k-1} + C_{k+1,j}) + \sum
 \end{cases}
 \end{equation*}
 
-Para empezar relleno en la tabla los casos base ($i \geq j$):
+Para empezar relleno en la tabla los casos base ($i \geq j$) e inicializo los demás valores
+con $+\infty$ (porque estoy buscando el mínimo):
 
 \begin{lstlisting}[caption={Inicialización de casos base de la tabla C},label=alg:tablaC_base]
 for i $\asig 1$ to $n$ do
-    S[i][i] = p_i
+    $S_{i,i} = p_i$
 
-for i $asig 1$ to $n$ do
-    for j $asig 1$ to $i-1$ do
-        S[i][j]=0
-\end{lstlisting}
+for i $\asig 1$ to $n$ do
+    for j $\asig 1$ to $i-1$ do
+        $S_{i,j} \asig 0$
 
-Nos encontramos otra vez con un algoritmo de tiempo $O(n^2)$. Una vez resueltos los
-casos base intento llenar el resto de la tabla. Hay que observar que el valor de $C_{i,j}$
-depende únicamente de $S_{i,j}$ (ya calculado) y los $C_{x,y}$ tales que $x=i$ y $y<j$ o
-$y=j$ y $x<i$. En otras palabras, depende de los elementos que están a la izquierda en su
-fila y de los que están abajo en su columna. Puedo calcular los valores de la diagonal inmediatamente
-a la derecha de la diagonal recién calculada,
-
-
-\begin{lstlisting}[caption={Cálculo de la tabla C},label=alg:tablaC]
-
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Cálculo del árbol},label=alg:arbol]
 for i $\asig 1$ to $n$ do
     for j $\asig i+1$ to $n$ do
-        suma $\asig 0$
+        $S_{i,j} \asig +\infty$
+\end{lstlisting}
 
-        for k $\asig i$ to $j$ do
-            suma $\asig suma + p_k$
+Una vez resueltos los
+casos base intento llenar el resto de la tabla. Hay que observar que el valor de $C_{i,j}$
+depende únicamente de $S_{i,j}$ (ya calculado) y los $C_{x,y}$ tales que ($x=i \wedge y<j$) o
+($y=j \wedge x>i$). En otras palabras, depende de los elementos que están a la izquierda en su
+fila y de los que están abajo en su columna si en la tabla tenemos índices crecientes de izquierda
+a derecha y de arriba hacia abajo.
 
-        S[i][j] $\asig suma$
+Llamemos diagonal $p$ a la diagonal descendiente que comienza en la casilla $C_{i,i+p}$. Entonces
+puedo calcular la diagonal $p$ si y sólo si todas las diagonales $q < p$ están calculadas
+ya que para una casilla
+dada de esa diagonal $C_{i,i+p}$ es necesario y suficiente que estén calculadas todas las casillas
+entre $C_{i,i-1}$ y $C_{i,i+p-1}$ y las casillas entre $C_{i+1,i+p}$ y $C_{i+p+1,i+p}$.
+
+Entonces puedo calcular progresivamente todas las diagonales desde la mitad
+hacia la derecha hasta calcular $C_{1,n}$ en la última diagonal. Esto resulta en
+el siguiente algoritmo:
+
+\begin{lstlisting}[caption={Cálculo de la tabla C},label=alg:completoC]
+for j $\asig 1$ to $n-1$ do /* diagonal j */
+    for i $\asig 1$ to $n$ do /* fila i de la diagonal j */
+        for k $\asig i$ to $i+j$ do
+            actual $\asig$ $C_{i,k-1}+C_{k+1,i+j}+S_{i,i+j}$
+            $C_{i,i+j}$=min($C_{i,i+j}$,actual)
+\end{lstlisting}
+
+El algoritmo contiene tres ciclos anidados que pueden realizar $O(n)$ operaciones. Su
+complejidad es $O(n^3)$. Habiendo hallado el valor para $C_{1,n}$ debo construir un árbol
+de búsqueda óptimo con los valores $C_{i,j}$. Observemos que dados $i, j$
+debe existir $k$ tal que $C_{i,j} - \sum_{k=i}^j p_k = C_{i,k-1} + C_{k+1,j}$.
+Es claro que el costo de un árbol con raíz en $k$ tal que ambos sub-árboles son óptimos es
+igual a $C_{i,j}$. Entonces para construir un árbol óptimo simplemente debemos hallar $k$
+y construir recursivamente el árbol izquierdo (elementos entre $i$ y $k-1$) y el derecho
+(elementos entre $k+1$ y $j$). Suponiendo que $arbol(A,I,D)$ es un árbol cuyo valor es el elemento
+de la secuencia original con índice $A$ y cuyos
+sub-árboles son $I$ y $D$, el siguiente algoritmo recursivo halla el árbol óptimo para
+$i,j$ de la manera descrita:
+
+\begin{lstlisting}[caption={Cálculo del árbol},label=alg:arbol]
+procedure optimo(i, j)
+    if i > j do
+        return hoja
+
+    if i = j do
+        return arbol(i, hoja, hoja)
+
+    for k $\asig i$ to $j$ do
+        if $C_{i,j} - S_{i,j} = C_{i,k-1} + C_{k+1,j}$ do
+            return arbol(k, optimo(i,k-1), optimo(k+1,j))
 \end{lstlisting}
 
 \end{document}
