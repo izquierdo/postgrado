@@ -44,6 +44,15 @@
 % Pregunta 1
 \section{}
 
+\begin{lstlisting}[float,caption={Solución al ejercicio 1},label=alg:ejercicio1]
+procedure buscar(A[1$\ldots$N], X)
+    $i \asig 1$
+    $j \asig 2$
+
+    for $k \asig 1$ to $N$ do
+        
+\end{lstlisting}
+
 % Pregunta 2
 \section{}
 
@@ -108,7 +117,7 @@ en $T_2$. Entonces puedo agregar en el último día del torneo todos los juegos 
 obtener un resultado válido de $n/2-1$ días. El algoritmo se puede observar en el listado
 \ref{alg:ejercicio3a}.
 
-\begin{lstlisting}[float,caption={Solución al ejercicio 3},label=alg:ejercicio3a]
+\begin{lstlisting}[float,caption={Solución al ejercicio 2, caso potencias de dos},label=alg:ejercicio3a]
 procedure torneo(n)
   return tabla(n, 1)
 
@@ -185,7 +194,7 @@ con $x$ en $T_1$ y $k > 0$. Esto termina por completar los $n/2-1$ días que fal
 En el listado \ref{alg:ejercicio3b} se puede observar
 el algoritmo desarrollado a partir de este razonamiento.
 
-\begin{lstlisting}[caption={Solución al ejercicio 3},label=alg:ejercicio3b]
+\begin{lstlisting}[caption={Solución al ejercicio 2, caso general},label=alg:ejercicio3b]
 procedure torneo(n)
   return tabla(n, 1)
 
@@ -232,12 +241,12 @@ procedure tabla(n, inicio)
 
   for $x \asig 1$ to $n/2-1$ do
     for $y \asig 1$ to $n/2$ do
-      if y+(n/2+1) $\leq$ n do
-        piso[x][y] = y+(n/2+1)
-        piso[x][y+(n/2+1)] = y
+      if (n/2+y)+x $\leq$ n do
+        piso[x][y] = (n/2+y)+x
+        piso[x][(n/2+y)+x] = y
       else do
-        piso[x][y] = n/2+1
-        piso[x][n/2+1] = y
+        piso[x][y] = y+x
+        piso[x][y+x] = y
 
   return $unir\_vertical(techo, piso)$
 
