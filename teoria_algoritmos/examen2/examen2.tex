@@ -7,6 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage[spanish]{babel}
+\usepackage{qtree}
 
 % Para codigo bonito
 \newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
@@ -156,7 +157,7 @@ procedure tabla(n, inicio)
  \item El costo promedio en comparaciones a realizar es
 
 $$
-0,1 + (0,25+0,3)*2 + (0,2+0,05+0,05+0,05)*3 = 2,25
+0.1 + (0.25+0.3)*2 + (0.2+0.05+0.05+0.05)*3 = 2.25
 $$
 
 El costo del árbol en la figura 8.8 del libro es menor y, por lo tanto, mejor.
@@ -171,6 +172,19 @@ de aplicar el algoritmo sobre el subconjunto de elementos mayores a la raíz. En
 de los conjuntos sea vacío, entonces el resultado para ese sub-árbol es una hoja.
 
  \item
+
+El siguiente árbol es más eficiente en promedio:
+
+El costo promedio en comparaciones a realizar es
+
+$$
+0.25 + (0.2+0.3)*2 + (0.1+0.05)*3 + (0.05+0.05)*4 = 2.1
+$$
+
+Podemos ver que es menor que el costo promedio del árbol en la figura 8.8 del libro.
+Esto refuerza el hecho de que es usual que un problema no pueda ser resuelto con un
+algoritmo voraz (como el utilizado para construir dicho árbol).
+
 \end{enumerate}
 
 % Pregunta 4
