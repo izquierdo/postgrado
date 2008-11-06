@@ -340,9 +340,13 @@ procedure optimo(i, j)
 
 A continuación presento el algoritmo completo para conseguir un árbol de búsqueda óptimo.
 $abo()$ será un árbol de búsqueda óptimo para los elementos de la secuencia con índice
-entre $1$ y $n$ inclusive.
+entre $1$ y $n$ inclusive. Este algoritmo necesita tiempo $O(n^3)$ para correr
+sobre una secuencia de $n$ elementos. Aplicar el algoritmo a la instancia del problema 8.33
+resultó en el siguiente árbol de costo promedio 2.1:
 
-\begin{lstlisting}[float,caption={Cálculo del árbol},label=alg:completo]
+\Tree [.12 6 [.34 [.20 18 27 ] 35 ] ]
+
+\begin{lstlisting}[float,caption={Solución del problema 8.34},label=alg:completo]
 procedure optimo(i, j)
     if i > j do
         return hoja
