@@ -338,4 +338,51 @@ procedure optimo(i, j)
             return arbol(k, optimo(i,k-1), optimo(k+1,j))
 \end{lstlisting}
 
+A continuación presento el algoritmo completo para conseguir un árbol de búsqueda óptimo.
+$abo()$ será un árbol de búsqueda óptimo para los elementos de la secuencia con índice
+entre $1$ y $n$ inclusive.
+
+\begin{lstlisting}[float,caption={Cálculo del árbol},label=alg:completo]
+procedure optimo(i, j)
+    if i > j do
+        return hoja
+
+    if i = j do
+        return arbol(i, hoja, hoja)
+
+    for k $\asig i$ to $j$ do
+        if $C_{i,j} - S_{i,j} = C_{i,k-1} + C_{k+1,j}$ do
+            return arbol(k, optimo(i,k-1), optimo(k+1,j))
+
+procedure abo()
+    /* calculo de S */
+    for i $\asig 1$ to $n$ do
+        suma $\asig p_i$
+
+        for j $\asig i+1$ to $n$ do
+            suma $\asig suma + p_j$
+            $S_{i,j} \asig suma$
+
+    /* calculo de C */
+    for i $\asig 1$ to $n$ do
+        $S_{i,i} = p_i$
+
+    for i $\asig 1$ to $n$ do
+        for j $\asig 1$ to $i-1$ do
+            $S_{i,j} \asig 0$
+
+    for i $\asig 1$ to $n$ do
+        for j $\asig i+1$ to $n$ do
+            $S_{i,j} \asig +\infty$
+
+    for j $\asig 1$ to $n-1$ do /* diagonal j */
+        for i $\asig 1$ to $n$ do /* fila i de la diagonal j */
+            for k $\asig i$ to $i+j$ do
+                actual $\asig$ $C_{i,k-1}+C_{k+1,i+j}+S_{i,i+j}$
+                $C_{i,i+j}$=min($C_{i,i+j}$,actual)
+
+    /* calculo del arbol */
+    return optimo(1,n)
+\end{lstlisting}
+
 \end{document}
