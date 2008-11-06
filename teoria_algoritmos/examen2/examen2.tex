@@ -192,4 +192,96 @@ algoritmo voraz (como el utilizado para construir dicho árbol).
 % Pregunta 4
 \section{}
 
+Supongo que --como aparece en el libro-- la secuencia de entrada está ordenada.
+Voy a usar la definición de $C_{i,j}$ dada en el libro con la nueva condición de que
+$C_{i,j} = 0$ si $j < i$. Supongamos que tenemos una solución $X$
+óptima para la secuencia de elementos entre $i$ y $j$. Sea $k$ el índice del elemento
+raíz de esa solución. El sub-árbol izquierdo contiene los elementos menores que el elemento
+$k$, es decir, los elementos con índices entre $i$ y $k-1$ inclusive. El sub-árbol derecho contiene
+los elementos mayores que el elemento $k$, es decir, los elementos con índices entre $k+1$ y $j$
+inclusive. Sean $K_i$ y $K_d$ los costos de los sub-árboles izquierdo y
+derecho de la solución respectivamente. El costo de la solución $X$ es
+
+$$
+K_i + K_d + \sum_{k=i}^j p_k
+$$
+
+ya que debemos considerar el costo de ambos sub-árboles más el costo de acceder al
+elemento raíz más el costo añadido de incrementar la profundidad de cada nodo en
+cualquiera de los sub-árboles en uno (ya que estamos agregando la raíz a altura mayor).
+Si tenemos que $K_i \neq C_{i,k-1}$, entonces una solución mejor consiste en reemplazar
+el sub-árbol $K_i$ por uno tal que su costo sea igual a $C_{i,k-1}$, el cual es el costo
+mínimo para un sub-árbol con los elementos entre $i$ y $k-1$ inclusive. Esto contradice
+la suposición de que $X$ es una solución óptima.
+
+Por lo tanto tenemos obligatoriamente que el costo de $K_i$ es igual a $C_{i,k-1}$.
+Ocurre de manera análoga con el sub-árbol derecho y un árbol de costo $C_{k+1,j}$.
+Entonces el costo de la solución $X$ debe ser 
+
+$$
+C_{i,k-1} + C_{k+1,j} + \sum_{k=i}^j p_k
+$$
+
+Ahora, supongamos al absurdo que existe $m \neq k$ tal que $i \leq m \leq j$ y
+$C_{i,m-1}+C_{m+1,j} < C_{i,k-1}+C_{k+1,j}$. Entonces el árbol que contiene los
+elementos entre $i$ y $j$ inclusive y tiene como raíz el elemento $m$ tiene menor
+costo, ya que 
+
+$$
+C_{i,m-1} + C_{m+1,j} + \sum_{k=i}^j p_k < C_{i,k-1} + C_{k+1,j} + \sum_{k=i}^j p_k
+$$
+
+Esto contradice el hecho de que $X$ sea una solución óptima. Con esto, $k$ debe ser tal que
+no exista índice $m$ como el descrito. Así, he probado con el principio de optimalidad
+que
+
+$$
+C_{i,j} = (\text{{\bf min} } k : i \leq k \leq j : C_{i,k-1} + C_{k+1,j}) + \sum_{k=i}^j p_k
+$$
+
+Para obtener el algoritmo de programación dinámica solicitado,
+defino las tablas $S$ y $C$, ambas de tamaño $n$. Usaré la tabla $S$ para pre-calcular las sumatorias
+
+$$
+\sum_{k=i}^j p_k
+$$
+
+para todo $i < j$. Hago esto ya que necesito esos valores para resolver el problema. La tabla $C$ contendrá
+los valores $C_{ij}$.
+
+Para obtener la tabla $S$ utilizo el siguiente algoritmo
+
+\begin{lstlisting}[caption={Cálculo de la tabla S},label=alg:tablaS]
+for i $\asig 1$ to $n$ do
+    for j $\asig i+1$ to $n$ do
+        suma $\asig 0$
+
+        for k $\asig i$ to $j$ do
+            suma $\asig suma + p_k$
+
+        S[i][j] $\asig suma$
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Cálculo de la tabla C},label=alg:tablaC]
+for i $\asig 1$ to $n$ do
+    for j $\asig i+1$ to $n$ do
+        suma $\asig 0$
+
+        for k $\asig i$ to $j$ do
+            suma $\asig suma + p_k$
+
+        S[i][j] $\asig suma$
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Cálculo del árbol},label=alg:arbol]
+for i $\asig 1$ to $n$ do
+    for j $\asig i+1$ to $n$ do
+        suma $\asig 0$
+
+        for k $\asig i$ to $j$ do
+            suma $\asig suma + p_k$
+
+        S[i][j] $\asig suma$
+\end{lstlisting}
+
 \end{document}
