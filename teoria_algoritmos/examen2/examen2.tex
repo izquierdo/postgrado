@@ -47,14 +47,32 @@
 % Pregunta 2
 \section{}
 
-En ambos casos, el algoritmo
-devuelve la matriz $partidos$ donde $partidos[d][c]$
+En ambos casos, el algoritmo una matriz $T$ donde $T[d][c]$
 es el competidor contra el cual
-jugará el competidor $c$ en el día $d$. Si
-$partidos[d][c] = 0$, el competidor $c$ no juega el día $d$. Supongo que
-$matriz(n,m)$ devuelve una matriz de tamaño $n x m$ con todas las casillas
-inicializadas en cero. También supongo que tengo los siguientes procedimientos disponibles
-como ayuda:
+jugará el competidor $c$ en el día $d$.
+Supongo que
+$matriz(n,m)$ devuelve una matriz de tamaño $n x m$. También supongo que tengo las funciones
+$unir_horizontal$ y $unir_vertical$ tales que si $H_1$ y $H_2$ son matrices con la misma altura
+y $V_1$ y $V_2$ son matrices con el mismo ancho, entonces
+
+$$
+unir\_horizontal(H_1, H_2) = \left[
+\begin{array}{cc}
+H_1 & H_2 \\
+\end{array}
+\right]
+$$
+
+y
+
+$$
+unir\_vertical(V_1, V_2) = \left[
+\begin{array}{c}
+V_1 \\
+V_2 \\
+\end{array}
+\right]
+$$
 
 \begin{lstlisting}[float,caption={Procedimientos auxiliares para el ejercicio 3},label=alg:aux-ejercicio3]
 procedure horizontal(M1[1..n][1..m1]; M2[1..n][1..m2])
@@ -122,9 +140,11 @@ procedure torneo(n)
 
 procedure tabla(n, inicio)
   if n = 2 do
-    partidos[1][inicio] $\asig inicio+1$
-    partidos[1][inicio+1] $\asig inicio$
-    return partidos
+    T = matriz(1,2)
+
+    T[1][inicio] $\asig inicio+1$
+    T[1][inicio+1] $\asig inicio$
+    return T
 
   m1 $\asig tabla(n/2, inicio)$
   m2 $\asig tabla(n/2, inicio+(n/2))$
