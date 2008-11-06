@@ -52,7 +52,7 @@ es el competidor contra el cual
 jugará el competidor $c$ en el día $d$.
 Supongo que
 $matriz(n,m)$ devuelve una matriz de tamaño $n x m$. También supongo que tengo las funciones
-$unir_horizontal$ y $unir_vertical$ tales que si $H_1$ y $H_2$ son matrices con la misma altura
+$unir\_horizontal$ y $unir\_vertical$ tales que si $H_1$ y $H_2$ son matrices con la misma altura
 y $V_1$ y $V_2$ son matrices con el mismo ancho, entonces
 
 $$
@@ -73,32 +73,6 @@ V_2 \\
 \end{array}
 \right]
 $$
-
-\begin{lstlisting}[float,caption={Procedimientos auxiliares para el ejercicio 3},label=alg:aux-ejercicio3]
-procedure horizontal(M1[1..n][1..m1]; M2[1..n][1..m2])
-  resultado $\asig matriz(n,m1+m2)$
-
-  for i $\asig 1$ to n do
-    for j $\asig 1$ to $m1$ do
-      resultado[i][j] $\asig M1[i][j]$
- 
-    for j $\asig 1$ to $m2$ do
-      resultado[i][m1+j] $\asig M2[i][j]$
-
-  return resultado
-
-procedure vertical(M1[1..n1][1..m1]; M2[1..n2][1..m2])
-  resultado $\asig matriz(n,m1+m2)$
-
-  for j $\asig 1$ to $m$ do
-    for i $\asig 1$ to $n1$ do
-      resultado[i][j] $\asig M1[i][j]$
- 
-    for i $\asig 1$ to $n2$ do
-      resultado[n1+i][j] $\asig M2[i][j]$
-
-  return resultado
-\end{lstlisting}
 
 \begin{itemize}
 
@@ -149,8 +123,8 @@ procedure tabla(n, inicio)
   m1 $\asig tabla(n/2, inicio)$
   m2 $\asig tabla(n/2, inicio+(n/2))$
 
-  vi $\asig vertical(m1, m2)$
-  vd $\asig vertical(m2, m1)$
+  vi $\asig unir_vertical(m1, m2)$
+  vd $\asig unir_vertical(m2, m1)$
 
   piso $\asig matriz(1,n)$
 
@@ -158,9 +132,9 @@ procedure tabla(n, inicio)
     piso[1][i] $\asig i+(n/2)$
     piso[1][$i+(n/2)$] $\asig i$
 
-  total $\asig horizontal(vi, vd)$
+  total $\asig unir_horizontal(vi, vd)$
 
-  return $vertical(total, piso)$
+  return $unir_vertical(total, piso)$
 \end{lstlisting}
 
 \item Caso $n > 1$:
