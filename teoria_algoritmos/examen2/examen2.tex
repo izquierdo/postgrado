@@ -151,8 +151,6 @@ procedure tabla(n, inicio)
 \section{}
 
 \renewcommand{\labelenumi}{(\alph{enumi})}
-
-
 \begin{enumerate}
  \item El costo promedio en comparaciones a realizar es
 
@@ -194,7 +192,8 @@ algoritmo voraz (como el utilizado para construir dicho árbol).
 
 Supongo que --como aparece en el libro-- la secuencia de entrada está ordenada.
 Voy a usar la definición de $C_{i,j}$ dada en el libro con la nueva condición de que
-$C_{i,j} = 0$ si $j < i$. Supongamos que tenemos una solución $X$
+$C_{i,j} = 0$ si $j < i$ ya que un árbol sin elementos tiene como tiempo promedio de
+búsqueda $0$. Supongamos que tenemos una solución $X$
 óptima para la secuencia de elementos entre $i$ y $j$. Sea $k$ el índice del elemento
 raíz de esa solución. El sub-árbol izquierdo contiene los elementos menores que el elemento
 $k$, es decir, los elementos con índices entre $i$ y $k-1$ inclusive. El sub-árbol derecho contiene
@@ -247,30 +246,53 @@ $$
 $$
 
 para todo $i < j$. Hago esto ya que necesito esos valores para resolver el problema. La tabla $C$ contendrá
-los valores $C_{ij}$.
+los valores $C_{i,j}$.
 
 Para obtener la tabla $S$ utilizo el siguiente algoritmo
 
 \begin{lstlisting}[caption={Cálculo de la tabla S},label=alg:tablaS]
 for i $\asig 1$ to $n$ do
+    suma $\asig p_i$
+
     for j $\asig i+1$ to $n$ do
-        suma $\asig 0$
-
-        for k $\asig i$ to $j$ do
-            suma $\asig suma + p_k$
-
+        suma $\asig suma + p_j$
         S[i][j] $\asig suma$
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Cálculo de la tabla C},label=alg:tablaC]
+En el algoritmo encontramos dos ciclos, uno dentro de otro, ambos realizando $O(n)$ operaciones. Entonces
+el costo en tiempo del algoritmo es $O(n^2)$. Hecho esto utilizaré programación dinámica para calcular
+$C_{1,n}$. Recordemos que los casos para $C$ son
+
+\begin{equation*}
+C_{i,j} = 
+\begin{cases}
+p_i & \text{si $i=j$,} \\
+0 &\text{si $i>j$,} \\
+C_{i,j} = (\text{{\bf min} } k : i \leq k \leq j : C_{i,k-1} + C_{k+1,j}) + \sum_{k=i}^j p_k &\text{si $i<j$.} \\
+\end{cases}
+\end{equation*}
+
+Para empezar relleno en la tabla los casos base ($i \geq j$):
+
+\begin{lstlisting}[caption={Inicialización de casos base de la tabla C},label=alg:tablaC_base]
 for i $\asig 1$ to $n$ do
-    for j $\asig i+1$ to $n$ do
-        suma $\asig 0$
+    S[i][i] = p_i
 
-        for k $\asig i$ to $j$ do
-            suma $\asig suma + p_k$
+for i $asig 1$ to $n$ do
+    for j $asig 1$ to $i-1$ do
+        S[i][j]=0
+\end{lstlisting}
 
-        S[i][j] $\asig suma$
+Nos encontramos otra vez con un algoritmo de tiempo $O(n^2)$. Una vez resueltos los
+casos base intento llenar el resto de la tabla. Hay que observar que el valor de $C_{i,j}$
+depende únicamente de $S_{i,j}$ (ya calculado) y los $C_{x,y}$ tales que $x=i$ y $y<j$ o
+$y=j$ y $x<i$. En otras palabras, depende de los elementos que están a la izquierda en su
+fila y de los que están abajo en su columna. Puedo calcular los valores de la diagonal inmediatamente
+a la derecha de la diagonal recién calculada,
+
+
+\begin{lstlisting}[caption={Cálculo de la tabla C},label=alg:tablaC]
+
 \end{lstlisting}
 
 \begin{lstlisting}[caption={Cálculo del árbol},label=alg:arbol]
