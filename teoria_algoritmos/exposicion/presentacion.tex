@@ -25,10 +25,53 @@
 
 \frame
 {
-  \frametitle{Introducción}
+  \frametitle{Ejemplos}
 
-  Este proyecto consiste del diseño, implementación y evaluación de un
-  compilador paralelizante.
+  Problema de satisfactibilidad: ¿es posible satisfacer las siguientes expresiones?
+
+  \begin{itemize}
+  \item $v_1 \vee v_2$
+  \item $(v_1 \vee \neg v_2) \wedge (v_2 \vee v_3)$
+  \item $(v_1 \wedge \neg v_2) \wedge (v_2 \wedge v_3)$
+  \end{itemize}
+}
+
+\frame
+{
+  \frametitle{Un ejemplo más complicado}
+
+  \begin{itemize}
+  \item $(\neg v_{1} \vee v_5 \vee v_3) \wedge (\neg v_{3} \vee \neg v_{4} \vee \neg v_{6}) \wedge (\neg v_{1} \vee \neg v_{8} \vee v_{7}) \wedge$
+        $(\neg v_{4} \vee \neg v_{1} \vee v_{5}) \wedge (v_4 \vee v_2 \vee v_8) \wedge (\neg v_3 \vee \neg v_9 \vee v_1) \wedge (v_7 \vee v_4 \vee v_8)$
+  \end{itemize}
+}
+
+\frame
+{
+  \frametitle{Formulación del problema}
+
+  Problema de satisfactibilidad: ¿es posible satisfacer las siguientes expresiones?
+
+  \begin{itemize}
+  \item $v_1 \vee v_2$
+  \item $(v_1 \vee \neg v_2) \wedge (v_2 \vee v_3)$
+  \item $(v_1 \wedge \neg v_2) \wedge (v_2 \wedge v_3)$
+  \end{itemize}
+}
+
+\section{Backtracking}
+
+\frame
+{
+  \frametitle{Motivación}
+
+  Problema de satisfactibilidad: ¿es posible satisfacer las siguientes expresiones?
+
+  \begin{itemize}
+  \item $v_1 \vee v_2$
+  \item $(v_1 \vee \neg v_2) \wedge (v_2 \vee v_3)$
+  \item $(v_1 \wedge \neg v_2) \wedge (v_2 \wedge v_3)$
+  \end{itemize}
 }
 
 \section{Preguntas}
