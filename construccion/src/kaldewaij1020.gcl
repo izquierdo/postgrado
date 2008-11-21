@@ -1,0 +1,21 @@
+program kaldewaij1020
+|[
+    const N = 10 : int {N >= 0};
+    var h := [-1,2,-3,-4,5,6,7,-2,-8,10] : array[] of int;
+
+
+    var m := 0, n := 0 : int;
+
+    {inv 0 <= m <= n <= N /\ (%forall i : 0 <= i < m : h[i] <= 0) /\ (%forall i : m <= i < n : h[i] >= 0)}
+    {bound N-n}
+    do n != N ->
+        if h[n] <= 0 ->
+            |[ var r := h[m] : int ; h[m] := h[n] ; h[n] := r ]|
+            ;m, n := m+1, n+1
+        |  h[n] >= 0 ->
+            n := n+1
+        fi
+    od
+
+    {(%forall i : 0 <= i < m : h[i] <= 0) /\ (%forall i : m <= i < N : h[i] >= 0)}
+]|

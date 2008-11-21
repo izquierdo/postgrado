@@ -1,0 +1,14 @@
+program kaldewaij413
+|[
+    const A = 15, B = 9 : int {A > 0 /\ B > 0};
+
+    var x := A : int;
+
+    {inv 1 <= x <= A*B /\ x mod A = 0 /\ (%forall i : 1 <= i < x : i mod A != 0 \/ i mod B != 0)}
+    {bound A*B-x}
+    do x mod B != 0 ->
+        x := x + A
+    od
+
+    /*{x = (%min i : 1 <= i /\ i mod A = 0 /\ i mod B = 0 : i)}*/
+]|

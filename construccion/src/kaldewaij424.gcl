@@ -1,0 +1,22 @@
+program kaldewaij424
+|[
+    const N = 3 : int {N >= 0} ;
+    const X = 10 : int ;
+    const f = [1, 2, 3] : array[3] of int ;
+    var r := 0 : int ;
+
+    /* inicio del programa */
+
+    var n := 0 : int ;
+    var x := 1 : int ;
+
+    {inv r = (%sigma i : 0<=i<n : f[i]*(X^i)) /\ x = X^n}
+    {bound N-n}
+    do n != N ->
+        n, r, x := n + 1, r + f[n]*x, x*X
+    od
+
+    /* fin del programa */
+    
+    {r = (%sigma i : 0<=i<N : f[i]*(X^i))}
+]|

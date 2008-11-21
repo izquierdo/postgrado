@@ -1,0 +1,40 @@
+program kaldewaij435
+|[
+    /* credit.p.q = ((%count i : p<=i<q : A[i] > 0) - (%count i : p<=i<q : A[i] < 0)) */
+
+    const N = 35 : int ;
+    var A := [-42,-3,8,-14,-6,-43,-123,-4,-439,3,2,5,0,-12,2,4,34,-50,-9,-23,-2,-18,-104,-22,-40,-40,-3,-34,0,-11,-11,-3,-43,-99,-66] : array[] of int ;
+    var x := 0 : int ;
+    var y := 0 : int ;
+    var m := 0 : int ;
+
+    var n := 0 : int ;
+    var s := 0 : int ;
+    var e := 0 : int ;
+
+    {inv m = (%max p, q : 0<=p<=q<=n : ((%count i : p<=i<q : A[i] > 0) - (%count i : p<=i<q : A[i] < 0))) /\
+         s = (%max p : 0<=p<=n : ((%count i : p<=i<n : A[i] > 0) - (%count i : p<=i<n : A[i] < 0))) /\
+         0<=n<=N /\
+         m = ((%count i : x<=i<y : A[i] > 0) - (%count i : x<=i<y : A[i] < 0))
+    }
+    {bound N-n}
+    do n != N ->
+        if A[n] < 0 -> 
+            if s - 1 < 0 -> s, e := 0, n + 1
+            |  s - 1 >= 0 -> s := s - 1
+            fi
+        | A[n] = 0 -> skip
+        | A[n] > 0 -> s := s + 1
+        fi ;
+
+        if m <= s -> m, x, y := s, e, n + 1
+        |  m > s -> skip
+        fi ;
+
+        n := n + 1
+    od
+
+    {    m = (%max p, q : 0<=p<=q<=N : ((%count i : p<=i<q : A[i] > 0) - (%count i : p<=i<q : A[i] < 0))) /\
+         m = ((%count i : x<=i<y : A[i] > 0) - (%count i : x<=i<y : A[i] < 0))
+    }
+]|

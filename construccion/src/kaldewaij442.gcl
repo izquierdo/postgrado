@@ -1,0 +1,15 @@
+program kaldewaij442
+|[
+    const N = 4, X = 2 : int { N >= 0 };
+    const f = [1,2,3,4] : array[] of int;
+
+    var n := N, r := 0 : int;
+
+    {inv r = (%sigma i : n <= i < N : f[i] * X^(i-n))}
+    {bound n}
+    do n != 0 ->
+        n, r := n-1, f[n-1] + X*r
+    od
+
+    {r = (%sigma i : 0 <= i < N : f[i] * X^i)}
+]|

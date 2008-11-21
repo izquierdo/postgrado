@@ -1,0 +1,715 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+\usepackage{alltt}
+
+
+% Para codigo bonito
+\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+
+\newcommand{\algoritmo}[2]
+{
+{
+  \singlespace
+  \begin{algorithm}[h]
+    \caption{#1}
+    \begin{algorithmic}[1]
+      #2
+    \end{algorithmic}
+  \end{algorithm}
+}
+}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\lstset{language=GCL,mathescape=true,frame=single}
+
+\begin{document}
+
+% Título
+
+\title{Tarea 1 \\ Construcción Formal de Programas}
+\author{Daniel Izquierdo \\ \#08-86809}
+\date{4 de noviembre de 2008}
+
+\maketitle
+
+% Pregunta 1
+\section{Ejercicio 2.0.0}
+
+\begin{itemize}
+\item $\{true\} S \{true\}$: el programa $S$ siempre termina.
+\item $\{false\} S \{true\}$: no da información sobre la terminación de $S$.
+\end{itemize}
+
+% Pregunta 2
+\section{Ejercicio 2.2.1}
+
+Debo demostrar $\{true\} x := x + 1 \{true\}$. Tenemos
+
+\begin{align*}
+ & \{true\} x := x + 1 \{true\} \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & [ true \Rightarrow wp.(x := x + 1).true ] \\
+ \equiv & <true => P \equiv P> \\
+ & [ wp.(x := x + 1).true ] \\
+ \equiv & <wp.(x := E).Q \equiv Q(x := E)> \\
+ & [ true(x := x + 1) ] \\
+ \equiv & <\text{sustitución}> \\
+ & [ true ] \\
+ \equiv & <\text{cuantificación sin variables ligadas}> \\
+ & true
+\end{align*}
+
+% Pregunta 3
+\section{Ejercicio 2.4.1}
+
+\begin{align*}
+ & \{P\} \text{{\bf if }} B_0 \rightarrow S_0 ; S | B_1 \rightarrow S_1 ; S \text{ {\bf fi}} \{Q\} \\
+ \equiv & <\text{definición de {\bf if}}> \\
+ & [ P \Rightarrow B_0 \vee B_1 ] \wedge \{P \wedge B_0\} S_0 ; S \{Q\} \wedge \{P \wedge B_1\} S_1 ; S \{Q\} \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & [ P \Rightarrow B_0 \vee B_1 ] \wedge [P \wedge B_0 \Rightarrow wp.(S_0 ; S).Q] \wedge [P \wedge B_1 \Rightarrow wp.(S_1 ; S).Q] \\
+ \equiv & <[wp.(S ; T).Q \equiv wp.S.(wp.T.Q)]> \\
+ & [ P \Rightarrow B_0 \vee B_1 ] \wedge [P \wedge B_0 \Rightarrow wp.S_0.(wp.S.Q)] \wedge [P \wedge B_1 \Rightarrow wp.S_1.(wp.S.Q)] \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & [ P \Rightarrow B_0 \vee B_1 ] \wedge \{P \wedge B_0\} S_0 \{wp.S.Q\} \wedge \{P \wedge B_1\} S_1 \{wp.S.Q\} \\
+ \equiv & <\text{definición de {\bf if}}> \\
+ & \{P\} \text{{\bf if }} B_0 \rightarrow S_0 | B_1 \rightarrow S_1 \text{ {\bf fi}} \{wp.S.Q\} \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & [P \Rightarrow wp.(\text{{\bf if }} B_0 \rightarrow S_0 | B_1 \rightarrow S_1 \text{ {\bf fi}}).(wp.S.Q)] \\
+ \equiv & <[wp.(S ; T).Q \equiv wp.S.(wp.T.Q)]> \\
+ & [P \Rightarrow wp.(\text{{\bf if }} B_0 \rightarrow S_0 | B_1 \rightarrow S_1 \text{ {\bf fi}} ; S).Q] \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & \{P\} \text{{\bf if }} B_0 \rightarrow S_0 | B_1 \rightarrow S_1 \text{ {\bf fi}} ; S \{Q\}
+\end{align*}
+
+% Pregunta 4
+\section{Ejercicio 2.6.2}
+
+\begin{align*}
+ & \{P\} S \{Q\} \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & [P => wp.S.Q] \\
+ \Rightarrow & <\text{introducción del existencial con } y=y> \\
+ & [P => (\exists y : y \in \mathbb{Z} : wp.S.Q)] \\
+ \Rightarrow & <wp.S.Q \vee wp.S.R \Rightarrow wp.S.(Q \vee R)> \\
+ & [P => wp.S.(\exists y : y \in \mathbb{Z} : Q)] \\
+ \equiv & <y \text{ no ocurre libre en } (\exists y : y \in \mathbb{Z} : Q)> \\
+ & [P => wp.S.(\forall y : y \in \mathbb{Z} : (\exists y : y \in \mathbb{Z} : Q))] \\
+ \equiv & <wp.S.Q \wedge wp.S.R \equiv wp.S.(Q \wedge R)> \\
+ & [P => (\forall y : y \in \mathbb{Z} : wp.S.(\exists y : y \in \mathbb{Z} : Q))] \\
+ \equiv & <[wp.|[\text{var } y : \text{int } ; S |].Q \equiv (\forall y : y \in \mathbb{Z} : wp.S.Q)]> \\
+ & [P => wp.|[\text{var } y : \text{int } ; S |].(\exists y : y \in \mathbb{Z} : Q)] \\
+ \equiv & <\text{equivalencia TH / wp}> \\
+ & \{P\} |[\text{var } y : \text{int } ; S |] \{(\exists y : y \in \mathbb{Z} : Q)\} \\
+\end{align*}
+
+% Pregunta 5
+\section{Ejercicio 4.1.3}
+
+Para empezar, observo que $i = A*B$ satisface $i$ $mod$ $A = 0 \wedge i$ $mod$ $B = 0$.
+Como estamos buscando el mínimo, esto me da una cota superior para el resultado.
+Pongo como primera invariante
+
+$$
+P_0: 1 \leq x \leq A*B
+$$
+
+Usando la técnica de tomar una conjunción como invariante, pongo la invariante
+
+$$
+P_1: x \text{ {\bf mod} } A = 0
+$$
+
+y el guardia
+
+$$
+B: x \text{ {\bf mod} } B \neq 0
+$$
+
+Cuando tengamos $P_0 \wedge P_1 \wedge \neg B$ tendremos un múltiplo de $A$ y $B$, mas
+no necesariamente el mínimo. Añado entonces una condición más a la invariante:
+
+$$
+P_2: (\forall i : 1 \leq i < x \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0)
+$$
+
+De esta manera, si se cumplen las invariantes y no el guardia llegamos a la postcondición.
+Es claro que a inicialización $x := A$ satisface $P_0$ y $P_1$. También satisface
+$P_2$, porque no hay número $r$ tal que $1 \leq r < x \wedge r \text{ {\bf mod} } A = 0$.
+Con todo esto tenemos una aproximación a la solución (listado \ref{prog413_parcial}).
+
+\begin{lstlisting}[float,caption={Solución parcial del ejercicio 4.1.3},label=prog413_parcial]
+|[
+    con A, B : int {$A > 0 \wedge B > 0$};
+    var x : int;
+
+    x := A;
+
+    {inv $P_0 \wedge P_1 \wedge P_2$}
+    do $x mod B \neq 0 \rightarrow$
+        S
+    od
+
+    {$x = A \text{ {\bf lcm} } B$}
+]|
+\end{lstlisting}
+
+En el rango de la cuantificación en $P_2$ sólo considero números divisibles por $A$.
+El próximo número a considerar en un momento dado es $x + A$. Investigo para $S$ la
+asignación $x := x + A$. Es claro que $P_1 \Rightarrow P_1(x := x + A)$. Por otra parte,
+suponiendo la invariante, sea $p > 0$ tal que $x=p*A$. Tenemos $1 \leq A*p = x < A*B$ (porque
+$x \text{ {\bf mod} } B \neq 0$. Por lo tanto, $p < B$ y entonces
+
+\begin{align*}
+ & P_0(x := x + A) \\
+ \equiv & <\text{sustitución y definición de } P_0> \\
+ & 1 \leq x + A \leq A*B \\
+ \equiv & <\text{x = p*A}> \\
+ & 1 \leq p*A + A \leq A*B \\
+ \equiv & <\text{aritmética}> \\
+ & 1 \leq A*(p+1) \leq A*B \\
+ \equiv & <p < B, A*p \geq 1, \text{aritmética}> \\
+ & true
+\end{align*}
+
+Además,
+
+\begin{align*}
+ & P_2(x := x + A) \\
+ \equiv & <\text{sustitución y definición de } P_2> \\
+ & (\forall i : 1 \leq i < x+A \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0) \\
+ \equiv & <\text{separación de rangos}> \\
+ & (\forall i : 1 \leq i < x \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0) \wedge \\
+ & (\forall i : x \leq i < x+A \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0) \\
+ \equiv & <\text{definición } P_2> \\
+ & P_2 \wedge (\forall i : x \leq i < x+A \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0) \\
+ \equiv & <\text{separación de rangos, suposición } P_2 \text{, neutro de } \wedge \text{, } P_1> \\
+ & x \text{ {\bf mod} } B \neq 0 \wedge (\forall i : x+1 \leq i < x+A \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0) \\
+ \equiv & <\text{suposición guardia, neutro de } \wedge> \\
+ & (\forall i : x+1 \leq i < x+A \wedge i \text{ {\bf mod} } A = 0 : i \text{ {\bf mod} } B \neq 0) \\
+ \equiv & <\text{rango vacío por } P_1> \\
+ & true
+\end{align*}
+
+Para ver la terminación del ciclo, pongo la variante $A*B-x$. Noto primero que
+$P_0$ implica que la variante es no negativa. Si tenemos $X = A*B-x$, entonces
+
+\begin{align*}
+ & X(x := x + A) \\
+ = & <\text{sustitución}> \\
+ & A*B-x+A \\
+ < & <A > 0, \text{aritmética, definición de X}> \\
+ & X
+\end{align*}
+
+Queda entonces el programa final (listado \ref{prog413}).
+
+\begin{lstlisting}[float,caption={Solución del ejercicio 4.1.3},label=prog413]
+|[
+    con A, B : int {$A > 0 \wedge B > 0$};
+    var x : int;
+
+    x := A;
+
+    {inv $P_0 \wedge P_1 \wedge P_2$}
+    {bound A*B-x}
+    do $x mod B \neq 0 \rightarrow$
+        x := x + A
+    od
+
+    {$x = A \text{ {\bf lcm} } B$}
+]|
+\end{lstlisting}
+
+% Pregunta 6
+\section{Ejercicio 4.2.4}
+
+Voy a utilizar un lazo con la técnica de sustitución de constante por variable
+para resolver el problema. Introduzco la variable $n$ y entonces tenemos
+las invariantes
+
+$$
+P_0: r = (\sum i : 0 \leq i < n : f.i * X^i)
+$$
+
+y
+
+$$
+P_1: 0 \leq n \leq N
+$$
+
+Por construcción, $P_0 \wedge n = N$ implica la postcondición. Como la sumatoria
+sobre un rango vacío es 0, se satisfacen $P_0$ y $P_1$ con $n, r := 0, 0$. El
+guardia del lazo será $n \neq N$. Al incrementar $n$ en 1 y suponer
+$P_0 \wedge P_1 \wedge n \neq N$ tenemos 
+
+\begin{align*}
+ & (\sum i : 0 \leq i < n + 1: f.i * X^i) \\
+ = & <\text{separación de rango con } 0 \leq n < n+ 1> \\
+ & (\sum i : 0 \leq i < n : f.i * X^i) + f.n * X^n \\
+ = & <P_0> \\
+ & r + f.n * X^n
+\end{align*}
+
+En este punto noto que es necesaria una variable para el valor de $X^n$.
+Introduzco entonces la variable $x$ con la invariante
+
+$$
+P_2: x = X^n
+$$
+
+Con esto queda que
+
+\begin{align*}
+ & (\sum i : 0 \leq i < n + 1: f.i * X^i) \\
+ = & <\text{demostrado previamente}> \\
+ & r + f.n * X^n \\
+ = & <P_2> \\
+ & r + f.n * x
+\end{align*}
+
+Por lo tanto, la asignación $n, r := n + 1, r + f.n * x$ basta para
+satisfacer $P_0$. Queda por satisfacer $P_2$. Derivo
+
+\begin{align*}
+ & X^{(n+1)} \\
+ = & <\text{definición de potencia}> \\
+ & X^n * X \\
+ = & <P_2> \\
+ & x * X
+\end{align*}
+
+En conclusión, la asignación a ejecutar dentro del lazo es
+$n, r, x := n + 1, r + f.n * x, x * X$. Agregar $x = 1$ a la sección
+de inicialización permite que se cumpla $P_2$ al iniciar el lazo, ya
+que $X^0 = 1$. Como función de cota usamos $N-n$. El programa final se
+muestra en el listado \ref{prog424}.
+
+\begin{lstlisting}[float,caption={Solución del ejercicio 4.2.4},label=prog424]
+|[
+    con N, X : int {$ N \geq 0$}; f : array[0..N) of int;
+    var r : int;
+
+    var n, x : int;
+
+    n, r, x := 0, 0, 1;
+    {inv $P_0 \wedge P_1 \wedge P_2$}
+    {bound $N-n$}
+    do $n \neq N \rightarrow$
+        n, r, x := n + 1, r + f.n * x, x * X
+    od
+
+    {$r = (\sum i : 0 \leq i < N : f.i * X^i)$}
+]|
+\end{lstlisting}
+
+% Pregunta 7
+\section{Ejercicio 4.3.5}
+
+Introduzco las variables $m, x$ e $y$. $m$ representará el crédito dado
+por el segmento maximal, y $x$ e $y$ denotarán un segmento maximal. La
+postcondición del programa a derivar es
+
+$$
+m = (\text{{\bf max} } p, q : 0 \leq p \leq q \leq N : credit.p.q) \wedge m = credit.x.y 
+$$
+
+Voy a utilizar un lazo con la técnica de sustitución de constante por variable. Para ello,
+introduzco la variable $n$ en sustitución de $N$. Las invariantes del lazo son
+
+$$
+P_0: m = (\text{{\bf max} } p, q : 0 \leq p \leq q \leq n : credit.p.q)
+$$
+
+$$
+P_1: m = credit.x.y
+$$
+
+$$
+P_2: 0 \leq n \leq N
+$$
+
+La instrucción de inicialización $n, m, x, y := 0, 0, 0, 0$ satisface las invariantes
+ya que $credit$.$0$.$0 = 0$. Al tratar de incrementar $n$ en $1$, tenemos
+
+\begin{align*}
+ & (\text{{\bf max} } p, q : 0 \leq p \leq q \leq n + 1 : credit.p.q) \\
+ = & <\text{separación de rango con } n \geq 0, P_0> \\
+ & m \text{ {\bf max} } (\text{{\bf max} } p : 0 \leq p \leq n + 1 : credit.p.(n+1)) \\
+\end{align*}
+
+Aquí noto la necesidad de una variable $s$ con invariante
+
+$$
+s = (\text{{\bf max} } p : 0 \leq p \leq n + 1 : credit.p.(n+1))
+$$
+
+Ese predicado no está definido para $n = N$, lo cual es admitido
+por $P_2$. Entonces defino la invariante
+
+$$
+P_3: s = (\text{{\bf max} } p : 0 \leq p \leq n : credit.p.n)
+$$
+
+que es válida para $n = N$ e intento establecer $P_3(n := n+1)$ antes de la
+instrucción de actualización de $m$. Para hacerlo, dados $P_3$ y $n \neq N$,
+tenemos
+
+\begin{align*}
+ & (\text{{\bf max} } p : 0 \leq p \leq n + 1 : credit.p.(n+1)) \\
+ = & <\text{separación de rango con } n \geq 0> \\
+ & (\text{{\bf max} } p : 0 \leq p \leq n : credit.p.(n+1)) \text{ {\bf max} } credit.(n+1).(n+1) \\
+ = & <\text{crédito con rango vacío es } 0> \\
+ & (\text{{\bf max} } p : 0 \leq p \leq n : credit.p.(n+1)) \text{ {\bf max} } 0 \\
+\end{align*}
+
+Al llegar a este punto me doy cuenta de que hay tres posibilidades 
+dependiendo del valor de $A.n$.
+
+\begin{itemize}
+ \item Caso 0 ($A.n = 0$):
+
+ \begin{align*}
+  & (\text{{\bf max} } p : 0 \leq p \leq n : credit.p.(n+1)) \text{ {\bf max} } 0 \\
+  = & <\text{definición de } credit \text{, separación, aritmética, suposición } A.n = 0> \\
+  & s \text{ {\bf max} } 0 \\
+ \end{align*}
+
+ \item Caso 1 ($A.n < 0$):
+
+ \begin{align*}
+  & (\text{{\bf max} } p : 0 \leq p \leq n : credit.p.(n+1)) \text{ {\bf max} } 0 \\
+  = & <\text{definición de } credit \text{, separación, aritmética, suposición } A.n = 0> \\
+  & s-1 \text{ {\bf max} } 0 \\
+ \end{align*}
+
+ \item Caso 2 ($A.n > 0$):
+
+ \begin{align*}
+  & (\text{{\bf max} } p : 0 \leq p \leq n : credit.p.(n+1)) \text{ {\bf max} } 0 \\
+  = & <\text{definición de } credit \text{, separación, aritmética, suposición } A.n = 0> \\
+  & s+1 \text{ {\bf max} } 0 \\
+ \end{align*}
+
+\end{itemize}
+
+Para establecer $P_3(n := n + 1)$ puedo usar, entonces, la instrucción de selección. Con ese resultado,
+intento de nuevo derivar la instrucción para mantener $P_0$.
+
+\begin{align*}
+ & (\text{{\bf max} } p, q : 0 \leq p \leq q \leq n + 1 : credit.p.q) \\
+ = & <\text{separación de rango con } n \geq 0, P_0> \\
+ & m \text{ {\bf max} } (\text{{\bf max} } p : 0 \leq p \leq n + 1 : credit.p.(n+1)) \\
+ = & <\text{suposición de que se mantiene } P_3(n := n+1)> \\
+ & m \text{ {\bf max} } s \\
+\end{align*}
+
+La inicialización $s := 0$ satisface $P_3$.
+Hecho esto, escribo una aproximación parcial del programa (listado \ref{prog435_parcial}). Este programa
+satisface $P_0$, $P_2$ y $P_3$ pero no necesariamente $P_1$. $P_1$ se puede ver afectado por la instrucción
+que actualiza $m$ en caso que $m \neq m$ {\bf max} $s$.
+
+\begin{lstlisting}[float,caption={Primera solución parcial del ejercicio 4.3.5},label=prog435_parcial]
+|[
+    con N : int { $N \geq 0$ };
+    var A : array[0..N) of int;
+
+    var n, m, x, y, s : int;
+
+    n, m, x, y, s := 0, 0, 0, 0, 0;
+
+    do $n \neq N \rightarrow$
+        if $A.n = 0 \rightarrow$ $s$ := $s$ $max$ $0$
+        |  $A.n < 0 \rightarrow$ $s$ := $(s-1)$ $max$ $0$
+        |  $A.n > 0 \rightarrow$ $s$ := $(s+1)$ $max$ $0$
+        fi;
+        $m$ := $m$ $max$ $s$
+    od
+]|
+\end{lstlisting}
+
+Introduzco la nueva variable $e$ y la invariante
+
+$$
+P_4: s = credit.e.n
+$$
+
+Si $m \neq m$ {\bf max} $s$, entonces $s = m$ {\bf max} $s$. Luego de la asignación quedará $m = s$.
+Es claro que, si realizamos $x, y := e, n+1$, entonces $P_1$ se satisfará si suponemos que $P_4(n := n+1)$ se
+mantiene.
+
+$P_4$ se cumple tras la inicialización $e := 0$. En el programa parcial que tengo se
+puede ver afectada con la modificación de $s$. Observo que $s \geq 0$ se mantiene como
+condición invariante y escribo una segunda aproximación del programa para ayudarme a lograr mantener
+$P_4$ (listado \ref{prog435_parcial1}).
+
+\begin{lstlisting}[float,caption={Segunda solución parcial del ejercicio 4.3.5},label=prog435_parcial1]
+|[
+    con N : int { $N \geq 0$ };
+    var A : array[0..N) of int;
+
+    var n, m, x, y, s : int;
+
+    n, m, x, y, s, e := 0, 0, 0, 0, 0, 0;
+
+    do $n \neq N \rightarrow$
+        if $A.n = 0 \rightarrow$ skip
+        |  $A.n < 0 \rightarrow$ $s$ :=
+               if $(s-1) \neq (s-1)$ $max$ $0 \rightarrow$ s := 0
+               |  $(s-1) = (s-1)$ $max$ $0 \rightarrow$ s := s-1
+               fi
+        |  $A.n > 0 \rightarrow$ $s$ := $(s+1)$
+        fi;
+        if $m = m$ $max$ $s \rightarrow$ skip
+        |  $m \neq m$ $max$ $s \rightarrow$ m, x, y := s, e, n+1
+        fi
+    od
+]|
+\end{lstlisting}
+
+Hay dos casos en los que cambia $s$. Por una parte tenemos $A.n > 0$:
+
+\begin{align*}
+ & (credit.e.n)(n := n+1) \\
+ \equiv & <\text{sustitución, definición de credit}> \\
+ & (\# i : e \leq i < n+1 : A.i > 0) - (\# i : e \leq i < n+1 : A.i < 0) \\
+ \equiv & <\text{separación de rangos, suposición } A.n > 0> \\
+ & (\# i : e \leq i < n : A.i > 0) + 1 - (\# i : e \leq i < n : A.i < 0) \\
+ \equiv & <\text{aritmética, suposición } P_4> \\
+ & s + 1 \\
+\end{align*}
+
+Como realizamos la asignación $s := s + 1$ en este caso, $P_4(n := n+1)$ se mantiene.
+El segundo caso se presenta cuando $A.n < 0$ y se puede dividir en dos subcasos como se
+ve en el listado \ref{prog435_parcial1}. Primero tenemos $(s - 1) \neq (s - 1)$ $max$ $0$.
+Poner $e := n+1$ lo resuelve ya que el crédito de un rango vacío es $0$ y en este caso
+asignamos $0$ a $s$. Cuando $(s - 1) = (s - 1)$ $max$ $0$ tenemos
+
+\begin{align*}
+ & (credit.e.n)(n := n+1) \\
+ \equiv & <\text{sustitución, definición de credit}> \\
+ & (\# i : e \leq i < n+1 : A.i > 0) - (\# i : e \leq i < n+1 : A.i < 0) \\
+ \equiv & <\text{separación de rangos, suposición } A.n < 0> \\
+ & (\# i : e \leq i < n : A.i > 0) - ((\# i : e \leq i < n : A.i < 0) + 1) \\
+ \equiv & <\text{aritmética, suposición } P_4> \\
+ & s - 1
+\end{align*}
+
+Como realizamos la asignación $s := s - 1$ en este caso, $P_4(n := n+1)$ se mantiene. Obtengo
+así el programa final, el cual se puede ver en el listado \ref{prog435}.
+
+\begin{lstlisting}[float,caption={Solución del ejercicio 4.3.5},label=prog435]
+|[
+    con N : int { $N \geq 0$ };
+    var A : array[0..N) of int;
+
+    var n, m, x, y, s : int;
+
+    n, m, x, y, s, e := 0, 0, 0, 0, 0, 0;
+
+    do $n \neq N \rightarrow$
+        if $A.n = 0 \rightarrow$ skip
+        |  $A.n < 0 \rightarrow$ $s$ :=
+               if $(s-1) \neq (s-1)$ $max$ $0 \rightarrow$ s := 0, e := n+1
+               |  $(s-1) = (s-1)$ $max$ $0 \rightarrow$ s := s-1
+               fi
+        |  $A.n > 0 \rightarrow$ $s$ := $(s+1)$
+        fi;
+        if $m = m$ $max$ $s \rightarrow$ skip
+        |  $m \neq m$ $max$ $s \rightarrow$ m, x, y := s, e, n+1
+        fi
+    od
+]|
+\end{lstlisting}
+
+% Pregunta 8
+\section{Ejercicio 4.4.2}
+
+El caso base para G.n es $n = N$. Por rango vacío de la sumatoria tenemos
+
+$$
+G.N = 0
+$$
+
+Para el caso recursivo voy a intentar relacionar $G.(n-1)$ con $G.(n)$ 
+teniendo $0 < n \leq N$.
+
+\begin{align*}
+ & G.(n-1) \\
+ = & <\text{definición de G.n}> \\
+ & (\sum i : n-1 \leq i < N : f.i * X^{i-(n-1)}) \\
+ = & <\text{separación de rango con } n \leq N> \\
+ & f.(n-1) * X^{(n-1)-(n-1)} + (\sum i : n \leq i < N : f.i * X^{i-(n-1)}) \\
+ = & <\text{aritmética y definición de potencia}> \\
+ & f.(n-1) + (\sum i : n \leq i < N : f.i * X^{i-n}*X) \\
+ = & <\text{distributividad de multiplicación sobre suma}> \\
+ & f.(n-1) + X*(\sum i : n \leq i < N : f.i * X^{i-n}) \\
+ = & <\text{definición de G.n}> \\
+ & f.(n-1) + X*G.n \\
+\end{align*}
+
+Viendo que $r = G$.$0$ es equivalente a la postcondición solicitada, voy a derivar el
+programa usando un ciclo. Introduzco la variable $n$ y pongo como invariante
+
+$$
+ r = G.n \wedge 0 \leq n \leq N
+$$
+
+y como variante $n$. La instrucción de inicialización es $n, r := N, 0$. Al intentar
+reducir $n$ en 1 y suponiendo $n \neq 0$ tenemos
+
+\begin{align*}
+ & G.(n-1) \\
+ = & <\text{visto previamente}> \\
+ & f.(n-1) + X*G.n \\
+ = & <\text{invariante}> \\
+ & f.(n-1) + X*r \\
+\end{align*}
+
+Con esto puedo escribir el programa final (listado \ref{prog442}).
+
+\begin{lstlisting}[float,caption={Solución del ejercicio 4.4.2},label=prog442]
+|[
+    con N, X : int { $N \geq 0$ }; f : array[0..N) of int;
+
+    var r, n : int;
+
+    n, r := N, 0;
+
+    {inv $r = G.n$}
+    {bound $n$}
+    do $n \neq 0 \rightarrow$
+        n, r := n-1, f.(n-1) + X*r
+    od
+]|
+\end{lstlisting}
+
+% Pregunta 9
+\section{Ejercicio 10.2.0}
+
+Introduzco la variable $m$ para derivar un programa con postcondición
+
+$$
+0 \leq m \leq N \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge (\forall i : m \leq i < N : h.i \geq 0)
+$$
+
+lo que satisfaría la postcondición de existencia de $p$ dada en el enunciado
+del problema. Intento derivar el programa usando un lazo y la técnica de
+sustitución de constante por variable. Las invariantes del lazo serían
+
+$$
+P_0: 0 \leq m \leq n \leq N
+$$
+
+$$
+P_1: (\forall i : 0 \leq i < m : h.i \leq 0) \wedge (\forall i : m \leq i < n : h.i \geq 0)
+$$
+
+La instrucción de inicialización $m, n := 0, 0$ satisface las invariantes ya que $N \geq 0$ y
+las cuantificaciones universales en $P_1$ quedan con rango vacío. El guardia $B$ del lazo será
+$n \neq N$. Es claro que $P_0 \wedge P_1 \wedge \neg B$ implica la postcondición.
+Al incrementar $n$ en $1$ podemos considerar el elemento $h.n$. Hay dos
+posibilidades (no disjuntas): $h.n \leq 0$ y $h.n \geq 0$. Se puede ver una solución parcial en
+el listado \ref{prog1020_parcial}.
+
+\begin{lstlisting}[float,caption={Solución parcial del ejercicio 10.2.0},label=prog1020_parcial]
+|[
+    con N : int { $N \geq 0$ };
+    var h : array[0..N) of int;
+
+    var m, n : int;
+
+    m, n := 0, 0;
+
+    {inv $P_0 \wedge P_1$}
+    {bound $N-n$}
+    do $n \neq N \rightarrow$
+        if $h.n \leq 0 \rightarrow$ $S_a$
+        |  $h.n \geq 0 \rightarrow$ $S_b$
+        fi
+    od
+]|
+\end{lstlisting}
+
+Ataco primero $S_b$ por ser el caso más fácil. Tenemos
+
+\begin{align*}
+ & (P_0 \wedge P_1)(n := n + 1) \\
+ \equiv & <\text{n no ocurre en } P_0\text{, sustitución y definición de } P_1> \\
+ & P_0 \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge (\forall i : m \leq i < n+1 : h.i \geq 0) \\
+ \equiv & <\text{separación de rango con } n+1 > n \geq 0> \\
+ & P_0 \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge (\forall i : m \leq i < n : h.i \geq 0) \wedge h.n \geq 0 \\
+ \equiv & <\text{definición de } P_1> \\
+ & P_0 \wedge P_1 \wedge h.n \geq 0
+\end{align*}
+
+Por lo tanto, dados que la invariante y el segundo guardia
+son ciertos, basta con ejecutar $n := n + 1$ para mantener la invariante con
+$n$ incrementada en $1$. Para conseguir $S_a$ considero la operación
+$swap.m.n$, la cual no afecta la primera parte de $P_1$.
+De la segunda parte de $P_1$ se infiere que
+$m < n \Rightarrow h.m \geq 0$. Como suponemos que se mantiene $P_0$, eso
+es equivalente a $m = n \vee h.m \geq 0$. En el primer caso, $m = n$ y
+entonces
+
+\begin{align*}
+ & \{P_0 \wedge P_1 \wedge m = n \wedge h.n \leq 0\} \\
+ & swap.m.n \\
+ & \{P_0 \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge m = n \wedge h.m \leq 0\} \\
+ & ;m, n := m+1, n+1 \\
+ & \{P_0 \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge m = n\} \\
+\end{align*}
+
+Tenemos que
+
+\begin{align*}
+ & \{P_0 \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge m = n\} \\
+ \Rightarrow & <\text{cuantificación universal con rango vacío, true es neutro de } \wedge> \\
+ & \{P_0 \wedge (\forall i : 0 \leq i < m : h.i \leq 0) \wedge (\forall i : m \leq i < n : h.i \geq 0)\} \\
+ \equiv & <\text{definición de } P_1> \\
+ & \{P_0 \wedge P_1\} \\
+\end{align*}
+
+Por lo tanto, si $m = n$, es admisible que $S_a = swap.m.n ; m, n := m+1, n+1$. Queda ver el
+segundo caso, en el que se mantiene que $h.m \geq 0$. Sean $P_{11}$ la primera parte de $P_1$
+y $P_{12}$ la segunda. Entonces
+
+\begin{align*}
+ & \{P_0 \wedge P_1 \wedge h.m \geq 0 \wedge h.n \leq 0\} \\
+ & swap.m.n \\
+ & \{P_0 \wedge P_{11} \wedge h.m \leq 0 \wedge (\forall i : m + 1 \leq i < n : h.i \geq 0) \wedge h.n \geq 0\} \\
+ & ;m, n := m+1, n+1 \\
+ & \{P_0 \wedge P_{11} \wedge P_{12}\} \\
+\end{align*}
+
+La misma instrucción que cumple con lo necesario en el primer caso también sirve en el segundo.
+Habiendo entonces resuelto $S_a$ se obtiene el programa final (listado \ref{prog1020}).
+
+\begin{lstlisting}[float,caption={Solución del ejercicio 10.2.0},label=prog1020]
+|[
+    con N : int { $N \geq 0$ };
+    var h : array[0..N) of int;
+
+    var m, n : int;
+
+    m, n := 0, 0;
+
+    {inv $P_0 \wedge P_1$}
+    {bound $N-n$}
+    do $n \neq N \rightarrow$
+        if $h.n \leq 0 \rightarrow$ swap.m.n ; m, n := m+1, n+1
+        |  $h.n \geq 0 \rightarrow$ n := n+1
+        fi
+    od
+]|
+\end{lstlisting}
+
+\end{document}
