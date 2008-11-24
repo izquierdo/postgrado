@@ -47,6 +47,7 @@
 \section{}
 
 \setcounter{subsection}{-1}
+
 \subsection{skip}
 
 \begin{align*}
@@ -62,7 +63,29 @@
  \equiv & <wp.skip.Q \equiv Q \text{ tres veces}> \\
  & [ P \vee Q \equiv P \vee Q ] \\
  \equiv & <P \equiv P \text{, } true \text{ constante}> \\
- & true
+ & true \\
+\end{align*}
+
+\subsection{asignación}
+
+\begin{align*}
+ & wp.(x := E).(P \wedge Q) \\
+ \equiv & <wp.(x := E).Q \equiv Q(x := E)> \\
+ & (P \wedge Q)(x := E) \\
+ \equiv & <\text{sustitución}> \\
+ & P(x := E) \wedge Q(x := E) \\
+ \equiv & <wp.(x := E).Q \equiv Q(x := E) \text{ dos veces}> \\
+ & wp.(x := E).P \wedge wp.(x := E).Q \\
+\end{align*}
+
+\begin{align*}
+ & wp.(x := E).(P \vee Q) \\
+ \equiv & <wp.(x := E).Q \equiv Q(x := E)> \\
+ & (P \vee Q)(x := E) \\
+ \equiv & <\text{sustitución}> \\
+ & P(x := E) \vee Q(x := E) \\
+ \equiv & <wp.(x := E).Q \equiv Q(x := E) \text{ dos veces}> \\
+ & wp.(x := E).P \vee wp.(x := E).Q \\
 \end{align*}
 
 % Pregunta 1
