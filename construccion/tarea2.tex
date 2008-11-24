@@ -88,6 +88,36 @@
  & wp.(x := E).P \vee wp.(x := E).Q \\
 \end{align*}
 
+\subsection{secuenciación}
+
+Suponiendo que $S_0$ y $S_1$ son instrucciones que
+cumplen la segunda, la tercera y la cuarta ``condición de salubridad'':
+
+\begin{align*}
+ & wp.(S_0 ; S_1).(P \wedge Q) \\
+ \equiv & <wp.(S_0 ; S_1).Q \equiv wp.S_0.(wp.S_1.Q)> \\
+ & wp.S_0.(wp.S_1.(P \wedge Q)) \\
+ \equiv & <S_1 \text{ cumple tercera condición de salubridad}> \\
+ & wp.S_0.(wp.S_1.P \wedge wp.S_1.Q) \\
+ \equiv & <S_0 \text{ cumple tercera condición de salubridad}> \\
+ & wp.S_0.(wp.S_1.P) \wedge wp.S_0.(wp.S_1.Q) \\
+ \equiv & <wp.(S_0 ; S_1).Q \equiv wp.S_0.(wp.S_1.Q) \text{ dos veces}> \\
+ & wp.(S_0 ; S_1).P \wedge wp.(S_0 ; S_1).Q \\
+\end{align*}
+
+\begin{align*}
+ & wp.(S_0 ; S_1).P \vee wp.(S_0 ; S_1).Q \\
+ \equiv & <wp.(S_0 ; S_1).Q \equiv wp.S_0.(wp.S_1.Q) \text{ dos veces}> \\
+ & wp.S_0.(wp.S_1.P) \vee wp.S_0.(wp.S_1.Q) \\
+ \Rightarrow & <S_0 \text{ cumple tercera condición de salubridad}> \\
+ & wp.S_0.(wp.S_1.P \vee wp.S_1.Q) \\
+ \Rightarrow & <S_1 \text{ cumple tercera condición de salubridad y} \\
+             & S_0 \text{ cumple segunda condición de salubridad}> \\
+ & wp.S_0.(wp.S_1.(P \vee Q)) \\
+ \equiv & <wp.(S_0 ; S_1).Q \equiv wp.S_0.(wp.S_1.Q)> \\
+ & wp.(S_0 ; S_1).(P \vee Q) \\
+\end{align*}
+
 % Pregunta 1
 \section{}
 
