@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+\usepackage{alltt}
+
+
+% Para codigo bonito
+\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+
+\newcommand{\algoritmo}[2]
+{
+{
+  \singlespace
+  \begin{algorithm}[h]
+    \caption{#1}
+    \begin{algorithmic}[1]
+      #2
+    \end{algorithmic}
+  \end{algorithm}
+}
+}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\lstset{language=GCL,mathescape=true,frame=single}
+
+\begin{document}
+
+% Título
+
+\title{Tarea 2 \\ Construcción Formal de Programas}
+\author{Daniel Izquierdo \\ \#08-86809}
+\date{2 de diciembre de 2008}
+
+\maketitle
+
+%que empiecen las secciones desde 0
+\setcounter{section}{-1}
+
+% Pregunta 0
+\section{}
+
+\setcounter{subsection}{-1}
+\subsection{skip}
+
+\begin{align*}
+ & [ wp.skip.P \wedge wp.skip.Q \equiv wp.skip.(P \wedge Q) ] \\
+ \equiv & <wp.skip.Q \equiv Q \text{ tres veces}> \\
+ & [ P \wedge Q \equiv P \wedge Q ] \\
+ \equiv & <P \equiv P \text{, } true \text{ constante}> \\
+ & true
+\end{align*}
+
+\begin{align*}
+ & [ wp.skip.P \vee wp.skip.Q \equiv wp.skip.(P \vee Q) ] \\
+ \equiv & <wp.skip.Q \equiv Q \text{ tres veces}> \\
+ & [ P \vee Q \equiv P \vee Q ] \\
+ \equiv & <P \equiv P \text{, } true \text{ constante}> \\
+ & true
+\end{align*}
+
+% Pregunta 1
+\section{}
+
+\end{document}
