@@ -3,6 +3,7 @@
 \usepackage{beamerthemesplit}
 \usepackage[spanish,activeacute]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 
 \begin{document}
 \title{Solución exacta de problemas difíciles: Backtraking para ``Satisfiability"}
@@ -56,6 +57,7 @@
   \item La CNF de una fórmula consiste en una conjunción de disyunciones $(A \vee B \vee \ldots) \wedge (C \vee D \vee \ldots) \wedge \ldots$
   \item Cualquier expresión proposicional se puede convertir a CNF preservando
         equivalencia o satisfactibilidad.
+  \item Cada elemento de la conjunción de una fórmula CNF se denomina cláusula.
   \end{itemize}
 }
 
@@ -104,11 +106,11 @@
 
 \frame
 {
-  \frametitle{GRASP y exploración del espacio de búsqueda}
+  \frametitle{Exploración del espacio de búsqueda con GRASP}
 
-  GRASP
+  GRASP es un ``SAT solver''.
 
-  Exploramos un ``árbol de deciciones'' y utilizamos técnicas
+  Exploramos un ``árbol de decisiones'' y utilizamos técnicas
   para incrementar la velocidad de la exploración. Un nodo del árbol
   de decisiones representa una asignación a una variable no asignada.
   Proceso:
@@ -116,14 +118,51 @@
   \begin{enumerate}
    \item Tomo una decisión de asignación.
    \item ``Extiendo'' el conjunto de asignaciones actual (BCP).
-   \item Si no pude satisfacer la fórmula, me reracto decisión de asignación tomada para intentar
-         otra asignación (backtracking).
+   \item Si no pude satisfacer la fórmula, me retracto de la decisión de
+         asignación tomada para intentar otra asignación (backtracking).
   \end{enumerate}
 }
 
 \frame
 {
+  \frametitle{Heurísticas para la decisión de asignación}
+
+  \begin{itemize}
+   \item Se pueden utilizar heurísticas para intentar tomar una buena decisión de asignación.
+   \item Ejemplo (GRASP): elegir la asignación que satisface el mayor número de cláusulas.
+  \end{itemize}
+}
+
+\frame
+{
+  \frametitle{Análisis de conflictos}
+
+  Podemos ir más allá de BCP y averiguar sobre las causas de los conflictos,
+  aprovechando esta información para optimizar la búsqueda.
+
+  \begin{enumerate}
+   \item Aprendizaje
+   \item Backtracking no cronológico
+  \end{enumerate}
+
+}
+
+\frame
+{
   \frametitle{Aprendizaje}
+
+   \begin{enumerate}
+    \item Podemos agregar cláusulas nuevas a partir de un conflicto para evitar conseguirlo de nuevo.
+    \item Se puede emplear una heurística para decidir si agregar cada cláusula o no, de manera de no
+          aumentar demasiado el tamaño de la base de datos.
+   \end{enumerate}
+}
+
+\frame
+{
+  \frametitle{Aprendizaje (cont.)}
+
+  \scalebox{0.38}{\includegraphics{ig.png}}
 }
 
 \frame
