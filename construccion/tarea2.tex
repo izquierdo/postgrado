@@ -118,6 +118,36 @@ cumplen la segunda, la tercera y la cuarta ``condición de salubridad'':
  & wp.(S_0 ; S_1).(P \vee Q) \\
 \end{align*}
 
+\subsection{selección condicional}
+
+Suponiendo que $S_i$ con $1 \leq i \leq n$ es una instrucción que
+cumple la segunda, la tercera y la cuarta ``condición de salubridad'',
+sean
+
+\begin{align*}
+IF & = & if B_1 \rightarrow S_1 | \ldots | B_n \rightarrow S_n fi  \\
+R & \equiv & 1 \leq i \leq n \\
+BB & \equiv & (\exists i : R : B_i) \\
+\end{align*}
+
+Entonces,
+
+\begin{align*}
+ & wp.IF.P \wedge wp.IF.Q \\
+ \equiv & <wp.IF.Q \equiv BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q) \text{ dos veces}> \\
+ & (BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.P)) \wedge (BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q)) \\
+ \equiv & <P \wedge P \equiv P> \\
+ & BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.P) \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q) \\
+ \equiv & <(\forall x : R : A) \wedge (\forall x : R : B) \equiv (\forall x : R : A \wedge B)> \\
+ & BB \wedge (\forall i : R : (B_i \Rightarrow wp.S_i.P) \wedge (B_i \Rightarrow wp.S_i.Q)) \\
+ \equiv & <(P \Rightarrow Q) \wedge (P \Rightarrow R) \equiv P \Rightarrow Q \wedge R> \\
+ & BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.P \wedge wp.S_i.Q) \\
+ \equiv & <S_i \text{ cumple tercera condición de salubridad}> \\
+ & BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.(P \wedge Q)) \\
+ \equiv & <wp.IF.Q \equiv BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q)> \\
+ & wp.IF.(P \wedge Q)
+\end{align*}
+
 % Pregunta 1
 \section{}
 
