@@ -69,7 +69,7 @@
   Enfoques:
 
   \begin{itemize}
-  \item Heurísticas
+  \item Algoritmos probabilísticos
   \item Backtracking
   \end{itemize}
 }
@@ -88,6 +88,47 @@
   $$
 
   Problema con este enfoque: toma tiempo exponencial ($2^n$)
+}
+
+\frame
+{
+  \frametitle{BCP}
+
+  \begin{itemize}
+   \item BCP: ``Boolean Constraint Propagation'' o ``Propagación de restricciones booleanas''
+   \item Al realizar una asignación puedo deducir sus efectos: cláusulas satisfechas, cláusulas unitarias y conflictos.
+   \item Ejemplo 1: $(X \vee Y) \wedge (\neg X \vee \neg W) \wedge (W \vee U)$
+   \item Ejemplo 2: $(X \vee Y) \wedge (X \vee Z) \wedge (\neg X \vee \neg W) \wedge (W)$
+  \end{itemize}
+}
+
+\frame
+{
+  \frametitle{GRASP y exploración del espacio de búsqueda}
+
+  GRASP
+
+  Exploramos un ``árbol de deciciones'' y utilizamos técnicas
+  para incrementar la velocidad de la exploración. Un nodo del árbol
+  de decisiones representa una asignación a una variable no asignada.
+  Proceso:
+
+  \begin{enumerate}
+   \item Tomo una decisión de asignación.
+   \item ``Extiendo'' el conjunto de asignaciones actual (BCP).
+   \item Si no pude satisfacer la fórmula, me reracto decisión de asignación tomada para intentar
+         otra asignación (backtracking).
+  \end{enumerate}
+}
+
+\frame
+{
+  \frametitle{Aprendizaje}
+}
+
+\frame
+{
+  \frametitle{Backtracking no cronológico}
 }
 
 \section{Preguntas}
