@@ -109,9 +109,9 @@ cumplen la segunda, la tercera y la cuarta ``condición de salubridad'':
  & wp.(S_0 ; S_1).P \vee wp.(S_0 ; S_1).Q \\
  \equiv & <wp.(S_0 ; S_1).Q \equiv wp.S_0.(wp.S_1.Q) \text{ dos veces}> \\
  & wp.S_0.(wp.S_1.P) \vee wp.S_0.(wp.S_1.Q) \\
- \Rightarrow & <S_0 \text{ cumple tercera condición de salubridad}> \\
+ \Rightarrow & <S_0 \text{ cumple cuarta condición de salubridad}> \\
  & wp.S_0.(wp.S_1.P \vee wp.S_1.Q) \\
- \Rightarrow & <S_1 \text{ cumple tercera condición de salubridad y} \\
+ \Rightarrow & <S_1 \text{ cumple cuarta condición de salubridad y} \\
              & S_0 \text{ cumple segunda condición de salubridad}> \\
  & wp.S_0.(wp.S_1.(P \vee Q)) \\
  \equiv & <wp.(S_0 ; S_1).Q \equiv wp.S_0.(wp.S_1.Q)> \\
@@ -121,7 +121,7 @@ cumplen la segunda, la tercera y la cuarta ``condición de salubridad'':
 \subsection{selección condicional}
 
 Suponiendo que $S_i$ con $1 \leq i \leq n$ es una instrucción que
-cumple la segunda, la tercera y la cuarta ``condición de salubridad'',
+cumple la tercera y la cuarta ``condición de salubridad'',
 sean
 
 \begin{align*}
@@ -146,6 +146,22 @@ Entonces,
  & BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.(P \wedge Q)) \\
  \equiv & <wp.IF.Q \equiv BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q)> \\
  & wp.IF.(P \wedge Q)
+\end{align*}
+
+\begin{align*}
+ & wp.IF.P \vee wp.IF.Q \\
+ \equiv & <wp.IF.Q \equiv BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q) \text{ dos veces}> \\
+ & (BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.P)) \vee (BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q)) \\
+ \equiv & <\text{distributividad } \wedge \text{ sobre } \vee> \\
+ & BB \wedge ((\forall i : R : B_i \Rightarrow wp.S_i.P) \vee (\forall i : R : B_i \Rightarrow wp.S_i.Q)) \\
+ \Rightarrow & <(\forall x : R : A) \vee (\forall x : R : B) \Rightarrow (\forall x : R : A \vee B)> \\
+ & BB \wedge (\forall i : R : (B_i \Rightarrow wp.S_i.P) \vee (B_i \Rightarrow wp.S_i.Q)) \\
+ \equiv & <(P \Rightarrow Q) \vee (P \Rightarrow R) \equiv P \Rightarrow Q \vee R> \\
+ & BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.P \vee wp.S_i.Q) \\
+ \Rightarrow & <S_i \text{ cumple cuarta condición de salubridad}> \\
+ & BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.(P \vee Q)) \\
+ \equiv & <wp.IF.Q \equiv BB \wedge (\forall i : R : B_i \Rightarrow wp.S_i.Q)> \\
+ & wp.IF.(P \vee Q)
 \end{align*}
 
 % Pregunta 1
