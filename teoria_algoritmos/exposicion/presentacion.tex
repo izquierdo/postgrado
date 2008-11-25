@@ -15,9 +15,9 @@
 \frame
 {
   \begin{itemize}
-  \item Marco teórico.
-  \item Diseño e implementación.
-  \item Resultados.
+  \item Definición del problema.
+  \item Opciones para resolver el problema.
+  \item Técnicas para mejorar backtracking.
   \end{itemize}
 }
 
@@ -48,14 +48,24 @@
 
 \frame
 {
-  \frametitle{Formulación del problema}
-
-  Problema de satisfactibilidad: ¿es posible satisfacer las siguientes expresiones?
+  \frametitle{CNF}
 
   \begin{itemize}
-  \item $v_1 \vee v_2$
-  \item $(v_1 \vee \neg v_2) \wedge (v_2 \vee v_3)$
-  \item $(v_1 \wedge \neg v_2) \wedge (v_2 \wedge v_3)$
+  \item CNF: ``Conjunctive normal form'' o ``Forma normal conjuntiva''
+  \item Es una forma ``estándar'' de representar fórmulas.
+  \item La CNF de una fórmula consiste en una conjunción de disyunciones $(A \vee B \vee \ldots) \wedge (C \vee D \vee \ldots) \wedge \ldots$
+  \item Cualquier expresión proposicional se puede convertir a CNF preservando
+        equivalencia o satisfactibilidad.
+  \end{itemize}
+}
+
+\frame
+{
+  \frametitle{¿Cómo resolver el problema?}
+
+  \begin{itemize}
+  \item Heurísticas
+  \item Backtracking
   \end{itemize}
 }
 
