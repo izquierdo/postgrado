@@ -61,7 +61,12 @@
 
 \frame
 {
-  \frametitle{¿Cómo resolver el problema?}
+  \frametitle{¿Cuál es el problema y cómo resolverlo?}
+
+  Dada una fórmula $F$ con $n$ variables $X_1, \ldots, X_n$, decir si es
+  posible asignar valores a las variables de manera que $F$ se satisfaga.
+
+  Enfoques:
 
   \begin{itemize}
   \item Heurísticas
@@ -73,15 +78,16 @@
 
 \frame
 {
-  \frametitle{Motivación}
+  \frametitle{Enfoque ``fuerza bruta''}
 
-  Problema de satisfactibilidad: ¿es posible satisfacer las siguientes expresiones?
+  Usar backtracking para intentar todas las posibles asignaciones de valores a variables. Por
+  ejemplo, para dos variables $X$ e $Y$ podemos probar:
 
-  \begin{itemize}
-  \item $v_1 \vee v_2$
-  \item $(v_1 \vee \neg v_2) \wedge (v_2 \vee v_3)$
-  \item $(v_1 \wedge \neg v_2) \wedge (v_2 \wedge v_3)$
-  \end{itemize}
+  $$
+  (X=0,Y=0), (X=0,Y=1), (X=1,Y=0), (X=1,Y=1)
+  $$
+
+  Problema con este enfoque: toma tiempo exponencial ($2^n$)
 }
 
 \section{Preguntas}
