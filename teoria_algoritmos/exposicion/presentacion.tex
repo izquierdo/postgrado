@@ -151,23 +151,39 @@
 {
   \frametitle{Aprendizaje}
 
-   \begin{enumerate}
+   \begin{itemize}
     \item Podemos agregar cláusulas nuevas a partir de un conflicto para evitar conseguirlo de nuevo.
     \item Se puede emplear una heurística para decidir si agregar cada cláusula o no, de manera de no
           aumentar demasiado el tamaño de la base de datos.
-   \end{enumerate}
+   \end{itemize}
 }
 
 \frame
 {
   \frametitle{Aprendizaje (cont.)}
 
-  \scalebox{0.38}{\includegraphics{ig.png}}
+  \scalebox{0.3}{\includegraphics{ig.png}}
+
+  Podemos agregar $(\neg X_1 \vee X_9 \vee X_10 \vee X_11)$.
 }
 
 \frame
 {
   \frametitle{Backtracking no cronológico}
+
+   \begin{itemize}
+    \item Al conseguir un conflicto, podemos hacer backtracking más allá de un nivel en el
+          árbol de decisiones.
+   \end{itemize}
+}
+
+\frame
+{
+  \frametitle{Backtracking no cronológico (cont.)}
+
+  \scalebox{0.3}{\includegraphics{ig.png}}
+
+  Podemos regresar al nivel 3 del árbol de decisiones.
 }
 
 \section{Preguntas}
