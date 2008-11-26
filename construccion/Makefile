@@ -32,4 +32,4 @@ ${DOCUMENTO}.pdf: $(patsubst %,capitulos/%.tex,${CAPITULOS})
 .PHONY: clean
 
 clean:
-	rm -f ${DOCUMENTO}.${EXT_BASURA} $(patsubst %,capitulos/%.${EXT_BASURA},${CAPITULOS})
+	rm -f tarea{1,2}.${EXT_BASURA} $(patsubst %,capitulos/%.${EXT_BASURA},${CAPITULOS})
