@@ -167,4 +167,19 @@ Entonces,
 % Pregunta 1
 \section{}
 
+Utilizo los $H_k$ dados en el paper de Dijkstra para definir $wp.DO.R$. Supongo que $k$ es
+una variable que no ocurre en $Q$.
+
+\begin{align*}
+ & \neg B \wedge Q \\
+ \equiv & <\text{definición de } H_0(R) \text{ con } BB = B> \\
+ & H_0(Q) \\
+ \equiv & <\text{sustitución, } k \text{ no ocurre en } Q> \\
+ & (H_k(Q))(k := 0) \\
+ \Rightarrow & <\text{introducción de existencial}> \\
+ & (\exists k :: H_k(Q)) \\
+ \equiv & <\text{precondición más débil de la iteración}> \\
+ & wp.(do B \rightarrow I od).Q \\
+\end{align*}
+
 \end{document}
