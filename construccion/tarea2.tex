@@ -352,4 +352,32 @@ Tenemos
  & \{pre\} \preccurlyeq \{(\exists a :: Ac \wedge pre)\}
 \end{align*}
 
+\begin{align*}
+ & rep.(wp.[post].Q) \\
+ \equiv & <\text{defn. } [post]> \\
+ & rep.(wp.[true,post].Q) \\
+ \equiv & <\text{defn. } wp.[pre,post] \text{, } true \text{ neutro de } \wedge> \\
+ & rep.(post \Rightarrow Q) \\
+ \equiv & <\text{defn. rep}> \\
+ & (\exists a :: (post \Rightarrow Q) \wedge Ac) \\
+ \equiv & <\text{defn. } \Rightarrow> \\
+ & (\exists a :: (\neg post \vee Q) \wedge Ac) \\
+ \equiv & <\text{distrib. } \wedge \text{ sobre } \vee> \\
+ & (\exists a :: (\neg post \wedge Ac) \vee (Q \wedge Ac)) \\
+ \equiv & <\text{sep. term.}> \\
+ & (\exists a :: \neg post \wedge Ac) \vee (\exists a :: Q \wedge Ac) \\
+ \equiv & <\text{de Morgan, defn. } rep.Q> \\
+ & (\exists a :: \neg (post \vee \neg Ac)) \vee rep.Q \\
+ \equiv & <\text{de Morgan, defn. } \Rightarrow> \\
+ & \neg (\forall a :: Ac \Rightarrow post) \vee rep.Q \\
+ \equiv & <\text{defn. } \Rightarrow> \\
+ & (\forall a :: Ac \Rightarrow post) \Rightarrow rep.Q \\
+ \equiv & <\text{defn. } wp.[pre,post] \text{, } true \text{ neutro de } \wedge> \\
+ & wp.[true,(\forall a :: Ac \Rightarrow post)].(rep.Q) \\
+ \equiv & <\text{defn. } [post]> \\
+ & wp.[(\forall a :: Ac \Rightarrow post)].(rep.Q) \\
+ \therefore & \\
+ & [post] \preccurlyeq [(\forall a :: Ac \Rightarrow post)]
+\end{align*}
+
 \end{document}
