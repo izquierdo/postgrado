@@ -327,4 +327,29 @@ Tenemos
  & (\Diamond i :: A_i) \preccurlyeq (\Diamond i :: B_i) \\
 \end{align*}
 
+% Pregunta 5
+\section{}
+
+\begin{align*}
+ & rep.(wp.\{pre\}.Q) \\
+ \equiv & <\text{defn. } \{pre\}> \\
+ & rep.(wp.[pre,true].Q) \\
+ \equiv & <\text{defn. } wp.[pre,post] \text{, } true \Rightarrow p \equiv p> \\
+ & rep.(pre \wedge Q) \\
+ \equiv & <\text{defn. rep}> \\
+ & (\exists a :: pre \wedge Q \wedge Ac) \\
+ \equiv & <\text{idempotencia } \wedge> \\
+ & (\exists a :: pre \wedge Q \wedge Ac \wedge Ac) \\
+ \Rightarrow & <\text{ley A.71 del libro de Morgan}> \\
+ & (\exists a :: pre \wedge Ac) \wedge (\exists a :: Q \wedge Ac) \\
+ \equiv & <\text{defn. rep}> \\
+ & (\exists a :: pre \wedge Ac) \wedge rep.Q \\
+ \equiv & <\text{defn. } wp.[pre,post] \text{, } true \Rightarrow p \equiv p> \\
+ & wp.[(\exists a :: pre \wedge Ac),true].(rep.Q) \\
+ \equiv & <\text{defn. } \{pre\}> \\
+ & wp.\{(\exists a :: pre \wedge Ac)\}.(rep.Q) \\
+ \therefore & \\
+ & \{pre\} \preccurlyeq \{(\exists a :: Ac \wedge pre)\}
+\end{align*}
+
 \end{document}
