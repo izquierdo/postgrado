@@ -125,7 +125,7 @@ cumple la tercera y la cuarta ``condición de salubridad'',
 sean
 
 \begin{align*}
-IF & = & if B_1 \rightarrow S_1 | \ldots | B_n \rightarrow S_n fi  \\
+IF & = & \text{{\bf if }} B_1 \rightarrow S_1 | \ldots | B_n \rightarrow S_n \text{ {\bf fi}}  \\
 R & \equiv & 1 \leq i \leq n \\
 BB & \equiv & (\exists i : R : B_i) \\
 \end{align*}
@@ -180,6 +180,31 @@ una variable que no ocurre en $Q$.
  & (\exists k :: H_k(Q)) \\
  \equiv & <\text{precondición más débil de la iteración}> \\
  & wp.(do B \rightarrow I od).Q \\
+\end{align*}
+
+% Pregunta 2
+\section{}
+
+\begin{align*}
+ & wp.(\text{{\bf if }} (| i \cdot G_i \rightarrow w : [G_i \wedge pre, post]) \text{ {\bf fi}}).Q \\
+ \equiv & <\text{definiciones de } wp.(\text{{\bf if }} (| i \cdot G_i \rightarrow w : [G_i \wedge pre, post]) \text{ {\bf fi}}) \text{ y } GG> \\
+ & (\exists i :: G_i) \wedge (\forall i :: G_i \Rightarrow wp.(w : [G_i \wedge pre, post]).Q \\
+ \equiv & <\text{definición de } wp.[pre,post]> \\
+ & (\exists i :: G_i) \wedge (\forall i :: G_i \Rightarrow (G_i \wedge pre \wedge (\forall w :: post \Rightarrow Q))) \\
+ \equiv & <p \Rightarrow p \wedge q \equiv p \Rightarrow q> \\
+ & (\exists i :: G_i) \wedge (\forall i :: G_i \Rightarrow (pre \wedge (\forall w :: post \Rightarrow Q))) \\
+ \equiv & <\text{dist. } \wedge \text{/ } \exists \text{, renombramiento } i := j \text{, rango no vacío}> \\
+ & (\exists i :: G_i \wedge (\forall j :: G_j \Rightarrow pre \wedge (\forall w :: post \Rightarrow Q))) \\
+ \equiv & <\text{dist. } \wedge \text{/ } \forall \text{, rango no vacío}> \\
+ & (\exists i :: (\forall j :: G_i \wedge (G_j \Rightarrow pre \wedge (\forall w :: post \Rightarrow Q)))) \\
+ \Rightarrow & <\text{instanciación } \forall \text{, } j := i> \\
+ & (\exists i :: G_i \wedge (G_i \Rightarrow pre \wedge (\forall w :: post \Rightarrow Q))) \\
+ \Rightarrow & <\text{Modus Ponens}> \\
+ & (\exists i :: pre \wedge (\forall w :: post \Rightarrow Q)) \\
+ \equiv & <i \text{ no ocurre libre en } pre \wedge (\forall w :: post \Rightarrow Q) \text{, rango } true> \\
+ & pre \wedge (\forall w :: post \Rightarrow Q) \\
+ \equiv & <\text{definición de } wp.[pre,post]> \\
+ & wp.(w : [pre,post]).Q
 \end{align*}
 
 \end{document}
