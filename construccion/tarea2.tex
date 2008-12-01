@@ -290,4 +290,41 @@ wp.CON.(a > 0) \wedge wp.CON.(a \leq 0) \equiv wp.CON.(a > 0 \wedge a \leq 0)
 
 Entonces el $prog$ dado es un contraejemplo.
 
+% Pregunta 4
+\section{}
+
+Supongamos $(\forall i :: A_i \preccurlyeq B_i)$. Debo demostrar
+
+$$
+(\Diamond i :: A_i) \preccurlyeq (\Diamond i :: B_i)
+$$
+
+siendo
+
+$$
+rep.P \equiv (\exists a :: P \wedge Ac)
+$$
+
+Tenemos
+
+\begin{align*}
+ & rep.(wp.(\Diamond i :: A_i).Q) \\
+ \equiv & <\text{defn. rep}> \\
+ & (\exists a :: wp.(\Diamond i :: A_i).Q \wedge Ac) \\
+ \equiv & <\text{defn. } wp.\Diamond> \\
+ & (\exists a :: (\exists i :: wp.A_i.Q) \wedge Ac) \\
+ \equiv & <\text{distrib. } \wedge \text{ sobre } \exists> \\
+ & (\exists a :: (\exists i :: wp.A_i.Q \wedge Ac)) \\
+ \equiv & <\text{interc. cuantificadores}> \\
+ & (\exists i :: (\exists a :: wp.A_i.Q \wedge Ac)) \\
+ \equiv & <\text{defn. rep, } Q := wp.A_i.Q> \\
+ & (\exists i :: rep.(wp.A_i.Q)) \\
+ \Rightarrow & <\text{hipótesis } A_i \preccurlyeq B_i> \\
+ & (\exists i :: wp.B_i.(rep.Q)) \\
+ \equiv & <\text{defn. } wp.\Diamond> \\
+ & wp.(\Diamond i :: B_i).(rep.Q) \\
+ \therefore & \\
+ & (\Diamond i :: A_i) \preccurlyeq (\Diamond i :: B_i) \\
+\end{align*}
+
 \end{document}
