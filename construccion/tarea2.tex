@@ -189,7 +189,7 @@ una variable que no ocurre en $Q$.
  & wp.(\text{{\bf if }} (| i \cdot G_i \rightarrow w : [G_i \wedge pre, post]) \text{ {\bf fi}}).Q \\
  \equiv & <\text{definiciones de } wp.(\text{{\bf if }} (| i \cdot G_i \rightarrow w : [G_i \wedge pre, post]) \text{ {\bf fi}}) \text{ y } GG> \\
  & (\exists i :: G_i) \wedge (\forall i :: G_i \Rightarrow wp.(w : [G_i \wedge pre, post]).Q \\
- \equiv & <\text{definición de } wp.[pre,post]> \\
+ \equiv & <\text{definición de } wp.(w : [pre,post])> \\
  & (\exists i :: G_i) \wedge (\forall i :: G_i \Rightarrow (G_i \wedge pre \wedge (\forall w :: post \Rightarrow Q))) \\
  \equiv & <p \Rightarrow p \wedge q \equiv p \Rightarrow q> \\
  & (\exists i :: G_i) \wedge (\forall i :: G_i \Rightarrow (pre \wedge (\forall w :: post \Rightarrow Q))) \\
@@ -206,5 +206,88 @@ una variable que no ocurre en $Q$.
  \equiv & <\text{definición de } wp.[pre,post]> \\
  & wp.(w : [pre,post]).Q
 \end{align*}
+
+% Pregunta 3
+\section{}
+
+Para demostrar que la tercera condición de salubridad no se cumple usaré un
+contraejemplo. Sea
+
+$$
+ prog = \left\{ \begin{array}{ll}
+ b : [true, b=X] ; & I_0 \\
+ a := b & I_1
+ \end{array} \right.
+$$
+
+Suponiendo que $b$ no ocurre libre en $Q$, tenemos
+
+\begin{align*}
+ & wp.prog.Q \\
+ \equiv & <\text{definición de } wp.(S_0 ; S_1)> \\
+ & wp.I_0.(wp.I_1.Q) \\
+ \equiv & <\text{definición de } wp.(x := E)> \\
+ & wp.I_0.(Q(a := b)) \\
+ \equiv & <\text{definición de } wp.(w : [pre, post])> \\
+ & true \wedge (\forall b :: b = X \Rightarrow Q(a := b)) \\
+ \equiv & <\text{neutro de } \wedge> \\
+ & (\forall b :: b = X \Rightarrow Q(a := b)) \\
+ \equiv & <\text{trading}> \\
+ & (\forall b : b = X : Q(a := b)) \\
+ \equiv & <\text{regla de un punto y sustitución, suposición de no ocurrencia de } b \text{ en } Q> \\
+ & Q(a := X) \\
+\end{align*}
+
+Entonces, si
+
+$$
+CON = |[ \text{{\bf con} } X ; prog ]|
+$$
+
+tenemos,
+
+\begin{align*}
+ & wp.CON.(a > 0) \\
+ \equiv & <\text{definición de } wp.CON> \\
+ & (\exists X :: wp.prog.(a > 0)) \\
+ \equiv & <\text{demostración previa, sustitución}> \\
+ & (\exists X :: X > 0) \\
+ \Leftarrow & <\text{introducción de } \exists> \\
+ & 1 > 0 \\
+ \equiv & <\text{aritmética}> \\
+ & true \\
+\end{align*}
+
+\begin{align*}
+ & wp.CON.(a \leq 0) \\
+ \equiv & <\text{definición de } wp.CON> \\
+ & (\exists X :: wp.prog.(a \leq 0)) \\
+ \equiv & <\text{demostración previa, sustitución}> \\
+ & (\exists X :: X \leq 0) \\
+ \Leftarrow & <\text{introducción de } \exists> \\
+ & 0 \leq 0 \\
+ \equiv & <\text{aritmética}> \\
+ & true \\
+\end{align*}
+
+\begin{align*}
+ & wp.CON.(a > 0 \wedge a \leq 0) \\
+ \equiv & <\text{definición de } wp.CON> \\
+ & (\exists X :: wp.prog.(a > 0 \wedge a \leq 0)) \\
+ \equiv & <\text{demostración previa, sustitución}> \\
+ & (\exists X :: X > 0 \wedge X \leq 0) \\
+ \equiv & <X > 0 \neq X \leq 0 \text{, contradicción}> \\
+ & (\exists X :: false) \\
+ \equiv & <\exists \text{ de } false> \\
+ & false
+\end{align*}
+
+Por esto es falso decir
+
+\begin{align*}
+wp.CON.(a > 0) \wedge wp.CON.(a \leq 0) \equiv wp.CON.(a > 0 \wedge a \leq 0)
+\end{align*}
+
+Entonces el $prog$ dado es un contraejemplo.
 
 \end{document}
