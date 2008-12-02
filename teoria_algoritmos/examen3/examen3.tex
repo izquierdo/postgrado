@@ -54,7 +54,11 @@
 Los vértices del grafo son subconjuntos de $A$, representados por una fila
 de unos y ceros. El vértice objetivo es $A$. La búsqueda comienza a partir del vértice
 que representa el conjunto vacío. Los sucesores de un vértice que representa el conjunto
-$V$ son todos los $V \bigcup U$ tales que $U \neq \emptyset \wedge U \in F \wedge V \bigcap U = \emptyset$.
+$V$ son todos los $V \bigcup U$ tales que
+
+$$
+U \neq \emptyset \wedge U \in F \wedge V \bigcap U = \emptyset \text{ }(*)
+$$
 
 Este grafo no tiene ciclos. La explicación informal del por qué es que un nodo sólo tiene
 como sucesores conjuntos con cardinalidad estrictamente mayor a la suya.
@@ -68,16 +72,30 @@ los nodos como visitados (puede haber hasta $2^n$ nodos distintos para un $A$ de
 
  \item
 
-\begin{tabular}{cc}
- Comienzo (0): & \{\} \\
- Sucesor (1):  & \{c,e,f\} \\
- Sucesor (2): & \{a,d,g,c,e,f\} \\
- Backtracking (1): & \{c,e,f\} \\
- Sucesor (2): & \{a,d,c,e,f\} \\
- Sucesor (3): & \{a,d,c,e,f,b,g\} \\
- Objetivo (3)
-\end{tabular}
+\renewcommand{\labelenumii}{\arabic{enumii}.}
 
+% F={{c,e,f}, {a,d,g}, {b,c,f}, {a,d}, {b,a,g}, {b,g}}
+\begin{enumerate}
+\item Comienzo la búsqueda en el conjunto vacío $\emptyset$. \\
+      Nodo actual: $\emptyset$
+
+\item Elijo para añadir el primer elemento de $F$ elegible según $(*)$: \{c,e,f\}
+      Nodo actual: $\{c, e, f\}$
+
+\item Elijo para añadir el primer elemento de $F$ elegible según $(*)$: \{a,d,g\}
+      Nodo actual: $\{c,e,f,a,d,g\}$
+
+\item No quedan sucesores del nodo actual; me retracto de mi última decisión.
+      Nodo actual: $\{c, e, f\}$
+
+\item Elijo para añadir el segundo elemento de $F$ elegible según $(*)$: \{a,d\}
+      Nodo actual: $\{c, e, f, a, d\}$
+
+\item Elijo para añadir el primer elemento de $F$ elegible según $(*)$: \{b,g\}
+      Nodo actual: $\{c, e, f, a, d, b, g\}$
+
+\item Llegué al objetivo. Fin. El algoritmo responde ``sí''.
+\end{enumerate}
 
 \end{enumerate}
 
