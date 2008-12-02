@@ -124,13 +124,22 @@ Por lo tanto, el multiconjunto en el cual se incluye el primer elemento del arre
 Entonces se puede elegir como nodo inicial del grafo $(A_1 = \{A[0]\}, A_2 = \emptyset)$ y no explorar
 la asignación de $A[0]$ a $A_2$.
 
-Para decidir cuál es el siguiente nodo a expandir en un momento dado se toman todos los
-sucesores no visitados del nodo actual y se elige alguno que tenga la mínima cota
-inferior según la función de acotamiento. En caso de no existir ninguno, se hace backtracking.
+Para decidir cuál es el siguiente nodo a expandir en un momento dado tomaré todos los
+sucesores no visitados del nodo actual y elegiré alguno que tenga la mínima cota
+superior según la función de acotamiento. En caso de no existir ninguno, haré backtracking.
+La función de acotamiento es descrita en la siguiente sección.
 
  \item
 
+La función de acotamiento $h$ aplicada a un nodo $x = (A_1, A_2)$ en que están asignados los $k$
+primeros elementos de $A$ cumple 
 
+$$
+h(x) = \left| \left(\left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|\right) - \sum_{i=k}^n A[i] \right|
+$$
+
+Es fácil ver que eso es una cota superior para cualquier asignación alcanzable desde $x$, ya que es el resultado
+de asignar todos los elementos que quedan por decidir al 
 
  \item
 
@@ -139,5 +148,27 @@ inferior según la función de acotamiento. En caso de no existir ninguno, se ha
 
 % Pregunta 3
 \section{}
+
+Supongo que ordenamos los tipos de objeto de la manera sugerida en la sección 9.7.2 del libro.
+El grafo implícito sobre el cual se ramifica tiene como nodos asignaciones parciales de cantidades
+de objetos de cada tipo, de la forma $x_1 \ldots x_k, 0 \leq k \leq n$ como se describe en el libro. Los sucesores
+de un nodo son aquellos que resultan de extender su asignación parcial ya sea incrementando $x_k$ en uno o
+eligiendo si se puede $x_{k+1} = 1$, siempre y cuando se satisfaga la restricción de peso de la mochila.
+Usando el mismo argumento de la sección 9.6.1 del libro, no hay pérdida de generalidad
+si no consideramos incrementar los $x_j$ con $j < k$. Un nodo final es aquel que no tiene sucesores.
+
+La función de acotamiento es
+
+Criterio de escogencia
+
+A continuación el algoritmo aplicado paso a paso:
+
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+
+\begin{enumerate}
+
+\item Comienzo la búsqueda sin 
+
+\end{enumerate}
 
 \end{document}
