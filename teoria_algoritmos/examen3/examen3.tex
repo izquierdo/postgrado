@@ -125,7 +125,7 @@ Entonces se puede elegir como nodo inicial del grafo $(A_1 = \{A[0]\}, A_2 = \em
 la asignación de $A[0]$ a $A_2$.
 
 Al expandir un nodo, agrego todos sus sucesores a una cola de prioridad donde tiene mayor prioridad un nodo
-con menor cota superior según la función de acotamiento.
+con menor cota según la función de acotamiento.
 Para decidir cuál es el siguiente nodo a expandir en un momento dado tomaré el nodo de mayor prioridad
 en la cola. La función de acotamiento es descrita en la siguiente sección.
 
@@ -138,11 +138,53 @@ $$
 h(x) = \left| \left(\left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|\right) - \sum_{i=k}^n A[i] \right|
 $$
 
-Es fácil ver que eso es una cota superior para cualquier asignación alcanzable desde $x$, ya que es el resultado
-de asignar todos los elementos que quedan por decidir al 
-
  \item
 
+Denotaré una nodo como $(A_0,A_1) (H)$ donde los $A_i$ son los multiconjuntos parciales que particionan a
+$A$ y $H$ es  el valor de la función de acotamiento para ese nodo.
+
+\renewcommand{\labelenumii}{\arabic{enumii}.}
+
+\begin{enumerate}
+\item Ordeno $A$ de manera no creciente.
+
+\item Comienzo la búsqueda con la solución inicial $(\{A_0\},\emptyset) ()$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1]\},\emptyset) ()$,\\
+$(\{A[0]\},\{A[1]\}) ()$.
+
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\emptyset) ()$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1],A[2]\},\emptyset) ()$,\\
+$(\{A[0],A[1]\},\{A[2]\}) ()$.
+
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2]\}) ()$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1],A[3]\},\{A[2]\}) ()$,\\
+$(\{A[0],A[1]\},\{A[2],A[3]\}) ()$.
+
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2],A[3]\}) ()$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1],A[3],A[4]\},\{A[2]\}) ()$,\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) ()$.
+
+\item Escojo como próxima solución actual a\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) ()$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1],A[3],A[4],A[5]\},\{A[2]\}) ()$,\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) ()$.
+
+\item Escojo como próxima solución actual a \\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) ()$.
+
+\end{enumerate}
+
+Entonces la mejor solución tiene diferencia $1$.
 
 \end{enumerate}
 
@@ -201,7 +243,7 @@ $[x_3=1] (3)(3+6*(3/2))$,\\
 $[x_4=1] (6)(6+4*(6/4))$,\\
 $[x_1=1,x_3=1] (13+0)$.
 
-\item No quedan nodos por expandir. Una solución óptima es la mejor solución global encontrada: $[x_1=1,x_2=1] (15)(15+0)$. Fin.
+\item No quedan nodos por expandir. La solución óptima es la mejor solución global encontrada: $[x_1=1,x_2=1] (15)(15+0)$. Fin.
 
 \end{enumerate}
 
