@@ -138,6 +138,10 @@ $$
 h(x) = \left| \left(\left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|\right) - \sum_{i=k}^n A[i] \right|
 $$
 
+%$$
+%h(x) = \left(\left| \left(\left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|\right) - \sum_{i=k}^n A[i] \right|\right)/2
+%$$
+
  \item
 
 Denotaré una nodo como $(A_0,A_1) (H)$ donde los $A_i$ son los multiconjuntos parciales que particionan a
@@ -146,41 +150,42 @@ $A$ y $H$ es  el valor de la función de acotamiento para ese nodo.
 \renewcommand{\labelenumii}{\arabic{enumii}.}
 
 \begin{enumerate}
+
 \item Ordeno $A$ de manera no creciente.
 
 \item Comienzo la búsqueda con la solución inicial $(\{A_0\},\emptyset) ()$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1]\},\emptyset) ()$,\\
-$(\{A[0]\},\{A[1]\}) ()$.
+$(\{A[0],A[1]\},\emptyset) (1)$,\\
+$(\{A[0]\},\{A[1]\}) (23)$.
 
-\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\emptyset) ()$.
-
-\item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[2]\},\emptyset) ()$,\\
-$(\{A[0],A[1]\},\{A[2]\}) ()$.
-
-\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2]\}) ()$.
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\emptyset) (1)$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[3]\},\{A[2]\}) ()$,\\
-$(\{A[0],A[1]\},\{A[2],A[3]\}) ()$.
+$(\{A[0],A[1],A[2]\},\emptyset) (19)$,\\
+$(\{A[0],A[1]\},\{A[2]\}) (1)$.
 
-\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2],A[3]\}) ()$.
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2]\}) (1)$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[3],A[4]\},\{A[2]\}) ()$,\\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) ()$.
+$(\{A[0],A[1],A[3]\},\{A[2]\}) (17)$,\\
+$(\{A[0],A[1]\},\{A[2],A[3]\}) (1)$.
+
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2],A[3]\}) (1)$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1],A[3],A[4]\},\{A[2]\}) (11)$,\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) (1)$.
 
 \item Escojo como próxima solución actual a\\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) ()$.
+$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) (1)$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[3],A[4],A[5]\},\{A[2]\}) ()$,\\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) ()$.
+$(\{A[0],A[1],A[3],A[4],A[5]\},\{A[2]\}) (3)$,\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) (1)$.
 
 \item Escojo como próxima solución actual a \\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) ()$.
+$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) (1)$.
 
 \end{enumerate}
 
