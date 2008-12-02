@@ -103,9 +103,32 @@ los nodos como visitados (puede haber hasta $2^n$ nodos distintos para un $A$ de
 \section{}
 
 \begin{enumerate}
- \item 
+
  \item
+
+Tomemos $A$ como un arreglo (sin pérdida de generalidad). En el grafo implícito, un vértice es
+una asignación parcial $(A_1, A_2)$: cada elemento en $A[0 \ldots k)$ para algún $k \geq 0$ a uno de los dos multiconjuntos.
+Se tiene una asignación válida (aunque no necesariamente óptima) cuando se llega a un nodo en que $k = n$.
+Los sucesores de un vértice no final con $k$ variables asignadas
+son los resultantes de incluir $A[k]$ en $A_1$ o en $A_2$.
+
+Supongamos que, para una instancia del problema, $(S, T)$ es una solución óptima
+y $A[0] \in S$. Entonces $(T, S)$ también es una solución óptima, ya que
+
+$$
+\left|\sum_{e \in S} e - \sum_{e \in T} e\right| = \left|\sum_{e \in T} e - \sum_{e \in S} e\right|
+$$
+
+Por lo tanto, el multiconjunto en el cual se incluye el primer elemento del arreglo no cambia la solución.
+Entonces se puede elegir como nodo inicial del grafo $(A_1 = \{A[0]\}, A_2 = \emptyset)$ y no explorar
+la asignación de $A[0]$ a $A_2$.
+
  \item
+
+
+ \item
+
+
 \end{enumerate}
 
 % Pregunta 3
