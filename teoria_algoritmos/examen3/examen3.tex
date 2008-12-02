@@ -107,8 +107,9 @@ los nodos como visitados (puede haber hasta $2^n$ nodos distintos para un $A$ de
  \item
 
 Tomemos $A$ como un arreglo (sin pérdida de generalidad). En el grafo implícito, un vértice es
-una asignación parcial $(A_1, A_2)$: cada elemento en $A[0 \ldots k)$ para algún $k \geq 0$ a uno de los dos multiconjuntos.
-Se tiene una asignación válida (aunque no necesariamente óptima) cuando se llega a un nodo en que $k = n$.
+una asignación parcial $(A_1, A_2)$: cada elemento en $A[0 \ldots k)$ para algún $k \geq 0$ a uno de los dos multiconjuntos
+$A_1$ o $A_2$.
+Se tiene una asignación válida (aunque no necesariamente óptima) cuando se llega a un nodo final (lo que significa que $k = n$).
 Los sucesores de un vértice no final con $k$ variables asignadas
 son los resultantes de incluir $A[k]$ en $A_1$ o en $A_2$.
 
@@ -123,7 +124,12 @@ Por lo tanto, el multiconjunto en el cual se incluye el primer elemento del arre
 Entonces se puede elegir como nodo inicial del grafo $(A_1 = \{A[0]\}, A_2 = \emptyset)$ y no explorar
 la asignación de $A[0]$ a $A_2$.
 
+Para decidir cuál es el siguiente nodo a expandir en un momento dado se toman todos los
+sucesores no visitados del nodo actual y se elige alguno que tenga la mínima cota
+inferior según la función de acotamiento. En caso de no existir ninguno, se hace backtracking.
+
  \item
+
 
 
  \item
