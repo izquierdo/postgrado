@@ -42,8 +42,55 @@
 
 \maketitle
 
+\renewcommand{\labelenumi}{\alph{enumi})}
+
 % Pregunta 1
 \section{}
 
+\begin{enumerate}
+
+ \item
+
+Los vértices del grafo son subconjuntos de $A$, representados por una fila
+de unos y ceros. El vértice objetivo es $A$. La búsqueda comienza a partir del vértice
+que representa el conjunto vacío. Los sucesores de un vértice que representa el conjunto
+$V$ son todos los $V \bigcup U$ tales que $U \neq \emptyset \wedge U \in F \wedge V \bigcap U = \emptyset$.
+
+Este grafo no tiene ciclos. La explicación informal del por qué es que un nodo sólo tiene
+como sucesores conjuntos con cardinalidad estrictamente mayor a la suya.
+
+Si en un momento del backtracking consigo un nodo que ya visité anteriormente, entonces no hay solución
+por ese camino. Esto se debe al hecho de que seguí buscando luego de visitarlo, lo que implica que ni él ni
+ninguno de sus sucesores es el nodo final. Por lo tanto, al llegar a un nodo visitado previamente podemos
+ignorar su rama del árbol. Un criterio de poda puede ser, entonces, eliminar ramas previamente visitadas.
+Este criterio sólo es razonable para instancias pequeñas, ya que necesitamos espacio exponencial para marcar
+los nodos como visitados (puede haber hasta $2^n$ nodos distintos para un $A$ de cardinalidad $n$).
+
+ \item
+
+\begin{tabular}{cc}
+ Comienzo (0): & \{\} \\
+ Sucesor (1):  & \{c,e,f\} \\
+ Sucesor (2): & \{a,d,g,c,e,f\} \\
+ Backtracking (1): & \{c,e,f\} \\
+ Sucesor (2): & \{a,d,c,e,f\} \\
+ Sucesor (3): & \{a,d,c,e,f,b,g\} \\
+ Objetivo (3)
+\end{tabular}
+
+
+\end{enumerate}
+
+% Pregunta 2
+\section{}
+
+\begin{enumerate}
+ \item 
+ \item
+ \item
+\end{enumerate}
+
+% Pregunta 3
+\section{}
 
 \end{document}
