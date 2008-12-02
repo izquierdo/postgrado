@@ -159,28 +159,49 @@ restricción de peso de la mochila.
 Usando el mismo argumento de la sección 9.6.1 del libro, no hay pérdida de generalidad
 si no consideramos incrementar los $x_j$ con $j < k$. Un nodo final es aquel que no tiene sucesores.
 
-La función de acotamiento inferior es
+Estoy maximizando; la función de acotamiento es
 
 $$
-\sum_{i=1}^k x_i v_i + \left( W - \sum_{i=1}^k x_i w_i \right) v_{k+1}/w_{k+1}
+\sum_{i=1}^k x_i v_i + \left( W - \sum_{i=1}^k x_i w_i \right) v_{j}/w_{j}
 $$
 
-Criterio de escogencia
+donde $j$ es el mínimo índice de un tipo de objeto igual o a la derecha de $k$ que todavía
+puede ser insertado en la mochila. Para escoger el próximo nodo a expandir en un momento dado, el criterio es
+preferir el nodo cuyo valor de función de acotamiento es mayor.
 
-A continuación el algoritmo aplicado paso a paso. Denotaré un nodo como $[x_1 = A_1, \ldots X_k = A_k] (V)(H)$ donde
-cada $x_i = A_i$ es la asignación de cantidades de objetos de cada tipo, $V$ es el valor obtenido y $H$ es el valor
-de la función de acotamiento inferior para ese nodo.
+A continuación el algoritmo aplicado paso a paso. Denotaré un nodo como $[x_1=A_1, \ldots X_k=A_k] (V)(H)$ donde
+cada $x_i = A_i$ es la asignación de cantidades de objetos de cada tipo, $V$ es el valor obtenido por esa asignación y $H$ es el valor
+de la función de acotamiento para ese nodo.
 
 \renewcommand{\labelenumi}{\arabic{enumi}.}
 
 \begin{enumerate}
 
 \item Comienzo la búsqueda con $0$ elementos de cada tipo.
-\item Expando mi solución actual. Las nuevas posibilidades son: $[x_1=1] (10)()$, $[x_2=1] (5)$, $[x_3=1] (3)$, $[x_4=1] (6)$.
-\item Escojo como próxima solución actual a $[x_1=1] (10)$.
-\item Expando mi solución actual. Las nuevas posibilidades son: $[x_1=1,x_2=1] (15)()$, $[x_1=1,x_3=1] (13)$.
-\item Escojo como próxima solución actual a $[x_1=1,x_2=1] (15)$.
-\item No hay más sucesores, marco $[x_1=1,x_2=1] (15)$ como mejor solución global encontrada.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$[x_1=1] (10)(10+3*(5/3))$,\\
+$[x_2=1] (5)(5+5*(5/3))$,\\
+$[x_3=1] (3)(3+6*(3/2))$,\\
+$[x_4=1] (6)(6+4*(6/4))$.
+
+\item Escojo como próxima solución actual a $[x_1=1] (10)(10+3*(5/3))$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son:\\
+$[x_1=1,x_2=1] (15)(15+0)$,\\
+$[x_1=1,x_3=1] (13+0)$.
+
+\item Escojo como próxima solución actual a $[x_1=1,x_2=1] (15)(15+0)$.
+
+\item No hay más sucesores, marco $[x_1=1,x_2=1] (15)(15+0)$ como mejor solución global encontrada.
+
+\item Por tener cotas superiores menores, elimino de la búsqueda los nodos:\\
+$[x_2=1] (5)(5+5*(5/3))$,\\
+$[x_3=1] (3)(3+6*(3/2))$,\\
+$[x_4=1] (6)(6+4*(6/4))$,\\
+$[x_1=1,x_3=1] (13+0)$.
+
+\item No quedan nodos por expandir. Una solución óptima es la mejor solución global encontrada: $[x_1=1,x_2=1] (15)(15+0)$. Fin.
 
 \end{enumerate}
 
