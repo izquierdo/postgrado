@@ -77,14 +77,32 @@
  T_2 & \asig & T_1 - \text{GUSTA}
 \end{eqnarray*}
 
+A partir de ahora supongo $\text{NO\_GUSTA} \asig T_2$.
+
 % Pregunta 5
- \item 
+ \item
+
+\begin{eqnarray*}
+ T_1 & \asig & \pi_{\text{CI,CodFS}}(\text{NO\_GUSTA} \text{ Join } \text{VENDE}) \\
+ T_2 & \asig & \pi_{\text{CI,CodFS}}(\text{BEBEDOR} \times \text{FUENTES\_SODA}) \\
+ T_3 & \asig & T_2 - T_1 \\
+\end{eqnarray*}
 
 % Pregunta 6
- \item 
+ \item
 
 % Pregunta 7
- \item 
+ \item
+
+\begin{eqnarray*}
+ T_1 & \asig & \sigma_{(\text{NombreBeb}=\text{``malta''})}(\text{BEBIDAS}) \\
+ T_2 & \asig & \sigma_{(\text{NombreBeb}=\text{``frescolita''})}(\text{BEBIDAS}) \\
+ T_3 & \asig & \sigma_{(\text{NombreBeb}=\text{``coca-cola''})}(\text{BEBIDAS}) \\
+ T_4 & \asig & \pi_{\text{CI}}(T_1 \text{ Join } \text{GUSTA}) \\
+ T_5 & \asig & \pi_{\text{CI}}(T_2 \text{ Join } \text{GUSTA}) \\
+ T_6 & \asig & \pi_{\text{CI}}(T_3 \text{ Join } \text{GUSTA}) \\
+ T_7 & \asig & (T_4 - T_5) - T_6 \\
+\end{eqnarray*}
 
 % Pregunta 8
  \item 
