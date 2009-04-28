@@ -1,0 +1,48 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+\usepackage{qtree}
+
+% Para codigo bonito
+\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+
+\newcommand{\algoritmo}[2]
+{
+{
+  \singlespace
+  \begin{algorithm}[h]
+    \caption{#1}
+    \begin{algorithmic}[1]
+      #2
+    \end{algorithmic}
+  \end{algorithm}
+}
+}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\lstset{mathescape=true,frame=single}
+
+\newcommand{\asig}{\ensuremath{\leftarrow}}
+\renewcommand{\lstlistingname}{Listado} %listings en español
+
+\begin{document}
+
+% Título
+
+\title{Tarea 1 de Bases de Datos Heterogéneas}
+\author{Daniel Izquierdo \\ \#08-86809}
+\date{30 de abril de 2009}
+
+\maketitle
+
+% Pregunta 1
+\section{}
+
+\end{document}
