@@ -1,36 +1,11 @@
 \documentclass[12pt]{article}
 
-\usepackage{algorithm}
-\usepackage{algorithmic}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[utf8]{inputenc}
-\usepackage{listings}
 \usepackage[spanish]{babel}
-\usepackage{qtree}
-
-% Para codigo bonito
-\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
-
-\newcommand{\algoritmo}[2]
-{
-{
-  \singlespace
-  \begin{algorithm}[h]
-    \caption{#1}
-    \begin{algorithmic}[1]
-      #2
-    \end{algorithmic}
-  \end{algorithm}
-}
-}
-
-\newcommand{\theHalgorithm}{\arabic{algorithm}}
-
-\lstset{mathescape=true,frame=single}
 
 \newcommand{\asig}{\ensuremath{\leftarrow}}
-\renewcommand{\lstlistingname}{Listado} %listings en español
 
 \begin{document}
 
@@ -74,10 +49,10 @@
 
 \begin{eqnarray*}
  T_1 & \asig & \pi_{\text{CI,CodBeb}}(\text{BEBEDOR} \times \text{BEBIDAS}) \\
- T_2 & \asig & T_1 - \text{GUSTA}
+ T_2 & \asig & T_1 - \text{GUSTA} \\
 \end{eqnarray*}
 
-A partir de ahora supongo $\text{NO\_GUSTA} \asig T_2$.
+A partir de ahora supongo $\text{NO\_GUSTA} = T_2$.
 
 % Pregunta 5
  \item
@@ -90,6 +65,16 @@ A partir de ahora supongo $\text{NO\_GUSTA} \asig T_2$.
 
 % Pregunta 6
  \item
+
+\begin{eqnarray*}
+ T_1 & \asig & \pi_{\text{CI,CodFS}}(\text{BEBEDOR} \times \text{FUENTES\_SODA}) \\
+ \text{NO\_FREC} & \asig & T_1 - \text{FRECUENTA} \\ % NO_FRECUENTA
+ T_2 & \asig & \pi_{\text{CodFS,CodBeb}}(\text{FUENTES\_SODA} \times \text{BEBIDAS}) \\
+ \text{NO\_VENDE} & \asig & T_2 - \text{VENDE} \\ % NO_VENDE
+ T_3 & \asig & \pi_{\text{CodFS,CI}}(\text{NO\_VENDE} \text{ Join } \text{GUSTA}) \\
+ T_4 & \asig & T_1 - T_3 \\
+ T_5 & \asig & \text{NO\_FREC} \text{ Join } T_4 \\
+\end{eqnarray*}
 
 % Pregunta 7
  \item
