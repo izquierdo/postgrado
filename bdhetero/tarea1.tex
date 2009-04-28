@@ -36,7 +36,7 @@
 
 % Título
 
-\title{Tarea 1 de Bases de Datos Heterogéneas}
+\title{Bases de Datos Heterogéneas \\ Tarea 1}
 \author{Daniel Izquierdo \\ \#08-86809}
 \date{30 de abril de 2009}
 
@@ -45,21 +45,78 @@
 \begin{enumerate}
 
 % Pregunta 1
- \item 
+ \item
 
 \begin{eqnarray*}
  T_1 & \asig & \sigma_{(\text{NombreBeb}=\text{``malta''})}(\text{BEBIDAS}) \\
  T_2 & \asig & \pi_{\text{CI}}(T_1 \text{ Join } \text{GUSTA}) \\
- T_3 & \asig & \pi_{\text{CI}}(\text{BEBEDOR}) - T_2
+ T_3 & \asig & \pi_{\text{CI}}(\text{BEBEDOR}) - T_2 \\
 \end{eqnarray*}
 
 % Pregunta 2
- \item 
+ \item
+
+\begin{eqnarray*}
+ T_1 & \asig & \sigma_{(\text{Nombre}=\text{``Luis Pérez''})}(\text{BEBEDOR}) \\
+ T_2 & \asig & \pi_{\text{CodFS}}(T_1 \text{ Join } \text{FRECUENTA}) \\
+ T_3 & \asig & \pi_{\text{CodFS}}(\text{FUENTES\_SODA}) - T_2 \\
+\end{eqnarray*}
 
 % Pregunta 3
+ \item
+
+\begin{eqnarray*}
+ T_1 & \asig & \pi_{\text{CI}}(\text{GUSTA} \text{ Join } \text{FRECUENTA}) \\
+\end{eqnarray*}
+
+% Pregunta 4
+ \item
+
+\begin{eqnarray*}
+ T_1 & \asig & \pi_{\text{CI,CodBeb}}(\text{BEBEDOR} \times \text{BEBIDAS}) \\
+ T_2 & \asig & T_1 - \text{GUSTA}
+\end{eqnarray*}
+
+% Pregunta 5
  \item 
 
-% Pregunta x
+% Pregunta 6
+ \item 
+
+% Pregunta 7
+ \item 
+
+% Pregunta 8
+ \item 
+
+% Pregunta 9
+ \item 
+
+% Pregunta 10
+ \item 
+
+% Pregunta 11
+ \item 
+
+% Pregunta 12
+ \item 
+
+% Pregunta 13
+ \item 
+
+% Pregunta 14
+ \item 
+
+% Pregunta 15
+ \item 
+
+% Pregunta 16
+ \item 
+
+% Pregunta 17
+ \item 
+
+% Pregunta 18
  \item 
 
 \end{enumerate}
