@@ -92,6 +92,13 @@ A partir de ahora supongo $\text{NO\_GUSTA} = T_2$.
 % Pregunta 8
  \item 
 
+\begin{eqnarray*}
+ T_1 & \asig & \sigma_{(\text{Nombre}=\text{``Luis Pérez''})}(\text{BEBEDOR}) \\
+ T_2 & \asig & \pi_{\text{CodBeb}}(T_1 \text{ Join } \text{GUSTA}) \\
+ T_3 & \asig & \pi_{\text{CI}}(T_2 \text{ Join } \text{GUSTA}) \\
+ T_4 & \asig & \pi_{\text{CI}}(BEBEDOR) - T_3
+\end{eqnarray*}
+
 % Pregunta 9
  \item 
 
