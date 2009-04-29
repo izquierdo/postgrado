@@ -136,6 +136,71 @@ $w$.
 % Pregunta 5
 \section{}
 
+Primero demostraré que $(\forall e \in E :: P_0(e))$ con
+$P_0(e) \equiv |e|_( = |e|_)$. Sea $e \in E$. El
+caso base es $e \in V$. Si es así, entonces $|e|_( = 0 = |e|_)$. Si no,
+supongamos que todas las expresiones de longitud menor que la de $e$ cumplen
+$P_0$. Hay dos posibilidades:
+
+\begin{itemize}
+\item Existe $d \in E$ tal que $e = d^*$. Supusimos que $|d|_( = |d|_)$.
+Entonces
+
+$$|e|_( = |d^*|_( = |d|_( = |d|_) = |d^*|_) = |e|_)$$
+
+\item Existen $f,g \in E$ tales que $e = (f+g)$. Supusimos que
+$|f|_( = |f|_)$ y $|g|_( = |g|_)$. Entonces
+
+$$
+|e|_( = |(f+g)|_( = 2 + |f|_( + |g|_( = 2 + |f|_) + |g|_) = |(f+g)|_) = |e|_)
+$$
+
+\end{itemize}
+
+Esto termina la primera parte de la demostración. Ahora falta ver que
+$(\forall e \in E :: P_1(e))$
+con
+$P_1(e) \equiv p \text{ es prefijo de } e \Rightarrow |p|_( \geq |p|_)$.
+Es claro que para prefijos vacíos se cumple $P_1$.
+El caso base es $e \in V$. Si es así, entonces el único posible prefijo $p$ de
+$e$ es $e$ y tenemos $|p|_( = |e|_( = 0 = |e|_) = |p|_)$. Para cualquier otro
+caso, supongamos que todas las expresiones de longitud menor que la de $e$
+cumplen $P_1$. Hay dos posibilidades:
+
+\begin{itemize}
+
+\item Existe $d \in E$ tal que $e = d^*$. Los únicos prefijos posibles de $e$
+son $d^*$ y $d$. Tenemos
+
+$$|d^*|_( = |d|_( = |d|_) = |d^*|_)$$
+
+y
+
+$$|d|_( = |d|_)$$
+
+\item Existen $f,g \in E$ tales que $e = (f+g)$. Hay dos posibilidades para un
+prefijo de $e$: incluye el último paréntesis, o no. En el primer caso tenemos
+
+$$
+|(f+g)|_( = |(f+g)|_)
+$$
+
+por $(f+g) \in E$ junto con la demostración anterior. En el segundo caso podemos
+tener
+
+\begin{eqnarray*}
+& & |(f+g|_( = 1 + |f|_( + |g|_( = 1 + |f|_) + |g|_) > |f|_) + |g|_) = |(f+g|_) \\
+& & |(f+|_( = 1 + |f|_( = 1 + |f|_) > |f|_) = |(f+|_) \\
+& & |(f|_( = 1 + |f|_( = 1 + |f|_) > |f|_) = |(f|_) \\
+& & |(|_( = 1 > 0 = |(f|_) \\
+\end{eqnarray*}
+
+Con esto queda completa la demostración. Resulta
+
+$$(\forall e \in E :: P_0(e) \wedge P_1(e))$$
+
+\end{itemize}
+
 % Pregunta 6
 \section{}
 
