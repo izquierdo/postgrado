@@ -204,4 +204,22 @@ $$(\forall e \in E :: P_0(e) \wedge P_1(e))$$
 % Pregunta 6
 \section{}
 
+Primero observemos que el número de hojas de un árbol binario donde cada nodo
+interno tiene exactamente dos hijos debe tener $2^p$ hojas con $p \geq 0$.
+Entonces hacemos inducción sobre los $n$ potencia de dos. El caso base es un
+árbol con 1 hoja. Aquí tenemos $0 = 1 - 1$ nodos internos y se cumple la
+propiedad a demostrar.
+
+Ahora supongamos que la propiedad se cumple para los
+árboles estudiados con $n$ hojas. Un árbol con $2n$ hojas tiene un nodo raíz
+con dos hijos y cada hijo tiene $n$ hojas. Sabemos que el número de nodos de los
+hijos es $n-1$ por hipótesis inductiva. Por lo tanto, el número de
+nodos internos del árbol es $1$ por la raíz más dos veces $n-1$, es decir,
+
+$$
+1+2(n-1) = 1 + 2n - 2 = 2n - 1
+$$
+
+Con esto queda demostrada la proposición.
+
 \end{document}
