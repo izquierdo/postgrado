@@ -58,11 +58,61 @@ $s \leq x$. Entonces $s$ es el menor elemento del CPO.
 % Pregunta 2
 \section{}
 
+Sean $a, b$ dos letras distintas de $V$ tales que $a < b$. Existe al menos la
+cadena infinitamente decreciente
+
+$$
+ab > aab > aaab > aaaab > \ldots
+$$
+
+Por lo tanto, $(V^*,\preceq)$ no es Noetheriano.
+
 % Pregunta 3
 \section{}
 
 % Pregunta 4
 \section{}
+
+% 4.1
+\subsection{}
+
+Llamaré $P$ al conjunto deseado. Supongo que $0$ es par.
+
+\begin{itemize}
+\item Base: $0 \in P$.
+
+\item Si $x,y$ son palabras tales que
+$xy \in P \wedge x \neq \epsilon$, entonces $x0y \in P$.
+
+\item Si $x,y$ son palabras tales que
+$xy \in P \wedge y \neq \epsilon$, entonces $x1y \in P$.
+\end{itemize}
+
+Un número es par si y sólo si su representación binaria termina en cero.
+Tenemos como caso base que $0$ representa un número par sin ceros inútiles.
+Supongamos que $x,y$ son palabras tales que $xy \in P \wedge x \neq \epsilon$.
+Entonces $x0y$ es par porque si $y = \epsilon$ entonces $x0y = x0$ y, si no,
+$y$ obligatoriamente termina en cero. $x0y$ no tiene ceros inútiles porque $x$
+no puede tenerlos. Por otra parte, si $x, y$ son palabras tales que
+$xy \in P \wedge y \neq \epsilon$, entonces $x1y$ es par porque $y$
+obligatoriamente lo es. Además, si $x = \epsilon$ entonces $x1y$ = $1y$ y
+entonces no tiene ceros inútiles. En caso de que $x \neq \epsilon$, $x$ no puede
+tener ceros inútiles y por lo tanto $x1y$ tampoco los tiene. Por todo esto, el
+esquema sólo construye representaciones de números pares sin ceros inútiles.
+
+El número más pequeño que estamos considerando es $0$, representado por el
+caso base. Sea $w$ la representación de un número par sin ceros inútiles de
+longitud $n > 1$ y supongamos que el esquema puede generar todas las
+representaciones con esa propiedad de longitud $m < n$. Entonces el esquema
+también puede generar $w$: si $w = x1y$ para algún $x, y$, $y$ no puede ser
+vacío y $xy$ también es par sin ceros inútiles, de menor longitud que $w$. Si
+$w = x0y$, $x$ no puede ser vacío y $xy$ también es par sin ceros inútiles, de
+menor longitud que $w$.
+Por todo esto, el esquema puede construir todas las representaciones de números
+pares sin ceros inútiles.
+
+% 4.2
+\subsection{}
 
 % Pregunta 5
 \section{}
