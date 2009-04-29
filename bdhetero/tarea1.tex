@@ -102,6 +102,15 @@ A partir de ahora supongo $\text{NO\_GUSTA} = T_2$.
 % Pregunta 9
  \item 
 
+\begin{eqnarray*}
+ T_1 & \asig & \sigma_{(\text{Nombre}=\text{``Luis Pérez''})}(\text{BEBEDOR}) \\
+ T_2 & \asig & \pi_{\text{CodFS}}(T_1 \text{ Join } \text{FRECUENTA}) \\ % FS frecuentadas por luis
+ T_3 & \asig & \pi_{\text{CI,CodFS}}(\text{BEBEDOR} \times \text{FUENTES\_SODA}) \\
+ \text{NO\_FREC} & \asig & T_3 - \text{FRECUENTA} \\ % NO_FRECUENTA
+ T_4 & \asig & \pi_{\text{CI}}(T_2 \text{ Join } \text{NO\_FREC}) \\ % CI de los que no frecuentan alguna FS frecuentada por luis
+ T_5 & \asig & \pi_{\text{CodFS}}(BEBEDOR) - T_4 \\
+\end{eqnarray*}
+
 % Pregunta 10
  \item 
 
