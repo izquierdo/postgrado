@@ -114,6 +114,25 @@ pares sin ceros inútiles.
 % 4.2
 \subsection{}
 
+Llamaré $P$ al conjunto deseado.
+
+\begin{itemize}
+\item Base: $\epsilon \in P$.
+\item Base: $0 \in P$.
+\item Base: $1 \in P$.
+\item Si $w \in P$, entonces $0w0 \in P$.
+\item Si $w \in P$, entonces $1w1 \in P$.
+\end{itemize}
+
+$\epsilon, 0, 1$ son palíndromes. Si $w$ es palíndrome, es claro que $0w0$ y
+$1w1$ también lo son. Entonces el esquema sólo genera palíndromes. Además, se ve
+que el esquema genera todos los palíndromes de longitud menor o igual a $1$.
+Supongamos que $w$ es palíndrome de longitud $n > 1$ y el esquema genera todas
+los palíndromes de longitud $m < n$. Tenemos $w = xpx$ donde $p$ es
+una palabra de longitud menor que $n$ y $x = 0 \vee x = 1$.
+Como el esquema puede generar $p$, es claro que el esquema también puede generar
+$w$.
+
 % Pregunta 5
 \section{}
 
