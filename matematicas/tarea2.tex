@@ -45,4 +45,53 @@
 % Pregunta 1
 \section{}
 
+Supongamos que $F$ no termina. Entonces existe una cadena
+infinita de llamadas
+
+$$
+P_0: F(x_0, y_0) \rightarrow F(x_1, y_1) \rightarrow F(x_2, y_2) \rightarrow \ldots
+$$
+
+donde defino $\rightarrow$ como ``llama a''.
+Aquí, no puede ser que haya $x_i$ tal que $x_i = 0$ o $y_i$ tal que $y_i = 0$
+porque
+en estos casos $F$ no hace llamadas recursivas.
+%Observemos que hay una
+%correspondencia uno a uno $c$ entre llamadas a $F$ y el producto cartesiano de
+%los naturales, de manera que $c(F(x,y)) = (x,y)$.
+Observemos que cuando
+$F(x,y) \rightarrow F(u,v)$, tenemos dos posibilidades:
+
+\begin{itemize}
+\item $(u,v) = (x-1,r)$ para algún $r$. Tenemos por definición del orden
+lexicográfico que $(x,y) \succeq (x-1,r)$ porque $x-1 < x$.
+\item $(u,v) = (x,y-1)$. Tenemos también por definición del orden lexicográfico
+que $(x,y) \succeq (x,y-1)$ porque $x = x \wedge y-1 < y$.
+\end{itemize}
+
+De esta manera, $F(x,y) \rightarrow F(u,v)$ implica que $(x,y) \succeq (u,v)$.
+Luego, la existencia de $P_0$ implica que existe una cadena infinita
+
+$$
+(x_0, y_0) \succeq (x_1, y_1) \succeq (x_2, y_2) \succeq \ldots
+$$
+
+lo cual es falso porque el orden es Noetheriano. Esta contradicción nos lleva a
+concluir que $F$ termina.
+
+% Pregunta 2
+\section{}
+
+% Pregunta 3
+\section{}
+
+% Pregunta 4
+\section{}
+
+% Pregunta 5
+\section{}
+
+% Pregunta 6
+\section{}
+
 \end{document}
