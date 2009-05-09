@@ -11,6 +11,7 @@
 
 % Para codigo bonito
 \newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+\newcommand{\piso}[1]{\lfloor #1 \rfloor}
 
 \newcommand{\algoritmo}[2]
 {
@@ -81,6 +82,43 @@ concluir que $F$ termina.
 
 % Pregunta 2
 \section{}
+
+Primero quiero ver qué debe cumplir $d$ para que $f(n) \leq dn$ siga de suponer
+que $n$ es suficientemente grande y $f(m) \leq dm$ para todo $m$ menor que $n$
+y también suficientemente grande. Si hacemos tal suposición y tenemos
+$\piso{pn}$ y $\piso{qn}$ suficientemente grandes, entonces necesitamos
+$f(n) \leq dn$ y tenemos
+
+\begin{align*}
+ & f(n) \\
+ = & \\
+ & f(\piso{pn}) + f(\piso{qn}) + bn \\
+ \leq & \\
+ & d\piso{pn} + d\piso{qn} + bn \\
+ \leq & \\
+ & dpn + dqn + bn \\
+ = & \\
+ & dn(p+q) + bn \\
+ = & \\
+ & n(d(p+q) + b) \\
+\end{align*}
+
+Para poder concluir que $f(n) \leq dn$ necesitamos que
+
+\begin{align*}
+ & n(d(p+q) + b) \leq dn \\
+ \equiv & \\
+ & d(p+q) + b \leq d \\
+ \equiv & \\
+ & b \leq d - d(p+q) \\
+ \equiv & \\
+ & b \leq d(1 - (p+q)) \\
+ \equiv & \\
+ & \frac{b}{1-(p+q)} \leq d \\
+\end{align*}
+
+El término de la izquierda en la última ecuación está definido y es positivo
+porque $p+q$ es positivo y menor que $1$ y $b$ es positivo.
 
 % Pregunta 3
 \section{}
