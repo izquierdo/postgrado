@@ -12,6 +12,7 @@
 % Para codigo bonito
 \newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
 \newcommand{\piso}[1]{\lfloor #1 \rfloor}
+\newcommand{\techo}[1]{\lceil #1 \rceil}
 
 \newcommand{\algoritmo}[2]
 {
@@ -118,18 +119,36 @@ Para poder concluir que $f(n) \leq dn$ necesitamos que
 \end{align*}
 
 El término de la izquierda en la última ecuación está definido y es positivo
-porque $p+q$ es positivo y menor que $1$ y $b$ es positivo.
+porque $p+q$ es positivo y menor que $1$ y $b$ es positivo. Entonces tenemos
+que, bajo esa condición, $f(n) \leq dn$ es cierto si
+$f(\piso{pn}) \leq d\piso{pn}$ y $f(\piso{qn}) \leq d\piso{qn}$ también lo son.
+Para culminar la prueba buscaré números apropiados como base para aplicar
+inducción.
 
 % Pregunta 3
 \section{}
+
+Estas funciones tienen la propiedad de que $\piso{f(x)} = \piso{f(\techo{x}}$.
+La prueba es similar a la dada en el libro para demostrar que
+$\techo{f(x)} = \techo{f(\techo{x})}$.
+Para todo $x$ entero se cumple trivialmente porque $x = \techo{x}$. Si $x$ no
+es entero, tenemos $x < \techo{x}$. Como $f$ es monótona decreciente, esto
+implica que $f(x) > f(\techo{x})$. Entonces
+$\piso{f(x)} \geq \piso{f(\techo{x})}$.
+Cuando es $\piso{f(x)} > \piso{f(\techo{x})}$, debe haber $y$ tal que
+$x \leq y < \techo{x}$ y $f(y) = \piso{f(x)}$ porque $f$ es continua.
+$y$ debe
+ser entero por la propiedad
+de $f$ de tomar valores enteros sólo con argumentos enteros.
+Pero no puede haber enteros $i$ tales que $x \leq i < \techo{x}$. 
+Con esto llegamos
+a una contradicción.
+Entonces debe ser $\piso{f(x)} = \piso{f(\techo{x})}$.
 
 % Pregunta 4
 \section{}
 
 % Pregunta 5
-\section{}
-
-% Pregunta 6
 \section{}
 
 \end{document}
