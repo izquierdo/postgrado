@@ -11,8 +11,8 @@
 
 % Para codigo bonito
 \newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
-\newcommand{\piso}[1]{\lfloor #1 \rfloor}
-\newcommand{\techo}[1]{\lceil #1 \rceil}
+\newcommand{\piso}[1]{\left \lfloor #1 \right \rfloor}
+\newcommand{\techo}[1]{\left \lceil #1 \right \rceil}
 
 \newcommand{\algoritmo}[2]
 {
@@ -122,7 +122,7 @@ El término de la izquierda en la última ecuación está definido y es positivo
 porque $p+q$ es positivo y menor que $1$ y $b$ es positivo. Entonces tenemos
 que, bajo esa condición, $f(n) \leq dn$ es cierto si
 $f(\piso{pn}) \leq d\piso{pn}$ y $f(\piso{qn}) \leq d\piso{qn}$ también lo son.
-Para culminar la prueba buscaré números apropiados como base para aplicar
+Para culminar la prueba necesito números apropiados como base para aplicar
 inducción.
 
 % Pregunta 3
@@ -148,7 +148,29 @@ Entonces debe ser $\piso{f(x)} = \piso{f(\techo{x})}$.
 % Pregunta 4
 \section{}
 
+Tenemos
+
+\begin{align*}
+ & \techo{\frac{n}{m}} = \piso{\frac{n+m-1}{m}} \\
+ \equiv & \\
+ & \techo{\frac{n}{m}} - \piso{\frac{n}{m}} = \piso{\frac{n+m-1}{m}} - \piso{\frac{n}{m}} \\
+ \equiv & \langle \piso{\frac{n}{m}} \text{ es entero} \rangle \\
+ & \techo{\frac{n}{m} - \piso{\frac{n}{m}}} = \piso{\frac{n+m-1}{m} - \piso{\frac{n}{m}}} \\
+ \equiv & \\
+ & \techo{\frac{n - m\piso{\frac{n}{m}}}{m}} = \piso{\frac{n+m-1 - m\piso{\frac{n}{m}}}{m}} \\
+ \equiv & \langle m \text{ positivo} \rangle \\
+ & \techo{\frac{n \mathtt{mod} m}{m}} = \piso{\frac{n \mathtt{mod} m +m-1}{m}} \\
+\end{align*}
+
+Esto último es equivalente a $n \mathtt{mod} m > 0$, porque debe ser
+$0 \leq n \mathtt{mod} m < m$.
+Entonces es equivalente a $m > 0$. Por lo tanto, $m > 0$ implica la igualdad que se quería
+demostrar.
+
 % Pregunta 5
 \section{}
+
+Sea $N = \frac{3^77-1}{2}$. $N$ es impar porque 
+$N$ es compuesto porque es divisible entre $\frac{3^7-1}{2}$:
 
 \end{document}
