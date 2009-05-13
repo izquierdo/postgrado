@@ -122,8 +122,20 @@ El término de la izquierda en la última ecuación está definido y es positivo
 porque $p+q$ es positivo y menor que $1$ y $b$ es positivo. Entonces tenemos
 que, bajo esa condición, $f(n) \leq dn$ es cierto si
 $f(\piso{pn}) \leq d\piso{pn}$ y $f(\piso{qn}) \leq d\piso{qn}$ también lo son.
+
 Para culminar la prueba necesito números apropiados como base para aplicar
-inducción.
+inducción. Pero observemos: sea $M$ el máximo valor tomado por $f(n)$ con
+$n \leq n_0$, que existe porque el dominio de la función es el conjunto de los
+naturales. Sea $T$ el máximo entre $M+1$ y $\frac{b}{1-(p+q)}$. Entonces se cumple
+
+$$
+f(n) \leq Tn
+$$
+
+para todo $n \leq n_0$ por la manera como elegimos $T$ (a partir de $M$). Además,
+como $T$ cumple la condición suficiente para $d$ que conseguimos anteriormente, entonces
+$f(n)$ sigue para todos los $n > n_0$ tomando $d = T$. Si se quiere, se puede
+tomar como base $n_0$.
 
 % Pregunta 3
 \section{}
