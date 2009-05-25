@@ -38,15 +38,24 @@
 
 % Título
 
-\title{Tarea 2 de Matemáticas para Computación}
+\title{Tarea 3 de Matemáticas para Computación}
 \author{Daniel Izquierdo \\ \#08-86809}
-\date{12 de mayo de 2009}
+\date{26 de mayo de 2009}
 
 \maketitle
 
 % Pregunta 1
 \section{}
 
+\begin{align*}
+ & \sum_{1 \leq k \leq n} \piso{log_2k} \\
+ = & \\
+ & \sum_{1 \leq k \leq n} m[m = \piso{log_2k}] \\
+ = & \\
+ & \sum_{1 \leq k \leq n} m[m \leq log_2k < m+1] \\
+ = & \\
+ & \sum_{1 \leq k \leq n} m[2^m \leq k < 2^{m+1}] \\
+\end{align*}
 
 % Pregunta 2
 \newpage
@@ -86,12 +95,42 @@ Por lo tanto,
 \end{align*}
 
 % Pregunta 3
-\section{}
+\section{} % (2.23)
+
+\subsection{} % (a)
+
+\subsection{} % (b)
+
+Sean $u(x) = 2x+1, \Delta v(x) = \frac{1}{x(x+1)}$. Entonces $\Delta u(x) = 2$
+y $v(x) = -\frac{1}{x}$. Usando suma por partes tenemos
+
+% u = 2x+1
+% du = 2
+% v = -1/x
+% dv = 1/(x(x+1))
+
+\begin{align*}
+\sum u \Delta v & = uv - \sum Ev \Delta u \\
+ & = (2x+1)(-\frac{1}{x}) - \sum -\frac{1}{x+1}(2) \\
+ & = -\frac{2x+1}{x} - \sum -\frac{2}{x+1} \\
+ & = -\frac{2x+1}{x} + 2\sum \frac{1}{x+1} \\
+ & = -\frac{2x+1}{x} + 2\sum x^{\underline{-1}} \\
+ & = 2H_x - \frac{2x+1}{x} \\
+\end{align*}
+
+Entonces
+
+\begin{align*}
+\sum_{k=1}^n \frac{2k+1}{k(k+1)} & = \sum_{k=1}^n u \Delta v \\
+             & = 2H_x -\frac{2x+1}{x} \Big |_{1}^{n+1} \\
+             & = 2H_{n+1} -\frac{2(n+1)+1}{n+1} - 2H_1 + \frac{2+1}{1} \\
+             & = 2H_{n+1} -\frac{2n+3}{n+1} - 2 + 3 \\
+\end{align*}
 
 % Pregunta 4
-\section{}
+\section{} % (2.27)
 
 % Pregunta 5
-\section{}
+\section{} % (2.29)
 
 \end{document}
