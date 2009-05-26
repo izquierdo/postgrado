@@ -142,8 +142,11 @@ Por lo tanto,
   & = \sum_{k=1}^n \frac{2k+1}{k} - \sum_{k=1}^n \frac{2k+1}{k+1} \\
   & = \sum_{k=1}^n \frac{2k}{k} + \sum_{k=1}^n \frac{1}{k} - \sum_{k=1}^n \frac{2k+1}{k+1} \\
   & = 2n + H_n - \sum_{k=1}^n \frac{2k+1}{k+1} \\
-  & = 2n + H_n - \sum_{k=1}^n \frac{k}{k+1} - \sum_{k=1}^n \frac{k+1}{k+1} \\
-  & = 2n + H_n - \sum_{k=1}^n \frac{k}{k+1} - n \\
+  & = 2n + H_n - \sum_{1 \leq k \leq n} \frac{2k+1}{k+1} \\
+  & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2(k-1)+1}{(k-1)+1} \\
+  & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2k-1}{k} \\
+  & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2k}{k} - \sum_{1 \leq k-1 \leq n} \frac{1}{k} \\
+  & = 2n + H_n - 2n - \sum_{1 \leq k-1 \leq n} \frac{1}{k} \\
 \end{align*}
 
 \subsection{} % (b)
