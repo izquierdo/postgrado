@@ -47,15 +47,27 @@
 % Pregunta 1
 \section{}
 
+Si $n < 1$, la suma da $0$. Suponiendo $n \geq 1$.
+
 \begin{align*}
  & \sum_{1 \leq k \leq n} \piso{log_2k} \\
  = & \\
- & \sum_{1 \leq k \leq n} m[m = \piso{log_2k}] \\
+ & \sum_{1 \leq k < n} \piso{log_2k} + \piso{log_2n} \\
  = & \\
- & \sum_{1 \leq k \leq n} m[m \leq log_2k < m+1] \\
+ & \sum_{1 \leq k < n} m[m = \piso{log_2k}] + \piso{log_2n} \\
  = & \\
- & \sum_{1 \leq k \leq n} m[2^m \leq k < 2^{m+1}] \\
+ & \sum_{1 \leq k < n} m[m \leq log_2k < m+1] + \piso{log_2n} \\
+ = & \\
+ & \sum_{1 \leq k < n} m[2^m \leq k < 2^{m+1}] + \piso{log_2n} \\
+ = & \\
+ & \sum m[1 \leq k < n][2^m \leq k < 2^{m+1}] + \piso{log_2n} \\
+ = & \\
+ & \sum m[2^m \leq k < n < 2^{m+1}] + \sum m[2^m \leq k < 2^{m+1} \leq n] + \piso{log_2n} \\
 \end{align*}
+
+Si $n = 2^a$ entonces la primera suma es $0$ porque no puede haber una potencia de $2$
+estrictamente entre una potencia de $2$ y la próxima. Para la segunda suma tenemos:
+
 
 % Pregunta 2
 \newpage
@@ -125,6 +137,7 @@ Entonces
              & = 2H_x -\frac{2x+1}{x} \Big |_{1}^{n+1} \\
              & = 2H_{n+1} -\frac{2(n+1)+1}{n+1} - 2H_1 + \frac{2+1}{1} \\
              & = 2H_{n+1} -\frac{2n+3}{n+1} - 2 + 3 \\
+             & = 2H_{n+1} -\frac{2n+3}{n+1} + 1 \\
 \end{align*}
 
 % Pregunta 4
