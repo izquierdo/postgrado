@@ -215,4 +215,58 @@ Entonces
 % Pregunta 5
 \section{} % (2.29)
 
+Observemos que
+
+$$
+\frac{k}{4k^2-1} = \frac{1}{4} \left( \frac{1}{2k+1} + \frac{1}{2k-1} \right)
+$$
+
+Entonces
+
+\begin{align*}
+\sum_{k=1}^n (-1)^k \frac{k}{4k^2-1} & = \sum_{k=1}^n (-1)^k \frac{1}{4} \left( \frac{1}{2k+1} + \frac{1}{2k-1} \right) \\
+  & = \sum_{k=1}^n (-1)^k \frac{1}{4} \left( \frac{1}{2k+1} \right) + \sum_{k=1}^n (-1)^k \frac{1}{4} \left( \frac{1}{2k-1} \right) \\
+\end{align*}
+
+Ahora, si
+
+$$
+f(k) = \frac{1}{4} \left( \frac{1}{2k+1} \right)
+$$
+
+y
+
+$$
+g(k) = \frac{1}{4} \left( \frac{1}{2k-1} \right)
+$$
+
+tenemos
+
+\begin{align*}
+ & \sum_{k=1}^n (-1)^k \frac{1}{4} \left( \frac{1}{2k+1} \right) + \sum_{k=1}^n (-1)^k \frac{1}{4} \left( \frac{1}{2k-1} \right) \\
+ = & \\
+ & \sum_{k=1}^n (-1)^k f(k) + \sum_{k=1}^n (-1)^k g(k) \\
+ = & \\
+ & -f(1)+f(2)-\ldots+(-1)^n f(n)-g(1)+g(2)-\ldots+(-1)^n g(n) \\
+\end{align*}
+
+Pero $g(k+1) = f(k)$ porque
+
+\begin{align*}
+g(k+1) & = \frac{1}{4} \left( \frac{1}{2(k+1)-1} \right) \\
+       & = \frac{1}{4} \left( \frac{1}{2k+2-1} \right) \\
+       & = \frac{1}{4} \left( \frac{1}{2k+1} \right) \\
+       & = f(k) \\
+\end{align*}
+
+Por lo tanto, en el resultado que teníamos cada $g(k+1)$ se cancela con su $f(k)$ correspondiente
+porque tienen signos distintos ($(-1)^k y (-1)^{k+1}$. Al final sólo quedan sin eliminar $g(1)$ y
+$f(n)$. Entonces
+
+\begin{align*}
+\sum_{k=1}^n (-1)^k \frac{k}{4k^2-1} & = (-1)^1 f(1) + (-1)^n g(n) \\
+                                     & = -\frac{1}{4} + (-1)^n \left( \frac{1}{4(2n+1)} \right) \\
+                                     & = -\frac{1}{4} + (-1)^n \left( \frac{1}{8n+4} \right) \\
+\end{align*}
+
 \end{document}
