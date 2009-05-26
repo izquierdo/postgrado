@@ -136,6 +136,16 @@ Por lo tanto,
 
 \subsection{} % (a)
 
+\begin{align*}
+\sum_{k=1}^n \frac{2k+1}{k(k+1)} & = \sum_{k=1}^n (2k+1)(\frac{1}{k} - \frac{1}{k+1}) \\ 
+  & = \sum_{k=1}^n (\frac{2k+1}{k} - \frac{2k+1}{k+1}) \\ 
+  & = \sum_{k=1}^n \frac{2k+1}{k} - \sum_{k=1}^n \frac{2k+1}{k+1} \\
+  & = \sum_{k=1}^n \frac{2k}{k} + \sum_{k=1}^n \frac{1}{k} - \sum_{k=1}^n \frac{2k+1}{k+1} \\
+  & = 2n + H_n - \sum_{k=1}^n \frac{2k+1}{k+1} \\
+  & = 2n + H_n - \sum_{k=1}^n \frac{k}{k+1} - \sum_{k=1}^n \frac{k+1}{k+1} \\
+  & = 2n + H_n - \sum_{k=1}^n \frac{k}{k+1} - n \\
+\end{align*}
+
 \subsection{} % (b)
 
 Sean $u(x) = 2x+1, \Delta v(x) = \frac{1}{x(x+1)}$. Entonces $\Delta u(x) = 2$
@@ -167,6 +177,34 @@ Entonces
 
 % Pregunta 4
 \section{} % (2.27)
+
+\begin{align*}
+\Delta(c^{\underline{x}}) & = c^{\underline{x+1}} - c^{\underline{x}} \\
+  & = c(c-1) \ldots (c-x+1)(c-x+2) - c(c-1) \ldots (c-x+1) \\
+  & = c(c-1) \ldots (c-x+1)((c-x+2)-1) \\
+  & = (c(c-1) \ldots (c-x+1))(c-x-1) \\
+  & = c^{\underline{x}}(c-x-1) \\
+  & = \frac{c^{\underline{x+2}}}{c-x} \\
+\end{align*}
+
+Con esto tenemos el caso particular:
+
+$$
+\Delta((-2)^{\underline{x-2}}) = -\frac{(-2)^{\underline{x}}}{x}
+$$
+
+y
+
+$$
+\Delta(-(-2)^{\underline{x-2}}) = \frac{(-2)^{\underline{x}}}{x}
+$$
+
+Entonces
+
+\begin{align*}
+\sum_{k=1}^n \frac{(-2)^{\underline{k}}}{k} & = -(-2)^{\underline{x-2}} \Big |_{1}^{n+1} \\
+  & = - (-2)^{\underline{n-1}} + (-2)^{\underline{-1}} \\
+\end{align*}
 
 % Pregunta 5
 \section{} % (2.29)
