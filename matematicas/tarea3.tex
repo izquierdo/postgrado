@@ -68,6 +68,31 @@ Si $n < 1$, la suma da $0$. Suponiendo $n \geq 1$.
 Si $n = 2^a$ entonces la primera suma es $0$ porque no puede haber una potencia de $2$
 estrictamente entre una potencia de $2$ y la próxima. Para la segunda suma tenemos:
 
+\begin{align*}
+\sum m[2^m \leq k < 2^{m+1} \leq 2^a] & = \sum m (2^{m+1}-2^m)[m+1 \leq a] \\
+  & = \sum m (2*2^m-2^m)[m+1 \leq a] \\
+  & = \sum m 2^m[m < a] \\
+  & = \sum_0^{a-1} m 2^m \\
+  & = 2((a-1)2^{(a-1)} - 2^{(a-1)} + 1) \\
+\end{align*}
+
+Para el caso general podemos poner $a = \piso{log_2n}$ y sólo nos resta agregar
+los términos para $2^a \leq k < n$ que son todos iguales a $a$ (por el uso de la
+función piso) y entonces suman a $(n-2^a)a$. Entonces tenemos
+
+\begin{align*}
+ & \sum_{1 \leq k \leq n} \piso{log_2k} \\
+ = & \\
+ & 2((a-1)2^{(a-1)} - 2^{(a-1)} +1) + \piso{log_2n} + (n-2^a)a \\
+ = & \\
+ & 2((a-1)2^{(a-1)} - 2^{(a-1)} +1) + (n-2^a+1)a \\
+\end{align*}
+
+con
+
+$$
+a = \piso{log_2n}
+$$
 
 % Pregunta 2
 \newpage
