@@ -145,8 +145,11 @@ Por lo tanto,
   & = 2n + H_n - \sum_{1 \leq k \leq n} \frac{2k+1}{k+1} \\
   & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2(k-1)+1}{(k-1)+1} \\
   & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2k-1}{k} \\
-  & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2k}{k} - \sum_{1 \leq k-1 \leq n} \frac{1}{k} \\
-  & = 2n + H_n - 2n - \sum_{1 \leq k-1 \leq n} \frac{1}{k} \\
+  & = 2n + H_n - \sum_{1 \leq k-1 \leq n} \frac{2k}{k} + \sum_{1 \leq k-1 \leq n} \frac{1}{k} \\
+  & = 2n + H_n - 2n + \sum_{2 \leq k \leq n+1} \frac{1}{k} \\
+  & = 2n + H_n - 2n + (\sum_{1 \leq k \leq n} \frac{1}{k} - \sum_{1 \leq k \leq 1} \frac{1}{k} + \sum_{n+1 \leq k \leq n+1} \frac{1}{k}) \\
+  & = 2n + H_n - 2n + (H_n - 1 + \frac{1}{n+1}) \\
+  & = 2H_n - 1 + \frac{1}{n+1} \\
 \end{align*}
 
 \subsection{} % (b)
