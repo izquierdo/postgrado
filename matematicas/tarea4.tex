@@ -107,9 +107,58 @@ Por lo tanto,
 \end{enumerate}
 
 % Pregunta 2
+\newpage
 \section{}
 
+Hago la demostración por inducción sobre $l$. Esto es permisible porque hay
+restricciones $l$ entero y $l \geq 0$ para la identidad. Para el caso $l = 0$:
+
+% \sum_k \binom{l}{m+k} \binom{s+k}{n} (-1)^k & = (-1)^{l+m} \binom{s-m}{n-l}
+
+\begin{align*}
+  & \sum_k \binom{0}{m+k} \binom{s+k}{n} (-1)^k = (-1)^{0+m} \binom{s-m}{n-0} \\
+  \equiv & \\
+  & \sum_k \binom{0}{m+k} \binom{s+k}{n} (-1)^k = (-1)^m \binom{s-m}{n} \\
+\end{align*}
+
+$\binom{0}{x} = 0$ si $x \neq 0$ y $\binom{0}{0} = 1$. Entonces el término de la
+suma del lado izquierdo sólo es distinto de cero cuando $k = -m$. Queda:
+
+\begin{align*}
+  & \sum_k \binom{0}{m+k} \binom{s+k}{n} (-1)^k = (-1)^m \binom{s-m}{n} \\
+  \equiv & \\
+  & \binom{s-m}{n} (-1)^m = (-1)^m \binom{s-m}{n} \\
+  \equiv & \\
+  & \mathtt{true}
+\end{align*}
+
+Ahora supongamos que la identidad se cumple para todo $k < l$ con un
+$l > 0$. Entonces
+
+\begin{align*}
+  & \sum_k \binom{l}{m+k} \binom{s+k}{n} (-1)^k \\
+  = & \langle \text{fórmula aditiva} \rangle \\
+  & \sum_k \left(\binom{l-1}{m+k}+\binom{l-1}{m+k-1}\right) \binom{s+k}{n} (-1)^k \\
+  = & \\
+  & \sum_k \binom{l-1}{m+k} \binom{s+k}{n} (-1)^k + \sum_k \binom{l-1}{m+k-1} \binom{s+k}{n} (-1)^k \\
+  = & \langle \text{hipótesis inductiva} \rangle \\
+  & (-1)^{l+m-1} \binom{s-m}{n-l+1} + (-1)^{l+m-2} \binom{s-m+1}{n-l+1} \\
+  = & \langle (-1)^2 = 1 \rangle \\
+  & (-1)^{l+m-1} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m+1}{n-l+1} \\
+  = & \langle \text{fórmula aditiva} \rangle \\
+  & (-1)^{l+m-1} \binom{s-m}{n-l+1} + (-1)^{l+m} \left( \binom{s-m}{n-l+1} + \binom{s-m}{n-l} \right) \\
+  = & \\
+  & (-1)^{l+m-1} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m}{n-l} \\
+  = & \\
+  & (-1)(-1)^{l+m-2} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m}{n-l} \\
+  = & \langle (-1)^2 = 1 \rangle \\
+  & (-1)(-1)^{l+m} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m}{n-l+1} + (-1)^{l+m} \binom{s-m}{n-l} \\
+  = & \\
+  & (-1)^{l+m} \binom{s-m}{n-l} \\
+\end{align*}
+
 % Pregunta 3
+\newpage
 \section{}
 
 \end{document}
