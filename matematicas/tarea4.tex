@@ -84,7 +84,24 @@ $(-\frac{1}{n})^n$. Entonces, por (5.42) del libro tenemos
   & = 2 \left( \sum_{0 \leq k} \left( \frac{\binom{n}{2k+1}}{2(k+1)} + \frac{\binom{n}{2k}}{2(k+1)} \right) \right) \\
   & = 2 \left( \sum_{0 \leq k} \frac{\binom{n}{2k+1}+\binom{n}{2k}}{2(k+1)} \right) \\
   & = \sum_{0 \leq k} \frac{\binom{n}{2k+1}+\binom{n}{2k}}{k+1} \\
-  & = \sum_{0 \leq k} \frac{\binom{n+1}{2k+1}}{k+1} \\
+  & = \sum_{0 \leq k} \frac{\binom{n+1}{2k+1}}{k+1} & \langle \text{por fórmula aditiva} \rangle \\
+  & = \sum_{0 \leq k} \frac{2}{n+2} \frac{(n+2) \binom{n+1}{2k+1}}{2(k+1)} \\
+  & = \frac{2}{n+2} \sum_{0 \leq k} \frac{n+2}{2k+2} \binom{n+1}{2k+1} \\
+  & = \frac{2}{n+2} \sum_{0 \leq k} \binom{n+2}{2k+2} & \langle \text{por (5.5)} \rangle \\
+\end{align*}
+
+Ahora bien, sabemos que $\binom{n}{0}-\binom{n}{1}+\ldots+(-1)^n \binom{n}{n} = 0$.
+Entonces debemos tener que las partes
+$\binom{n}{0}+\binom{n}{2}+\ldots$ y $\binom{n}{1}+\binom{n}{3}+\ldots$ son iguales.
+Como sabemos que $\binom{n}{0}+\binom{n}{1}+\ldots+\binom{n}{n} = 2^n$,
+entonces debe ser $\binom{n}{0}+\binom{n}{2}+\ldots = \frac{2^n}{2} = 2^{n-1}$.
+Por lo tanto,
+
+\begin{align*}
+\sum_{k=0}^n \frac{\binom{n}{k}}{\techo{\frac{k+1}{2}}} & = \frac{2}{n+2} \sum_{0 \leq k} \binom{n+2}{2k+2} \\
+  & = \frac{2}{n+2} \left( \sum_{0 \leq k} \binom{n+2}{2k} - \binom{n+2}{0} \right) \\
+  & = \frac{2}{n+2} \left( 2^{(n+2)-1} - 1 \right) \\
+  & = \frac{2^{n+2} - 2}{n+2} \\
 \end{align*}
 
 \end{enumerate}
