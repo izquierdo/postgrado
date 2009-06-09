@@ -14,6 +14,8 @@
 \newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
 \newcommand{\piso}[1]{\left \lfloor #1 \right \rfloor}
 \newcommand{\techo}[1]{\left \lceil #1 \right \rceil}
+\newcommand{\stirlingU}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\stirlingD}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
 
 \newcommand{\algoritmo}[2]
 {
@@ -160,5 +162,16 @@ $l > 0$. Entonces
 % Pregunta 3
 \newpage
 \section{}
+
+\begin{align*}
+  \sum_k \binom{n}{k} \stirlingD{k+1}{m+1} (-1)^{n-k} & = \sum_k \binom{n}{n-k} \stirlingD{k+1}{m+1} (-1)^{n-k} \\
+  & = \sum_k \binom{n-k-n-1}{n-k} \stirlingD{k+1}{m+1} \\
+  & = \sum_k \binom{-k-1}{n-k} \stirlingD{k+1}{m+1} \\
+  & = \sum_k \binom{-k-1}{-k-1-(n-k)} \stirlingD{k+1}{m+1} \\
+  & = \sum_k \binom{-k-1}{-n-1} \stirlingD{k+1}{m+1} \\
+  & = \sum_k \binom{-(k+1)}{-n-1} \stirlingU{-m-1}{-(k+1)} & \langle \text{(6.33)} \rangle \\
+  & = \stirlingU{-m}{-n} & \langle \text{(6.16)} \rangle \\
+  & = \stirlingD{n}{m} & \langle \text{(6.33)} \rangle \\
+\end{align*}
 
 \end{document}
