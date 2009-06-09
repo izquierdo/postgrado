@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage[spanish]{babel}
 \usepackage{qtree}
+\usepackage{enumerate}
 
 % Para codigo bonito
 \newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
@@ -46,6 +47,28 @@
 
 % Pregunta 1
 \section{}
+
+\begin{enumerate}[a.]
+
+ \item 5.8
+
+Primero observemos que $p(k) = (1-\frac{k}{n})^n$ es un polinomio sobre $k$ de
+grado $n$. $p(k)$ expande a
+$(1-\frac{k}{n})(1-\frac{k}{n})\ldots n \text{ veces} \ldots(1-\frac{k}{n})$.
+Vemos que el único término de grado $n$ en la expansión es $(-\frac{k}{n})^n$
+y que no hay términos de mayor grado. El coeficiente de este término es
+$(-\frac{1}{n})^n$. Entonces, por (5.42) del libro tenemos
+
+\begin{align*}
+\sum_k \binom{n}{k} (-1)^k (1-\frac{k}{n})^n & = (-1)^n n! (-\frac{1}{n})^n\\
+                                             & = (-1)^n n! (-1)^n (\frac{1}{n})^n\\
+                                             & = (-1)^{2n} n! \frac{1}{n^n}\\
+                                             & = \frac{n!}{n^n}\\
+\end{align*}
+
+ \item 5.64
+
+\end{enumerate}
 
 % Pregunta 2
 \section{}
