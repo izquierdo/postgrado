@@ -66,7 +66,26 @@ $(-\frac{1}{n})^n$. Entonces, por (5.42) del libro tenemos
                                              & = \frac{n!}{n^n}\\
 \end{align*}
 
+ \newpage
  \item 5.64
+
+\begin{align*}
+\sum_{k=0}^n \frac{\binom{n}{k}}{\techo{\frac{k+1}{2}}} & = \sum_{0 \leq k} \frac{\binom{n}{k}}{\techo{\frac{k+1}{2}}} \\
+  & = \sum_{0 \leq k\text{, } k \text{ impar}} \frac{\binom{n}{k}}{\techo{\frac{k+1}{2}}} +
+      \sum_{0 \leq k\text{, } k \text{ par}} \frac{\binom{n}{k}}{\techo{\frac{k+1}{2}}} \\
+  & = \sum_{0 \leq k\text{, } k \text{ impar}} \frac{\binom{n}{k}}{\frac{k+1}{2}} +
+      \sum_{0 \leq k\text{, } k \text{ par}} \frac{\binom{n}{k}}{\frac{k+2}{2}} \\
+  & = \sum_{0 \leq k\text{, } k \text{ impar}} \frac{2 \binom{n}{k}}{k+1} +
+      \sum_{0 \leq k\text{, } k \text{ par}} \frac{2 \binom{n}{k}}{k+2} \\
+  & = \sum_{0 \leq k} \frac{2 \binom{n}{2k+1}}{(2k+1)+1} +
+      \sum_{0 \leq k} \frac{2 \binom{n}{2k}}{2k+2} \\
+  & = 2 \left( \sum_{0 \leq k} \frac{\binom{n}{2k+1}}{2k+2} +
+      \sum_{0 \leq k} \frac{\binom{n}{2k}}{2k+2} \right) \\
+  & = 2 \left( \sum_{0 \leq k} \left( \frac{\binom{n}{2k+1}}{2(k+1)} + \frac{\binom{n}{2k}}{2(k+1)} \right) \right) \\
+  & = 2 \left( \sum_{0 \leq k} \frac{\binom{n}{2k+1}+\binom{n}{2k}}{2(k+1)} \right) \\
+  & = \sum_{0 \leq k} \frac{\binom{n}{2k+1}+\binom{n}{2k}}{k+1} \\
+  & = \sum_{0 \leq k} \frac{\binom{n+1}{2k+1}}{k+1} \\
+\end{align*}
 
 \end{enumerate}
 
