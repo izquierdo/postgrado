@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
+\usepackage{qtree}
 
 \newcommand{\asig}{\ensuremath{\leftarrow}}
 
@@ -19,7 +20,53 @@
 \renewcommand{\labelenumi}{\alph{enumi}.}
 \begin{enumerate}
 
-% Pregunta 1
+% Pregunta a
+ \item
+
+\Tree
+[.$\Pi_{\text{PELICULA.NOMBRE}}$
+  [.{$\sigma$ \\
+   PRODUCE.PRESUPUESTO $ = 1000000$ \\
+   PRODUCE.AÑO $ = 2004$ {\bf OR} PRODUCE.AÑO $ = 2005$ \\
+   COMPAÑIA.NOMBRE $ = $ ``MGM'' \\
+   PELICULA.COD\_PELICULA $ = $ PRODUCE.COD\_PELICULA \\
+   PRODUCE.COD\_COMPAÑIA $ = $ COMPAÑIA.COD\_COMPAÑIA \\
+   }
+    [.$\times$
+      [.$\times$ PELICULA PRODUCE ]
+      COMPAÑIA
+    ]
+  ]
+]
+
+% Pregunta b
+ \item
+
+% Pregunta c
+ \item
+
+% Pregunta d
+ \item
+
+% Pregunta e
+ \item
+
+% Pregunta f
+ \item
+
+% Pregunta g
+ \item
+
+% Pregunta h
+ \item
+
+% Pregunta i
+ \item
+
+% Pregunta j
+ \item
+
+% Pregunta k
  \item
 
 \end{enumerate}
