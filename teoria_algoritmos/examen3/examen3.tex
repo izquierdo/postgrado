@@ -131,20 +131,42 @@ en la cola. La función de acotamiento es descrita en la siguiente sección.
 
  \item
 
-La función de acotamiento $h$ aplicada a un nodo $x = (A_1, A_2)$ en que están asignados los $k$
-primeros elementos de $A$ cumple 
+Sean para un nodo cualquiera
 
 $$
-h(x) = \left| \left(\left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|\right) - \sum_{i=k}^n A[i] \right|
+L = \left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|
 $$
 
-%$$
-%h(x) = \left(\left| \left(\left|\sum_{e \in A_1} e - \sum_{e \in A_2} e\right|\right) - \sum_{i=k}^n A[i] \right|\right)/2
-%$$
+y
+
+$$
+S = \sum_{i=k}^n A[i]
+$$
+
+Si $L = S$, hay una asignación que hace mínimo el valor absoluto de la diferencia de los multiconjunos, porque
+no puede ser menor que $0$ y se puede lograr diferencia $0$ asignando los elementos faltantes a la menor parte
+de la suma. Si $L < S$, entonces la mínima diferencia que se podría lograr es $S-L$, porque ya los elementos que
+generan $S$ están asignados y lo único que podemos hacer es tratar de acercarnos a $0$. Si $L > S$, entonces
+una cota inferior para la diferencia que podemos conseguir por el nodo es $1$ si $L-S$ es impar y $0$ si es par,
+lo que consistiría en insertar
+elementos en el menor componente hasta igualarlo con el mayor y luego repartir el resto equitativamente.
+
+Entonces la función de acotamiento sería:
+
+\begin{equation*}
+h(x) = 
+\begin{cases}
+0 & \text{si $S=L$ o $L>S$ y $L-S$ es par,} \\
+S-L &\text{si $S>L$,} \\
+1 &\text{si $L>S$ y $L-S$ es impar.} \\
+\end{cases}
+\end{equation*}
+
+Ordeno $A$ de manera no decreciente para obtener mejor rendimiento.
 
  \item
 
-Denotaré una nodo como $(A_0,A_1) (H)$ donde los $A_i$ son los multiconjuntos parciales que particionan a
+Denotaré una nodo como $(A_0,A_1)$ donde los $A_i$ son los multiconjuntos parciales que particionan a
 $A$ y $H$ es  el valor de la función de acotamiento para ese nodo.
 
 \renewcommand{\labelenumii}{\arabic{enumii}.}
@@ -153,39 +175,41 @@ $A$ y $H$ es  el valor de la función de acotamiento para ese nodo.
 
 \item Ordeno $A$ de manera no creciente.
 
-\item Comienzo la búsqueda con la solución inicial $(\{A_0\},\emptyset) ()$.
+\item Comienzo la búsqueda con la solución inicial $(\{A_0\},\emptyset)$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1]\},\emptyset) (1)$,\\
-$(\{A[0]\},\{A[1]\}) (23)$.
+$(\{A[0],A[1]\},\emptyset)$,\\
+$(\{A[0]\},\{A[1]\})$.
 
-\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\emptyset) (1)$.
-
-\item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[2]\},\emptyset) (19)$,\\
-$(\{A[0],A[1]\},\{A[2]\}) (1)$.
-
-\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2]\}) (1)$.
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\emptyset)$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[3]\},\{A[2]\}) (17)$,\\
-$(\{A[0],A[1]\},\{A[2],A[3]\}) (1)$.
+$(\{A[0],A[1],A[2]\},\emptyset)$,\\
+$(\{A[0],A[1]\},\{A[2]\})$.
 
-\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2],A[3]\}) (1)$.
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2]\})$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[3],A[4]\},\{A[2]\}) (11)$,\\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) (1)$.
+$(\{A[0],A[1],A[3]\},\{A[2]\})$,\\
+$(\{A[0],A[1]\},\{A[2],A[3]\})$.
+
+\item Escojo como próxima solución actual a $(\{A[0],A[1]\},\{A[2],A[3]\})$.
+
+\item Expando mi solución actual. Las nuevas posibilidades son: \\
+$(\{A[0],A[1],A[3],A[4]\},\{A[2]\})$,\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4]\})$.
 
 \item Escojo como próxima solución actual a\\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4]\}) (1)$.
+$(\{A[0],A[1]\},\{A[2],A[3],A[4]\})$.
 
 \item Expando mi solución actual. Las nuevas posibilidades son: \\
-$(\{A[0],A[1],A[3],A[4],A[5]\},\{A[2]\}) (3)$,\\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) (1)$.
+$(\{A[0],A[1],A[3],A[4],A[5]\},\{A[2]\})$,\\
+$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\})$.
 
 \item Escojo como próxima solución actual a \\
-$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\}) (1)$.
+$(\{A[0],A[1]\},\{A[2],A[3],A[4],A[5]\})$.
+
+\item Puedo podar todos las demás ramas con esta solución. Fin.
 
 \end{enumerate}
 
