@@ -40,17 +40,20 @@
 ]
 
 % Pregunta b
- \item
+\item
 
 \renewcommand{\labelenumii}{\arabic{enumii}.}
 \newcommand{\andsql}{\text{ {\bf and} }}
 
+Usaré conmutatividad y asociatividad de $\andsql$ y neutralidad de
+$\mathtt{true}$ sobre $\andsql$ libremente.
+
 \begin{enumerate}
  \item Cascada de selecciones:
        \begin{eqnarray*}
-       & \sigma_{C1 \andsql C2 \andsql C4 \andsql C3 \andsql C5}(\ldots) \\
+       & \sigma_{C1 \andsql C2 \andsql C3 \andsql C4 \andsql C5}(\ldots) \\
        \equiv & \\
-       & \sigma_{C1 \andsql C2}(\sigma_{C4}(\sigma_{C3}(\sigma_{C5}(\ldots))))
+       & \sigma_{C1 \andsql C2 \andsql C3 \andsql C4}(\sigma_{C5}(\ldots))
        \end{eqnarray*}
 
  \item Conversión del producto cartesiano en join:
@@ -69,6 +72,13 @@
 
        Se puede verificar que se cumplen las condiciones sobre los atributos
        para aplicar esta equivalencia.
+
+ \item Cascada de selecciones:
+       \begin{eqnarray*}
+       & \sigma_{(C1 \andsql C2) \andsql C4}(\ldots) \\
+       \equiv & \\
+       & \sigma_{C1 \andsql C2}(\sigma_{C4}(\ldots))
+       \end{eqnarray*}
 
  \item Conversión del producto cartesiano en join:
        \begin{eqnarray*}
