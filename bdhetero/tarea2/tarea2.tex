@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[10pt]{article}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -26,11 +26,11 @@
 \Tree
 [.$\Pi_{\text{PELICULA.NOMBRE}}$
   [.{$\sigma$ \\
-   PRODUCE.PRESUPUESTO $ = 1000000$ \\
-   PRODUCE.AÑO $ = 2004$ {\bf OR} PRODUCE.AÑO $ = 2005$ \\
-   COMPAÑIA.NOMBRE $ = $ ``MGM'' \\
-   PELICULA.COD\_PELICULA $ = $ PRODUCE.COD\_PELICULA \\
-   PRODUCE.COD\_COMPAÑIA $ = $ COMPAÑIA.COD\_COMPAÑIA \\
+   PRODUCE.PRESUPUESTO $ = 1000000$ (C1) \\
+   PRODUCE.AÑO $ = 2004$ {\bf OR} PRODUCE.AÑO $ = 2005$ (C2) \\
+   COMPAÑIA.NOMBRE $ = $ ``MGM'' (C3) \\
+   PELICULA.COD\_PELICULA $ = $ PRODUCE.COD\_PELICULA (C4) \\
+   PRODUCE.COD\_COMPAÑIA $ = $ COMPAÑIA.COD\_COMPAÑIA (C5) \\
    }
     [.$\times$
       [.$\times$ PELICULA PRODUCE ]
@@ -41,6 +41,60 @@
 
 % Pregunta b
  \item
+
+\renewcommand{\labelenumii}{\arabic{enumii}.}
+\newcommand{\andsql}{\text{ {\bf and} }}
+
+\begin{enumerate}
+ \item Cascada de selecciones:
+       \begin{eqnarray*}
+       & \sigma_{C1 \andsql C2 \andsql C4 \andsql C3 \andsql C5}(\ldots) \\
+       \equiv & \\
+       & \sigma_{C1 \andsql C2}(\sigma_{C4}(\sigma_{C3}(\sigma_{C5}(\ldots))))
+       \end{eqnarray*}
+
+ \item Conversión del producto cartesiano en join:
+       \begin{eqnarray*}
+       & \sigma_{C5}((\text{PELICULA} \times \text{PRODUCE}) \times \text{COMPAÑIA}) \\
+       \equiv & \\
+       & (\text{PELICULA} \times \text{PRODUCE}) \Join_{C5} \text{COMPAÑIA} \\
+       \end{eqnarray*}
+
+\item Distributividad de la selección con respecto al join:
+       \begin{eqnarray*}
+       & \sigma_{(C1 \andsql C2 \andsql C4) \andsql C3}(\ldots \Join_{C5} \ldots)  \\
+       \equiv & \\
+       & \sigma_{C1 \andsql C2 \andsql C4}(\ldots) \Join_{C5} \sigma_{C3}(\text{COMPAÑIA})  \\
+       \end{eqnarray*}
+
+       Se puede verificar que se cumplen las condiciones sobre los atributos
+       para aplicar esta equivalencia.
+
+ \item Conversión del producto cartesiano en join:
+       \begin{eqnarray*}
+       & \sigma_{C4}(\text{PELICULA} \times \text{PRODUCE}) \\
+       \equiv & \\
+       & \text{PELICULA} \Join_{C4} \text{PRODUCE} \\
+       \end{eqnarray*}
+
+\item Distributividad de la selección con respecto al join:
+       \begin{eqnarray*}
+       & \sigma_{\mathtt{true} \andsql (C1 \andsql C2)}(\text{PELICULA} \Join_{C4} \text{PRODUCE})  \\
+       \equiv & \\
+       & PELICULA \Join_{C4} \sigma_{C1 \andsql C2}(\text{PRODUCE})  \\
+       \end{eqnarray*}
+
+       Se puede verificar que se cumplen las condiciones sobre los atributos
+       para aplicar esta equivalencia.
+
+ \item Cascada de selecciones:
+       \begin{eqnarray*}
+       & \sigma_{C1 \andsql C2}(\text{PRODUCE}) \\
+       \equiv & \\
+       & \sigma_{C1}(\sigma_{C2}(PRODUCE))
+       \end{eqnarray*}
+
+\end{enumerate}
 
 % Pregunta c
  \item
