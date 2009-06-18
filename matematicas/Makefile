@@ -4,7 +4,7 @@ PDFLATEX=pdflatex
 BIBTEX=bibtex
 DVIPDF=dvipdf
 
-DOCUMENTO=tarea4
+DOCUMENTO=tarea5
 
 CAPITULOS=
 EXT_BASURA={log,aux,toc,dvi,pdf,bbl,blg,out,lot}
