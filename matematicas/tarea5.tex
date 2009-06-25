@@ -50,6 +50,65 @@
 % Pregunta 1
 \section{}
 
+$\stirlingD{n}{m}$ es el número de maneras de particionar un conjunto de $n$
+elementos en $m$ subconjuntos no vacíos. Ahora, sea $A$ un conjunto
+tal que $|A| = n$ y supongamos que tenemos un conjunto $B$ de contenedores
+llamados $b_i$ con $1 \leq i \leq m$. Observemos entonces que los $F_i$
+propuestos en el enunciado de la pregunta son las maneras de particionar $A$
+colocando cada elemento en alguno de los $b_k$ con $k \neq i$, lo que garantiza
+que $b_i$ queda vacío. Observemos también que si quisieramos particionar los $n$
+elementos en los $m$ subconjuntos olvidando la restricción de prohibir
+subconjuntos vacíos, hay $m^n$ opciones porque podemos elegir entre $m$
+subconjuntos para colocar cada elemento.
+
+Con todo esto tenemos que
+
+\[ \left| \bigcup_{i=1}^m F_i \right| \]
+
+es el número de maneras de particionar $A$ en los $b_i$ de manera de que exista
+al menos un $b_i$ vacío. Por principio de inclusión-exclusión y utilizando el
+hecho de que, para cualquier $q$, cualquier interseccón de $q$ distintos $F_i$
+tiene la misma
+cardinalidad, nos da
+
+\begin{align*}
+\left| \bigcup_{i=1}^m F_i \right| & = \sum_{k=1}^m \binom{m}{k} (-1)^{k-1} |F_1 \cap F_2 \cap \ldots \cap F_k|
+\end{align*}
+
+Ahora, sabemos que la intersección de $q$ $F_i$ distintos es el conjunto de las
+maneras de particionar $A$ en $m-q$ conjuntos, sin importar que queden conjuntos
+vacíos (porque estamos obligando a $q$ conjuntos a estar vacíos, y no nos
+importan los demás con tal de que cada elemento de $A$ quede asignado). Entonces
+la cardinalidad de una intersección tal es $(m-q)^n$. Por lo tanto queda
+
+\begin{align*}
+\left| \bigcup_{i=1}^m F_i \right| & = \sum_{k=1}^m \binom{m}{k} (-1)^{k-1} (m-k)^n
+\end{align*}
+
+Si lo que queremos es contar particiones en la que ningún $b_i$ esté
+vacío, debemos tomar todas las posibles maneras de particionar y quitarles el
+número que acabamos de calcular. Es decir, lo que buscamos es
+
+\begin{align*}
+m^n - \left| \bigcup_{i=1}^m F_i \right|
+  & = m^n - \sum_{k=1}^m \binom{m}{k} (-1)^{k-1} (m-k)^n \\
+  & = m^n + \sum_{k=1}^m \binom{m}{k} (-1)^{k} (m-k)^n \\
+  & = \sum_{k=0}^m \binom{m}{k} (-1)^{k} (m-k)^n \\
+  & = \sum_k \binom{m}{k} (-1)^{k} (m-k)^n \\
+  & = \sum_{m-k} \binom{m}{m-k} (-1)^{m-k} k^n \\
+  & = \sum_{m-k} \binom{m}{k} (-1)^{m-k} k^n \\
+  & = \sum_k \binom{m}{k} (-1)^{m-k} k^n \\
+\end{align*}
+
+Para terminar nos damos cuenta de que $\stirlingD{n}{m}$ es igual a este
+número salvo la numeración de los $b_i$. Hay $m!$ maneras de numerarlos
+(número de permutaciones distintas de $m$ elementos), factor que
+debemos eliminar del cálculo. Entonces nos queda
+
+\[
+\stirlingD{n}{m} = \frac{1}{m!} \sum_k \binom{m}{k} (-1)^{m-k} k^n \\
+\]
+
 % Pregunta 2
 \section{}
 
