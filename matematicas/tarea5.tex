@@ -134,11 +134,102 @@ más. Por lo tanto tenemos
 R(N) = \Phi(N)-1 + \Phi(N)-1 + 1 = 2\Phi(N) - 1
 \]
 
-\item
+\item Usando (4.62) del libro y el resultado anterior tenemos
+
+\begin{align*}
+R(N)
+  & = 2\Phi(N)-1 \\
+  & = 2 \left( \frac{1}{2} \sum_{d \geq 1} \mu(d) \piso{N/d} \piso{1+N/d} \right) -1 \\
+  & = \sum_{d \geq 1} \mu(d) \piso{N/d} \piso{1+N/d} - 1 \\
+  & = \ldots \\
+  & = \sum_{d \geq N} \piso{N/d}^2 \mu(d)  \\
+\end{align*}
 
 \end{enumerate}
 
 % Pregunta 4
 \section{}
+
+\begin{enumerate}
+
+\item Función generatriz:
+
+\item Polinomio característico:
+
+La recurrencia indica la ecuación
+
+\begin{align*}
+& t_n - 3t_{n-1} + 2t_{n-2} = 3*2^{n-2} \\
+\equiv & \\
+& t_n - 3t_{n-1} + 2t_{n-2} = \frac{3}{4} 2^n \\
+\end{align*}
+
+Procedemos a multiplicar todo por $2$
+
+\begin{align*}
+2t_n - 6t_{n-1} + 4t_{n-2} = \frac{3}{4} 2^{n+1} \\
+\end{align*}
+
+y a sustituir $n$ por $n-1$
+
+\begin{align*}
+2t_{n-1} - 6t_{n-2} + 4t_{n-3} = \frac{3}{4} 2^{n} \\
+\end{align*}
+
+Restando de la ecuación original tenemos
+
+\begin{align*}
+& t_n - 3t_{n-1} +2t_{n-2} -2t_{n-1}+6t_{n-2}-4t_{n-3} = 0 \\
+\equiv & \\
+& t_n - 5t_{n-1} + 8t_{n-2}-4t_{n-3} = 0 \\
+\end{align*}
+
+De aquí obtenemos el polinomio característico:
+
+\[
+x^3-5x^2+8x-4 = (x-2)^2(x-1)
+\]
+
+lo que nos dice que todas las soluciones de la recurrencia general son de la
+forma
+
+\[
+t_n = c_1 + c_2 2^n + c_3 n 2^n
+\]
+
+La recurrencia del enunciado impone la condición $t_2 = 3t_1-2t_0+3$. Unido a
+los casos base tenemos el sistema de ecuaciones
+
+\begin{align*}
+c_1 + c_2 & = t_0 & n = 0 \\
+c_1+2c_2 + 2c_3 & = t_1 & n = 1 \\
+c_1+4c_2+8c_3 & = 3t_1-2t_0+3 & n = 2 \\
+\end{align*}
+
+Sustituyendo por los valores conocidos de los casos base queda
+
+\begin{align*}
+c_1 + c_2 & = 1 & \\
+c_1+2c_2 + 2c_3 & = 2 & \\
+c_1+4c_2+8c_3 & = 7 & \\
+\end{align*}
+
+Resolviendo obtenemos
+
+\begin{align*}
+c_1 & = 3 \\
+c_2 & = -2 \\
+c_3 & = \frac{3}{2} \\
+\end{align*}
+
+En conclusión, resulta que
+
+\[
+t_n = 3-2*2^n+\frac{3}{2}n2^n = 3-2^{n+1}+3n2^{n-1}
+\]
+
+\item $t_n \in \Theta(n2^n)$
+
+\end{enumerate}
 
 \end{document}
