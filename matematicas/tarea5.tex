@@ -112,6 +112,49 @@ debemos eliminar del cálculo. Entonces nos queda
 % Pregunta 2
 \section{}
 
+Supongamos que cada alfabeto tiene un orden y que trabajamos con permutaciones
+que preservan el orden de las letras de cada alfabeto. Es decir, permitimos
+permutaciones $l_1, l_2, \ldots, l_{5n}$ tales que si $l_i, l_j$ pertenecen
+al mismo alfabeto y $l_i < l_j$ según ese alfabeto, entonces $i < j$.
+Si definimos $F_i$ como el conjunto de tales permutaciones que además cumplan
+que hay alguna letra del alfabeto $i$ que no está acompañada de otra del mismo
+alfabeto, entonces
+
+\[ \left| \bigcup_{i=1}^n F_i \right| \]
+
+es el número de permutaciones que tienen alguna letra que no está acompañada. De
+manera similar al ejercicio anterior vemos que
+
+\begin{align*}
+\left| \bigcup_{i=1}^n F_i \right| & = \sum_{k=1}^n \binom{n}{k} (-1)^{k-1} |F_1 \cap F_2 \cap \ldots \cap F_k|
+\end{align*}
+
+Tenemos que la cardinalidad de la intersección de $q$ $F_i$ distintos es
+$(2n-q)!$. El número de permutaciones posibles total es $(2n)!$. Si eliminamos
+del número total aquellas que no nos interesan, queda
+
+\begin{align*}
+& (2n)! - \left| \bigcup_{i=1}^n F_i \right| \\
+= & \\
+& (2n)! - \sum_{k=1}^n \binom{n}{k} (-1)^{k-1} |F_1 \cap F_2 \cap \ldots \cap F_k| \\
+= & \\
+& (2n)! - \sum_{k=1}^n \binom{n}{k} (-1)^{k-1} (2n-k)! \\
+= & \\
+& (2n)! + \sum_{k=1}^n \binom{n}{k} (-1)^{k} (2n-k)! \\
+= & \\
+& \sum_{k=0}^n \binom{n}{k} (-1)^{k} (2n-k)! \\
+\end{align*}
+
+Este resultado es el número de permutaciones válidas dado un orden específico
+para cada alfabeto. Pero estamos buscando el número sin importar el orden. Hay
+$n$ alfabetos, cada uno de los cuales aporta $5!$ posibles órdenes
+(porque son las permutaciones de las cinco letras que tienen). Entonces debemos
+multiplicar el resultado por $(5!)^n = 120^n$ y queda
+
+\begin{align*}
+(120)^n (\sum_{k=0}^n \binom{n}{k} (-1)^{k} (2n-k)!) \\
+\end{align*}
+
 % Pregunta 3
 \section{}
 
