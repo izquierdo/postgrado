@@ -154,6 +154,24 @@ R(N)
 
 \item Función generatriz:
 
+Como primer paso escribo la ecuación de la recurrencia de manera que sea válida
+para todo $n$ bajo la suposición de que los términos con índice negativo siempre
+se anulan. Entonces pongo
+
+\[
+t_n = 3t_{n-1} - 2t_{n-2} + 3*2^{n-2} [n \geq 0] - \frac{5}{2} [n=1] + \frac{1}{4}[n=0]
+\]
+
+El segundo paso es multiplicar por $z^n$, sumar sobre $n$ e intentar despejar $G(z)$.
+
+\begin{align*}
+G(z)
+  & = \sum_n t_n z^n \\
+  & = 3 \sum_n t_{n-1} z^n - 2 \sum_n t_{n-2} z^n + \frac{3}{4} \sum_n 2^n z^n [n \geq 0] - \\
+  &   \frac{5}{2} \sum_n z^n [n=1] + \frac{1}{4} \sum_n z^n [n=0] \\
+  & = 3zG(z) - 2z^2G(z) + \frac{3}{4}\frac{1}{1-2z} - \frac{5}{2}z + \frac{1}{4} \\
+\end{align*}
+
 \item Polinomio característico:
 
 La recurrencia indica la ecuación
