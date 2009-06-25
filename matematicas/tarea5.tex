@@ -115,6 +115,29 @@ debemos eliminar del cálculo. Entonces nos queda
 % Pregunta 3
 \section{}
 
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\begin{enumerate}
+
+\item Para un par de enteros $m,n$ con $1 \leq m \leq N$ y $1 \leq n \leq N$
+pueden haber tres posibilidades: $m=n$, $m<n$ o $m>n$. Si $m=n$ entonces
+$m \perp n \equiv m=n=1$, por lo que se cuenta un sólo caso para el resultado de
+$R(N)$.
+
+Analicemos qué ocurre si $m<n$. Para un $m \neq 1$, $\varphi(m)$ cuenta
+los coprimos $c < m$. O sea que $\Phi(N)$ cuenta todos los pares $1 \leq n < m
+\leq N$ con $n \perp m$ pero también añade el caso $n=m=1$, el cual debemos
+eliminar. Entonces cuando $m<n$ debemos agregar $\Phi(N)-1$ a $R(N)$.
+Al tener $m>n$ ocurre de manera similar, es decir, tenemos $\Phi(N)-1$ casos
+más. Por lo tanto tenemos
+
+\[
+R(N) = \Phi(N)-1 + \Phi(N)-1 + 1 = 2\Phi(N) - 1
+\]
+
+\item
+
+\end{enumerate}
+
 % Pregunta 4
 \section{}
 
