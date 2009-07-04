@@ -1,0 +1,59 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+\usepackage{qtree}
+\usepackage{enumerate}
+
+% Para codigo bonito
+\newcommand{\singlespace}{\renewcommand{\baselinestretch}{1.0}}
+\newcommand{\piso}[1]{\left \lfloor #1 \right \rfloor}
+\newcommand{\techo}[1]{\left \lceil #1 \right \rceil}
+\newcommand{\stirlingU}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\stirlingD}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+\newcommand{\algoritmo}[2]
+{
+{
+  \singlespace
+  \begin{algorithm}[h]
+    \caption{#1}
+    \begin{algorithmic}[1]
+      #2
+    \end{algorithmic}
+  \end{algorithm}
+}
+}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\lstset{mathescape=true,frame=single}
+
+\newcommand{\asig}{\ensuremath{\leftarrow}}
+\renewcommand{\lstlistingname}{Listado} %listings en español
+
+\begin{document}
+
+% Título
+
+\title{Tarea 6 de Matemáticas para Computación}
+\author{Daniel Izquierdo \\ \#08-86809}
+\date{7 de julio de 2009}
+
+\maketitle
+
+% Pregunta 1 (7.11)
+\section{}
+
+% Pregunta 2 (9.14)
+\section{}
+
+% Pregunta 3 (9.27)
+\section{}
+
+\end{document}
