@@ -177,14 +177,13 @@ más. Por lo tanto tenemos
 R(N) = \Phi(N)-1 + \Phi(N)-1 + 1 = 2\Phi(N) - 1
 \]
 
-\item Usando (4.62) del libro y el resultado anterior tenemos
+\item Usando (4.62), (4.61) del libro y el resultado anterior tenemos
 
 \begin{align*}
 R(N)
   & = 2\Phi(N)-1 \\
   & = 2 \left( \frac{1}{2} \sum_{d \geq 1} \mu(d) \piso{N/d} \piso{1+N/d} \right) -1 \\
   & = \sum_{d \geq 1} \mu(d) \piso{N/d} \piso{1+N/d} - 1 \\
-  & = \ldots \\
   & = \sum_{d \geq N} \piso{N/d}^2 \mu(d)  \\
 \end{align*}
 
@@ -214,6 +213,15 @@ G(z)
   &   \frac{5}{2} \sum_n z^n [n=1] + \frac{1}{4} \sum_n z^n [n=0] \\
   & = 3zG(z) - 2z^2G(z) + \frac{3}{4}\frac{1}{1-2z} - \frac{5}{2}z + \frac{1}{4} \\
 \end{align*}
+
+Como tercer paso despejamos $G(z)$, lo que resulta en la siguiente ecuación:
+
+\[
+G(z) = \frac{5z^2-3z+1}{-4z^3+8z^2-5z+1}
+\]
+
+El cuarto paso es expandir esto en series de potencia y conseguir
+ahí el coeficiente de $z^n$.
 
 \item Polinomio característico:
 
