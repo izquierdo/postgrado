@@ -53,6 +53,19 @@
 % Pregunta 2 (9.14)
 \section{}
 
+%
+\begin{align*}
+(n+\alpha)^{n+\beta} & = n^{n+\beta}(1+\frac{\alpha}{n})^{n+\beta} \\
+                     & = n^{n+\beta} e^{\ln (1+\frac{\alpha}{n})^{n+\beta}}\\
+                     & = n^{n+\beta} e^{(n+\beta)\ln (1+\frac{\alpha}{n})}\\
+                     & = n^{n+\beta} e^{(n+\beta) (\frac{\alpha}{n}-\frac{1}{2}(\frac{\alpha}{n})^2+O(n^{-3}))} & \text{(9.33)} \\
+                     & = n^{n+\beta} e^{\alpha+\frac{\beta\alpha}{n}-\frac{\alpha^2}{2n}-\frac{\beta\alpha^2}{2n^2}+O(n^{-2}+\beta n^{-3})} \\
+                     & = n^{n+\beta} e^{\alpha+\frac{\beta\alpha}{n}-\frac{\alpha^2}{2n}-\frac{\beta\alpha^2}{2n^2}+O(n^{-2})} \\
+                     & = n^{n+\beta} e^{\alpha}e^{\frac{2\beta\alpha-\alpha^2}{2n}}e^{\frac{-\beta\alpha^2}{2n^2}}e^{O(n^{-2})} \\
+                     & = n^{n+\beta} e^{\alpha}e^{(\frac{2\beta\alpha-\alpha^2}{2})n^{-1}}e^{(\frac{-\beta\alpha^2}{2})n^{-2}}e^{O(n^{-2})} \\
+\end{align*}
+
+
 % Pregunta 3 (9.27)
 \section{}
 
