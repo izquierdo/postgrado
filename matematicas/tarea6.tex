@@ -111,6 +111,7 @@ Entonces el $f_k(r)$ solicitado es
 \end{enumerate}
 
 % Pregunta 2 (9.14)
+\newpage
 \section{}
 
 \begin{align*}
@@ -132,8 +133,56 @@ Entonces el $f_k(r)$ solicitado es
                      & = n^{n+\beta} e^{\alpha} (1 + \alpha (\beta - \frac{1}{2}\alpha) n^{-1}+O(n^{-2})) \\
 \end{align*}
 
-
 % Pregunta 3 (9.27)
+\newpage
 \section{}
+
+Para empezar veamos que $f(0) = 0$, por lo que $\sum_{k=1}^n f(k) = \sum_{k=0}^n f(k)$.
+Usaremos la reescritura (9.78) de la fórmula de Euler.
+
+\begin{align*}
+& \sum_{k=0}^n f(k) \\
+= & \\
+& \sum_{0 \leq k < n+1} f(k) \\
+= & \\
+& \sum_{0 \leq k < n} f(k) + f(n) \\
+= & \\
+& \int_0^n f(x)dx - \left. \frac{1}{2} f(x) \right|_0^n + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \left. f^{(2k-1)}(x) \right|_0^n + \\
+& O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx + n^\alpha \\
+= & \\
+& \int_0^n x^\alpha dx - \left. \frac{1}{2} x^\alpha \right|_0^n + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \left. f^{(2k-1)}(x) \right|_0^n + \\
+& O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx + n^\alpha \\
+= & \\
+& \left. \frac{x^{\alpha+1}}{\alpha+1} \right|_0^n
+  - \left. \frac{1}{2} x^\alpha \right|_0^n + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \left. f^{(2k-1)}(x) \right|_0^n + \\
+& O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx + n^\alpha \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  - \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \left. f^{(2k-1)}(x) \right|_0^n 
+  + O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx + n^\alpha \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \left. f^{(2k-1)}(x) \right|_0^n 
+  + O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \left. \alpha^{\underline{2k-1}} x^{\alpha-2k+1} \right|_0^n +
+  O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx \\
+\end{align*}
+
+\begin{align*}
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{(2k)!} \alpha^{\underline{2k-1}} n^{\alpha-2k+1} +
+  O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{(2k)(2k-1)!} \alpha^{\underline{2k-1}} n^{\alpha-2k+1} + \\
+& O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx \\
+\end{align*}
 
 \end{document}
