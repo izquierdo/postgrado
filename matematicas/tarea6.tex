@@ -63,6 +63,13 @@
                      & = n^{n+\beta} e^{\alpha+\frac{\beta\alpha}{n}-\frac{\alpha^2}{2n}-\frac{\beta\alpha^2}{2n^2}+O(n^{-2})} \\
                      & = n^{n+\beta} e^{\alpha}e^{\frac{2\beta\alpha-\alpha^2}{2n}}e^{\frac{-\beta\alpha^2}{2n^2}}e^{O(n^{-2})} \\
                      & = n^{n+\beta} e^{\alpha}e^{(\frac{2\beta\alpha-\alpha^2}{2})n^{-1}}e^{(\frac{-\beta\alpha^2}{2})n^{-2}}e^{O(n^{-2})} \\
+                     & = n^{n+\beta}
+                         e^{\alpha}
+                         (1 + \frac{2\beta\alpha-\alpha^2}{2}n^{-1}+O(n^{-2}))* \\
+                         & (1+\frac{-\beta\alpha^2}{2}n^{-2}+O(n^{-4})
+                         (1+O(n^{-2})) \\
+                     & = n^{n+\beta} e^{\alpha} (1 + \frac{2\beta\alpha-\alpha^2}{2}n^{-1}+O(n^{-2})) \\
+                     & = n^{n+\beta} e^{\alpha} (1 + \alpha (\beta - \frac{1}{2}\alpha) n^{-1}+O(n^{-2})) \\
 \end{align*}
 
 
