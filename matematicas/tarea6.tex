@@ -50,15 +50,45 @@
 % Pregunta 1 (7.11)
 \section{}
 
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\begin{enumerate}
+ % (a)
+ \item
+ 
+ % (b) 
+ \item Tomando el caso apropiado de la tabla 320 del libro empezamos:
+
+\begin{align*}
+zB'(z) & = \sum_n n b_n z^n \\
+       & = \sum_n \left( \sum_{k=0}^n \frac{2^k a_k}{(n-k)!} \right) z^n & \langle \text{suposición} \rangle \\
+       & = \sum_n \left( \sum_{k=0}^n (2^k a_k) \frac{1}{(n-k)!} \right) z^n \\
+       & = \sum_n \left( \sum_{k \leq n} (2^k a_k) \frac{1}{(n-k)!} \right) z^n
+           & \langle a_k=0 \text{ con } k \text{ negativo}  \rangle \\
+       & = \sum_n \left( \sum_{k} (2^k a_k) \frac{1}{(n-k)!} \right) z^n
+           & \langle \text{factorial indefinido para negativos}  \rangle \\
+       & = A(2z) e^z & \langle \text{idents. de } F(z)G(z) \text{, } G(cz) \text{ y } e^z \rangle \\
+\end{align*}
+
+Entonces
+
+\[
+A(z) = (z/2) B'(z/2) e^{-(z/2)}
+\]
+
+
+ % (c)
+ \item
+\end{enumerate}
+
 % Pregunta 2 (9.14)
 \section{}
 
-%
 \begin{align*}
 (n+\alpha)^{n+\beta} & = n^{n+\beta}(1+\frac{\alpha}{n})^{n+\beta} \\
                      & = n^{n+\beta} e^{\ln (1+\frac{\alpha}{n})^{n+\beta}}\\
                      & = n^{n+\beta} e^{(n+\beta)\ln (1+\frac{\alpha}{n})}\\
-                     & = n^{n+\beta} e^{(n+\beta) (\frac{\alpha}{n}-\frac{1}{2}(\frac{\alpha}{n})^2+O(n^{-3}))} & \text{(9.33)} \\
+                     & = n^{n+\beta} e^{(n+\beta) (\frac{\alpha}{n}-\frac{1}{2}(\frac{\alpha}{n})^2+O(n^{-3}))}
+                         & \langle \text{(9.33)} \rangle \\
                      & = n^{n+\beta} e^{\alpha+\frac{\beta\alpha}{n}-\frac{\alpha^2}{2n}-\frac{\beta\alpha^2}{2n^2}+O(n^{-2}+\beta n^{-3})} \\
                      & = n^{n+\beta} e^{\alpha+\frac{\beta\alpha}{n}-\frac{\alpha^2}{2n}-\frac{\beta\alpha^2}{2n^2}+O(n^{-2})} \\
                      & = n^{n+\beta} e^{\alpha}e^{\frac{2\beta\alpha-\alpha^2}{2n}}e^{\frac{-\beta\alpha^2}{2n^2}}e^{O(n^{-2})} \\
