@@ -75,9 +75,39 @@ Entonces
 A(z) = (z/2) B'(z/2) e^{-(z/2)}
 \]
 
-
  % (c)
- \item
+ \item 
+
+\begin{align*}
+A(z) & = \sum_n \sum_{k=0}^n \binom{r+k}{k} b_{n-k} z^n \\
+     & = \sum_n \sum_{k=0}^n \binom{r+k}{k} b_{n-k} z^n \\
+     & = \sum_n \sum_{k} \binom{r+k}{k} b_{n-k} z^n & \langle b_k \text{ negativo con } k < 0 \rangle \\
+     & = \frac{B(z)}{(1-z)^{r+1}} & \langle \text{idents. de } F(z)G(z) \text{, } 1/(1-z)^c \text{ si } c=r+1 \rangle \\
+\end{align*}
+
+Ahora, con esto tenemos
+
+\[
+B(z) = (1-z)^{r+1} A(z)
+\]
+
+Notemos que si $F(z) = (1+z)^{r+1}$, entonces $(1-z)^{r+1} = F((-1)z)$. Por lo
+tanto,
+
+\begin{align*}
+B(z) & = (1-z)^{r+1} A(z) \\
+     & = \sum_n \left( \sum_k (-1)^k \binom{r+1}{k} a_{n-k} \right) z^n
+         & \langle \text{idents. } F(z)G(z) \text{, } (1+z)^c \text{, } G(cz)\rangle  \\
+     & = \sum_n \left( \sum_{k=0}^n (-1)^k \binom{r+1}{k} a_{n-k} \right) z^n \\
+\end{align*}
+
+Entonces el $f_k(r)$ solicitado es
+
+\[
+ f_k(r) = (-1)^k \binom{r+1}{k}
+\]
+
+
 \end{enumerate}
 
 % Pregunta 2 (9.14)
