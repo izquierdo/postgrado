@@ -111,7 +111,6 @@ Entonces el $f_k(r)$ solicitado es
 \end{enumerate}
 
 % Pregunta 2 (9.14)
-\newpage
 \section{}
 
 \begin{align*}
@@ -134,7 +133,6 @@ Entonces el $f_k(r)$ solicitado es
 \end{align*}
 
 % Pregunta 3 (9.27)
-\newpage
 \section{}
 
 Para empezar veamos que $f(0) = 0$, por lo que $\sum_{k=1}^n f(k) = \sum_{k=0}^n f(k)$.
@@ -183,6 +181,37 @@ Usaremos la reescritura (9.78) de la fórmula de Euler.
 & \frac{n^{\alpha+1}}{\alpha+1}
   + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
   O((2\pi)^{-2m}) \int_0^n | f^{(2m)}(x) | dx \\
+= & \langle x^\alpha \text{ positivo en el rango} \rangle \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m}) \int_0^n f^{(2m)}(x) dx \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m}) \left. (f^{(2m-1)}(x) \right|_0^n  \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m}) \left. \alpha^{\underline{2m-1}} x^{\alpha-2m+1} \right|_0^n  \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m}) \alpha^{\underline{2m-1}} n^{\alpha-2m+1}  \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m}) O(n^{\alpha-2m+1})  \\
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O((2\pi)^{-2m} n^{\alpha-2m+1})  \\
+\end{align*}
+
+\begin{align*}
+= & \\
+& \frac{n^{\alpha+1}}{\alpha+1}
+  + \frac{1}{2} n^\alpha + \sum_{k=1}^m \frac{B_{2k}}{2k} \binom{\alpha}{2k-1} n^{\alpha-2k+1} + 
+  O(n^{\alpha-2m+1})  \\
 \end{align*}
 
 \end{document}
