@@ -55,6 +55,43 @@
  % (a)
  \item
  
+\begin{align*}
+c_n & = \sum_{j+2k \leq n} a_j b_k \\
+    & = \sum_{j+k \leq n} a_j b_{k/2} \\
+    & = \sum_{j \leq j+k \leq n} a_j b_{k/2} & \langle j \leq j+k \text{ con } 0 \leq j,k \rangle \\
+    & = \sum_{j \leq k \leq n} a_j b_{(k-j)/2} \\
+    & = \sum_{k \leq n} \sum_{j \leq k} a_j b_{(k-j)/2} \\
+\end{align*}
+
+Aquí fue usado el hecho de que los coeficientes de $n$ negativo son cero. Ahora,
+si $G(z) = \sum_n (\sum_{j \leq n} a_n b_{(n-j)/2}) z^n$ (con $g_n = (\sum_{j \leq n} a_n b_{(n-j)/2})$, entonces
+
+\[
+\frac{G(z)}{1-z} = \sum_n (\sum_{k \leq n} g_k) z^n = \sum_n (\sum_{k \leq n} (\sum_{j \leq k} a_k b_{(k-j)/2})) z^n
+\]
+
+Por lo tanto
+
+\[
+C(z) = \sum_n c_n z^n = \sum_n (\sum_{k \leq n} (\sum_{j \leq k} a_k b_{(k-j)/2})) = \frac{G(z)}{1-z}
+\]
+
+Ahora,
+
+\begin{align*}
+G(z) & = \sum_n \sum_{j \leq n} a_n b_{(n-j)/2} z^n \\
+     & = \sum_n \sum_{j} a_n b_{(n-j)/2} z^n & \langle \text{coeficientes negativos son cero} \rangle \\
+     & = (\sum_n a_n z^n)(\sum_n b_{n/2} z^n) \\
+     & = (\sum_n a_n z^n)(\sum_n b_n z^{2n}) \\
+     & = A(z)B(z^2) \\
+\end{align*}
+
+En conclusión,
+
+\[
+C(z) = \frac{A(z)B(z^2)}{1-z}
+\]
+
  % (b) 
  \item Tomando el caso apropiado de la tabla 320 del libro empezamos:
 
@@ -126,8 +163,8 @@ Entonces el $f_k(r)$ solicitado es
                      & = n^{n+\beta}
                          e^{\alpha}
                          (1 + \frac{2\beta\alpha-\alpha^2}{2}n^{-1}+O(n^{-2}))* \\
-                         & (1+\frac{-\beta\alpha^2}{2}n^{-2}+O(n^{-4})
-                         (1+O(n^{-2})) \\
+                         & (1+\frac{-\beta\alpha^2}{2}n^{-2}+O(n^{-4}) 
+                         (1+O(n^{-2})) & \langle \text{(9.32)} \rangle \\
                      & = n^{n+\beta} e^{\alpha} (1 + \frac{2\beta\alpha-\alpha^2}{2}n^{-1}+O(n^{-2})) \\
                      & = n^{n+\beta} e^{\alpha} (1 + \alpha (\beta - \frac{1}{2}\alpha) n^{-1}+O(n^{-2})) \\
 \end{align*}
