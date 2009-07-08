@@ -138,11 +138,18 @@ A partir de ahora supongo $\text{NO\_GUSTA} = T_2$.
  \item 
 
 \begin{eqnarray*}
- T_4 & \asig & \pi_{\text{CI}}(GUSTA \text{ Join } \text{VENDE}) \\
+ T_1 & \asig & \text{GUSTA} \text{ Join } \text{VENDE} \\
+ T_2 & \asig & T_1 \text{ Join } \text{FRECUENTA} \\
+ T_3 & \asig & \pi_{\text{CI}}(T_2) \\
 \end{eqnarray*}
 
 % Pregunta 13
  \item 
+
+\begin{eqnarray*}
+ T_1 & \asig & \pi_{\text{CI,CodFS}}(\text{NO\_VENDE} \text{ Join } \text{GUSTA}) \\
+ T_2 & \asig & \pi_{CI}(\text{FRECUENTA}-T_1) \\
+\end{eqnarray*}
 
 % Pregunta 14
  \item 
