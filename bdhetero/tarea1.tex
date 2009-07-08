@@ -162,7 +162,7 @@ A partir de ahora supongo $\text{NO\_GUSTA} = T_2$.
 
 \begin{eqnarray*}
  T_1 & \asig & \pi_{\text{CI,CodFS}}(\text{NO\_GUSTA} \text{ Join } \text{VENDE}) \\
- T_2 & \asig & \pi_{CI}(\text{BEBEDOR}) - \pi_{CI}(\text{FRECUENTA} \text{ Join } T_1) \\
+ T_2 & \asig & \pi_{\text{CI}}(\text{BEBEDOR}) - \pi_{\text{CI}}(\text{FRECUENTA} \text{ Join } T_1) \\
 \end{eqnarray*}
 
 % Pregunta 17
@@ -170,11 +170,21 @@ A partir de ahora supongo $\text{NO\_GUSTA} = T_2$.
 
 \begin{eqnarray*}
  T_1 & \asig & \pi_{\text{CI,CodFS}}(\text{NO\_GUSTA} \text{ Join } \text{VENDE}) \\
- T_2 & \asig & \pi_{CI}(\text{BEBEDOR}) - \pi_{CI}(\text{FRECUENTA} \text{ Join } T_1) \\
+ T_2 & \asig & \pi_{\text{CI}}(\text{BEBEDOR}) - \pi_{\text{CI}}(\text{FRECUENTA} \text{ Join } T_1) \\
 \end{eqnarray*}
 
 % Pregunta 18
  \item 
+
+\begin{eqnarray*}
+ T_1 & \asig & \pi_{\text{CI,CodBeb}}(\text{FRECUENTA} \text{ Join } \text{VENDE}) \\
+ T_2 & \asig & \text{GUSTA} -T_1 \\
+ T_3 & \asig & \pi_{\text{CI}}(BEBEDOR) - \pi_{\text{CI}}(T_2) \\
+ T_4 & \asig & \pi_{\text{CI,CodFS}}(\text{NO\_GUSTA} \text{ Join } \text{VENDE}) \\
+ T_5 & \asig & \pi_{\text{CI}}(T_4 \text{ Join } \text{FRECUENTA}) \\
+ T_6 & \asig & \pi_{\text{CI}}(BEBEDOR) - T_4 \\
+ T_7 & \asig & T_3 \text { Join } T_6 \\
+\end{eqnarray*}
 
 \end{enumerate}
 
