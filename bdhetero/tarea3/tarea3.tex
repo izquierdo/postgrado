@@ -47,6 +47,16 @@
  ]
 ]
 
+\begin{itemize}
+ \item Costo selección sobre Pelicula: $10s+4*10s = 50s$.
+ Se obtienen en promedio $4\frac{1024}{100}$ películas.
+ \item Costo join Pelicula/Evaluacion: $50s + 4\frac{1024}{100}*(25s+1*20s) = 1895s$.
+ \item Costo selección sobre Evaluacion (en el mediador): $1895s + \lceil \frac{4(4\frac{1024}{100})}{1024} \rceil s = 1896s$.
+ \item Costo join Pelicula/Evaluacion/Premio: $1896s + 4\frac{1024}{100}*(27s+2*15s) = 4230s$.
+ \item Costo selección sobre Premio (en el mediador): $4230s + \lceil \frac{4(4\frac{1024}{100})}{1024} \rceil = 4231s$.
+\end{itemize}
+
+
 % Pregunta 2.2
 \subsection{}
 
