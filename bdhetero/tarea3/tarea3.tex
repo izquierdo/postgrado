@@ -12,127 +12,15 @@
 
 % Título
 
-\title{Bases de Datos Heterogéneas \\ Tarea 2}
+\title{Bases de Datos Heterogéneas \\ Tarea 3}
 \author{Daniel Izquierdo \\ \#08-86809}
 
 \maketitle
 
-\renewcommand{\labelenumi}{\alph{enumi}.}
-\begin{enumerate}
+% Pregunta 1
+\section{}
 
-% Pregunta a
- \item
-
-\Tree
-[.$\Pi_{\text{PELICULA.NOMBRE}}$
-  [.{$\sigma$ \\
-   PRODUCE.PRESUPUESTO $ = 1000000$ (C1) \\
-   PRODUCE.AÑO $ = 2004$ {\bf OR} PRODUCE.AÑO $ = 2005$ (C2) \\
-   COMPAÑIA.NOMBRE $ = $ ``MGM'' (C3) \\
-   PELICULA.COD\_PELICULA $ = $ PRODUCE.COD\_PELICULA (C4) \\
-   PRODUCE.COD\_COMPAÑIA $ = $ COMPAÑIA.COD\_COMPAÑIA (C5) \\
-   }
-    [.$\times$
-      [.$\times$ PELICULA PRODUCE ]
-      COMPAÑIA
-    ]
-  ]
-]
-
-% Pregunta b
-\item
-
-\renewcommand{\labelenumii}{\arabic{enumii}.}
-\newcommand{\andsql}{\text{ {\bf and} }}
-
-Usaré conmutatividad y asociatividad de $\andsql$ y neutralidad de
-$\mathtt{true}$ sobre $\andsql$ libremente.
-
-\begin{enumerate}
- \item Cascada de selecciones:
-       \begin{eqnarray*}
-       & \sigma_{C1 \andsql C2 \andsql C3 \andsql C4 \andsql C5}(\ldots) \\
-       \equiv & \\
-       & \sigma_{C1 \andsql C2 \andsql C3 \andsql C4}(\sigma_{C5}(\ldots))
-       \end{eqnarray*}
-
- \item Conversión del producto cartesiano en join:
-       \begin{eqnarray*}
-       & \sigma_{C5}((\text{PELICULA} \times \text{PRODUCE}) \times \text{COMPAÑIA}) \\
-       \equiv & \\
-       & (\text{PELICULA} \times \text{PRODUCE}) \Join_{C5} \text{COMPAÑIA} \\
-       \end{eqnarray*}
-
-\item Distributividad de la selección con respecto al join:
-       \begin{eqnarray*}
-       & \sigma_{(C1 \andsql C2 \andsql C4) \andsql C3}(\ldots \Join_{C5} \ldots)  \\
-       \equiv & \\
-       & \sigma_{C1 \andsql C2 \andsql C4}(\ldots) \Join_{C5} \sigma_{C3}(\text{COMPAÑIA})  \\
-       \end{eqnarray*}
-
-       Se puede verificar que se cumplen las condiciones sobre los atributos
-       para aplicar esta equivalencia.
-
- \item Cascada de selecciones:
-       \begin{eqnarray*}
-       & \sigma_{(C1 \andsql C2) \andsql C4}(\ldots) \\
-       \equiv & \\
-       & \sigma_{C1 \andsql C2}(\sigma_{C4}(\ldots))
-       \end{eqnarray*}
-
- \item Conversión del producto cartesiano en join:
-       \begin{eqnarray*}
-       & \sigma_{C4}(\text{PELICULA} \times \text{PRODUCE}) \\
-       \equiv & \\
-       & \text{PELICULA} \Join_{C4} \text{PRODUCE} \\
-       \end{eqnarray*}
-
-\item Distributividad de la selección con respecto al join:
-       \begin{eqnarray*}
-       & \sigma_{\mathtt{true} \andsql (C1 \andsql C2)}(\text{PELICULA} \Join_{C4} \text{PRODUCE})  \\
-       \equiv & \\
-       & PELICULA \Join_{C4} \sigma_{C1 \andsql C2}(\text{PRODUCE})  \\
-       \end{eqnarray*}
-
-       Se puede verificar que se cumplen las condiciones sobre los atributos
-       para aplicar esta equivalencia.
-
- \item Cascada de selecciones:
-       \begin{eqnarray*}
-       & \sigma_{C1 \andsql C2}(\text{PRODUCE}) \\
-       \equiv & \\
-       & \sigma_{C1}(\sigma_{C2}(PRODUCE))
-       \end{eqnarray*}
-
-\end{enumerate}
-
-% Pregunta c
- \item
-
-% Pregunta d
- \item
-
-% Pregunta e
- \item
-
-% Pregunta f
- \item
-
-% Pregunta g
- \item
-
-% Pregunta h
- \item
-
-% Pregunta i
- \item
-
-% Pregunta j
- \item
-
-% Pregunta k
- \item
-
-\end{enumerate}
+% Pregunta 2
+\section{}
 
 \end{document}
