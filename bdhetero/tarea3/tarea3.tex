@@ -26,8 +26,28 @@
  \item $v_3(y,x),v_3(x,y),v_6(x),v_7(y)$
 \end{itemize}
 
-
 % Pregunta 2
 \section{}
+
+% Pregunta 2.1
+\subsection{}
+
+\Tree
+[.$\sigma_{\text{Premio.Premio}=\text{'Oscar'}, \text{Premio.Año}=2009}$
+ [.$\Join_{Pelicula.CodPelicula=Premio.CodPelicula}$
+   [.$\sigma_{\text{Evaluacion.Evaluacion}=\text{'Buena'}}$
+    [.$\Join_{\text{Pelicula.CodPelicula}=\text{Evaluacion.CodPelicula}}$
+     [.$\sigma_{\text{Pelicula.Director}=\text{'Almodovar'}}$
+      Pelicula
+     ]
+     Evaluacion
+    ]
+   ]
+   Premio
+ ]
+]
+
+% Pregunta 2.2
+\subsection{}
 
 \end{document}
