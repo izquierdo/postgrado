@@ -139,8 +139,29 @@ $391+79+3168+25+238+(2N)/1024$ donde $N$ es el número de tuplas resultado.
 % Pregunta e
  \item
 
+Para los operadores de selección no tenemos índices sobre los atributos de selección. Por esto
+se implementan como un recorrido completo de la relación. Para el join más profundo no tenemos índice
+sobre el atributo de join y tampoco cabe la relación izquierda en memoria principal, por lo que no podemos
+usar Block Nested Loop Join ni Index Nested Loop Join. Entre los operadores restantes, el más barato
+es Hash Join.
+
+Para el join menos profundo, no podemos usar Block Nested Loop Join por falta de memoria principal, y tampoco
+Index Nested Loop Join por ser una operación sobre resultados intermedios. Entonces el operador más barato
+es también Hash Join.
+
+El costo de esta solución es el visto en la parte c, es decir, 3901 accesos a bloques.
+Esta solución no es óptima porque --como veremos más adelante-- hay soluciones de menor costo.
+
 % Pregunta f
  \item
+
+\begin{itemize}
+ \item Tamaño 1: PELICULA: 977 bloques. Selección sobre PRODUCE: 470 bloques. Selección sobre COMPAÑIA: 25 bloques.
+       Se elige selección sobre COMPAÑIA. Costo hasta ahora: $25$ bloques, y tenemos una tupla de COMPAÑIA.
+ \item Tamaño 2: Sólo se puede hacer join con PRODUCE. Se hace join de la selección de COMPAÑIA con la selección de PRODUCE.
+       Costo hasta ahora: $25+3*1+3*470=25+1413$ bloques, y tenemos $4$ tuplas del join (por las estadísticas).
+ \item Tamaño 3: Sólo queda PELICULA. Podemos usar Block Nested Loop Join. Costo hasta ahora: $25+1413+1+1*2931=4370$ bloques.
+\end{itemize}
 
 % Pregunta g
  \item
