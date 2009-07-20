@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{qtree}
+\usepackage{enumerate}
 
 \newcommand{\asig}{\ensuremath{\leftarrow}}
 
@@ -56,8 +57,58 @@
  \item Costo selección sobre Premio (en el mediador): $4230s + \lceil \frac{4(4\frac{1024}{100})}{1024} \rceil = 4231s$.
 \end{itemize}
 
-
 % Pregunta 2.2
 \subsection{}
+
+\begin{enumerate}[a.]
+ \item 
+
+ \begin{enumerate}[1:]
+  % Iteracion 1
+  \item Posibles subplanes:
+    \begin{itemize}
+     \item Director $\rightarrow$  NombrePelicula, CodPelicula, Actores, Directores. Costo: $10+4*10s = 50s$.
+     \item NombrePelicula $\rightarrow$ Actores, Directores, CodPelicula. \\
+           No se tiene NombrePelicula.
+     \item CodPelicula $\rightarrow$  Evaluacion. No se tiene CodPelicula.
+     \item CodPelicula $\rightarrow$  Premio, Año. No se tiene CodPelicula.
+     \item Año $\rightarrow$ Premio, CodPelicula. Costo: $30s+3*45s = 165s$.
+    \end{itemize}
+ 
+     Se elige el subplan: Director $\rightarrow$  NombrePelicula, CodPelicula, Actores, Directores \\
+     Costo: $50s$
+
+  % Iteracion 2
+ \item Posibles subplanes:
+    \begin{itemize}
+     \item NombrePelicula $\rightarrow$ Actores, Directores, CodPelicula. \\
+     Ya tenemos Actores, Directores, CodPelicula.
+     \item CodPelicula $\rightarrow$  Evaluacion. Costo: $50s+(4\frac{1024}{100})(25+1*20)s+4 = 1893,2s+4$
+     \item CodPelicula $\rightarrow$  Premio, Año. Costo: $50s+(4\frac{1024}{100})(27+2*15)+4 = 2384,7s+4$
+     \item Año $\rightarrow$ Premio, CodPelicula. Costo (join): $50s+(30+3*45)s+4+\lceil \frac{4}{20} \rceil*(1600000*50/1024) = 215s+78129$.
+    \end{itemize}
+
+    Se elige el subplan: CodPelicula $\rightarrow$  Evaluacion \\
+    Costo: $1893,2s+4$
+
+  % Iteracion 3
+ \item Posibles subplanes:
+    \begin{itemize}
+     \item CodPelicula $\rightarrow$  Premio, Año. Costo: $1893,2s+4+(4\frac{1024}{100})(27+2*15)+4 = 4227,9s+8$
+     \item Año $\rightarrow$ Premio, CodPelicula. Costo (join): $1893,2s+4+(30+3*45)s+4+\lceil \frac{4}{20} \rceil*(1600000*50/1024) =
+           2058,2s + 78133$.
+    \end{itemize}
+
+    Se elige el subplan: CodPelicula $\rightarrow$  Premio, Año \\
+    Costo: $4227,9s+8$
+
+ \end{enumerate}
+
+ \item El costo del plan es $4227,9$ segundos y ocho veces el tiempo de lectura o escritura de un bloque.
+
+ \item El plan es peor que el propuesto anteriormente porque dura al menos más que el anterior en envío de páginas.
+
+\end{enumerate}
+
 
 \end{document}
