@@ -122,12 +122,19 @@ $\mathtt{true}$ sobre $\andsql$ libremente.
 
 \item $(...) \Join_{C5} (...)$: (hash join) 235+3=238 bloques
 
+\item Proyección: 238 bloques
+
 \end{itemize}
 
-El costo es $391+79+3168+25+238=3901$ accesos a bloques.
+El costo es $391+79+3168+25+238+238=4139$ accesos a bloques.
 
 % Pregunta d
  \item
+
+Hay que hacer proyección con eliminación de duplicados. Usando la técnica basada
+en \emph{hashing}, el costo es 
+
+$391+79+3168+25+238+(2N)/1024$ donde $N$ es el número de tuplas resultado.
 
 % Pregunta e
  \item
