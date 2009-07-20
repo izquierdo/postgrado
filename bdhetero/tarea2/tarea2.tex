@@ -43,7 +43,7 @@
 \item
 
 \renewcommand{\labelenumii}{\arabic{enumii}.}
-\newcommand{\andsql}{\text{ {\bf and} }}
+\newcommand{\andsql}{\text{ {\bf AND} }}
 
 Usaré conmutatividad y asociatividad de $\andsql$ y neutralidad de
 $\mathtt{true}$ sobre $\andsql$ libremente.
@@ -101,13 +101,30 @@ $\mathtt{true}$ sobre $\andsql$ libremente.
        \begin{eqnarray*}
        & \sigma_{C1 \andsql C2}(\text{PRODUCE}) \\
        \equiv & \\
-       & \sigma_{C1}(\sigma_{C2}(PRODUCE))
+       & \sigma_{C1}(\sigma_{C2}(\text{PRODUCE}))
        \end{eqnarray*}
 
 \end{enumerate}
 
 % Pregunta c
  \item
+
+\begin{itemize}
+
+\item $\sigma_{C2}(\text{PRODUCE})$: 391 bloques, produce 2000 tuplas
+
+\item $\sigma_{C1}(\sigma_{C2}(\text{PRODUCE}))$: 79 bloques, produce hasta 2000 tuplas
+
+\item $PELICULA \Join_{C4} \sigma_{C1 \andsql C2}(\text{PRODUCE})$: \\
+      (hash join) 2931+237=3168 bloques, produce hasta 2000 tuplas
+
+\item $\sigma_{C4}(\text{COMPAÑIA})$: 25 bloques, produce hasta hasta 1 tupla
+
+\item $(...) \Join_{C5} (...)$: (hash join) 235+3=238 bloques
+
+\end{itemize}
+
+El costo es $391+79+3168+25+238=3901$ accesos a bloques.
 
 % Pregunta d
  \item
