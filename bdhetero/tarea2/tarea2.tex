@@ -149,9 +149,6 @@ Para el join menos profundo, no podemos usar Block Nested Loop Join por falta de
 Index Nested Loop Join por ser una operación sobre resultados intermedios. Entonces el operador más barato
 es también Hash Join.
 
-El costo de esta solución es el visto en la parte c, es decir, 3901 accesos a bloques.
-Esta solución no es óptima porque --como veremos más adelante-- hay soluciones de menor costo.
-
 % Pregunta f
  \item
 
@@ -166,12 +163,25 @@ Esta solución no es óptima porque --como veremos más adelante-- hay solucione
 % Pregunta g
  \item
 
+Criterio de equivalencia: incluye las mismas relaciones.
+
 \begin{itemize}
- \item Iteración 1:
+ \item Iteración 1: PELICULA: 977 bloques. Selección sobre PRODUCE: 470 bloques. Selección sobre COMPAÑIA: 25 bloques.
+ \item Iteración 2: Hash join entre PELICULA y PRODUCE: 4341 bloques. Hash join entre PRODUCE y PELICULA: 4341 bloques.
+       Hash join entre PRODUCE y COMPAÑIA: 1413 bloques. Hash join entre COMPAÑIA y PRODUCE: 1413 bloques. Block Nested Loop Join
+       entre COMPAÑIA y PRODUCE: 471 bloques.
+ \item Iteración 3: Hash join entre PELICULA y (Block Nested Loop Join entre COMPAÑIA y PRODUCE): 4344 bloques. Hash join entre
+       COMPAÑIA y (Hash join entre PRODUCE y PELICULA): 13026 bloques.
 \end{itemize}
+
+Resultado: Hash join entre PELICULA y (Block Nested Loop Join entre COMPAÑIA y PRODUCE), costo 4344 bloques.
 
 % Pregunta h
  \item
+
+El algoritmo greedy es un caso particular de programación dinámica donde todos los
+planes son equivalentes. Como se vió en la corrida anterior, no se cumple el principio
+de optimalidad porque no llegamos a la solución óptima.
 
 % Pregunta i
  \item
