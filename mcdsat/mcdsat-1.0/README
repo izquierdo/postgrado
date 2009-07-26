@@ -1,0 +1,25 @@
+Requirements
+------------
+  Need python 2.4.2 or newer
+  You will need the Darwiche's c2d compiler. Preferred installation site is c2d/ directory.
+    See http://reasoning.cs.ucla.edu/c2d/ for download and installation instructions.
+
+Installation
+------------
+  1. make
+  2. if TPG is not installed, uncompress TPG and follow instructions in README (you may need to have root access)
+  3. cd minicon; follow instructions in README
+  4. cd mcdsat ; follow instructions in READNE
+
+Execution
+---------
+Example files are located in examples/ directory.
+
+  Minicon: minicon/minicon <opt> <views> <query>
+  Mcdsat:  mcdsat/mcdsat <opt> <views> <query>
+
+where <opt> is either MCD or RW for obtaining the MCDs or rewritings respectively. E.g.
+
+  minicon/minicon RW examples/views.txt examples/query.txt
+  mcdsat/mcdsat RW examples/views.txt examples/query/txt
+
