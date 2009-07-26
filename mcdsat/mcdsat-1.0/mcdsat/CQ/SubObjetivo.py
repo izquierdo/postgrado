@@ -14,7 +14,7 @@ class SubObjetivo:
         self.orden = ord
 
     def __str__(self):
-        return self.predicado + "(" + (", ".join(self.orden)) + ")"
+        return self.predicado + "(" + (", ".join([str((x,self.argumentos[x])) for x in self.orden])) + ")"
 
     __repr__ = __str__
 

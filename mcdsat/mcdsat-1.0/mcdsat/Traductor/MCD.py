@@ -1,4 +1,4 @@
-from sets import Set
+#from sets import Set
 class MCD:
     ## hc: head homomorfismo (dict)
     ## phic: mapping vars(Q) en vars(V) (dict)

@@ -100,7 +100,7 @@ def crearReescritura(mcdc, query):
 
 def crearMCD(mod, vistas):
     phictodo = {}
-    gc=Set()
+    gc=set()
     for var in mod:
         if var[0] == 'v':
             numVista = var[2:len(var)-1]

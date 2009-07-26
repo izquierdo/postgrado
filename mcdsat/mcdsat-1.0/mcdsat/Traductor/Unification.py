@@ -1,4 +1,4 @@
-from sets import Set
+#from sets import Set
 
 # Algoritmo de unificacion de variables del Lloyd (modificado)
 # Se unifican funciones de Vars en Vars. 
@@ -47,7 +47,7 @@ def sustituciones(d, v):
 # para los cuales se cumple fun_i(x) != fun_j(x).
 # Antes realiza las sustituciones que se hayan hecho previamente
 def disagreementSet(listFun, sust, var):
-  d = Set()
+  d = set()
   for f in listFun:
     if f.has_key(var):
       vi = f[var]
