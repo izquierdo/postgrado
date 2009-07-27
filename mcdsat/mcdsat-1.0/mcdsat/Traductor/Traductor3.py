@@ -132,10 +132,7 @@ def generarTeoriaMCD(q, vistas):
     c10, c11 = clausulas11(lt, lv, ltaux)
     c15 = clausulas15(q, vistas)
 
-    c16 = clausulas16(q, vistas)
-    #c18 = clausulas18(q, vistas, lv, lt)
-    #c19 = clausulas19(q, vistas, lv, lt)
-    c18=c19=[]
+    c16, c18, c19 = clausulas161819(q, vistas)
 #     print "clausulas 1  \/ vi (por lo menos uno)"
 #     pprint.pprint(c1) 
 #     print "clausulas 2  -vi \/ -vj (maximo uno)"
@@ -429,20 +426,48 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
         c8temp1.append(varT.negarVar())
         c8temp2.append(varT.negarVar())
 
-        if subObQ.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
-            c17.append([varT.negarVar()])
-
         i = i + 1
         ltaux.setdefault((varT,varm),set([])).add(varz)    
     c8.append([varz.negarVar(), varg])
     c8.append([varz.negarVar(), varm])
+
+    for x in subObQ.orden:
+        for y in subObV.orden:
+            vn = VariableSat(True, 't', [x, y])
+            lt.add(vn)
+            varsT[(x,y)]=vn
+
+            if subObQ.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
+                c17.append([vn.negarVar()])
+
+    for x in subObQ.orden:
+        for y in subObQ.orden:
+            if subObQ.argumentos[x] == 1 and subObQ.argumentos[y] == 1 and x != y:
+                if not varsT.has_key((x,y)):
+                    vn = VariableSat(True, 't', [x, y])
+                    lt.add(vn)
+                    varsT[(x,y)]=vn
+                    c17.append([vn.negarVar()])
+
+    for x in subObV.orden:
+        for y in subObV.orden:
+            if subObV.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
+                if not varsT.has_key((x,y)):
+                    vn = VariableSat(True, 't', [x, y])
+                    lt.add(vn)
+                    varsT[(x,y)]=vn
+                    c17.append([vn.negarVar()])
+
     return lt
 
-def clausulas16(q, vistas):
+def clausulas161819(q, vistas):
+    #TODO funcion muy larga
     global varsV
     global varsT
 
     c16 = []
+    c18 = []
+    c19 = []
 
     constsQ = set()
     varsQ = set()
@@ -477,8 +502,8 @@ def clausulas16(q, vistas):
         for a in range(0,len(constsQ)):
             for b in range(a+1,len(constsQ)):
                 for x in varsthisV:
-                    left = varsT.get((constsQ[a], x))
-                    right = varsT.get((constsQ[b], x))
+                    left = varsT.get((constsQ[a], x)).negarVar()
+                    right = varsT.get((constsQ[b], x)).negarVar()
 
                     if (left is not None) and (right is not None):
                         c16.append([varm.negarVar(), left, right])
@@ -486,12 +511,48 @@ def clausulas16(q, vistas):
         for a in range(0,len(conststhisV)):
             for b in range(a+1,len(conststhisV)):
                 for x in varsQ:
-                    left = varsT.get((x, conststhisV[a]))
-                    right = varsT.get((x, conststhisV[b]))
+                    left = varsT.get((x, conststhisV[a])).negarVar()
+                    right = varsT.get((x, conststhisV[b])).negarVar()
 
                     if (left is not None) and (right is not None):
                         c16.append([varm.negarVar(), left, right])
 
+        for a in constsQ:
+            for y in varsQ:
+                for x in varsthisV:
+                    for z in conststhisV + varsthisV:
+                        if x != z:
+                            v1 = varsT.get((a,x)).negarVar()
+                            v2 = varsT.get((y,x)).negarVar()
+                            v3 = varsT.get((y,z)).negarVar()
+                            v4 = varsT.get((a,z))
+
+                            if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
+                                continue
+
+                            if z in conststhisV and a == z:
+                                continue
+
+                            c18.append([varm.negarVar(), v1, v2, v3, v4])
+
+        for x in varsQ:
+            for y in varsthisV:
+                for a in conststhisV:
+                    for z in constsQ + varsQ:
+                        if x != z:
+                            v1 = varsT.get((x,a)).negarVar()
+                            v2 = varsT.get((x,y)).negarVar()
+                            v3 = varsT.get((z,y)).negarVar()
+                            v4 = varsT.get((z,a))
+
+                            if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
+                                continue
+
+                            if z in conststhisV and a == z:
+                                continue
+
+                            c19.append([varm.negarVar(), v1, v2, v3, v4])
+
         m = m + 1
 
-        return c16
+        return c16, c18, c19
