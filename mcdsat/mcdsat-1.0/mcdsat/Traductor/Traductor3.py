@@ -275,7 +275,7 @@ def clausulas513(q, vistas, lt):
 
             
             for x in xrange(n):
-                vartx = varsT.get((int(varsE[x]), int(varv)))
+                vartx = varsT.get((varsE[x], varv))
                 if (vartx, varvt) in lt :
                     for y in xrange(x+1,n):
                         varty = varsT.get((int(varsE[y]), int(varv)))
@@ -413,9 +413,9 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
     i = 0
     for x in subObQ.orden:
         y = subObV.orden[i]
-        varT = VariableSat(True, 't', [int(x), int(y)])
+        varT = VariableSat(True, 't', [x, y])
         lt.add(varT)
-        varsT[(int(x), int(y))]=varT
+        varsT[(x, y)]=varT
         c7temp = [varm.negarVar(), varz.negarVar(), varT]
         c7.append(c7temp)
         c8temp1.append(varT.negarVar())

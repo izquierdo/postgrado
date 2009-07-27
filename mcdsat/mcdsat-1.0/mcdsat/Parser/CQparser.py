@@ -10,8 +10,7 @@ class CQparser(tpg.Parser):
         separator space '\s+';
 
         token var      '[A-Z][A-Za-z0-9]*';
-        token ctte       '[0-9_]+';
-        token nomb      '[a-z][a-z0-9]*';
+        token nomb      '[a-z][a-zA-Z0-9]*';
         token imp       ':[\-]';
 
         START/e -> EXPERIMENTO/e ;
@@ -49,8 +48,8 @@ class CQparser(tpg.Parser):
         ;
 
         ITEM/a ->
-                    var/v   $ a = (v[1:],0)
-                |   ctte/c  $ a = (c,1)
+                    var/v   $ a = (v,0)
+                |   nomb/c  $ a = (c,1)
                 ;
 
     """
