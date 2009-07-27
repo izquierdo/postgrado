@@ -439,6 +439,9 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
     return lt
 
 def clausulas16(q, vistas):
+    global varsV
+    global varsT
+
     c16 = []
 
     constsQ = set()
@@ -474,12 +477,20 @@ def clausulas16(q, vistas):
         for a in range(0,len(constsQ)):
             for b in range(a+1,len(constsQ)):
                 for x in varsthisV:
-                    c16.append([varm.negarVar(), VariableSat(False, 't', [constsQ[a], x]), VariableSat(False, 't', [constsQ[b], x])])
+                    left = varsT.get((constsQ[a], x))
+                    right = varsT.get((constsQ[b], x))
+
+                    if (left is not None) and (right is not None):
+                        c16.append([varm.negarVar(), left, right])
 
         for a in range(0,len(conststhisV)):
             for b in range(a+1,len(conststhisV)):
                 for x in varsQ:
-                    c16.append([varm.negarVar(), VariableSat(False, 't', [x, conststhisV[a]]), VariableSat(False, 't', [x, conststhisV[b]])])
+                    left = varsT.get((x, conststhisV[a]))
+                    right = varsT.get((x, conststhisV[b]))
+
+                    if (left is not None) and (right is not None):
+                        c16.append([varm.negarVar(), left, right])
 
         m = m + 1
 
