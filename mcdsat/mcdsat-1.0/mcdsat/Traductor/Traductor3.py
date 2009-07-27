@@ -36,8 +36,6 @@ def traducir(exp, archV, archC, archVars, archTiempo, archSalida):
 def traducir1(exp, archVistas, archCons, archVars, archSalida): #(archVistas, archCons):
     vistas = cargarCQ(archVistas)
     consultas = cargarCQ(archCons)
-    print "VISTAS:", vistas
-    print "CONSULTAS:", consultas
     for q in consultas:
         if exp == 'SatRW':
             transf = traducirConsultaRW(q, vistas, archSalida)
@@ -134,10 +132,10 @@ def generarTeoriaMCD(q, vistas):
     c10, c11 = clausulas11(lt, lv, ltaux)
     c15 = clausulas15(q, vistas)
 
-    #c16 = clausulas16(q, vistas, lv, lt)
+    c16 = clausulas16(q, vistas)
     #c18 = clausulas18(q, vistas, lv, lt)
     #c19 = clausulas19(q, vistas, lv, lt)
-    c16=c18=c19=[]
+    c18=c19=[]
 #     print "clausulas 1  \/ vi (por lo menos uno)"
 #     pprint.pprint(c1) 
 #     print "clausulas 2  -vi \/ -vj (maximo uno)"
@@ -432,7 +430,6 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
         c8temp2.append(varT.negarVar())
 
         if subObQ.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
-            print "constantes '%s' y '%s' son distintas, agregando" % (x,y)
             c17.append([varT.negarVar()])
 
         i = i + 1
@@ -440,3 +437,50 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
     c8.append([varz.negarVar(), varg])
     c8.append([varz.negarVar(), varm])
     return lt
+
+def clausulas16(q, vistas):
+    c16 = []
+
+    constsQ = set()
+    varsQ = set()
+
+    for so in q.cuerpo:
+        for x in so.orden:
+            if so.argumentos[x] == 1:
+                constsQ.add(x)
+            else:
+                varsQ.add(x)
+
+    constsQ = list(constsQ)
+    varsQ = list(varsQ)
+
+    m = 0
+    for v in vistas:
+        varm = varsV[m]
+
+        conststhisV = set()
+        varsthisV = set()
+
+        for so in v.cuerpo:
+            for x in so.orden:
+                if so.argumentos[x] == 1:
+                    conststhisV.add(x)
+                else:
+                    varsthisV.add(x)
+
+        conststhisV = list(conststhisV)
+        varsthisV = list(varsthisV)
+
+        for a in range(0,len(constsQ)):
+            for b in range(a+1,len(constsQ)):
+                for x in varsthisV:
+                    c16.append([varm.negarVar(), VariableSat(False, 't', [constsQ[a], x]), VariableSat(False, 't', [constsQ[b], x])])
+
+        for a in range(0,len(conststhisV)):
+            for b in range(a+1,len(conststhisV)):
+                for x in varsQ:
+                    c16.append([varm.negarVar(), VariableSat(False, 't', [x, conststhisV[a]]), VariableSat(False, 't', [x, conststhisV[b]])])
+
+        m = m + 1
+
+        return c16

@@ -13,7 +13,7 @@ class CQ:
     def variables(self):
         return self.vars
 
-    def obtVariables(self):
+    def obtVariables(self): # devuelve variables y constantes en vars
         vars = set()
         varsExist = set()
         varsDist = set()
@@ -25,6 +25,20 @@ class CQ:
                 else:
                     varsExist.add(x)
         return vars, varsExist, varsDist
+
+#    def obtConstantes(self):
+#        constantes = set()
+#
+#        for v in self.cabeza.orden:
+#            if self.cabeza.argumentos[v] == 1:
+#                constantes.add(v)
+#
+#        for so in self.cuerpo:
+#            for v in so.orden:
+#                if so.argumentos[v] == 1:
+#                    constantes.add(v)
+#
+#        return constantes
 
     def esSeguro(self):
         varsDisting = self.cabeza.argumentos
@@ -68,10 +82,17 @@ class CQ:
         return CQ(cab, cuer, comp)
 
     def esVarDisting(self, var):
-        return self.cabeza.argumentos.has_key(var)
+        if self.cabeza.argumentos.has_key(var):
+            return True
+
+        for so in self.cuerpo:
+            for x in so.orden:
+                if var == x and so.argumentos[x] == 1: # es una constante
+                    return True
 
     def todasVarDisting(self):
-        return len(self.cabeza.argumentos) == len(self.vars)
+        return len(self.vars) == len(self.varsDist)
+        #return len(self.cabeza.argumentos) == len(self.vars)
     
     def imprimir(self, dic):
         for x in dic.keys():
