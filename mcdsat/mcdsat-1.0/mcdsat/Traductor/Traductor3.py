@@ -141,6 +141,12 @@ def generarTeoriaMCD(q, vistas):
     c5, c13 = clausulas513(q,vistas,ltaux)
     c10, c11 = clausulas11(lt, lv, ltaux)
     c15 = clausulas15(q, vistas)
+
+    #c16 = clausulas16(q, vistas, lv, lt)
+    #c17 = clausulas17(q, vistas, lt)
+    #c18 = clausulas18(q, vistas, lv, lt)
+    #c19 = clausulas19(q, vistas, lv, lt)
+    c16=c17=c18=c19=[]
 #     print "clausulas 1  \/ vi (por lo menos uno)"
 #     pprint.pprint(c1) 
 #     print "clausulas 2  -vi \/ -vj (maximo uno)"
@@ -162,18 +168,30 @@ def generarTeoriaMCD(q, vistas):
 #     print "clausulas 10 t explicito"
 #     pprint.pprint(c10)
 #     print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
-    pprint.pprint(c11)
-    print "clausulas 12  v_m & g_j => -g_k "
+#     pprint.pprint(c11)
+#     print "clausulas 12  v_m & g_j => -g_k "
 #     pprint.pprint(c12)
 #     print "clausulas 13  t_ij => -t_kj"
 #     pprint.pprint(c13)
 #     print "clausulas 14  v_i => -gk cuando los preds son diff"
 #     pprint.pprint(c14)
 
+    print "clausulas 16  v_i /\ t_ax => -t_bx y v_i /\ t_xa => -t_xb cuando a,b constantes"
+    pprint.pprint(c16)
+
+    print "clausulas 17  -t_ab cuando a,b constantes"
+    pprint.pprint(c17)
+
+    print "clausulas 18  v_i /\ t_ax /\ t_yx /\ t_yz => t_az con a constante"
+    pprint.pprint(c18)
+
+    print "clausulas 19  v_i /\ t_xa /\ t_ya /\ t_yz => t_xz con a constante"
+    pprint.pprint(c19)
+
     variables = []
     variables = lv+ lg+ list(lt)+ lz
 
-    clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
+    clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15 + c16 + c17 + c18 + c19
     return variables, clausulas
 
 
@@ -226,14 +244,14 @@ def clausula4(q, varq, vis, varj, varO, lt, c4temp):
     global varsV
     global varsT
     varv = varsV[vis]
-    varqi = int(varq)
-    varji = int(varj)
+    varqi = varq
+    varji = varj
     variableij = varsT.get((varqi, varji))
 
     if (variableij, varv) in lt:
         clausulag4(q, varq, varv, variableij, c4temp)
         for vark in varO:
-            varki = int(vark)
+            varki = vark
             if vark != varj:
                 variableik = varsT.get((varqi, varki))
                 if (variableik, varv) in lt:
@@ -267,7 +285,7 @@ def clausulas513(q, vistas, lt):
         for varv in v.variables():
             if not v.esVarDisting(varv):
                 for varq in q.varsDist:
-                    vart = varsT.get((int(varq), int(varv)))
+                    vart = varsT.get((varq, varv))
                     if (vart, varvt) in lt:
                         c5.append([varvt.negarVar(),
                                    vart.negarVar()
