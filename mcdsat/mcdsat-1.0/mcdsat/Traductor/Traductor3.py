@@ -120,17 +120,9 @@ def generarTeoriaMCD(q, vistas):
     global varsT
     global varsZ
 
-    print "generar teoria mcd"
-    print "vistas"
-
-    for v in vistas:
-        print v
-
-    print "fin debug"
-
     lv, c1, c2 = variablesV(q, vistas)
     lg, c3 = variablesG(q, lv)
-    lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas)
+    lt, lz, c6, c7, c8, c9, c17, c14, ltaux = clausulas678(q, vistas)
 #     print "V",varsV,lv
 #     print "G",varsG,lg
 #     print "T",len(varsT),len(lt)
@@ -143,10 +135,9 @@ def generarTeoriaMCD(q, vistas):
     c15 = clausulas15(q, vistas)
 
     #c16 = clausulas16(q, vistas, lv, lt)
-    #c17 = clausulas17(q, vistas, lt)
     #c18 = clausulas18(q, vistas, lv, lt)
     #c19 = clausulas19(q, vistas, lv, lt)
-    c16=c17=c18=c19=[]
+    c16=c18=c19=[]
 #     print "clausulas 1  \/ vi (por lo menos uno)"
 #     pprint.pprint(c1) 
 #     print "clausulas 2  -vi \/ -vj (maximo uno)"
@@ -372,6 +363,7 @@ def clausulas678(q, vistas):
     ltaux = {}
     c6temp = []
     c14temp = {}
+    c17 = []
     i = 0
     for subOb in q.cuerpo:
         pred = subOb.predicado
@@ -391,7 +383,7 @@ def clausulas678(q, vistas):
                     varsZ[(i,j,m)]=varz
                     c6temp.append(varz)
                     c9temp.append(varz)
-                    lttemp = clausula78a(varz, varg, varm, subOb, subObtemp, m, ltaux, c7, c8)
+                    lttemp = clausula78a(varz, varg, varm, subOb, subObtemp, m, ltaux, c7, c8, c17)
                     lt |= lttemp
                     subObCubre = True
                 j = j + 1
@@ -402,7 +394,7 @@ def clausulas678(q, vistas):
             if not subObCubre == True:
                 c14temp.setdefault(varm.negarVar(),[]).append(varg.negarVar())
         i = i+1
-    return lt, lz, c6, c7, c8, c9, clausula14(c14temp), ltaux
+    return lt, lz, c6, c7, c8, c9, c17, clausula14(c14temp), ltaux
 
 
 def clausula14(c14temp):
@@ -423,7 +415,7 @@ def clausula9(c9temp):
 
 
 
-def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
+def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
     global varsT
     c8temp1 = [varz, varm.negarVar()]
     c8temp2 = [varm]
@@ -438,9 +430,13 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
         c7.append(c7temp)
         c8temp1.append(varT.negarVar())
         c8temp2.append(varT.negarVar())
+
+        if subObQ.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
+            print "constantes '%s' y '%s' son distintas, agregando" % (x,y)
+            c17.append([varT.negarVar()])
+
         i = i + 1
         ltaux.setdefault((varT,varm),set([])).add(varz)    
     c8.append([varz.negarVar(), varg])
     c8.append([varz.negarVar(), varm])
     return lt
-
