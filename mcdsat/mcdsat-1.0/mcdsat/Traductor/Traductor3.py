@@ -296,7 +296,7 @@ def clausulas513(q, vistas, lt):
                 vartx = varsT.get((varsE[x], varv))
                 if (vartx, varvt) in lt :
                     for y in xrange(x+1,n):
-                        varty = varsT.get((int(varsE[y]), int(varv)))
+                        varty = varsT.get((varsE[y], varv))
                         if (varty, varvt) in lt:
                             c13.append([vartx.negarVar(),
                                         varty.negarVar(),
