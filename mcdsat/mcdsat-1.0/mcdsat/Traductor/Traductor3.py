@@ -133,46 +133,43 @@ def generarTeoriaMCD(q, vistas):
     c15 = clausulas15(q, vistas)
 
     c16, c18, c19 = clausulas161819(q, vistas)
-#     print "clausulas 1  \/ vi (por lo menos uno)"
-#     pprint.pprint(c1) 
-#     print "clausulas 2  -vi \/ -vj (maximo uno)"
-#     pprint.pprint(c2) 
-#     print "clausulas 3  \/ gk (por lo menos uno)"
-#     pprint.pprint(c3) 
-#     print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
-#     pprint.pprint(c4) 
-#     print "clausulas 5  vm => -tij (i Dist y j exist) "
-#     pprint.pprint(c5)
-#     print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
-#     pprint.pprint(c6) 
-#     print "clausulas 7  zir => tir"
-#     pprint.pprint(c7) 
-#     print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
-#     pprint.pprint(c8)
-#     print "clausulas 9  maximo una z por vm, gi"
-#     pprint.pprint(c9)
-#     print "clausulas 10 t explicito"
-#     pprint.pprint(c10)
-#     print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
-#     pprint.pprint(c11)
-#     print "clausulas 12  v_m & g_j => -g_k "
-#     pprint.pprint(c12)
-#     print "clausulas 13  t_ij => -t_kj"
-#     pprint.pprint(c13)
-#     print "clausulas 14  v_i => -gk cuando los preds son diff"
-#     pprint.pprint(c14)
 
-    print "clausulas 16  v_i /\ t_ax => -t_bx y v_i /\ t_xa => -t_xb cuando a,b constantes"
-    pprint.pprint(c16)
-
+#    print "clausulas 1  \/ vi (por lo menos uno)"
+#    pprint.pprint(c1) 
+#    print "clausulas 2  -vi \/ -vj (maximo uno)"
+#    pprint.pprint(c2) 
+#    print "clausulas 3  \/ gk (por lo menos uno)"
+#    pprint.pprint(c3) 
+#    print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
+#    pprint.pprint(c4) 
+#    print "clausulas 5  vm => -tij (i Dist y j exist) "
+#    pprint.pprint(c5)
+#    print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
+#    pprint.pprint(c6) 
+#    print "clausulas 7  zir => tir"
+#    pprint.pprint(c7) 
+#    print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
+#    pprint.pprint(c8)
+#    print "clausulas 9  maximo una z por vm, gi"
+#    pprint.pprint(c9)
+#    print "clausulas 10 t explicito"
+#    pprint.pprint(c10)
+#    print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
+#    pprint.pprint(c11)
+#    print "clausulas 12  v_m & g_j => -g_k "
+#    pprint.pprint(c12)
+#    print "clausulas 13  t_ij => -t_kj"
+#    pprint.pprint(c13)
+#    print "clausulas 14  v_i => -gk cuando los preds son diff"
+#    pprint.pprint(c14)
+#    print "clausulas 16  v_i /\ t_ax => -t_bx y v_i /\ t_xa => -t_xb cuando a,b constantes"
+#    pprint.pprint(c16)
     print "clausulas 17  -t_ab cuando a,b constantes"
     pprint.pprint(c17)
-
-    print "clausulas 18  v_i /\ t_ax /\ t_yx /\ t_yz => t_az con a constante"
-    pprint.pprint(c18)
-
-    print "clausulas 19  v_i /\ t_xa /\ t_ya /\ t_yz => t_xz con a constante"
-    pprint.pprint(c19)
+#    print "clausulas 18  v_i /\ t_ax /\ t_yx /\ t_yz => t_az con a constante"
+#    pprint.pprint(c18)
+#    print "clausulas 19  v_i /\ t_xa /\ t_ya /\ t_yz => t_xz con a constante"
+#    pprint.pprint(c19)
 
     variables = []
     variables = lv+ lg+ list(lt)+ lz
@@ -207,7 +204,8 @@ def clausulas11(lt, lv, ltaux):
         for v in lv:
             if (t, v) in ltaux:
                 c11temp.append(v)
-        c11.append(c11temp)
+        #TODO eliminado por bug por daniel, de verdad es necesario?
+        #c11.append(c11temp)
     c10 = []
     for ((t, v), varzs) in ltaux.iteritems():
         c10.append([t.negarVar(), v.negarVar()] + list(varzs))
@@ -432,31 +430,41 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
     c8.append([varz.negarVar(), varm])
 
     for x in subObQ.orden:
+        for y in subObQ.orden:
+            vn = VariableSat(True, 't', [x, y])
+
+            if not varsT.has_key((x,y)):
+                lt.add(vn)
+                varsT[(x,y)]=vn
+
+            if subObQ.argumentos[x] == 1 and subObQ.argumentos[y] == 1 and x != y:
+                print "1 negarvar de (%s,%s)" % (x,y)
+                c17.append([vn.negarVar()])
+
+
+    for x in subObQ.orden:
         for y in subObV.orden:
             vn = VariableSat(True, 't', [x, y])
-            lt.add(vn)
-            varsT[(x,y)]=vn
+
+            if not varsT.has_key((x,y)):
+                lt.add(vn)
+                varsT[(x,y)]=vn
 
             if subObQ.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
                 c17.append([vn.negarVar()])
 
-    for x in subObQ.orden:
-        for y in subObQ.orden:
-            if subObQ.argumentos[x] == 1 and subObQ.argumentos[y] == 1 and x != y:
-                if not varsT.has_key((x,y)):
-                    vn = VariableSat(True, 't', [x, y])
-                    lt.add(vn)
-                    varsT[(x,y)]=vn
-                    c17.append([vn.negarVar()])
-
     for x in subObV.orden:
         for y in subObV.orden:
+            vn = VariableSat(True, 't', [x, y])
+
+            if not varsT.has_key((x,y)):
+                lt.add(vn)
+                varsT[(x,y)]=vn
+
             if subObV.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
-                if not varsT.has_key((x,y)):
-                    vn = VariableSat(True, 't', [x, y])
-                    lt.add(vn)
-                    varsT[(x,y)]=vn
-                    c17.append([vn.negarVar()])
+                print "3 negarvar de (%s,%s)" % (x,y)
+                print vn
+                c17.append([vn.negarVar()])
 
     return lt
 
