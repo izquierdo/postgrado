@@ -22,6 +22,8 @@ varsV = {}
 varsG = {}
 varsT = {}
 varsZ = {}
+varsTorig = {}
+ltorig = set([])
  
 def traducir(exp, archV, archC, archVars, archTiempo, archSalida):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
@@ -132,7 +134,7 @@ def generarTeoriaMCD(q, vistas):
     c10, c11 = clausulas11(lt, lv, ltaux)
     c15 = clausulas15(q, vistas)
 
-    c16, c18, c19 = clausulas161819(q, vistas)
+    c16, c18, c19, c20 = clausulas16181920(q, vistas)
 
 #    print "clausulas 1  \/ vi (por lo menos uno)"
 #    pprint.pprint(c1) 
@@ -170,11 +172,13 @@ def generarTeoriaMCD(q, vistas):
 #    pprint.pprint(c18)
 #    print "clausulas 19  v_i /\ t_xa /\ t_ya /\ t_yz => t_xz con a constante"
 #    pprint.pprint(c19)
+#    print "clausulas 20 (tau de transitividad solo si taus originales)
+#    pprint.pprint(c20)
 
     variables = []
     variables = lv+ lg+ list(lt)+ lz
 
-    clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15 + c16 + c17 + c18 + c19
+    clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15 + c16 + c17 + c18 + c19 + c20
     return variables, clausulas
 
 
@@ -198,8 +202,10 @@ def clausulas15(query, vistas):
             
 
 def clausulas11(lt, lv, ltaux):
+    global ltorig
+
     c11 = []
-    for t in lt:
+    for t in ltorig:
         c11temp = [t.negarVar()]
         for v in lv:
             if (t, v) in ltaux:
@@ -410,6 +416,9 @@ def clausula9(c9temp):
 
 def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
     global varsT
+    global varsTorig
+    global ltorig
+
     c8temp1 = [varz, varm.negarVar()]
     c8temp2 = [varm]
     lt = set([])
@@ -418,7 +427,9 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
         y = subObV.orden[i]
         varT = VariableSat(True, 't', [x, y])
         lt.add(varT)
+        ltorig.add(varT)
         varsT[(x, y)]=varT
+        varsTorig[(x, y)]=varT
         c7temp = [varm.negarVar(), varz.negarVar(), varT]
         c7.append(c7temp)
         c8temp1.append(varT.negarVar())
@@ -465,14 +476,16 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
 
     return lt
 
-def clausulas161819(q, vistas):
+def clausulas16181920(q, vistas):
     #TODO funcion muy larga
     global varsV
     global varsT
+    global ltorig
 
     c16 = []
     c18 = []
     c19 = []
+    c20 = []
 
     constsQ = set()
     varsQ = set()
@@ -522,42 +535,50 @@ def clausulas161819(q, vistas):
                     if (left is not None) and (right is not None):
                         c16.append([varm.negarVar(), left, right])
 
-        for a in constsQ:
-            for y in varsQ:
-                for x in varsthisV:
-                    for z in conststhisV + varsthisV:
-                        if x != z:
-                            v1 = varsT.get((a,x))
-                            v2 = varsT.get((y,x))
-                            v3 = varsT.get((y,z))
-                            v4 = varsT.get((a,z))
-
-                            if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
-                                continue
-
-                            if z in conststhisV and a == z:
-                                continue
-
-                            c18.append([varm.negarVar(), v1.negarVar(), v2.negarVar(), v3.negarVar(), v4])
-
-        for x in varsQ:
-            for y in varsthisV:
-                for a in conststhisV:
-                    for z in constsQ + varsQ:
-                        if x != z:
-                            v1 = varsT.get((x,a))
-                            v2 = varsT.get((x,y))
-                            v3 = varsT.get((z,y))
-                            v4 = varsT.get((z,a))
-
-                            if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
-                                continue
-
-                            if z in conststhisV and a == z:
-                                continue
-
-                            c19.append([varm.negarVar(), v1.negarVar(), v2.negarVar(), v3.negarVar(), v4])
+#        c20dict = {}
+#
+#        for a in constsQ:
+#            for y in varsQ:
+#                for x in varsthisV:
+#                    for z in conststhisV + varsthisV:
+#                        if x != z:
+#                            v1 = varsT.get((a,x))
+#                            v2 = varsT.get((y,x))
+#                            v3 = varsT.get((y,z))
+#                            v4 = varsT.get((a,z))
+#
+#                            if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
+#                                continue
+#
+#                            if z in conststhisV and a == z:
+#                                continue
+#
+#                            c18.append([varm.negarVar(), v1.negarVar(), v2.negarVar(), v3.negarVar(), v4])
+#
+#                            if v4 not in ltorig:
+#                                c20dict.setdefault(v4,set([])).add((v1.negarVar(),v2.negarVar(),v3.negarVar()))
+#
+#        for x in varsQ:
+#            for y in varsthisV:
+#                for a in conststhisV:
+#                    for z in constsQ + varsQ:
+#                        if x != z:
+#                            v1 = varsT.get((x,a))
+#                            v2 = varsT.get((x,y))
+#                            v3 = varsT.get((z,y))
+#                            v4 = varsT.get((z,a))
+#
+#                            if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
+#                                continue
+#
+#                            if z in conststhisV and a == z:
+#                                continue
+#
+#                            c19.append([varm.negarVar(), v1.negarVar(), v2.negarVar(), v3.negarVar(), v4])
+#
+#        for k in c20dict:
+#            print "a"
 
         m = m + 1
 
-        return c16, c18, c19
+        return c16, c18, c19, c20
