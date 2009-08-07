@@ -440,39 +440,43 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
     c8.append([varz.negarVar(), varg])
     c8.append([varz.negarVar(), varm])
 
-    for x in subObQ.orden:
-        for y in subObQ.orden:
-            vn = VariableSat(True, 't', [x, y])
-
-            if not varsT.has_key((x,y)):
-                lt.add(vn)
-                varsT[(x,y)]=vn
-
-            if subObQ.argumentos[x] == 1 and subObQ.argumentos[y] == 1 and x != y:
-                c17.append([vn.negarVar()])
+#    for x in subObQ.orden:
+#        for y in subObQ.orden:
+#            if not varsT.has_key((x,y)):
+#                vn = VariableSat(True, 't', [x, y])
+#                #lt.add(vn)
+#                #varsT[(x,y)]=vn
+#                continue # porque quite clausulas de transitividad
+#            else:
+#                vn = varsT[(x, y)]
+#
+#            if subObQ.argumentos[x] == 1 and subObQ.argumentos[y] == 1 and x != y:
+#                c17.append([vn.negarVar()])
 
 
     for x in subObQ.orden:
         for y in subObV.orden:
-            vn = VariableSat(True, 't', [x, y])
-
             if not varsT.has_key((x,y)):
-                lt.add(vn)
-                varsT[(x,y)]=vn
+                vn = VariableSat(True, 't', [x, y])
+                #lt.add(vn)
+                #varsT[(x,y)]=vn
+                continue # porque quite clausulas de transitividad
+            else:
+                vn = varsT[(x, y)]
 
             if subObQ.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
                 c17.append([vn.negarVar()])
 
-    for x in subObV.orden:
-        for y in subObV.orden:
-            vn = VariableSat(True, 't', [x, y])
-
-            if not varsT.has_key((x,y)):
-                lt.add(vn)
-                varsT[(x,y)]=vn
-
-            if subObV.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
-                c17.append([vn.negarVar()])
+#    for x in subObV.orden:
+#        for y in subObV.orden:
+#            vn = VariableSat(True, 't', [x, y])
+#
+#            if not varsT.has_key((x,y)):
+#                lt.add(vn)
+#                varsT[(x,y)]=vn
+#
+#            if subObV.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
+#                c17.append([vn.negarVar()])
 
     return lt
 
