@@ -164,8 +164,8 @@ def generarTeoriaMCD(q, vistas):
 #    pprint.pprint(c14)
 #    print "clausulas 16  v_i /\ t_ax => -t_bx y v_i /\ t_xa => -t_xb cuando a,b constantes"
 #    pprint.pprint(c16)
-    print "clausulas 17  -t_ab cuando a,b constantes"
-    pprint.pprint(c17)
+#    print "clausulas 17  -t_ab cuando a,b constantes"
+#    pprint.pprint(c17)
 #    print "clausulas 18  v_i /\ t_ax /\ t_yx /\ t_yz => t_az con a constante"
 #    pprint.pprint(c18)
 #    print "clausulas 19  v_i /\ t_xa /\ t_ya /\ t_yz => t_xz con a constante"
@@ -438,7 +438,6 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
                 varsT[(x,y)]=vn
 
             if subObQ.argumentos[x] == 1 and subObQ.argumentos[y] == 1 and x != y:
-                print "1 negarvar de (%s,%s)" % (x,y)
                 c17.append([vn.negarVar()])
 
 
@@ -462,8 +461,6 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, c17):
                 varsT[(x,y)]=vn
 
             if subObV.argumentos[x] == 1 and subObV.argumentos[y] == 1 and x != y:
-                print "3 negarvar de (%s,%s)" % (x,y)
-                print vn
                 c17.append([vn.negarVar()])
 
     return lt
@@ -510,11 +507,11 @@ def clausulas161819(q, vistas):
         for a in range(0,len(constsQ)):
             for b in range(a+1,len(constsQ)):
                 for x in varsthisV:
-                    left = varsT.get((constsQ[a], x)).negarVar()
-                    right = varsT.get((constsQ[b], x)).negarVar()
+                    left = varsT.get((constsQ[a], x))
+                    right = varsT.get((constsQ[b], x))
 
                     if (left is not None) and (right is not None):
-                        c16.append([varm.negarVar(), left, right])
+                        c16.append([varm.negarVar(), left.negarVar(), right.negarVar()])
 
         for a in range(0,len(conststhisV)):
             for b in range(a+1,len(conststhisV)):
@@ -530,9 +527,9 @@ def clausulas161819(q, vistas):
                 for x in varsthisV:
                     for z in conststhisV + varsthisV:
                         if x != z:
-                            v1 = varsT.get((a,x)).negarVar()
-                            v2 = varsT.get((y,x)).negarVar()
-                            v3 = varsT.get((y,z)).negarVar()
+                            v1 = varsT.get((a,x))
+                            v2 = varsT.get((y,x))
+                            v3 = varsT.get((y,z))
                             v4 = varsT.get((a,z))
 
                             if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
@@ -541,7 +538,7 @@ def clausulas161819(q, vistas):
                             if z in conststhisV and a == z:
                                 continue
 
-                            c18.append([varm.negarVar(), v1, v2, v3, v4])
+                            c18.append([varm.negarVar(), v1.negarVar(), v2.negarVar(), v3.negarVar(), v4])
 
         for x in varsQ:
             for y in varsthisV:

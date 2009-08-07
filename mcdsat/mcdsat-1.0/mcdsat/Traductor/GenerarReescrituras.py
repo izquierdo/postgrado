@@ -110,7 +110,8 @@ def crearMCD(mod, vistas):
                 vista = vistas[int(numVista)]
         elif var[0] == 't':
             i = var.find(',')
-            phictodo.setdefault('X'+var[2:i],[]).append('X'+var[i+2:len(var)-1])
+            #phictodo.setdefault('X'+var[2:i],[]).append('X'+var[i+2:len(var)-1])
+            phictodo.setdefault(var[3:i-1],[]).append(var[i+3:len(var)-2])
         elif var[0] == 'g':
             gc.add(var[2:len(var)-1])
     return MCD(phictodo, gc, vista)

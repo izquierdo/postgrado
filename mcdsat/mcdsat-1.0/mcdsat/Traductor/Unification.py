@@ -8,7 +8,7 @@ def unificar(listFun, listVars):
   mgu = {}
   sust = {}
   for x1 in listVars:
-    x = 'X'+x1
+    x = x1
     d = disagreementSet(listFun,sust,x) # calcula es conjunto desacuerdo de la variable x
     v = d.pop()                         # escoge a un representante v
     sust_i = sustituciones(d, v)        # calcula las sustituciones del conjunto desacuerdo y el representante
