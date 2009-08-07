@@ -545,9 +545,9 @@ def clausulas161819(q, vistas):
                 for a in conststhisV:
                     for z in constsQ + varsQ:
                         if x != z:
-                            v1 = varsT.get((x,a)).negarVar()
-                            v2 = varsT.get((x,y)).negarVar()
-                            v3 = varsT.get((z,y)).negarVar()
+                            v1 = varsT.get((x,a))
+                            v2 = varsT.get((x,y))
+                            v3 = varsT.get((z,y))
                             v4 = varsT.get((z,a))
 
                             if (v1 is None) or (v2 is None) or (v3 is None) or (v4 is None):
@@ -556,7 +556,7 @@ def clausulas161819(q, vistas):
                             if z in conststhisV and a == z:
                                 continue
 
-                            c19.append([varm.negarVar(), v1, v2, v3, v4])
+                            c19.append([varm.negarVar(), v1.negarVar(), v2.negarVar(), v3.negarVar(), v4])
 
         m = m + 1
 
