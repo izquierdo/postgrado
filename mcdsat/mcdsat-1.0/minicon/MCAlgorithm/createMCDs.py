@@ -28,6 +28,7 @@ def createMCDs(vistas, query):
                         if mcdaux != None:
                             extenderMapping(C, mcdaux, query, V, maps, gi)
         i = i + 1
+    eliminarMCDsPorConstantesIncompatibles(C, query)
     eliminarMCDsNoMinimales(C);
     return C
 
@@ -124,5 +125,50 @@ def eliminarMCDsNoMinimales(mcds):
                 elif mapsmcdy >= mapsmcdx and gcmcdy >= gcmcdx:
                     mcds.discard(mcdy)
 
+def eliminarMCDsPorConstantesIncompatibles(mcds, query):
+    listaMcds = list(mcds)
+    n = len(listaMcds)
+    for x in xrange(n):
+        mcdx = listaMcds[x]
+        mapsmcdx = mcdx.conjuntoMaps
 
+        qconstmappings = {}
+        vconstmappings = {}
 
+        for (a, b) in mapsmcdx:
+            aconst = False
+            bconst = False
+
+            for so in query.cuerpo:
+                if so.argumentos.has_key(a) and so.argumentos[a] == 1:
+                    aconst = True
+
+            for so in mcdx.vista.cuerpo:
+                if so.argumentos.has_key(b) and so.argumentos[b] == 1:
+                    bconst = True
+
+            if aconst and bconst and a != b:
+                mcds.discard(mcdx)
+                continue
+
+            if aconst:
+                qconstmappings.setdefault(a,set([])).add(b)
+
+            if bconst:
+                vconstmappings.setdefault(b,set([])).add(a)
+
+        for x, xset in qconstmappings.items():
+            for y, yset in qconstmappings.items():
+                if x == y:
+                    continue
+
+                if len(xset & yset) > 0:
+                    mcds.discard(mcdx)
+
+        for x, xset in vconstmappings.items():
+            for y, yset in vconstmappings.items():
+                if x == y:
+                    continue
+
+                if len(xset & yset) > 0:
+                    mcds.discard(mcdx)
