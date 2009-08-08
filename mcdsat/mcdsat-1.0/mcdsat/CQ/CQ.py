@@ -82,6 +82,8 @@ class CQ:
         return CQ(cab, cuer, comp)
 
     def esVarDisting(self, var):
+        return self.cabeza.argumentos.has_key(var)
+
         if self.cabeza.argumentos.has_key(var):
             return True
 
