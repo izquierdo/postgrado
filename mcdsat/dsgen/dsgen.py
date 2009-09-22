@@ -3,30 +3,52 @@
 import sys
 import random
 
-def sample_reps(pop, n):
-    assert(n > 0)
-    ret = []
+def sample_reps(population, k):
+    assert(k > 0)
 
-    while n > 0:
-        n = n - 1
+    result = [None] * k
 
-def query(subgoals, varlist):
-    print "q(%s) :- " % (",".join(varlist))
+    last = len(population)-1
 
-def view(views, subgoals, varlist):
-    print "view"
+    for i in xrange(k):
+        result[i] = population[random.randint(0,last)]
+
+    return result
+
+def gen_query(sgs_num, varlist, predlist, dist_pc):
+    sgs_predicates = sample_reps(predlist, sgs_num)
+    sgs = [(name,sample_reps(varlist,arity)) for (name,arity) in sgs_predicates]
+    sgs_strings = ["%s(%s)" % (name,",".join(list)) for (name,list) in sgs]
+
+    occurring_vars = []
+
+    for (_,l) in sgs:
+        for v in l:
+            if v not in occurring_vars:
+                #I know this is slow
+                occurring_vars.append(v)
+
+    dist_vars = random.sample(occurring_vars, int(len(occurring_vars)*(dist_pc/100.0)))
+
+    return "q(%s) :- %s" % (",".join(dist_vars), ",".join(sgs_strings))
+
+def gen_view(view_name):
+    pass
+
+def gen_views(views_num, subgoals, varlist):
+    return [gen_view(i) for i in xrange(views_num)]
 
 def main(views, subgoals, variables, predicates, distinguished):
-    varnum = int(variables)
+    sgs_num = int(subgoals)
+    vars_num = int(variables)
+    views_num = int(views)
+    dist_pc = float(distinguished)
 
-    varlist = ["X%d" % (i) for i in range(varnum)]
-    predlist = [("p%d" % (i), random.randint(1,varnum)) for i in range(int(predicates))]
+    varlist = ["X%d" % (i) for i in range(vars_num)]
+    predlist = [("p%d" % (i), random.randint(1,vars_num)) for i in range(int(predicates))]
 
-    print varlist
-    print predlist
-
-    query(subgoals, varlist)
-    view(views, subgoals, variables)
+    q = gen_query(sgs_num, varlist, predlist, dist_pc)
+    vs = gen_views(views_num, sgs_num, variables)
 
 def usage():
     print "Usage: %s <views> <subgoals> <variables> <predicates> <distinguished>" % (sys.argv[0])
