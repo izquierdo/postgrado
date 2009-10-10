@@ -1,0 +1,133 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\newcommand{\tablaTripletas}[2]
+{
+\begin{tabular}{l|c}
+ & Número de tripletas \\
+ \hline
+ Antes & #1 \\
+ Después & #2 \\
+\end{tabular}
+}
+
+\newcommand{\tablaPredicados}[1]
+{
+\begin{tabular}{l|c|c}
+Predicado & Antes & Después \\
+\hline
+#1
+\end{tabular}
+}
+
+\newcommand{\tablaInstancias}[1]
+{
+\begin{tabular}{l|c|c|c}
+Clase & Antes & Después \\
+\hline
+#1
+\end{tabular}
+}
+
+\newcommand{\resultadoDataSet}[5]
+{
+  \newpage
+
+  \section{#1}
+
+  \vspace{0.5cm}
+
+  \tablaTripletas{#2}{#3}
+
+  \vspace{1cm}
+
+  \tablaPredicados{#4}
+
+  \vspace{1cm}
+
+  \tablaInstancias{#5}
+}
+
+\begin{document}
+
+\resultadoDataSet{rdfPrimero}{89}{879}
+{
+    cursa & 14 & 70 \\
+    dicta & 16 & 40 \\
+    esProfesor & 0 & 27 \\
+    esSupervisor & 9 & 45 \\
+    esTutor & 0 & 36 \\
+    rdf:type & 40 & 507 \\
+    rdfs:subClassOf & 8 & 111 \\
+    rdfs:subPropertyOf & 2 & 43 \\
+}
+{
+    estudiante & 0 & 32 \\
+    estudiantePostGrado & 4 & 20 \\
+    estudiantePostGradoOcasional & 4 & 20 \\
+    estudiantePreGrado & 4 & 20 \\
+    materia & 0 & 32 \\
+    materiaPostGrado & 4 & 20 \\
+    materiaPreGrado & 4 & 20 \\
+    persona & 0 & 40 \\
+    profesor & 4 & 20 \\
+    rdfs:Class & 11 & 66 \\
+    rdfs:Property & 5 & 37 \\
+    rdfs:Resource & 0 & 180 \\
+}
+
+\resultadoDataSet{rdfSegundo}{120}{1193}
+{
+    cursa & 14 & 70 \\
+    dicta & 16 & 40 \\
+    esProfesor & 0 & 54 \\
+    esSupervisor & 18 & 90 \\
+    esTutor & 0 & 72 \\
+    rdf:type & 62 & 713 \\
+    rdfs:subClassOf & 8 & 111 \\
+    rdfs:subPropertyOf & 2 & 43 \\
+}
+{
+    estudiante & 0 & 32 \\
+    estudiantePostGrado & 4 & 20 \\
+    estudiantePostGradoOcasional & 24 & 120 \\
+    estudiantePreGrado & 4 & 20 \\
+    materia & 0 & 40 \\
+    materiaPostGrado & 5 & 25 \\
+    materiaPreGrado & 5 & 25 \\
+    persona & 0 & 40 \\
+    profesor & 4 & 20 \\
+    rdfs:Class & 11 & 66 \\
+    rdfs:Property & 5 & 37 \\
+    rdfs:Resource & 0 & 268 \\
+}
+
+\resultadoDataSet{rdfTercero}{162}{1489}
+{
+    cursa & 14 & 70 \\
+    dicta & 16 & 40 \\
+    esProfesor & 0 & 108 \\
+    esSupervisor & 36 & 180 \\
+    esTutor & 0 & 144 \\
+    rdf:type & 86 & 793 \\
+    rdfs:subClassOf & 8 & 111 \\
+    rdfs:subPropertyOf & 2 & 43 \\
+}
+{
+    estudiante & 0 & 32 \\
+    estudiantePostGrado & 4 & 20 \\
+    estudiantePostGradoOcasional & 48 & 160 \\
+    estudiantePreGrado & 4 & 20 \\
+    materia & 0 & 40 \\
+    materiaPostGrado & 5 & 25 \\
+    materiaPreGrado & 5 & 25 \\
+    persona & 0 & 40 \\
+    profesor & 4 & 20 \\
+    rdfs:Class & 11 & 66 \\
+    rdfs:Property & 5 & 37 \\
+    rdfs:Resource & 0 & 308 \\
+}
+
+\end{document}
