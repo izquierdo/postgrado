@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <fstream>
 #include <string>
+#include <cstring>
 
 namespace satlib {
 
