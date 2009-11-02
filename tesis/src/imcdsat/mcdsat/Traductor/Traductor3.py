@@ -163,6 +163,24 @@ def generarTeoriaMCD(q, vistas):
     variables = lv+ lg+ list(lt)+ lz
 
     clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
+
+    #TODO constantes
+    d1=[]
+    d2=[]
+    d3=clausulas_d3(q, vistas)
+    d4=[]
+    d5=[]
+
+    #print "clausulas d1  t_{x,A} => -t_{x,B}"
+    #pprint.pprint(d1)
+    #print "clausulas d2  t_{A,x} => -t_{B,x}"
+    #pprint.pprint(d2)
+    print "clausulas d1  -t_{A,B}"
+    pprint.pprint(d3)
+    #pprint.pprint(d4)
+    clausulas = clausulas + d1 + d2 + d3 + d4
+    #end TODO constantes
+
     return variables, clausulas
 
 
@@ -328,6 +346,12 @@ def clausulas12(vistas, lv, lg):
                     c12.append([lv[i].negarVar(), lg[x].negarVar(), lg[y].negarVar()])                    
     return c12
 
+
+def clausulas_d3(q, vistas):
+    global varsT
+    print "D3"
+    print vistas[0]
+    return []
 
 def clausulas678(q, vistas):
     global varsT

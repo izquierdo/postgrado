@@ -9,6 +9,7 @@ class SubObjetivo:
     orden = [] #Mantiene el orden de los argumentos en la tupla
     
     def __init__(self, pre, param, ord):
+        #print "SubObjetivo(pre=%s, param=%s, ord=%s)" % (str(pre), str(param), str(ord))
         self.predicado = pre
         self.argumentos = param
         self.orden = ord
