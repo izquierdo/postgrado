@@ -1,5 +1,3 @@
-from sets import Set
-
 from SubObjetivo import *
 from Seq import *
 class CQ:
@@ -14,12 +12,12 @@ class CQ:
         return self.vars
 
     def obtVariables(self):
-        vars = Set()
+        vars = set()
         varsXsubob = {}
         for so in self.cuerpo:
             for x in so.orden:
                 vars.add(x)
-                varsXsubob.setdefault(x,Set([])).add(so)
+                varsXsubob.setdefault(x,set([])).add(so)
         return vars, varsXsubob
 
     def esSeguro(self):

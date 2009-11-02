@@ -2,7 +2,6 @@
 # los argumentos de un subobjetivo pueden ser variables o cttes
 # tipo = 0 (variable)
 # tipo = 1 (constante)
-from sets import Set
 class SubObjetivo:
     argumentos = {}
     orden = [] #Mantiene el orden de los argumentos en la tupla
@@ -11,7 +10,7 @@ class SubObjetivo:
         self.predicado = pre
         self.argumentos = param
         self.orden = ord
-        self.conjVars = Set(ord)
+        self.conjVars = set(ord)
         self.clave = self.predicado + "(" + (", ".join(self.orden)) + ")"
 
     def __str__(self):

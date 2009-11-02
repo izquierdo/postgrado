@@ -65,7 +65,7 @@ def crearSO(pred, lista):
 
 # falta colocarle los predicados de orden
 def crearCQ(cabeza, cuerpo):
-#     scuerpo = Set(cuerpo)
+#     scuerpo = set(cuerpo)
     return CQ(cabeza, cuerpo, [])
 
 def cargarCQ(nomArch):

@@ -15,7 +15,6 @@ from BuckAlgorithm.containment import *
 from MCAlgorithm.createMCDs import *
 from MCAlgorithm.combinarMCDs import *
 from Parser.CQparser import *
-from sets import Set
 from random import *
 
 def main(archVistas, archCons, exp):

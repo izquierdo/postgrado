@@ -10,7 +10,7 @@ from MCDAux import *
 #Recibe una lista de vistas
 #Un query CQ
 def createMCDs(vistas, query):
-    C = Set([])
+    C = set([])
     subsQ = query.cuerpo
     conQ = query.comparacion
     n = len(subsQ)
@@ -23,7 +23,7 @@ def createMCDs(vistas, query):
                 if v.esIgual(g):
                     phitodo = mappingH(g, v, V)
                     if phitodo:
-                        gi = Set([i])
+                        gi = set([i])
                         mcdaux = crearMCDAux(query, V, phitodo, gi)
                         if mcdaux != None:
                             extenderMapping(C, mcdaux, query, V, maps, gi)
@@ -72,7 +72,7 @@ def extenderMapping1(mcds, mcdaux, query, vista, maps, gi):
 
 
 def obtPosiblesMaps(query, V):
-    maps = Set([])
+    maps = set([])
     for subobq in query.cuerpo:
         for subobv in V.cuerpo:
             if subobq.predicado == subobv.predicado:
@@ -92,7 +92,7 @@ def mappingH(g, v, V):
     varsY = v.orden
     j = 0
     for x in g.orden:
-        phitodo.setdefault(x,Set([])).add(varsY[j])
+        phitodo.setdefault(x,set([])).add(varsY[j])
         j = j + 1
 
     for i in phitodo:

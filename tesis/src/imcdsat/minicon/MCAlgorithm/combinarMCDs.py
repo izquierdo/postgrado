@@ -1,5 +1,3 @@
-from sets import Set
-
 from BuckAlgorithm.containment import estaContenido
 from CQ.CQ import *
 from Unification import unificar
@@ -13,7 +11,7 @@ def combinarMCDs1(mcds, n, i, cubiertos):
     if i == n:
         return []
     mcd = mcds[i]
-    s = mcd.gc # s es un Set de python
+    s = mcd.gc # s es un set de python
     if not s <= cubiertos:
         return []
     
@@ -31,7 +29,7 @@ def combinarMCDs1(mcds, n, i, cubiertos):
 
 def combinarMCDs(query, mcds):
     numSOQ = len(query.cuerpo)
-    cubiertos = Set(range(numSOQ))
+    cubiertos = set(range(numSOQ))
     numMCD = len(mcds)
     mcdsc = []
     reescrituras = []

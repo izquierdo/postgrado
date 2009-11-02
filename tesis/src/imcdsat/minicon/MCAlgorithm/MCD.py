@@ -1,5 +1,4 @@
 import copy
-from sets import Set
 class MCD:
     ## hc: head homomorfismo (dict)
     ## phic: mapping vars(Q) en vars(V) (dict)
@@ -22,7 +21,7 @@ class MCD:
             else:
                 self.clave = ""
         else:
-            self.gc, self.mapsTodosUtiles = Set(), False
+            self.gc, self.mapsTodosUtiles = set(), False
 
     def __str__(self):
         return self.clave
@@ -48,7 +47,7 @@ class MCD:
 
 
     def calcularConjuntoMaps(self):
-        conjuntoMap = Set()
+        conjuntoMap = set()
         for x in self.phictodo:
             for y in self.phictodo[x]:
                 conjuntoMap.add((x,y))
@@ -135,7 +134,7 @@ class MCD:
 
 
 def calcularMaps(query, phic, vista, vistaH, gi):
-    mapSubOb = Set()
+    mapSubOb = set()
     i = 0
     for x in query.cuerpo:
         j = 0
@@ -167,5 +166,5 @@ def agregarMapsXSubOb(subobq, subobv, mapSubOb):
 #             if cubreSubob:
 #                 gc.append(i)
 #             i = i+1
-#         return Set(gc)
+#         return set(gc)
 

@@ -1,6 +1,5 @@
 import itertools
 import copy
-from sets import Set
 from MCD import *
 
 class MCDAux:
@@ -51,7 +50,7 @@ class MCDAux:
 
 
     def obtMCDsGcminimal(self, gi):
-        self.mcds = Set()
+        self.mcds = set()
         self.obtMCDsGcminimal1(self.mcds, gi, self.subObsPosibles)
         eliminarNoMinimales(self.mcds)
 
