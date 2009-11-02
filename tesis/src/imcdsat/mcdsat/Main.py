@@ -10,7 +10,6 @@ from CQ.SOComparacion import *
 from Parser.CQparser import *
 from Traductor.Traductor3 import *
 from Traductor.GenerarReescrituras import *
-from sets import Set
 from random import *
 #from  import *
 

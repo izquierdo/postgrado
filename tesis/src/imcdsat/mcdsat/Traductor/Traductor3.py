@@ -340,7 +340,7 @@ def clausulas678(q, vistas):
     c9 = []
     c10 = []
     lz = []
-    lt = Set([])
+    lt = set([])
     ltaux = {}
     c6temp = []
     c14temp = {}
@@ -399,7 +399,7 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
     global varsT
     c8temp1 = [varz, varm.negarVar()]
     c8temp2 = [varm]
-    lt = Set([])
+    lt = set([])
     i = 0
     for x in subObQ.orden:
         y = subObV.orden[i]
@@ -411,7 +411,7 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
         c8temp1.append(varT.negarVar())
         c8temp2.append(varT.negarVar())
         i = i + 1
-        ltaux.setdefault((varT,varm),Set([])).add(varz)    
+        ltaux.setdefault((varT,varm),set([])).add(varz)    
     c8.append([varz.negarVar(), varg])
     c8.append([varz.negarVar(), varm])
     return lt

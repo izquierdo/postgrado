@@ -1,5 +1,3 @@
-from sets import Set
-
 from SubObjetivo import *
 from Seq import *
 class CQ:
@@ -14,9 +12,9 @@ class CQ:
         return self.vars
 
     def obtVariables(self):
-        vars = Set()
-        varsExist = Set()
-        varsDist = Set()
+        vars = set()
+        varsExist = set()
+        varsDist = set()
         for so in self.cuerpo:
             for x in so.orden:
                 vars.add(x)
@@ -78,7 +76,7 @@ class CQ:
             print x, map(str, dic[x])
         
     def obtSubObXVar(self, var):
-        res = Set([])
+        res = set([])
         i = 0
         for subOb in self.cuerpo:
             if subOb.argumentos.has_key(var):
