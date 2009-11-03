@@ -50,7 +50,7 @@ class CQparser(tpg.Parser):
 
         ITEM/a ->
                     var/v   $ a = (v[1:],0)
-                |   ctte/c  $ a = (c,1)
+                |   ctte/c  $ a = (str(int(c)+1000000000),1)
                 ;
 
     """

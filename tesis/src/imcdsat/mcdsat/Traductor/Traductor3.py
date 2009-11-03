@@ -22,6 +22,14 @@ varsV = {}
 varsG = {}
 varsT = {}
 varsZ = {}
+
+CONSTANT_BASE = 1000000000
+
+def es_const(x):
+    return x >= CONSTANT_BASE
+
+def es_var(x):
+    return not es_const(x)
  
 def traducir(exp, archV, archC, archVars, archTiempo, archSalida):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
@@ -175,7 +183,7 @@ def generarTeoriaMCD(q, vistas):
     #pprint.pprint(d1)
     #print "clausulas d2  t_{A,x} => -t_{B,x}"
     #pprint.pprint(d2)
-    print "clausulas d1  -t_{A,B}"
+    print "clausulas d3  -t_{A,B}"
     pprint.pprint(d3)
     #pprint.pprint(d4)
     clausulas = clausulas + d1 + d2 + d3 + d4
@@ -349,9 +357,26 @@ def clausulas12(vistas, lv, lg):
 
 def clausulas_d3(q, vistas):
     global varsT
-    print "D3"
-    print vistas[0]
-    return []
+
+    clausulas = set()
+
+    for soq in q.cuerpo:
+        for v in vistas:
+            for sov in v.cuerpo:
+                for vq in soq.orden:
+                    vq = int(vq)
+                    if es_const(vq):
+                        for vv in sov.orden:
+                            vv = int(vv)
+                            if es_const(vv):
+                                if vq != vv:
+                                    vt = varsT.get((vq, vv))
+
+                                    if vt:
+                                        clausulas.add(vt.negarVar())
+
+    return [[vt] for vt in clausulas]
+
 
 def clausulas678(q, vistas):
     global varsT
