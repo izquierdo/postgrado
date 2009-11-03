@@ -165,16 +165,15 @@ def generarTeoriaMCD(q, vistas):
     clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
 
     #TODO constantes
-    d1=[]
-    d2=[]
-    d3=clausulas_d3(q, vistas)
+    d1, d2 = clausulas_d1d2(q, vistas)
+    d3 = clausulas_d3(q, vistas)
     d4=[]
     d5=[]
 
-    #print "clausulas d1  t_{x,A} => -t_{x,B}"
-    #pprint.pprint(d1)
-    #print "clausulas d2  t_{A,x} => -t_{B,x}"
-    #pprint.pprint(d2)
+    print "clausulas d1  t_{x,A} => -t_{x,B}"
+    pprint.pprint(d1)
+    print "clausulas d2  t_{A,x} => -t_{B,x}"
+    pprint.pprint(d2)
     print "clausulas d3  -t_{A,B}"
     pprint.pprint(d3)
     #pprint.pprint(d4)
@@ -346,6 +345,66 @@ def clausulas12(vistas, lv, lg):
                     c12.append([lv[i].negarVar(), lg[x].negarVar(), lg[y].negarVar()])                    
     return c12
 
+def clausulas_d1d2(q, vistas):
+    global varsT
+
+    clausulas1 = []
+    clausulas2 = []
+
+    variables_query = []
+    constantes_query = []
+
+    variables_vistas = []
+    constantes_vistas = []
+
+    # obtener listas de variables y constantes para consulta
+
+    for so in q.cuerpo:
+        for v in so.orden:
+            if es_var(v):
+                variables_query.append(int(v))
+            else:
+                constantes_query.append(int(v))
+
+    # obtener listas de variables y constantes para vistas
+
+    for vista in vistas:
+        for so in vista.cuerpo:
+            for v in so.orden:
+                if es_var(v):
+                    variables_vistas.append(int(v))
+                else:
+                    constantes_vistas.append(int(v))
+
+    # clausulas d1
+
+    for x in variables_query:
+        for a in constantes_vistas:
+            t_xa = varsT.get((x, a))
+
+            if t_xa:
+                for b in constantes_vistas:
+                    if a != b:
+                        t_xb = varsT.get((x, b))
+
+                        if t_xb:
+                            clausulas1.append([t_xa.negarVar(), t_xb.negarVar()])
+
+    # clausulas d2
+
+    for x in variables_vistas:
+        for a in constantes_query:
+            t_ax = varsT.get((a, x))
+
+            if t_ax:
+                for b in constantes_query:
+                    if a != b:
+                        t_bx = varsT.get((b, x))
+
+                        if t_bx:
+                            clausulas2.append([t_ax.negarVar(), t_bx.negarVar()])
+
+    return clausulas1, clausulas2
 
 def clausulas_d3(q, vistas):
     global varsT
