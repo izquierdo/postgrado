@@ -1,5 +1,17 @@
 from SubObjetivo import *
 from Seq import *
+
+CONSTANT_BASE = 1000000000
+
+def es_const(x):
+    if type(x) != int:
+        x = int(x)
+
+    return x >= CONSTANT_BASE
+
+def es_var(x):
+    return not es_const(x)
+ 
 class CQ:
     def __init__(self, cab, cuer, comp):
         self.cabeza = cab
@@ -66,7 +78,7 @@ class CQ:
         return CQ(cab, cuer, comp)
 
     def esVarDisting(self, var):
-        return self.cabeza.argumentos.has_key(var)
+        return self.cabeza.argumentos.has_key(var) or es_const(var)
 
     def todasVarDisting(self):
         return len(self.cabeza.argumentos) == len(self.vars)

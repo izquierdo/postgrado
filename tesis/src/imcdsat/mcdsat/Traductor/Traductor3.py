@@ -23,14 +23,6 @@ varsG = {}
 varsT = {}
 varsZ = {}
 
-CONSTANT_BASE = 1000000000
-
-def es_const(x):
-    return x >= CONSTANT_BASE
-
-def es_var(x):
-    return not es_const(x)
- 
 def traducir(exp, archV, archC, archVars, archTiempo, archSalida):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
     tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
