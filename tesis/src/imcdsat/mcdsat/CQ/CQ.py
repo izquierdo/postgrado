@@ -81,7 +81,10 @@ class CQ:
         return self.cabeza.argumentos.has_key(var) or es_const(var)
 
     def todasVarDisting(self):
-        return len(self.cabeza.argumentos) == len(self.vars)
+        vars_cabeza = set([v for v in self.cabeza.argumentos.keys() if es_var(v)])
+        vars_cuerpo = set([v for v in self.vars if es_var(v) and self.esVarDisting(v)])
+
+        return vars_cuerpo.issubset(vars_cabeza)
     
     def imprimir(self, dic):
         for x in dic.keys():
