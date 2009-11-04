@@ -22,6 +22,7 @@ varsV = {}
 varsG = {}
 varsT = {}
 varsZ = {}
+contribVT = {}
 
 def traducir(exp, archV, archC, archVars, archTiempo, archSalida):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
@@ -167,7 +168,7 @@ def generarTeoriaMCD(q, vistas):
     #TODO constantes
     d1, d2 = clausulas_d1d2(q, vistas)
     d3 = clausulas_d3(q, vistas)
-    d4=[]
+    d4 = clausulas_d4(q, vistas)
     d5=[]
 
     print "clausulas d1  t_{x,A} => -t_{x,B}"
@@ -176,7 +177,10 @@ def generarTeoriaMCD(q, vistas):
     pprint.pprint(d2)
     print "clausulas d3  -t_{A,B}"
     pprint.pprint(d3)
-    #pprint.pprint(d4)
+    print "clausulas d4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
+    pprint.pprint(d4)
+    print "clausulas d5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
+    pprint.pprint(d5)
     clausulas = clausulas + d1 + d2 + d3 + d4
     #end TODO constantes
 
@@ -348,9 +352,6 @@ def clausulas12(vistas, lv, lg):
 def clausulas_d1d2(q, vistas):
     global varsT
 
-    clausulas1 = []
-    clausulas2 = []
-
     variables_query = []
     constantes_query = []
 
@@ -376,7 +377,16 @@ def clausulas_d1d2(q, vistas):
                 else:
                     constantes_vistas.append(int(v))
 
-    # clausulas d1
+
+    d1 = clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas)
+    d2 = clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas)
+
+    return d1, d2
+
+def clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas):
+    global varsT
+
+    d1 = []
 
     for x in variables_query:
         for a in constantes_vistas:
@@ -388,9 +398,14 @@ def clausulas_d1d2(q, vistas):
                         t_xb = varsT.get((x, b))
 
                         if t_xb:
-                            clausulas1.append([t_xa.negarVar(), t_xb.negarVar()])
+                            d1.append([t_xa.negarVar(), t_xb.negarVar()])
 
-    # clausulas d2
+    return d1
+
+def clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas):
+    global varsT
+
+    d2 = []
 
     for x in variables_vistas:
         for a in constantes_query:
@@ -402,9 +417,9 @@ def clausulas_d1d2(q, vistas):
                         t_bx = varsT.get((b, x))
 
                         if t_bx:
-                            clausulas2.append([t_ax.negarVar(), t_bx.negarVar()])
+                            d2.append([t_ax.negarVar(), t_bx.negarVar()])
 
-    return clausulas1, clausulas2
+    return d2
 
 def clausulas_d3(q, vistas):
     global varsT
@@ -427,6 +442,31 @@ def clausulas_d3(q, vistas):
                                         clausulas.add(vt.negarVar())
 
     return [[vt] for vt in clausulas]
+
+def clausulas_d4(q, vistas):
+    d4 = []
+
+    for v in vistas:
+        for (a0,y0) in contribVT[v]:
+            if not (es_const(a0) and es_var(y0)):
+                continue
+
+            for (x1,y1) in contribVT[v]:
+                if not (es_var(x1) and es_var(y1)):
+                    continue
+
+                if y0 != y1:
+                    continue
+
+                for (x2,z2) in contribVT[v]:
+                    if not (es_var(x2) and es_var(z2)):
+                        continue
+
+                    if x1 != x2:
+                        continue
+
+                d4.add()
+
 
 
 def clausulas678(q, vistas):
@@ -463,7 +503,7 @@ def clausulas678(q, vistas):
                     varsZ[(i,j,m)]=varz
                     c6temp.append(varz)
                     c9temp.append(varz)
-                    lttemp = clausula78a(varz, varg, varm, subOb, subObtemp, m, ltaux, c7, c8)
+                    lttemp = clausula78a(varz, varg, varm, subOb, subObtemp, m, ltaux, c7, c8, v)
                     lt |= lttemp
                     subObCubre = True
                 j = j + 1
@@ -484,7 +524,6 @@ def clausula14(c14temp):
             c14.append([varg, varm])
     return c14
 
-
 def clausula9(c9temp):
     c9 = []
     n = len(c9temp)
@@ -493,10 +532,9 @@ def clausula9(c9temp):
            c9.append([c9temp[x].negarVar(), c9temp[y].negarVar()])
     return c9
 
-
-
-def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
+def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
     global varsT
+    global contribVT
     c8temp1 = [varz, varm.negarVar()]
     c8temp2 = [varm]
     lt = set([])
@@ -506,6 +544,7 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8):
         varT = VariableSat(True, 't', [int(x), int(y)])
         lt.add(varT)
         varsT[(int(x), int(y))]=varT
+        contribVT.setdefault(vista, set()).add(varT)
         c7temp = [varm.negarVar(), varz.negarVar(), varT]
         c7.append(c7temp)
         c8temp1.append(varT.negarVar())
