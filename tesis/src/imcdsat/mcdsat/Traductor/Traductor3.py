@@ -160,16 +160,18 @@ def generarTeoriaMCD(q, vistas):
 #     print "clausulas 14  v_i => -gk cuando los preds son diff"
 #     pprint.pprint(c14)
 
-    variables = []
-    variables = lv+ lg+ list(lt)+ lz
 
     clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
 
     #TODO constantes
-    d1, d2 = clausulas_d1d2(q, vistas)
+    d1, d2, d4, lt_d4 = clausulas_d1d2d4(q, vistas)
     d3 = clausulas_d3(q, vistas)
-    d4 = clausulas_d4(q, vistas)
     d5=[]
+
+    lt.update(lt_d4)
+
+    variables = []
+    variables = lv+ lg+ list(lt)+ lz
 
     print "clausulas d1  t_{x,A} => -t_{x,B}"
     pprint.pprint(d1)
@@ -349,7 +351,7 @@ def clausulas12(vistas, lv, lg):
                     c12.append([lv[i].negarVar(), lg[x].negarVar(), lg[y].negarVar()])                    
     return c12
 
-def clausulas_d1d2(q, vistas):
+def clausulas_d1d2d4(q, vistas):
     global varsT
 
     variables_query = []
@@ -380,8 +382,9 @@ def clausulas_d1d2(q, vistas):
 
     d1 = clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas)
     d2 = clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas)
+    d4, lt_d4 = clausulas_d4(q, vistas, variables_query, constantes_query)
 
-    return d1, d2
+    return d1, d2, d4, lt_d4
 
 def clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas):
     global varsT
@@ -443,29 +446,73 @@ def clausulas_d3(q, vistas):
 
     return [[vt] for vt in clausulas]
 
-def clausulas_d4(q, vistas):
-    d4 = []
+def clausulas_d4(q, vistas, variables_query, constantes_query):
+    global varsT
+    global varsV
+
+    d4set = set([])
+
+    numVista = 0
 
     for v in vistas:
-        for (a0,y0) in contribVT[v]:
-            if not (es_const(a0) and es_var(y0)):
-                continue
+        for so in v.cuerpo:
+            for a in constantes_query:
+                for x in variables_query:
+                    for y in so.orden:
+                        for z in so.orden:
+                            if y == z:
+                                continue
 
-            for (x1,y1) in contribVT[v]:
-                if not (es_var(x1) and es_var(y1)):
-                    continue
+                            if es_const(y) or es_const(z):
+                                continue
 
-                if y0 != y1:
-                    continue
+                            d4set.add((varsV[numVista],a,y,x,z))
 
-                for (x2,z2) in contribVT[v]:
-                    if not (es_var(x2) and es_var(z2)):
-                        continue
+        numVista += 1
 
-                    if x1 != x2:
-                        continue
+#    for v in vistas:
+#        for (a0,y0) in contribVT.get(v, []):
+#            if not (es_const(a0) and es_var(y0)):
+#                continue
+#
+#            for (x1,y1) in contribVT.get(v, []):
+#                if not (es_var(x1) and es_var(y1)):
+#                    continue
+#
+#                if y0 != y1:
+#                    continue
+#
+#                for (x2,z2) in contribVT.get(v, []):
+#                    if not (es_var(x2) and es_var(z2)):
+#                        continue
+#
+#                    if x1 != x2:
+#                        continue
+#
+#                d4set.add((a0,y0,x1,z2))
 
-                d4.add()
+    d4 = []
+    lt_d4 = []
+
+    def buscar_o_crear_varT(i, j):
+        varT = varsT.get((i,j))
+
+        if varT is None:
+            varT = VariableSat(True, 't', [int(i), int(j)])
+            varsT[(int(i), int(j))]=varT
+            lt_d4.append(varT)
+
+        return varT
+
+    for (vv,a,y,x,z) in d4set:
+        vtay = buscar_o_crear_varT(a,y)
+        vtxy = buscar_o_crear_varT(x,y)
+        vtxz = buscar_o_crear_varT(x,z)
+        vtaz = buscar_o_crear_varT(a,z)
+        
+        d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
+
+    return d4, lt_d4
 
 
 
@@ -544,7 +591,7 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
         varT = VariableSat(True, 't', [int(x), int(y)])
         lt.add(varT)
         varsT[(int(x), int(y))]=varT
-        contribVT.setdefault(vista, set()).add(varT)
+        contribVT.setdefault(vista, set([])).add((int(x), int(y)))
         c7temp = [varm.negarVar(), varz.negarVar(), varT]
         c7.append(c7temp)
         c8temp1.append(varT.negarVar())
