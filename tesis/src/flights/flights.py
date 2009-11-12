@@ -18,7 +18,8 @@ def main():
     generator = commands.get(command)
 
     if generator is None:
-        usage_and_quit()
+        print_usage()
+        sys.exit(1)
     
     query, views = generator(sys.argv[4:])
 
@@ -30,9 +31,8 @@ def main():
     queryfile.write(str(query) + '\n')
     queryfile.close()
 
-def usage_and_quit():
-    print "Uso: ./buscawiki <archivo> (simple <regex> | relevancia <regex> | grafo <regex>)"
-    sys.exit(1)
+def print_usage():
+    print "Usage: %s <views_file> <query_file> <command> [command_arguments...]" % (sys.argv[0])
 
 if __name__ == "__main__":
     main()

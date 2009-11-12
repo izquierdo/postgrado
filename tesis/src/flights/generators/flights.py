@@ -2,7 +2,8 @@ from qrp_structures import *
 
 def samecompany(argv):
     if len(argv) != 2:
-        usage_and_quit()
+        #TODO
+        sys.exit(1)
 
     flights_pred = "r0"
 
