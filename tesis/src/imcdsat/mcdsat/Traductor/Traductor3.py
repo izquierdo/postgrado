@@ -63,13 +63,13 @@ def traducirConsultaRW(q, vistas, archSalida):
     variables, clausulas = generarTeoriaMCD(q, vistas)
     transf = TransformarFormula(variables)
     n = len(q.cuerpo)
-    clausulas2 = clausulasCombinarMCD(transf, n)
+    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas)
     imprimirCopias(variables, clausulas, clausulas2, n, transf, archSalida)
     return transf
 
 
 
-def clausulasCombinarMCD(transf, n):
+def clausulasCombinarMCD(transf, n, q, vistas):
     clausulas2 = []
     for numG in xrange(n):
         varG = VariableSat(False, 'g', [numG])
@@ -80,17 +80,50 @@ def clausulasCombinarMCD(transf, n):
             clsPorLoMenos1 = clsPorLoMenos1 + transf.var2NumSimple(varG1,numCopiaX) + ' '
             for numCopiaY in xrange(numCopiaX+1, n):
                 numVarGY = transf.var2NumSimple(varG,numCopiaY)
+                # clausulas C16
                 clausulas2.append(numVarGX + ' ' + numVarGY + ' 0\n')
             clausulaSimet= numVarGX+' '
             if numG > 0 and numCopiaX > 0:
                 for numGmenor in xrange(numG):
                     varG2 = VariableSat(True, 'g', [numGmenor])                
                     clausulaSimet= clausulaSimet + transf.var2NumSimple(varG2,numCopiaX-1) + ' '
+                # clausulas C17
                 clausulas2.append(clausulaSimet+'0\n')
             elif numG == 0 and numCopiaX == 0:
                 varG2 = VariableSat(True, 'g', [0])                
                 clausulas2.append(transf.var2NumSimple(varG2,0) + ' 0\n')                    
+        # clausulas C15
         clausulas2.append(clsPorLoMenos1+'0\n')
+
+    varsQ = set([])
+    varsVs = set([])
+
+    for so in q.cuerpo:
+        varsQ.update(set(so.orden))
+
+    for v in vistas:
+        for so in v.cuerpo:
+            varsVs.update(set(so.orden))
+
+    for x in varsQ:
+        for a in varsVs:
+            for b in varsVs:
+                if es_const(a) and es_const(b) and (a!=b):
+                    for numCopiaT0 in xrange(n):
+                        for numCopiaT1 in xrange(n):
+                            if numCopiaT0 != numCopiaT1:
+                                varT0 = VariableSat(False, 't', [int(x), int(a)])
+                                varT1 = VariableSat(False, 't', [int(x), int(b)])
+
+                                try:
+                                    numVarT0 = transf.var2NumSimple(varT0, numCopiaT0)
+                                    numVarT1 = transf.var2NumSimple(varT1, numCopiaT1)
+                                except KeyError:
+                                    continue
+
+                                #clausulas2.append("%s %s 0\n" % (str(numVarT0), str(numVarT1)))
+
+
     return clausulas2
                 
 
@@ -172,20 +205,21 @@ def generarTeoriaMCD(q, vistas):
     variables = []
     variables = lv+ lg+ list(lt)+ lz
 
-    print "clausulas d1  t_{x,A} => -t_{x,B}"
-    pprint.pprint(d1)
-    print "clausulas d2  t_{A,x} => -t_{B,x}"
-    pprint.pprint(d2)
-    print "clausulas d3  -t_{A,B}"
-    pprint.pprint(d3)
-    print "clausulas d4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
-    pprint.pprint(d4)
-    print "clausulas d5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
-    pprint.pprint(d5)
-    print "clausulas d6  vi => -t_{x,A} si A no aparece en cuerpo de vi"
-    pprint.pprint(d6)
+    #print "clausulas d1  t_{x,A} => -t_{x,B}"
+    #pprint.pprint(d1)
+    #print "clausulas d2  t_{A,x} => -t_{B,x}"
+    #pprint.pprint(d2)
+    #print "clausulas d3  -t_{A,B}"
+    #pprint.pprint(d3)
+    #print "clausulas d4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
+    #pprint.pprint(d4)
+    #print "clausulas d5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
+    #pprint.pprint(d5)
+    #print "clausulas d6  vi => -t_{x,A} si A no aparece en cuerpo de vi"
+    #pprint.pprint(d6)
 
-    clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
+    #clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
+    clausulas = clausulas + d1 + d2 + d3
 
     return variables, clausulas
 
@@ -570,7 +604,7 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
         varT = varsT.get((i,j))
 
         if varT is None:
-            print "Creando para (%s, %s)" % (i, j)
+            #print "Creando para (%s, %s)" % (i, j)
             varT = VariableSat(True, 't', [int(i), int(j)])
             varsT[(int(i), int(j))]=varT
             lt_d4.append(varT)
@@ -618,7 +652,7 @@ def clausulas_d5(q, vistas, variables_query, constantes_query):
         varT = varsT.get((i,j))
 
         if varT is None:
-            print "d5 Creando para (%s, %s)" % (i, j)
+            #print "d5 Creando para (%s, %s)" % (i, j)
             varT = VariableSat(True, 't', [int(i), int(j)])
             varsT[(int(i), int(j))]=varT
             lt_d5.append(varT)
@@ -658,7 +692,7 @@ def clausulas_d6(vistas, variables_query, constantes_vistas):
 
         m = m + 1
 
-    print variables_query
+    #print variables_query
 
     for variable in variables_query:
         for (varV, constante) in prohibidas:
