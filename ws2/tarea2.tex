@@ -1,0 +1,113 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\begin{document}
+
+\title{Aumento de tripletas RDF con axiomatización}
+\date{}
+\author{Daniel Izquierdo}
+
+\maketitle
+
+% DESCRIPCIÓN
+
+Con respecto al número de tripletas, con el pequeño conjunto de casos se observa
+aumento lineal de tripletas generadas por cantidad de tripletas preexistentes.
+El número de tripletas se multiplica aproximadamente por diez.
+
+Pasando al aumento de cláusulas por predicado usado podemos ver que los
+predicados que más contribuyen son los definidos por RDFS, particularmente
+{\tt rdfs:type}. Esto no sorprende porque la mayoría de los axiomas introducen
+cláusulas con este predicado. Los predicados definidos por el usuario registran
+aumento considerable pero no tan alto comparativamente. Algo importante es la
+introducción de muchas tripletas con predicados que no aparecían previamente.
+
+Viendo las tripletas por instancias también se nota que crecen más las tripletas
+relacionadas con clases de RDFS. El mayor incremento, por mucho, es el de {\tt
+rdfs:Resource}. Podemos observar que se introducen varias instancias de clases
+que previamente no estaban instanciadas.
+
+
+% RESULTADOS
+
+\resultadoDataSet{rdfPrimero}{89}{879}
+{
+    cursa & 14 & 70 \\
+    dicta & 16 & 40 \\
+    esProfesor & 0 & 27 \\
+    esSupervisor & 9 & 45 \\
+    esTutor & 0 & 36 \\
+    rdf:type & 40 & 507 \\
+    rdfs:subClassOf & 8 & 111 \\
+    rdfs:subPropertyOf & 2 & 43 \\
+}
+{
+    estudiante & 0 & 32 \\
+    estudiantePostGrado & 4 & 20 \\
+    estudiantePostGradoOcasional & 4 & 20 \\
+    estudiantePreGrado & 4 & 20 \\
+    materia & 0 & 32 \\
+    materiaPostGrado & 4 & 20 \\
+    materiaPreGrado & 4 & 20 \\
+    persona & 0 & 40 \\
+    profesor & 4 & 20 \\
+    rdfs:Class & 11 & 66 \\
+    rdfs:Property & 5 & 37 \\
+    rdfs:Resource & 0 & 180 \\
+}
+
+\resultadoDataSet{rdfSegundo}{120}{1193}
+{
+    cursa & 14 & 70 \\
+    dicta & 16 & 40 \\
+    esProfesor & 0 & 54 \\
+    esSupervisor & 18 & 90 \\
+    esTutor & 0 & 72 \\
+    rdf:type & 62 & 713 \\
+    rdfs:subClassOf & 8 & 111 \\
+    rdfs:subPropertyOf & 2 & 43 \\
+}
+{
+    estudiante & 0 & 32 \\
+    estudiantePostGrado & 4 & 20 \\
+    estudiantePostGradoOcasional & 24 & 120 \\
+    estudiantePreGrado & 4 & 20 \\
+    materia & 0 & 40 \\
+    materiaPostGrado & 5 & 25 \\
+    materiaPreGrado & 5 & 25 \\
+    persona & 0 & 40 \\
+    profesor & 4 & 20 \\
+    rdfs:Class & 11 & 66 \\
+    rdfs:Property & 5 & 37 \\
+    rdfs:Resource & 0 & 268 \\
+}
+
+\resultadoDataSet{rdfTercero}{162}{1489}
+{
+    cursa & 14 & 70 \\
+    dicta & 16 & 40 \\
+    esProfesor & 0 & 108 \\
+    esSupervisor & 36 & 180 \\
+    esTutor & 0 & 144 \\
+    rdf:type & 86 & 793 \\
+    rdfs:subClassOf & 8 & 111 \\
+    rdfs:subPropertyOf & 2 & 43 \\
+}
+{
+    estudiante & 0 & 32 \\
+    estudiantePostGrado & 4 & 20 \\
+    estudiantePostGradoOcasional & 48 & 160 \\
+    estudiantePreGrado & 4 & 20 \\
+    materia & 0 & 40 \\
+    materiaPostGrado & 5 & 25 \\
+    materiaPreGrado & 5 & 25 \\
+    persona & 0 & 40 \\
+    profesor & 4 & 20 \\
+    rdfs:Class & 11 & 66 \\
+    rdfs:Property & 5 & 37 \\
+    rdfs:Resource & 0 & 308 \\
+}
+
+\end{document}
