@@ -63,13 +63,13 @@ def traducirConsultaRW(q, vistas, archSalida):
     variables, clausulas = generarTeoriaMCD(q, vistas)
     transf = TransformarFormula(variables)
     n = len(q.cuerpo)
-    clausulas2 = clausulasCombinarMCD(transf, n)
+    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas)
     imprimirCopias(variables, clausulas, clausulas2, n, transf, archSalida)
     return transf
 
 
 
-def clausulasCombinarMCD(transf, n):
+def clausulasCombinarMCD(transf, n, q, vistas):
     clausulas2 = []
     for numG in xrange(n):
         varG = VariableSat(False, 'g', [numG])
@@ -80,17 +80,51 @@ def clausulasCombinarMCD(transf, n):
             clsPorLoMenos1 = clsPorLoMenos1 + transf.var2NumSimple(varG1,numCopiaX) + ' '
             for numCopiaY in xrange(numCopiaX+1, n):
                 numVarGY = transf.var2NumSimple(varG,numCopiaY)
+                # clausulas C16
                 clausulas2.append(numVarGX + ' ' + numVarGY + ' 0\n')
             clausulaSimet= numVarGX+' '
             if numG > 0 and numCopiaX > 0:
                 for numGmenor in xrange(numG):
                     varG2 = VariableSat(True, 'g', [numGmenor])                
                     clausulaSimet= clausulaSimet + transf.var2NumSimple(varG2,numCopiaX-1) + ' '
+                # clausulas C17
                 clausulas2.append(clausulaSimet+'0\n')
             elif numG == 0 and numCopiaX == 0:
                 varG2 = VariableSat(True, 'g', [0])                
                 clausulas2.append(transf.var2NumSimple(varG2,0) + ' 0\n')                    
+        # clausulas C15
         clausulas2.append(clsPorLoMenos1+'0\n')
+
+    varsQ = set([])
+    varsVs = set([])
+
+    for so in q.cuerpo:
+        varsQ.update(set(so.orden))
+
+    for v in vistas:
+        for so in v.cuerpo:
+            varsVs.update(set(so.orden))
+
+    for x in varsQ:
+        for a in varsVs:
+            for b in varsVs:
+                if es_const(a) and es_const(b) and (a!=b):
+                    for numCopiaT0 in xrange(n):
+                        for numCopiaT1 in xrange(n):
+                            if numCopiaT0 != numCopiaT1:
+                                varT0 = VariableSat(False, 't', [int(x), int(a)])
+                                varT1 = VariableSat(False, 't', [int(x), int(b)])
+
+                                try:
+                                    numVarT0 = transf.var2NumSimple(varT0, numCopiaT0)
+                                    numVarT1 = transf.var2NumSimple(varT1, numCopiaT1)
+                                except KeyError:
+                                    continue
+
+                                #clausulas para constantes en teoria extendida
+                                clausulas2.append("%s %s 0\n" % (str(numVarT0), str(numVarT1)))
+
+
     return clausulas2
                 
 
@@ -121,73 +155,74 @@ def generarTeoriaMCD(q, vistas):
     lv, c1, c2 = variablesV(q, vistas)
     lg, c3 = variablesG(q, lv)
     lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas)
-#     print "V",varsV,lv
-#     print "G",varsG,lg
-#     print "T",len(varsT),len(lt)
-#     print "Z",len(varsZ),len(lz)
+#    print "V",varsV,lv
+#    print "G",varsG,lg
+#    print "T",len(varsT),len(lt)
+#    print "Z",len(varsZ),len(lz)
     c12 = clausulas12(vistas, lv, lg)
     c4 = clausulas4(q,vistas,ltaux)
     
     c5, c13 = clausulas513(q,vistas,ltaux)
     c10, c11 = clausulas11(lt, lv, ltaux)
     c15 = clausulas15(q, vistas)
-#     print "clausulas 1  \/ vi (por lo menos uno)"
-#     pprint.pprint(c1) 
-#     print "clausulas 2  -vi \/ -vj (maximo uno)"
-#     pprint.pprint(c2) 
-#     print "clausulas 3  \/ gk (por lo menos uno)"
-#     pprint.pprint(c3) 
-#     print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
-#     pprint.pprint(c4) 
-#     print "clausulas 5  vm => -tij (i Dist y j exist) "
-#     pprint.pprint(c5)
-#     print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
-#     pprint.pprint(c6) 
-#     print "clausulas 7  zir => tir"
-#     pprint.pprint(c7) 
-#     print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
-#     pprint.pprint(c8)
-#     print "clausulas 9  maximo una z por vm, gi"
-#     pprint.pprint(c9)
-#     print "clausulas 10 t explicito"
-#     pprint.pprint(c10)
-#     print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
-#     pprint.pprint(c11)
-#     print "clausulas 12  v_m & g_j => -g_k "
-#     pprint.pprint(c12)
-#     print "clausulas 13  t_ij => -t_kj"
-#     pprint.pprint(c13)
-#     print "clausulas 14  v_i => -gk cuando los preds son diff"
-#     pprint.pprint(c14)
-
+#    print "clausulas 1  \/ vi (por lo menos uno)"
+#    pprint.pprint(c1) 
+#    print "clausulas 2  -vi \/ -vj (maximo uno)"
+#    pprint.pprint(c2) 
+#    print "clausulas 3  \/ gk (por lo menos uno)"
+#    pprint.pprint(c3) 
+#    print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
+#    pprint.pprint(c4) 
+#    print "clausulas 5  vm => -tij (i Dist y j exist) "
+#    pprint.pprint(c5)
+#    print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
+#    pprint.pprint(c6) 
+#    print "clausulas 7  zir => tir"
+#    pprint.pprint(c7) 
+#    print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
+#    pprint.pprint(c8)
+#    print "clausulas 9  maximo una z por vm, gi"
+#    pprint.pprint(c9)
+#    print "clausulas 10 t explicito"
+#    pprint.pprint(c10)
+#    print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
+#    pprint.pprint(c11)
+#    print "clausulas 12  v_m & g_j => -g_k "
+#    pprint.pprint(c12)
+#    print "clausulas 13  t_ij => -t_kj"
+#    pprint.pprint(c13)
+#    print "clausulas 14  v_i => -gk cuando los preds son diff"
+#    pprint.pprint(c14)
 
     clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
 
-    #TODO constantes
-    d1, d2, d4, lt_d4 = clausulas_d1d2d4(q, vistas)
-    d3 = clausulas_d3(q, vistas)
-    d5=[]
+    # support for constants
 
-    lt.update(lt_d4)
+    d1, d2, d4, lt_d4d5, d5, d6 = clausulas_d1d2d4d5d6(q, vistas)
+    d3 = clausulas_d3(q, vistas)
+
+    lt.update(lt_d4d5)
 
     variables = []
     variables = lv+ lg+ list(lt)+ lz
 
-    print "clausulas d1  t_{x,A} => -t_{x,B}"
-    pprint.pprint(d1)
-    print "clausulas d2  t_{A,x} => -t_{B,x}"
-    pprint.pprint(d2)
-    print "clausulas d3  -t_{A,B}"
-    pprint.pprint(d3)
-    print "clausulas d4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
-    pprint.pprint(d4)
-    print "clausulas d5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
-    pprint.pprint(d5)
-    clausulas = clausulas + d1 + d2 + d3 + d4
-    #end TODO constantes
+    #print "clausulas d1  t_{x,A} => -t_{x,B}"
+    #pprint.pprint(d1)
+    #print "clausulas d2  t_{A,x} => -t_{B,x}"
+    #pprint.pprint(d2)
+    #print "clausulas d3  -t_{A,B}"
+    #pprint.pprint(d3)
+    #print "clausulas d4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
+    #pprint.pprint(d4)
+    #print "clausulas d5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
+    #pprint.pprint(d5)
+    #print "clausulas d6  vi => -t_{x,A} si A no aparece en cuerpo de vi"
+    #pprint.pprint(d6)
+
+    #clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
+    clausulas = clausulas + d1 + d2 + d3
 
     return variables, clausulas
-
 
 def clausulas15(query, vistas):
     global varsZ
@@ -351,7 +386,7 @@ def clausulas12(vistas, lv, lg):
                     c12.append([lv[i].negarVar(), lg[x].negarVar(), lg[y].negarVar()])                    
     return c12
 
-def clausulas_d1d2d4(q, vistas):
+def clausulas_d1d2d4d5d6(q, vistas):
     global varsT
 
     variables_query = []
@@ -379,12 +414,19 @@ def clausulas_d1d2d4(q, vistas):
                 else:
                     constantes_vistas.append(int(v))
 
+    variables_query = list(set(variables_query))
+    variables_vistas = list(set(variables_vistas))
+    constantes_query = list(set(constantes_query))
+    constantes_vistas = list(set(constantes_vistas))
 
     d1 = clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas)
     d2 = clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas)
     d4, lt_d4 = clausulas_d4(q, vistas, variables_query, constantes_query)
+    d5, lt_d5 = clausulas_d5(q, vistas, variables_query, constantes_query)
 
-    return d1, d2, d4, lt_d4
+    d6 = clausulas_d6(vistas, variables_query, constantes_vistas)
+
+    return d1, d2, d4, list(set(lt_d4 + lt_d5)), d5, d6
 
 def clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas):
     global varsT
@@ -445,76 +487,6 @@ def clausulas_d3(q, vistas):
                                         clausulas.add(vt.negarVar())
 
     return [[vt] for vt in clausulas]
-
-def clausulas_d4(q, vistas, variables_query, constantes_query):
-    global varsT
-    global varsV
-
-    d4set = set([])
-
-    numVista = 0
-
-    for v in vistas:
-        for so in v.cuerpo:
-            for a in constantes_query:
-                for x in variables_query:
-                    for y in so.orden:
-                        for z in so.orden:
-                            if y == z:
-                                continue
-
-                            if es_const(y) or es_const(z):
-                                continue
-
-                            d4set.add((varsV[numVista],a,y,x,z))
-
-        numVista += 1
-
-#    for v in vistas:
-#        for (a0,y0) in contribVT.get(v, []):
-#            if not (es_const(a0) and es_var(y0)):
-#                continue
-#
-#            for (x1,y1) in contribVT.get(v, []):
-#                if not (es_var(x1) and es_var(y1)):
-#                    continue
-#
-#                if y0 != y1:
-#                    continue
-#
-#                for (x2,z2) in contribVT.get(v, []):
-#                    if not (es_var(x2) and es_var(z2)):
-#                        continue
-#
-#                    if x1 != x2:
-#                        continue
-#
-#                d4set.add((a0,y0,x1,z2))
-
-    d4 = []
-    lt_d4 = []
-
-    def buscar_o_crear_varT(i, j):
-        varT = varsT.get((i,j))
-
-        if varT is None:
-            varT = VariableSat(True, 't', [int(i), int(j)])
-            varsT[(int(i), int(j))]=varT
-            lt_d4.append(varT)
-
-        return varT
-
-    for (vv,a,y,x,z) in d4set:
-        vtay = buscar_o_crear_varT(a,y)
-        vtxy = buscar_o_crear_varT(x,y)
-        vtxz = buscar_o_crear_varT(x,z)
-        vtaz = buscar_o_crear_varT(a,z)
-        
-        d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
-
-    return d4, lt_d4
-
-
 
 def clausulas678(q, vistas):
     global varsT
@@ -602,3 +574,132 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
     c8.append([varz.negarVar(), varm])
     return lt
 
+def clausulas_d4(q, vistas, variables_query, constantes_query):
+    global varsT
+    global varsV
+
+    d4set = set([])
+
+    numVista = 0
+
+    for v in vistas:
+        for so in v.cuerpo:
+            for a in constantes_query:
+                for x in variables_query:
+                    for y in so.orden:
+                        for z in so.orden:
+                            if y == z:
+                                continue
+
+                            if es_const(y) or es_const(z):
+                                continue
+
+                            d4set.add((varsV[numVista],a,y,x,z))
+
+        numVista += 1
+
+    d4 = []
+    lt_d4 = []
+
+    def buscar_o_crear_varT(i, j):
+        varT = varsT.get((i,j))
+
+        if varT is None:
+            #print "Creando para (%s, %s)" % (i, j)
+            varT = VariableSat(True, 't', [int(i), int(j)])
+            varsT[(int(i), int(j))]=varT
+            lt_d4.append(varT)
+
+        return varT
+
+    for (vv,a,y,x,z) in d4set:
+        vtay = buscar_o_crear_varT(a,y)
+        vtxy = buscar_o_crear_varT(x,y)
+        vtxz = buscar_o_crear_varT(x,z)
+        vtaz = buscar_o_crear_varT(a,z)
+        
+        d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
+
+    return d4, lt_d4
+
+def clausulas_d5(q, vistas, variables_query, constantes_query):
+    global varsT
+    global varsV
+
+    d5set = set([])
+
+    numVista = 0
+
+    for v in vistas:
+        for so in v.cuerpo:
+            for y in variables_query:
+                for z in variables_query:
+                    for a in so.orden:
+                        for x in so.orden:
+                            if y == z:
+                                continue
+
+                            if es_var(a) or es_const(x):
+                                continue
+
+                            d5set.add((varsV[numVista],a,y,x,z))
+
+        numVista += 1
+
+    d5 = []
+    lt_d5 = []
+
+    def buscar_o_crear_varT(i, j):
+        varT = varsT.get((i,j))
+
+        if varT is None:
+            #print "d5 Creando para (%s, %s)" % (i, j)
+            varT = VariableSat(True, 't', [int(i), int(j)])
+            varsT[(int(i), int(j))]=varT
+            lt_d5.append(varT)
+
+        return varT
+
+    for (vv,a,y,x,z) in d5set:
+        vtya = buscar_o_crear_varT(y,a)
+        vtyx = buscar_o_crear_varT(y,x)
+        vtzx = buscar_o_crear_varT(z,x)
+        vtza = buscar_o_crear_varT(z,a)
+        
+        d5.append([vv.negarVar(), vtya.negarVar(), vtyx.negarVar(), vtzx.negarVar(), vtza])
+
+    return d5, lt_d5
+
+def clausulas_d6(vistas, variables_query, constantes_vistas):
+    global varsT
+    global varsV
+
+    prohibidas = set([])
+    d6 = []
+
+    m = 0
+
+    for vista in vistas:
+        constantes_esta_vista = set([])
+
+        for so in vista.cuerpo:
+            for v in so.orden:
+                if es_const(v):
+                    constantes_esta_vista.add(int(v))
+
+        for constante in constantes_vistas:
+            if constante not in constantes_esta_vista:
+                prohibidas.add((varsV[m], constante))
+
+        m = m + 1
+
+    #print variables_query
+
+    for variable in variables_query:
+        for (varV, constante) in prohibidas:
+            varT = varsT.get((int(variable), constante))
+
+            if varT:
+                d6.append([varV.negarVar(), varT.negarVar()])
+
+    return d6
