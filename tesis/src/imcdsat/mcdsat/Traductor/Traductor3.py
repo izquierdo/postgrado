@@ -121,7 +121,8 @@ def clausulasCombinarMCD(transf, n, q, vistas):
                                 except KeyError:
                                     continue
 
-                                #clausulas2.append("%s %s 0\n" % (str(numVarT0), str(numVarT1)))
+                                #clausulas para constantes en teoria extendida
+                                clausulas2.append("%s %s 0\n" % (str(numVarT0), str(numVarT1)))
 
 
     return clausulas2
