@@ -2,112 +2,103 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
+\usepackage{fancyvrb}
 
 \begin{document}
 
-\title{Aumento de tripletas RDF con axiomatización}
+\title{Consultas }
 \date{}
-\author{Daniel Izquierdo}
+\author{Daniel Izquierdo \\ \#08-86809}
 
 \maketitle
 
-% DESCRIPCIÓN
+\section{Medicamentos alternativos}
 
-Con respecto al número de tripletas, con el pequeño conjunto de casos se observa
-aumento lineal de tripletas generadas por cantidad de tripletas preexistentes.
-El número de tripletas se multiplica aproximadamente por diez.
+En el ejemplo de \emph{SQUIN} para obtener alternativas para medicamentos dados
+se utilizan tres consultas distintas.
 
-Pasando al aumento de cláusulas por predicado usado podemos ver que los
-predicados que más contribuyen son los definidos por RDFS, particularmente
-{\tt rdfs:type}. Esto no sorprende porque la mayoría de los axiomas introducen
-cláusulas con este predicado. Los predicados definidos por el usuario registran
-aumento considerable pero no tan alto comparativamente. Algo importante es la
-introducción de muchas tripletas con predicados que no aparecían previamente.
+\fvset{fontsize=\footnotesize}
 
-Viendo las tripletas por instancias también se nota que crecen más las tripletas
-relacionadas con clases de RDFS. El mayor incremento, por mucho, es el de {\tt
-rdfs:Resource}. Podemos observar que se introducen varias instancias de clases
-que previamente no estaban instanciadas.
-
-
-% RESULTADOS
-
-\resultadoDataSet{rdfPrimero}{89}{879}
-{
-    cursa & 14 & 70 \\
-    dicta & 16 & 40 \\
-    esProfesor & 0 & 27 \\
-    esSupervisor & 9 & 45 \\
-    esTutor & 0 & 36 \\
-    rdf:type & 40 & 507 \\
-    rdfs:subClassOf & 8 & 111 \\
-    rdfs:subPropertyOf & 2 & 43 \\
+\begin{SaveVerbatim}{VerbDrugLookupQuery}
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+SELECT ?uri ?label WHERE {
+  ?uri a drugbank:drugs .
+  ?uri rdfs:label ?label .
+  FILTER( regex(STR(?label),'MEDICAMENTO','i') )
 }
-{
-    estudiante & 0 & 32 \\
-    estudiantePostGrado & 4 & 20 \\
-    estudiantePostGradoOcasional & 4 & 20 \\
-    estudiantePreGrado & 4 & 20 \\
-    materia & 0 & 32 \\
-    materiaPostGrado & 4 & 20 \\
-    materiaPreGrado & 4 & 20 \\
-    persona & 0 & 40 \\
-    profesor & 4 & 20 \\
-    rdfs:Class & 11 & 66 \\
-    rdfs:Property & 5 & 37 \\
-    rdfs:Resource & 0 & 180 \\
-}
+ORDER BY ?uri"
+\end{SaveVerbatim}
 
-\resultadoDataSet{rdfSegundo}{120}{1193}
-{
-    cursa & 14 & 70 \\
-    dicta & 16 & 40 \\
-    esProfesor & 0 & 54 \\
-    esSupervisor & 18 & 90 \\
-    esTutor & 0 & 72 \\
-    rdf:type & 62 & 713 \\
-    rdfs:subClassOf & 8 & 111 \\
-    rdfs:subPropertyOf & 2 & 43 \\
+\begin{SaveVerbatim}{VerbAltDrugQuery}
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
+SELECT DISTINCT ?disease ?diseaseLabel ?altMedicine ?altMedicineLabel WHERE {
+  <uri> drugbank:possibleDiseaseTarget ?disease.
+  ?disease owl:sameAs ?sameDisease.
+  ?sameDisease rdf:type tcm:Disease.
+  ?altMedicine tcm:treatment ?sameDisease.
+  ?altMedicine rdf:type tcm:Medicine.
+  ?disease rdfs:label ?diseaseLabel.
+  ?altMedicine rdfs:label ?altMedicineLabel.
 }
-{
-    estudiante & 0 & 32 \\
-    estudiantePostGrado & 4 & 20 \\
-    estudiantePostGradoOcasional & 24 & 120 \\
-    estudiantePreGrado & 4 & 20 \\
-    materia & 0 & 40 \\
-    materiaPostGrado & 5 & 25 \\
-    materiaPreGrado & 5 & 25 \\
-    persona & 0 & 40 \\
-    profesor & 4 & 20 \\
-    rdfs:Class & 11 & 66 \\
-    rdfs:Property & 5 & 37 \\
-    rdfs:Resource & 0 & 268 \\
-}
+ORDER BY ?sameDisease
+\end{SaveVerbatim}
 
-\resultadoDataSet{rdfTercero}{162}{1489}
-{
-    cursa & 14 & 70 \\
-    dicta & 16 & 40 \\
-    esProfesor & 0 & 108 \\
-    esSupervisor & 36 & 180 \\
-    esTutor & 0 & 144 \\
-    rdf:type & 86 & 793 \\
-    rdfs:subClassOf & 8 & 111 \\
-    rdfs:subPropertyOf & 2 & 43 \\
+\begin{SaveVerbatim}{VerbSideEffectQuery}
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
+PREFIX dailymed: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>
+PREFIX sider:    <http://www4.wiwiss.fu-berlin.de/sider/resource/sider/>
+SELECT DISTINCT ?effect ?effectname WHERE {
+        <" + uri + "> tcm:ingredient ?ingredient .
+        ?dailymedIngredient owl:sameAs ?ingredient .
+        ?drug dailymed:activeIngredient ?dailymedIngredient .
+        ?drug owl:sameAs ?sider_drug .
+        ?sider_drug a sider:drugs .
+        ?sider_drug sider:sideEffect ?effect .
+        ?effect rdfs:label ?effectname .
 }
-{
-    estudiante & 0 & 32 \\
-    estudiantePostGrado & 4 & 20 \\
-    estudiantePostGradoOcasional & 48 & 160 \\
-    estudiantePreGrado & 4 & 20 \\
-    materia & 0 & 40 \\
-    materiaPostGrado & 5 & 25 \\
-    materiaPreGrado & 5 & 25 \\
-    persona & 0 & 40 \\
-    profesor & 4 & 20 \\
-    rdfs:Class & 11 & 66 \\
-    rdfs:Property & 5 & 37 \\
-    rdfs:Resource & 0 & 308 \\
-}
+ORDER BY ?effectname
+\end{SaveVerbatim}
+
+\begin{figure}[htbp]
+ \fbox
+ {
+  \begin{minipage}{\textwidth}
+   \BUseVerbatim{VerbDrugLookupQuery}
+   \caption{Consulta de búsqueda de medicamentos}
+   \label{src:DrugLookupQuery}
+  \end{minipage}
+ }
+\end{figure}
+
+\begin{figure}[htbp]
+ \fbox
+ {
+  \begin{minipage}{\textwidth}
+   \BUseVerbatim{VerbAltDrugQuery}
+   \caption{Consulta de búsqueda de alternativas}
+   \label{src:AltDrugQuery}
+  \end{minipage}
+ }
+\end{figure}
+
+\begin{figure}[htbp]
+ \fbox
+ {
+  \begin{minipage}{\textwidth}
+   \BUseVerbatim{VerbSideEffectQuery}
+   \caption{Consulta de búsqueda de efectos secundarios}
+   \label{src:SideEffectQuery}
+  \end{minipage}
+ }
+\end{figure}
+
+\section{Medicamentos para enfermedades específicas}
 
 \end{document}
