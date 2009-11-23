@@ -6,6 +6,8 @@
 
 \begin{document}
 
+\fvset{fontsize=\footnotesize}
+
 \title{Consultas }
 \date{}
 \author{Daniel Izquierdo \\ \#08-86809}
@@ -15,9 +17,13 @@
 \section{Medicamentos alternativos}
 
 En el ejemplo de \emph{SQUIN} para obtener alternativas para medicamentos dados
-se utilizan tres consultas distintas.
-
-\fvset{fontsize=\footnotesize}
+se utilizan tres consultas distintas. Para empezar se necesita buscar el
+\emph{uri} del nombre de medicamento dado por el usuario. No necesariamente el
+nombre corresponde a un medicamento y puede haber varios medicamentos cuyos
+nombres correspondan al patrón. Por esto se presenta al usuario una lista de
+medicamentos que corresponden. La lista se obtiene con la consulta que podemos
+observar en la figura \ref{src:DrugLookupQuery}. La palabra ``MEDICAMENTO'' se
+sustituye por el nombre o patrón dado.
 
 \begin{SaveVerbatim}{VerbDrugLookupQuery}
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -28,42 +34,6 @@ SELECT ?uri ?label WHERE {
   FILTER( regex(STR(?label),'MEDICAMENTO','i') )
 }
 ORDER BY ?uri"
-\end{SaveVerbatim}
-
-\begin{SaveVerbatim}{VerbAltDrugQuery}
-PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
-PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
-SELECT DISTINCT ?disease ?diseaseLabel ?altMedicine ?altMedicineLabel WHERE {
-  <uri> drugbank:possibleDiseaseTarget ?disease.
-  ?disease owl:sameAs ?sameDisease.
-  ?sameDisease rdf:type tcm:Disease.
-  ?altMedicine tcm:treatment ?sameDisease.
-  ?altMedicine rdf:type tcm:Medicine.
-  ?disease rdfs:label ?diseaseLabel.
-  ?altMedicine rdfs:label ?altMedicineLabel.
-}
-ORDER BY ?sameDisease
-\end{SaveVerbatim}
-
-\begin{SaveVerbatim}{VerbSideEffectQuery}
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
-PREFIX dailymed: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>
-PREFIX sider:    <http://www4.wiwiss.fu-berlin.de/sider/resource/sider/>
-SELECT DISTINCT ?effect ?effectname WHERE {
-        <" + uri + "> tcm:ingredient ?ingredient .
-        ?dailymedIngredient owl:sameAs ?ingredient .
-        ?drug dailymed:activeIngredient ?dailymedIngredient .
-        ?drug owl:sameAs ?sider_drug .
-        ?sider_drug a sider:drugs .
-        ?sider_drug sider:sideEffect ?effect .
-        ?effect rdfs:label ?effectname .
-}
-ORDER BY ?effectname
 \end{SaveVerbatim}
 
 \begin{figure}[htbp]
@@ -77,6 +47,31 @@ ORDER BY ?effectname
  }
 \end{figure}
 
+Teniendo un \emph{uri} específico del medicamento se puede comenzar a buscar sus
+alternativas. Esto se hace con la consulta de la figura \ref{src:AltDrugQuery}
+sustituyendo la palabra ``URI'' por el \emph{uri} correcto. Vemos que la
+consulta involucra varios documentos y básicamente consiste en listar las
+enfermedades tratadas por el medicamento dado, obtener medicamentos que tratan
+esa enfermedad y ordenar el resultado por enfermedad.
+
+\begin{SaveVerbatim}{VerbAltDrugQuery}
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
+SELECT DISTINCT ?disease ?diseaseLabel ?altMedicine ?altMedicineLabel WHERE {
+  <URI> drugbank:possibleDiseaseTarget ?disease.
+  ?disease owl:sameAs ?sameDisease.
+  ?sameDisease rdf:type tcm:Disease.
+  ?altMedicine tcm:treatment ?sameDisease.
+  ?altMedicine rdf:type tcm:Medicine.
+  ?disease rdfs:label ?diseaseLabel.
+  ?altMedicine rdfs:label ?altMedicineLabel.
+}
+ORDER BY ?sameDisease
+\end{SaveVerbatim}
+
 \begin{figure}[htbp]
  \fbox
  {
@@ -87,6 +82,31 @@ ORDER BY ?effectname
   \end{minipage}
  }
 \end{figure}
+
+Opcionalmente el usuario puede consultar efectos secundarios para cada una de
+las drogas alternativas obtenidas. En ese caso se realiza la consulta de la
+figura \ref{src:SideEffectQuery} haciendo la misma sustitución en ``URI''. Los
+documentos consultados nos proporcionan los ingredientes de la droga en
+cuestión y se procede a buscar efectos secundarios de medicamentos tales que
+alguno de sus ingredientes activos está en esa lista.
+
+\begin{SaveVerbatim}{VerbSideEffectQuery}
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
+PREFIX dailymed: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>
+PREFIX sider:    <http://www4.wiwiss.fu-berlin.de/sider/resource/sider/>
+SELECT DISTINCT ?effect ?effectname WHERE {
+        <URI> tcm:ingredient ?ingredient .
+        ?dailymedIngredient owl:sameAs ?ingredient .
+        ?drug dailymed:activeIngredient ?dailymedIngredient .
+        ?drug owl:sameAs ?sider_drug .
+        ?sider_drug a sider:drugs .
+        ?sider_drug sider:sideEffect ?effect .
+        ?effect rdfs:label ?effectname .
+}
+ORDER BY ?effectname
+\end{SaveVerbatim}
 
 \begin{figure}[htbp]
  \fbox
