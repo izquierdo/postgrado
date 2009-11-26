@@ -219,8 +219,8 @@ def generarTeoriaMCD(q, vistas):
     #print "clausulas d6  vi => -t_{x,A} si A no aparece en cuerpo de vi"
     #pprint.pprint(d6)
 
-    #clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
-    clausulas = clausulas + d1 + d2 + d3
+    clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
+    #clausulas = clausulas + d1 + d2 + d3
 
     return variables, clausulas
 
@@ -577,6 +577,48 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
 def clausulas_d4(q, vistas, variables_query, constantes_query):
     global varsT
     global varsV
+
+    #ejele
+
+    mappings = set()
+    newmappings = set()
+
+    for v in vistas:
+        for soq in q.cuerpo:
+            for sov in v.cuerpo:
+                if soq.predicado == sov.predicado:
+                    for (x, y) in zip(soq.orden, sov.orden):
+                        newmappings.add((x, y))
+
+    foundnewmappings = True
+
+    while foundnewmappings:
+        mappings.update(newmappings)
+        newmappings = set()
+
+        foundnewmappings = False
+
+        for (a, y0) in mappings:
+            if es_var(a) or es_const(y0):
+                continue
+
+            for (x1, y1) in mappings:
+                if es_const(x1) or (y0 != y1) or (x1 == y1):
+                    continue
+
+                for (x2, z) in mappings:
+                    if (x1 != x2) or es_const(z) or (x2 == z):
+                        continue
+
+                    if (a, z) not in mappings:
+                        foundnewmappings = True
+                        print "SI"
+                        print "%s por culpa de que %s y %s y %s" % (str((a,z)), str((a,y0)), str((x1,y1)), str((x2,z)))
+                        newmappings.add((a, z))
+
+    import sys
+    sys.exit(1)
+    return 0
 
     d4set = set([])
 
