@@ -1,0 +1,5 @@
+Corrida de imcdsat con todas las clausulas d y clausulas de RW para constantes, sin deteccion de no necesidad de la transitividad
+
+Usando qrpgen con #vistas de 10 a 80 con step 5, #pasos de 2 a 5 con step 1 (samecompany)
+
+El ultimo caso (80-5) fue cancelado por duracion larga
