@@ -1,0 +1,264 @@
+\documentclass{sig-alternate}
+
+\usepackage{enumerate}
+
+\makeatletter
+\let\@copyrightspace\relax
+\makeatother
+
+\def\sharedaffiliation{%
+\end{tabular}
+\begin{tabular}{c}}
+
+\newcommand{\denselist}{\topsep 0pt \itemsep -4pt}
+\newcommand{\tup}[1]{\langle #1 \rangle}
+\newcommand{\vvec}[1]{\mathbf{#1}}
+\newcommand{\join}{\bowtie}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\body}{{body}}
+\newcommand{\head}{{head}}
+\newcommand{\qrule}{:\!\!-}
+\newcommand{\arc}{\text{arc}}
+
+\begin{document}
+\allowdisplaybreaks
+
+\title{Computing Minimum-Cost Rewritings Using Circuits}
+\subtitle{[Extended Abstract]}
+\numberofauthors{3}
+\author{
+\alignauthor Daniel Izquierdo \email{idaniel@ldc.usb.ve}
+\alignauthor Mar\'{\i}a Esther Vidal \email{mvidal@ldc.usb.ve}
+\alignauthor Blai Bonet \email{bonet@ldc.usb.ve}
+\sharedaffiliation
+\affaddr{Departamento de Computaci\'on} \\
+\affaddr{Universidad Sim\'on Bol\'{\i}var} \\
+\affaddr{Caracas, Venezuela}
+}
+\maketitle
+
+\newtheorem{theorem}{Theorem}
+
+\begin{abstract}
+We show how the logical translation used in the McdSat algorithm
+can be used as well to compute the minimum-cost rewritings with
+respect to a simple additive cost model. Our algorithm exploits
+a known relation between d-DNNF theories and arithmetic circuits.
+\end{abstract}
+
+\section{Introduction}
+
+Recently, we considered the problem of computing all the rewritings
+of a query in terms of materialized views \cite{halevy:survey}.
+This problem is important in the context of data integration
+\cite{duschka:plan,kwok:plan,lambrecht:plan},
+and query optimization and data maintenance
+\cite{levy:bucket,zaharioudakis:table,mitra:svbt}.
+Our approach consisted in translating the problem of rewriting
+into the problem of enumerating the models of a propositional
+theory \cite{arvelo:aaai06} which is compiled into deterministic
+and decomposable negation normal form (d-DNNF) in order to
+enumerate the models efficiently \cite{darwiche:dnnf}.
+
+The theory is a CNF formula whose models are in correspondence
+with the rewritings of the query. This theory is constructed
+following the MiniCon Descriptions (MCDs) and their possible compositions
+\cite{pottinger:minicon}.
+The logical approach demonstrated to scale better than the MiniCon
+algorithm over a large number of benchmarks often showing performance
+improvements of several orders of magnitude.
+
+However, the McdSat algorithm, the name of the logical approach,
+was not desgined for rewriting problems involving explicit constants,
+nor to compute the best rewritings with respect to a given cost model.
+In this work, we address these shortcommings by provinding an
+extended logical formulation capable of handling the constants,
+and by showing how the d-DNNF can be exploited in order to compute
+the best rewritings for a simple yet interesting cost models.
+
+The paper is organized as follows.
+We define the problem, the translation, and the cost models (Sect.~2).
+We show how the theory can be extended to support explicit constants (Sect.~3)
+and how the d-DNNF is exploited to find best rewritings (Sect.~4).
+We end with some experiments (Sect.~5) and a discussion (Sect.~6).
+
+\section{Problem, Theories and Costs}
+
+We consider databases of the form $D=\tup{P,T}$ where
+$P$ be a set of predicates and $T=\{T_p\}_{p\in P}$ is a collection
+of tables that represents the predicates in extensional form.
+A conjunctive query $Q$ over $P$ is of the form 
+\begin{alignat*}{1}
+Q(\vvec{x})\ \qrule\ \  p_1(\vvec{x}_1),\, p_1(\vvec{x}_2),\, \ldots,\, p_m(\vvec{x}_m)\,,
+\end{alignat*}
+where $p_i\in P$, $\vvec{x}$ is a vector of variables, and each
+$\vvec{x}_i$ is a vector of variables and constants.
+The result of $Q$ over $D$, denoted as $Q(D)$, is the table with
+$|\vvec{x}|$ columns that result of the projection of the relational
+join $\join\!\!\{T_{p_i}\}_{i=1}^m$ over $\vvec{x}$.
+The atoms in the body of $Q$ are called the (sub)goals of $Q$.
+
+A view $V$ over $D$ is a query over $P$. In the context of data
+integration, the database $D$ is an idealized description of 
+the information contained across multiple data sources described
+as views.
+Given a database $D$, a query $Q$ and a collection of 
+views $E=\tup{\{V_i\}_i,\{E_i\}_i}$, we are required to find
+all the tuples in $Q(D)$ obtainable from the views in $E$.
+That is, we need to find all the \emph{rewritings} of the form
+\begin{alignat*}{1}
+R(\vvec{x})\ \qrule\ \ V_{i_1}(\vvec{x}_1),\, V_{i_2}(\vvec{x}_2),\, \ldots,\, V_{i_n}(\vvec{x}_n)
+\end{alignat*}
+such that $R(E) \subseteq Q(D)$.
+A query rewriting problem (QRP) is a tuple $\tup{P,Q,\{V_i\}}$ where $P$
+is a set of predicates, $Q$ is a query over $P$ and $\{V_i\}$ is a collection
+of views. We assume \emph{safe} problems in the sense that all 
+variables mentioned in the head of the query (resp.\ in the head of each view)
+appear in the body of the query (resp.\ in the body of each view).
+Further, we only deal with QRPs with no arithmetic predicates inside the
+query or views.
+A rewriting $R$ is \emph{valid} if for all databases $D=\tup{P,T}$
+and extensions $\{E_i\}$, $R(E) \subseteq Q(D)$.
+A collection $\R$ of valid rewritings is a solution if
+for all databases $D=\tup{P,T}$ and extensions $\{E_i\}$, there
+is no other $\R'$ such that $\R(E)\subset\R'(E)\subseteq Q(D)$.
+We are interested in finding a rewriting $\R$.
+
+\subsection{Logical Theories}
+
+In \cite{arvelo:aaai06}, we showed that a rewriting
+for a query $Q$ with $m$ goals can be obtained by enumerating the
+models of a logical theory
+$\Delta=\Delta_{rew}\cup\Delta_{mcd}^1\cup\cdots\Delta_{mcd}^m$
+where $\Delta_{rew}$ specified how to combine $m$ independent
+copies of MCD theories $\Delta_{mcd}$ that cover all goals in $Q$.
+Each $\Delta^i_{mcd}$ is a copy of the theory $\Delta_{mcd}$
+in which each literal $p$ is tagged as $p^i$.
+The theory $\Delta_{mcd}$ consists of different groups of 
+clauses that guarantess that its models are in correspondence
+with the MCDs, while the theory $\Delta_{rew}$ contains additional
+clauses to guarantee a sound and complete composition of the MCDs.
+The reader is referred to \cite{arvelo:aaai06} for a comprehensive
+description of the propositional theory.
+
+Let us describe the difficulties that arise when constants
+are presents in a QRP with the following example:
+\begin{alignat*}{1}
+Q(x,z)\ &\qrule\ \ p_1(x,y),\, p_2(y,z)\,, \\
+V_1(x_1)\ &\qrule\ \ p_1(x_1,A)\,, \\
+V_2(x_2)\ &\qrule\ \ p_2(B,x_2)\,, \\
+V_3(x_3,y_3)\ &\qrule\ \ p_2(x_3,y_3)
+%V_4(x_4,y_4)\ &\qrule\ \ p_1(x_1,A),\, p_2(B,y_4)\,,
+\end{alignat*}
+where $Q$ is the query and $\{V_1,V_2,V_3\}$ are the 
+views. In this case, the only rewriting is 
+$R(x,z)\qrule V_1(x),V_3(A,z)$ because the candidate 
+$R(x,z)\qrule V_1(x),V_2(z)$ is not valid as it maps
+$y$ into constants $A$ and $B$ that denote different
+objects.
+
+The main problem when handling constants is to
+be sure that different constants are not mapped into
+each other either directly or indirectly (via transitivity).
+
+\subsection{Cost Models}
+
+We assume a simple additive cost model in which each view
+$V_i$ is associated with a cost $c(V_i)$, and the cost of
+a rewriting is the sum of the costs for the views in it.
+An optimal or best rewriting is one with minimum cost,
+and the optimal cost of a QRP is the cost of a best
+rewriting. A QRP has always a well-defined optimal
+cost (if there are no rewritings, its cost is $\infty$),
+but it may have multiple best rewritings.
+The rewriting problem with costs consists in finding
+all the rewritings of minimum cost.
+
+%The cost model is simple yet expressive; e.g., if all
+%costs are unit, then best rewritings are those with
+%minimum number of views, yet in cases where views
+%represent different sources, it is natural
+%to associate them with different costs.
+
+
+\section{Extended Theories}
+
+The theory $\Delta_{mcd}$ makes use of propositions $t_{x,y}$
+to denote that the variable/constant $x$ in the query is mapped
+into the variable/constant $y$ in the view, and propositions $v_i$
+to indicate that the MCD uses view $V_i$.
+We obtain a sound and complete theory for QRPs with constants if
+$\Delta_{mcd}$ is extended with the clauses:
+\begin{enumerate}[C1.]\denselist
+\item (Inconsistent-1): $t_{x,A} \Rightarrow \neg t_{x,B}$,
+\item (Inconsistent-2): $t_{A,x} \Rightarrow \neg t_{B,x}$,
+\item (Inconsistent-3): $\neg t_{A,B}$,
+\item (Transitivity-1): $v_i\land t_{A,y}\land t_{x,y}\land t_{x,z}\Rightarrow t_{A,z}$,
+\item (Transitivity-2): $v_i\land t_{y,A}\land t_{y,x}\land t_{z,x}\Rightarrow t_{z,A}$.
+\end{enumerate}
+Clauses C1--C3 prune candidate rewritings in which one constant
+is directly mapped into a different one, and the last two implement
+a restricted propagation of transitivity.
+Similarly, $\Delta_{rew}$ must be extended with the clauses:
+\begin{enumerate}[C1.]\denselist
+\item[C6.] (Inconsistent-4): $t^i_{x,A} \Rightarrow \neg t^j_{x,B}$.
+\end{enumerate}
+XXXX showed that when the query has $m$ goals and there
+are at most $n$ dfferent constant symbols, it is enough
+to consider rewritings of length at most XXXXXX \cite{ref}.
+
+Given a QRP problem $\tup{Q,\{V_i\}}$ possibly with constant 
+symbols, we construct logical theories whose models are in
+correspondence with the rewritings. These theories are then
+compiled into d-DNNF from which all rewritings are extracted
+efficiently.
+Likewise, best rewritings can be computed by performing model
+enumeration twice: the first pass computes the optimal cost,
+and the second filters out suboptimal rewritings.
+However, there is a better way.
+
+\section{Minimum-Cost Models}
+
+Darwiche \& Marquis \cite{darwiche:weighted} show how to compute the
+rank $r^*(\Delta)$ of a propositional theory $\Delta$
+efficiently when $r$ is a literal ranking function and
+$\Delta$ is in d-DNNF. A literal ranking function ranks
+the models of the theory in terms of the rank of the
+literals $l$ that are true in the model, and ranks the
+theory as the best rank of its models:
+\[ r(\omega) = \sum_{\omega\vDash l} r(l),\quad r^*(\Delta) = \min_{\omega\vDash\Delta} r(\omega)\,. \]
+Furthermore, not only $r^*(\Delta)$ can be computed
+efficiently from the d-DNNF but also the models that
+have such rank.
+The procedure for computing the rank converts the d-DNNF
+into a circuit in which the literals are replaced by their
+ranks, the `or' nodes by `min', and the `and' nodes by `sum'.
+The evaluation of the circuit computes the rank of $\Delta$.
+
+We thus obtain a simple method for computing the best
+rewritings when the literal ranking function $r_c$ induced
+by the cost model $c$ is used; $r_c$ is defined by
+$r_c(l)=c(V_i)$ if $l=v^t_i$ for some $t$, and $r_c(l)=0$
+otherwise.
+
+\section{Preliminary Experiments}
+
+[brief explanation of results; no tables, no graphs; leave them for the poster]
+
+\section{Discussion}
+
+We have shown how the propositional theory used in McdSat can
+be extended to support constants, and how it can be used to 
+compute the best rewritings with respect to an additive
+cost model. The cost model is simple yet expressive.
+The computation of the best models relies on an arithmetic
+circuit that is obtained from the d-DNNF of the propositional
+theory.
+
+\small
+\bibliography{../../control}
+\bibliographystyle{plain}
+
+\end{document}
+

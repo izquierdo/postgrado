@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{arvelo:aaai06}
+Y.~Arvelo, B.~Bonet, and M.~E. Vidal.
+\newblock Compilation of query-rewriting problems into tractable fragments of
+  propositional logic.
+\newblock In {\em Proc.\ AAAI}, pages 225--230, 2006.
+
+\bibitem{darwiche:dnnf}
+A.~Darwiche.
+\newblock Decomposable negation normal form.
+\newblock {\em J. of the ACM}, 48(4):608--647, 2001.
+
+\bibitem{darwiche:weighted}
+A.~Darwiche and P.~Marquis.
+\newblock Compiling propositional weighted bases.
+\newblock {\em Art. Int.}, 157(1--2):81--113, 2004.
+
+\bibitem{duschka:plan}
+O.~Duschka and M.~Genesereth.
+\newblock Query planing in infomaster.
+\newblock In {\em Proc.\ {ACM} Symp. on App. Comp.}, pages 109--111, 1997.
+
+\bibitem{halevy:survey}
+A.~Halevy.
+\newblock Answering queries using views: {A} survey.
+\newblock {\em {VLDB} Journal}, 10:278--294, 2001.
+
+\bibitem{kwok:plan}
+C.~Kwok and D.~Weld.
+\newblock Planning to gather information.
+\newblock In {\em Proc.\ AAAI}, pages 32--39, 1996.
+
+\bibitem{lambrecht:plan}
+E.~Lambrecht, S.~Kambhampati, and S.~Gnanaprakasam.
+\newblock Optimizing recursive information gathering plans.
+\newblock In {\em Proc.\ IJCAI}, pages 1204--1211, 1999.
+
+\bibitem{levy:bucket}
+A.~Levy, A.~Rajaraman, and J.~Ordille.
+\newblock Query-answering algorithms for information agents.
+\newblock In {\em Proc.\ AAAI}, pages 40--47, 1996.
+
+\bibitem{mitra:svbt}
+P.~Mitra.
+\newblock An algorithm for answering queries efficiently using views.
+\newblock In {\em Proc.\ Australasian Database Conf.}, pages 92--99, 2001.
+
+\bibitem{pottinger:minicon}
+R.~Pottinger and A.~Halevy.
+\newblock {MiniCon}: A scalable algorithm for answering queries using views.
+\newblock {\em {VLDB} Journal}, 10:182--198, 2001.
+
+\bibitem{zaharioudakis:table}
+M.~Zaharioudakis, R.~Cochrane, G.~Lapis, H.~Pirahesh, and M.~Urata.
+\newblock Answering complex {SQL} queries using automatic summary tables.
+\newblock In {\em Proc.\ SIGMOD}, pages 105--116, 2000.
+
+\end{thebibliography}
