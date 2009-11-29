@@ -1,0 +1,9 @@
+codigo viejo vs codigo nuevo (para q/v sin constantes): mostrar que overhead es minimo, rendimiento de paper 1 sigue igual
+codigo nuevo vs minicon 
+
+
+1. ver si se pueden constantes en minicon
+
+tarea: 
+- comportamiento minicon con constantes, y tomamos decision
+  (mostrar overhead de manejar constantes)

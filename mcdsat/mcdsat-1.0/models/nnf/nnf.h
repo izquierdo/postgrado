@@ -444,6 +444,8 @@ namespace nnf {
 #ifdef MP
     MP_num* mp_count_models( MP_num *output = 0, const int *litmap = 0 ) const;
 #endif
+
+    int mincost_recursively( const Node *n, Model &m) const;
     std::pair<bool,const Node*> enumerate_models_recursively( const Node *n, Model &m, const Node *last_or ) const;
     void enumerate_models( std::ostream &os, bool all = false ) const;
     void enumerate_models( ModelList &models ) const;

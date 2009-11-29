@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <math.h>
 
+#define INF 0x7f
+#define MIN(a,b) ((a)<(b)?(a):(b))
+
 namespace nnf {
 
 size_t
@@ -318,6 +321,37 @@ Manager::compute_value_sorted_smooth( const Node *n, float *output, const float 
   return( result );
 }
 #endif
+
+int
+Manager::mincost_recursively( const Node *n, Model &m) const
+{
+  bool stat = true;
+  if( n->type_ == And ) {
+    int mm=INF;
+
+    for( NodePtr *p = n->children_; (*p != 0); ++p ) {
+      mm=MIN(mm,mincost_recursively(*p,m));
+    }
+
+    return mm;
+  }
+  else if( n->type_ == Or ) {
+    int sum=0;
+
+    for( NodePtr *p = n->children_; (*p != 0); ++p ) {
+      sum+=mincost_recursively(*p,m);
+    }
+
+    return sum;
+  }
+  else if( n->type_ == Variable ) {
+      //if n vista, devolver costo, else 0
+      return 0;
+  }
+  else if( n->type_ == Value ) {
+    return 0;
+  }
+}
 
 std::pair<bool,const Node*>
 Manager::enumerate_models_recursively( const Node *n, Model &m, const Node *last_or ) const
