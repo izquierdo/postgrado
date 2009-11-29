@@ -3,6 +3,11 @@
 import sys
 import generators.flights
 
+def writelist(l, filename):
+    f = open(filename, 'w')
+    f.writelines([str(e) + '\n' for e in l])
+    f.close()
+
 def main():
     if len(sys.argv) < 4:
         usage_and_quit()
@@ -23,13 +28,8 @@ def main():
     
     query, views = generator(sys.argv[4:])
 
-    viewsfile = open(viewsfilename, 'w')
-    viewsfile.writelines([str(v) + '\n' for v in views])
-    viewsfile.close()
-
-    queryfile = open(queryfilename, 'w')
-    queryfile.write(str(query) + '\n')
-    queryfile.close()
+    writelist(views, viewsfilename)
+    writelist([query], queryfilename)
 
 def print_usage():
     print "Usage: %s <views_file> <query_file> <command> [command_arguments...]" % (sys.argv[0])

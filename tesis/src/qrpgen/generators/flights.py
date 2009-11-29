@@ -1,6 +1,14 @@
 from qrp_structures import *
 
 def samecompany(argv):
+    companies = int(argv[0])
+    steps = int(argv[1])
+
+def specificcompany(argv):
+    companies = int(argv[0])
+    steps = int(argv[1])
+
+def samecompany(argv):
     if len(argv) != 2:
         #TODO
         sys.exit(1)
@@ -13,7 +21,7 @@ def samecompany(argv):
     # generate query
     company_var = Argument('var', steps)
     query_pred = "q"
-    query_args = [Argument('var', i) for i in range(1, steps+1)]
+    query_args = [Argument('var', i) for i in range(1, steps)]
     query_table = Table(query_pred, query_args)
     cityA, cityB = (Argument('const', 1), Argument('const', 2))
     query_sos = [Table(flights_pred, [cityA, Argument('var', 1), company_var])]
