@@ -583,13 +583,47 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
     mappings = set()
     newmappings = set()
 
+    viewmappings = {}
+
     for v in vistas:
+        currentmappings = set()
+        newmappings = set()
+
         for soq in q.cuerpo:
             for sov in v.cuerpo:
                 if soq.predicado == sov.predicado:
                     for (x, y) in zip(soq.orden, sov.orden):
                         newmappings.add((x, y))
 
+        updated = True
+
+        while updated:
+            currentmappings.update(newmappings)
+            newmappings = set()
+            updated = False
+
+            for (a, y0) in currentmappings:
+                if es_var(a) or es_const(y0):
+                    continue
+
+                for (x1, y1) in currentmappings:
+                    if es_const(x1) or (y0 != y1) or (x1 == y1):
+                        continue
+
+                    for (x2, z) in currentmappings:
+                        if (x1 != x2) or es_const(z) or (x2 == z):
+                            continue
+
+                        if (a, z) not in currentmappings:
+                            updated = True
+                            print "SI"
+                            print "%s por culpa de que %s y %s y %s (en vista %s)" % (str((a,z)), str((a,y0)), str((x1,y1)), str((x2,z)), str(v))
+                            newmappings.add((a, z))
+
+
+    import sys
+    sys.exit(1)
+    #BBB
     foundnewmappings = True
 
     while foundnewmappings:
@@ -613,8 +647,9 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                     if (a, z) not in mappings:
                         foundnewmappings = True
                         print "SI"
-                        print "%s por culpa de que %s y %s y %s" % (str((a,z)), str((a,y0)), str((x1,y1)), str((x2,z)))
+                        print "%s por culpa de que %s y %s y %s (en vista %s)" % (str((a,z)), str((a,y0)), str((x1,y1)), str((x2,z)), str(v))
                         newmappings.add((a, z))
+    #!BBB
 
     import sys
     sys.exit(1)
