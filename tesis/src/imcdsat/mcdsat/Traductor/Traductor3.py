@@ -628,6 +628,7 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
             newmappings = set()
             updated = False
 
+            # PARA D4
             for (a, y0) in currentmappings:
                 if es_var(a) or es_const(y0):
                     continue
@@ -654,6 +655,35 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
                                 if varT is None:
                                     varT = VariableSat(True, 't', [int(a), int(z)])
                                     varsT[(int(a), int(z))]=varT
+                                    lt_d4d5.append(varT)
+
+            # PARA D5
+            for (y0, a) in currentmappings:
+                if es_var(a) or es_const(y0):
+                    continue
+
+                for (y1, x1) in currentmappings:
+                    if es_const(x1) or (y0 != y1) or (x1 == y1):
+                        continue
+
+                    for (z, x2) in currentmappings:
+                        if (x1 != x2) or (x2 == z):
+                            continue
+
+                        if (z, a) not in currentmappings:
+                            cs = compatibles(providers[(y0,a)], providers[(y1,x1)], providers[(z,x2)])
+
+                            if len(cs) > 0:
+                                updated = True
+                                newmappings.add((z, a))
+                                providers[(z,a)] = cs
+
+                                #create the mapping var
+                                varT = varsT.get((z,a))
+
+                                if varT is None:
+                                    varT = VariableSat(True, 't', [int(z), int(a)])
+                                    varsT[(int(z), int(a))]=varT
                                     lt_d4d5.append(varT)
 
 
@@ -692,6 +722,7 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
                             if es_var(a) or es_const(x):
                                 continue
 
+                            #print "add %s %s %s %s" % (str(a), str(y), str(x), str(z))
                             d5set.add((varsV[numVista],a,y,x,z))
 
         numVista += 1
@@ -710,11 +741,13 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
     d5 = []
 
     for (vv,a,y,x,z) in d5set:
-        vtya = varsT.get((y,a))
-        vtyx = varsT.get((y,x))
-        vtzx = varsT.get((z,x))
-        vtza = varsT.get((z,a))
+        vtya = varsT.get((int(y),int(a)))
+        vtyx = varsT.get((int(y),int(x)))
+        vtzx = varsT.get((int(z),int(x)))
+        vtza = varsT.get((int(z),int(a)))
         
+        #print "cadd %s %s %s %s" % (str(a), str(y), str(x), str(z))
+        #print "considered %s %s %s %s" % (str(vtya), str(vtyx), str(vtzx), str(vtza))
         if vtza and vtya and vtyx and vtzx:
             d5.append([vv.negarVar(), vtya.negarVar(), vtyx.negarVar(), vtzx.negarVar(), vtza])
 
