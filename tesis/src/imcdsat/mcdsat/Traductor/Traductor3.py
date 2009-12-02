@@ -641,12 +641,9 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                         if (x1 != x2) or (x2 == z):
                             continue
 
-                        print "hey %s" % (str((a,z,)))
-                        print currentmappings
                         if (a, z) not in currentmappings:
                             cs = compatibles(providers[(a,y0)], providers[(x1,y1)], providers[(x2,z)])
 
-                            print "probe para %s %s %s" % (str((a,y0)), str((x1,y1)), str((x2,z)))
                             if len(cs) > 0:
                                 updated = True
                                 newmappings.add((a, z))
@@ -656,7 +653,6 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                                 varT = varsT.get((a,z))
 
                                 if varT is None:
-                                    print "generando para %s, %s" % (str(a), str(z))
                                     varT = VariableSat(True, 't', [int(a), int(z)])
                                     varsT[(int(a), int(z))]=varT
                                     lt_d4.append(varT)
@@ -675,10 +671,8 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                             if y == z:
                                 continue
 
-                            print "pat %s %s %s %s" % (a,x,y,z)
                             if es_const(y):
                                 continue
-                            print "pot %s %s %s %s" % (a,x,y,z)
 
                             d4set.add((varsV[numVista],a,y,x,z))
 
@@ -687,14 +681,12 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
     d4 = []
 
     for (vv,a,y,x,z) in d4set:
-        vtay = varsT.get((a,y))
-        vtxy = varsT.get((x,y))
-        vtxz = varsT.get((x,z))
-        vtaz = varsT.get((a,z))
+        vtay = varsT.get((int(a),int(y)))
+        vtxy = varsT.get((int(x),int(y)))
+        vtxz = varsT.get((int(x),int(z)))
+        vtaz = varsT.get((int(a),int(z)))
 
-        print vtaz
         if vtaz and vtay and vtxy and vtxz:
-            print "transit"
             d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
 
     return d4, lt_d4
@@ -730,7 +722,7 @@ def clausulas_d5(q, vistas, variables_query, constantes_query):
         varT = varsT.get((i,j))
 
         if varT is None:
-            #print "d5 Creando para (%s, %s)" % (i, j)
+            print "d5 Creando para (%s, %s)" % (i, j)
             varT = VariableSat(True, 't', [int(i), int(j)])
             varsT[(int(i), int(j))]=varT
             lt_d5.append(varT)
