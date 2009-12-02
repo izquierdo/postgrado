@@ -421,12 +421,11 @@ def clausulas_d1d2d4d5d6(q, vistas):
 
     d1 = clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas)
     d2 = clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas)
-    d4, lt_d4 = clausulas_d4(q, vistas, variables_query, constantes_query)
-    d5, lt_d5 = clausulas_d5(q, vistas, variables_query, constantes_query)
+    d4, d5, lt_d4d5 = clausulas_d4d5(q, vistas, variables_query, constantes_query)
 
     d6 = clausulas_d6(vistas, variables_query, constantes_vistas)
 
-    return d1, d2, d4, list(set(lt_d4 + lt_d5)), d5, d6
+    return d1, d2, d4, list(set(lt_d4d5)), d5, d6
 
 def clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas):
     global varsT
@@ -574,11 +573,11 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
     c8.append([varz.negarVar(), varm])
     return lt
 
-def clausulas_d4(q, vistas, variables_query, constantes_query):
+def clausulas_d4d5(q, vistas, variables_query, constantes_query):
     global varsT
     global varsV
 
-    lt_d4 = []
+    lt_d4d5 = []
 
     #return compatible mappings in a, b, c
     #TODO more efficient implementation
@@ -655,10 +654,11 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                                 if varT is None:
                                     varT = VariableSat(True, 't', [int(a), int(z)])
                                     varsT[(int(a), int(z))]=varT
-                                    lt_d4.append(varT)
+                                    lt_d4d5.append(varT)
 
 
     d4set = set([])
+    d5set = set([])
 
     numVista = 0
 
@@ -678,25 +678,6 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
 
         numVista += 1
 
-    d4 = []
-
-    for (vv,a,y,x,z) in d4set:
-        vtay = varsT.get((int(a),int(y)))
-        vtxy = varsT.get((int(x),int(y)))
-        vtxz = varsT.get((int(x),int(z)))
-        vtaz = varsT.get((int(a),int(z)))
-
-        if vtaz and vtay and vtxy and vtxz:
-            d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
-
-    return d4, lt_d4
-
-def clausulas_d5(q, vistas, variables_query, constantes_query):
-    global varsT
-    global varsV
-
-    d5set = set([])
-
     numVista = 0
 
     for v in vistas:
@@ -715,29 +696,29 @@ def clausulas_d5(q, vistas, variables_query, constantes_query):
 
         numVista += 1
 
+    d4 = []
+
+    for (vv,a,y,x,z) in d4set:
+        vtay = varsT.get((int(a),int(y)))
+        vtxy = varsT.get((int(x),int(y)))
+        vtxz = varsT.get((int(x),int(z)))
+        vtaz = varsT.get((int(a),int(z)))
+
+        if vtaz and vtay and vtxy and vtxz:
+            d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
+
     d5 = []
-    lt_d5 = []
-
-    def buscar_o_crear_varT(i, j):
-        varT = varsT.get((i,j))
-
-        if varT is None:
-            print "d5 Creando para (%s, %s)" % (i, j)
-            varT = VariableSat(True, 't', [int(i), int(j)])
-            varsT[(int(i), int(j))]=varT
-            lt_d5.append(varT)
-
-        return varT
 
     for (vv,a,y,x,z) in d5set:
-        vtya = buscar_o_crear_varT(y,a)
-        vtyx = buscar_o_crear_varT(y,x)
-        vtzx = buscar_o_crear_varT(z,x)
-        vtza = buscar_o_crear_varT(z,a)
+        vtya = varsT.get((y,a))
+        vtyx = varsT.get((y,x))
+        vtzx = varsT.get((z,x))
+        vtza = varsT.get((z,a))
         
-        d5.append([vv.negarVar(), vtya.negarVar(), vtyx.negarVar(), vtzx.negarVar(), vtza])
+        if vtza and vtya and vtyx and vtzx:
+            d5.append([vv.negarVar(), vtya.negarVar(), vtyx.negarVar(), vtzx.negarVar(), vtza])
 
-    return d5, lt_d5
+    return d4, d5, lt_d4d5
 
 def clausulas_d6(vistas, variables_query, constantes_vistas):
     global varsT
