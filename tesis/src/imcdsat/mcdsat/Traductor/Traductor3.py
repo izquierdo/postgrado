@@ -578,7 +578,24 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
     global varsT
     global varsV
 
-    #ejele
+    lt_d4 = []
+
+    #return compatible mappings in a, b, c
+    #TODO more efficient implementation
+    def compatibles(a, b, c):
+        ret = set()
+
+        for (aq, av) in a:
+            for (bq, bv) in b:
+                for (cq, cv) in c:
+                    if (aq == bq and av == bv) or (aq != bq and av != bv):
+                        if (aq == cq and av == cv) or (aq != cq and av != cv):
+                            if (bq == cq and bv == cv) or (bq != cq and bv != cv):
+                                ret.add((aq, av))
+                                ret.add((bq, bv))
+                                ret.add((cq, cv))
+
+        return ret
 
     mappings = set()
     newmappings = set()
@@ -589,11 +606,21 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
         currentmappings = set()
         newmappings = set()
 
+        providers = {}
+        soqn = 0
+
         for soq in q.cuerpo:
+            sovn = 0
+
             for sov in v.cuerpo:
                 if soq.predicado == sov.predicado:
                     for (x, y) in zip(soq.orden, sov.orden):
                         newmappings.add((x, y))
+                        providers.setdefault((x, y), set()).add((soqn, sovn))
+
+                sovn += 1
+
+            soqn += 1
 
         updated = True
 
@@ -611,49 +638,29 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                         continue
 
                     for (x2, z) in currentmappings:
-                        if (x1 != x2) or es_const(z) or (x2 == z):
+                        if (x1 != x2) or (x2 == z):
                             continue
 
+                        print "hey %s" % (str((a,z,)))
+                        print currentmappings
                         if (a, z) not in currentmappings:
-                            updated = True
-                            print "SI"
-                            print "%s por culpa de que %s y %s y %s (en vista %s)" % (str((a,z)), str((a,y0)), str((x1,y1)), str((x2,z)), str(v))
-                            newmappings.add((a, z))
+                            cs = compatibles(providers[(a,y0)], providers[(x1,y1)], providers[(x2,z)])
 
+                            print "probe para %s %s %s" % (str((a,y0)), str((x1,y1)), str((x2,z)))
+                            if len(cs) > 0:
+                                updated = True
+                                newmappings.add((a, z))
+                                providers[(a,z)] = cs
 
-    import sys
-    sys.exit(1)
-    #BBB
-    foundnewmappings = True
+                                #create the mapping var
+                                varT = varsT.get((a,z))
 
-    while foundnewmappings:
-        mappings.update(newmappings)
-        newmappings = set()
+                                if varT is None:
+                                    print "generando para %s, %s" % (str(a), str(z))
+                                    varT = VariableSat(True, 't', [int(a), int(z)])
+                                    varsT[(int(a), int(z))]=varT
+                                    lt_d4.append(varT)
 
-        foundnewmappings = False
-
-        for (a, y0) in mappings:
-            if es_var(a) or es_const(y0):
-                continue
-
-            for (x1, y1) in mappings:
-                if es_const(x1) or (y0 != y1) or (x1 == y1):
-                    continue
-
-                for (x2, z) in mappings:
-                    if (x1 != x2) or es_const(z) or (x2 == z):
-                        continue
-
-                    if (a, z) not in mappings:
-                        foundnewmappings = True
-                        print "SI"
-                        print "%s por culpa de que %s y %s y %s (en vista %s)" % (str((a,z)), str((a,y0)), str((x1,y1)), str((x2,z)), str(v))
-                        newmappings.add((a, z))
-    #!BBB
-
-    import sys
-    sys.exit(1)
-    return 0
 
     d4set = set([])
 
@@ -668,34 +675,27 @@ def clausulas_d4(q, vistas, variables_query, constantes_query):
                             if y == z:
                                 continue
 
-                            if es_const(y) or es_const(z):
+                            print "pat %s %s %s %s" % (a,x,y,z)
+                            if es_const(y):
                                 continue
+                            print "pot %s %s %s %s" % (a,x,y,z)
 
                             d4set.add((varsV[numVista],a,y,x,z))
 
         numVista += 1
 
     d4 = []
-    lt_d4 = []
-
-    def buscar_o_crear_varT(i, j):
-        varT = varsT.get((i,j))
-
-        if varT is None:
-            #print "Creando para (%s, %s)" % (i, j)
-            varT = VariableSat(True, 't', [int(i), int(j)])
-            varsT[(int(i), int(j))]=varT
-            lt_d4.append(varT)
-
-        return varT
 
     for (vv,a,y,x,z) in d4set:
-        vtay = buscar_o_crear_varT(a,y)
-        vtxy = buscar_o_crear_varT(x,y)
-        vtxz = buscar_o_crear_varT(x,z)
-        vtaz = buscar_o_crear_varT(a,z)
-        
-        d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
+        vtay = varsT.get((a,y))
+        vtxy = varsT.get((x,y))
+        vtxz = varsT.get((x,z))
+        vtaz = varsT.get((a,z))
+
+        print vtaz
+        if vtaz and vtay and vtxy and vtxz:
+            print "transit"
+            d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
 
     return d4, lt_d4
 
