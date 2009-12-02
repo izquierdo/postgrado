@@ -97,6 +97,12 @@ def crearReescritura(mcdc, query):
     res = CQ(cab, cue, [])
     return res    
 
+def nombreReal(var):
+    if es_const(var):
+        return str(int(var)-CONSTANT_BASE)
+
+    #VARRENAME
+    return 'X'+str(int(var)%10000)
 
 def crearMCD(mod, vistas):
     phictodo = {}
@@ -110,7 +116,10 @@ def crearMCD(mod, vistas):
                 vista = vistas[int(numVista)]
         elif var[0] == 't':
             i = var.find(',')
-            phictodo.setdefault('X'+var[2:i],[]).append('X'+var[i+2:len(var)-1])
+            vq = nombreReal(var[2:i])
+            vv = nombreReal(var[i+2:len(var)-1])
+
+            phictodo.setdefault(vq,[]).append(vv)
         elif var[0] == 'g':
             gc.add(var[2:len(var)-1])
     return MCD(phictodo, gc, vista)

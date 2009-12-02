@@ -55,16 +55,27 @@ class CQparser(tpg.Parser):
 
     """
 
+cq_actual = 0
+
 def crearSO(pred, lista):
     ord = []
     arg = {}
     for (x,y) in lista:
-        ord.append(x)
-        arg[x]=y
+        if y == 1:
+            nx = x
+        else:
+            #VARRENAME
+            nx = str(VAR_BASE + (10000*cq_actual) + int(x))
+
+        ord.append(nx)
+        arg[nx]=y
     return SubObjetivo(pred, arg, ord)
 
 # falta colocarle los predicados de orden
 def crearCQ(cabeza, cuerpo):
+    global cq_actual
+    cq_actual += 1
+
     return CQ(cabeza, cuerpo, [])
 
 def cargarCQ(nomArch):

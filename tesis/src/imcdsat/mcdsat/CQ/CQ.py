@@ -2,6 +2,7 @@ from SubObjetivo import *
 from Seq import *
 
 CONSTANT_BASE = 1000000000
+VAR_BASE = 400000000
 
 def es_const(x):
     #hack para las reescrituras que colocan la x antes
