@@ -6,6 +6,7 @@ import pprint
 import random
 import cPickle  
 import pickle  
+import logging
 
 from Unification import unificar
 from Parser import *
@@ -34,9 +35,12 @@ def generarReescrituras(exp, archV, archC, archVars, archTiempo, stdin):
 
 def generarReescrituras1(exp, archVistas, archCons, archVars, stdin):
     archVistas2 = archVistas.replace('.txt', '')
-    vistas = cargarCQ(archVistas)
+    print "archVistas2: %s" % (archVistas2,)
+    vistas = cargarCQ(archVistas,rename=False)
+    print "V: %s" % (vistas,)
     #print archMod
-    consultas = cargarCQ(archCons)
+    consultas = cargarCQ(archCons,rename=False)
+    print "Q: %s" % (consultas,)
     for q in consultas:
         numeros = leerVars(archVars)
         lenQuery = len(q.cuerpo)
@@ -85,7 +89,7 @@ def generarReescRWold(numeros, archMods, lenQuery, query, vistas):
 def crearReescritura(mcdc, query):
     r = []
     seq = Seq()
-    ecgeneral = unificar([k.ec for k in mcdc], query.variables())
+    ecgeneral = unificar([k.ec for k in mcdc], [nombreReal(var) for var in query.variables()])
     #print "ecgeneral", ecgeneral
     for m in mcdc:
         unif = m.obtUnificacion(ecgeneral)
@@ -132,6 +136,7 @@ def generarReescRW(numeros, stdin, lenQuery, query, vistas):
     for x in infile:
         l = x.strip().split()
         if l[0] != 'main:':
+            print "MODELORW: %s QUERY: %s" % (obtModeloRW(numeros, n, l, lenQuery, vistas), query)
             print crearReescritura(obtModeloRW(numeros, n, l, lenQuery, vistas), query)
     return modelos
 

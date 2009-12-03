@@ -1,5 +1,6 @@
  #!/usr/bin/env python
 
+import logging
 import tpg
 from CQ.CQ import *
 from CQ.SubObjetivo import *
@@ -50,23 +51,42 @@ class CQparser(tpg.Parser):
 
         ITEM/a ->
                     var/v   $ a = (v[1:],0)
-                |   ctte/c  $ a = (str(int(c)+1000000000),1)
+                |   ctte/c  $ a = (c,1)
                 ;
 
     """
 
 cq_actual = 0
+renameArguments = True
+
+def getConstantName(n):
+    global renameArguments
+
+    if renameArguments:
+        return str(int(n)+1000000000)
+
+    return n
+
+def getVariableName(x):
+    global renameArguments
+
+    if renameArguments:
+        return str(VAR_BASE + (10000*cq_actual) + int(x))
+
+    return x
 
 def crearSO(pred, lista):
     ord = []
     arg = {}
     for (x,y) in lista:
-        if y == 1:
-            nx = x
-        else:
-            #VARRENAME
-            nx = str(VAR_BASE + (10000*cq_actual) + int(x))
+        print "x es " + str(x)
 
+        if y == 1:
+            nx = getConstantName(x)
+        else:
+            nx = getVariableName(x)
+
+        print "nx me dio " + str(nx)
         ord.append(nx)
         arg[nx]=y
     return SubObjetivo(pred, arg, ord)
@@ -78,7 +98,11 @@ def crearCQ(cabeza, cuerpo):
 
     return CQ(cabeza, cuerpo, [])
 
-def cargarCQ(nomArch):
+def cargarCQ(nomArch,rename=True):
+    global renameArguments
+
+    logging.debug("loading CQ file=%s rename=%s" % (nomArch, rename))
+    renameArguments = rename
     parser = CQparser()
     in_file = open(nomArch,"r")
     text = in_file.read()

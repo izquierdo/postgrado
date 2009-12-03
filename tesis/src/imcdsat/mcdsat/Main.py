@@ -1,6 +1,7 @@
 #!/bin/python
 import pprint
 import sys
+import logging
 from CQ import *
 from CQ.Argumento import *
 from CQ.Predicado import *
@@ -19,6 +20,7 @@ from random import *
 if __name__ == "__main__":
     #import psyco  # only needed for improved performance
     #psyco.full()  # only needed for improved performance
+    logging.basicConfig(level=logging.DEBUG)
     op = sys.argv[1]
     exp = sys.argv[2]
     archVistas = sys.argv[3]

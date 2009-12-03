@@ -20,6 +20,9 @@ def es_var(x):
 class CQ:
     def __init__(self, cab, cuer, comp):
         self.cabeza = cab
+        print "cab es %s" % (cab,)
+        if str(cab) == "v1(_0, _1)":
+            None()
         self.cuerpo = cuer
         self.comparacion = comp
         self.vars,self.varsExist,self.varsDist = self.obtVariables();

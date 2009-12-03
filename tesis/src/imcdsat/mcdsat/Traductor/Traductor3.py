@@ -159,7 +159,7 @@ def generarTeoriaMCD(q, vistas):
 
     # support for constants
 
-    d1, d2, d4, lt_d4d5, d5, d6 = clausulas_d1d2d4d5d6(q, vistas, ltaux)
+    d1, d2, d4, lt_d4d5, d5, d6 = clausulas_d1d2d4d5d6(q, vistas, ltaux, lz)
     d3 = clausulas_d3(q, vistas)
 
     lt.update(lt_d4d5)
@@ -178,34 +178,34 @@ def generarTeoriaMCD(q, vistas):
     
     c5, c13 = clausulas513(q,vistas,ltaux)
     c15 = clausulas15(q, vistas)
-    print "clausulas 1  \/ vi (por lo menos uno)"
-    pprint.pprint(c1) 
-    print "clausulas 2  -vi \/ -vj (maximo uno)"
-    pprint.pprint(c2) 
-    print "clausulas 3  \/ gk (por lo menos uno)"
-    pprint.pprint(c3) 
-    print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
-    pprint.pprint(c4) 
-    print "clausulas 5  vm => -tij (i Dist y j exist) "
-    pprint.pprint(c5)
-    print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
-    pprint.pprint(c6) 
-    print "clausulas 7  zir => tir"
-    pprint.pprint(c7) 
-    print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
-    pprint.pprint(c8)
-    print "clausulas 9  maximo una z por vm, gi"
-    pprint.pprint(c9)
-    print "clausulas 10 t explicito"
-    pprint.pprint(c10)
-    print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
-    pprint.pprint(c11)
-    print "clausulas 12  v_m & g_j => -g_k "
-    pprint.pprint(c12)
-    print "clausulas 13  t_ij => -t_kj"
-    pprint.pprint(c13)
-    print "clausulas 14  v_i => -gk cuando los preds son diff"
-    pprint.pprint(c14)
+    #print "clausulas 1  \/ vi (por lo menos uno)"
+    #pprint.pprint(c1) 
+    #print "clausulas 2  -vi \/ -vj (maximo uno)"
+    #pprint.pprint(c2) 
+    #print "clausulas 3  \/ gk (por lo menos uno)"
+    #pprint.pprint(c3) 
+    #print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
+    #pprint.pprint(c4) 
+    #print "clausulas 5  vm => -tij (i Dist y j exist) "
+    #pprint.pprint(c5)
+    #print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
+    #pprint.pprint(c6) 
+    #print "clausulas 7  zir => tir"
+    #pprint.pprint(c7) 
+    #print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
+    #pprint.pprint(c8)
+    #print "clausulas 9  maximo una z por vm, gi"
+    #pprint.pprint(c9)
+    #print "clausulas 10 t explicito"
+    #pprint.pprint(c10)
+    #print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
+    #pprint.pprint(c11)
+    #print "clausulas 12  v_m & g_j => -g_k "
+    #pprint.pprint(c12)
+    #print "clausulas 13  t_ij => -t_kj"
+    #pprint.pprint(c13)
+    #print "clausulas 14  v_i => -gk cuando los preds son diff"
+    #pprint.pprint(c14)
 
     #print "clausulas d1  t_{x,A} => -t_{x,B}"
     #pprint.pprint(d1)
@@ -388,7 +388,7 @@ def clausulas12(vistas, lv, lg):
                     c12.append([lv[i].negarVar(), lg[x].negarVar(), lg[y].negarVar()])                    
     return c12
 
-def clausulas_d1d2d4d5d6(q, vistas, ltaux):
+def clausulas_d1d2d4d5d6(q, vistas, ltaux, lz):
     global varsT
 
     variables_query = []
@@ -423,7 +423,7 @@ def clausulas_d1d2d4d5d6(q, vistas, ltaux):
 
     d1 = clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas)
     d2 = clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas)
-    d4, d5, lt_d4d5 = clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux)
+    d4, d5, lt_d4d5 = clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz)
 
     d6 = clausulas_d6(vistas, variables_query, constantes_vistas)
 
@@ -575,7 +575,7 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
     c8.append([varz.negarVar(), varm])
     return lt
 
-def clausulas_d4d5(q, vistas, variables_query, constantes_query):
+def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
     global varsT
     global varsV
 
@@ -603,7 +603,10 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
 
     viewmappings = {}
 
-    for v in vistas:
+    createdmappings = set()
+
+    for (v, numVista) in zip(vistas, range(len(vistas))):
+        varV = VariableSat(True, 'v', [numVista])
         currentmappings = set()
         newmappings = set()
 
@@ -643,21 +646,33 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
                         if (x1 != x2) or (x2 == z):
                             continue
 
-                        if (a, z) not in currentmappings:
-                            cs = compatibles(providers[(a,y0)], providers[(x1,y1)], providers[(x2,z)])
+                        cs = compatibles(providers[(a,y0)], providers[(x1,y1)], providers[(x2,z)])
 
+                        if (a, z) not in currentmappings:
                             if len(cs) > 0:
                                 updated = True
                                 newmappings.add((a, z))
-                                providers[(a,z)] = cs
+                                providers[(a,z)] = set()
 
                                 #create the mapping var
-                                varT = varsT.get((a,z))
+                                varT = varsT.get((int(a),int(z)))
 
                                 if varT is None:
                                     varT = VariableSat(True, 't', [int(a), int(z)])
                                     varsT[(int(a), int(z))]=varT
                                     lt_d4d5.append(varT)
+                                    createdmappings.add(varT)
+
+                        varT = varsT.get((int(a),int(z)))
+
+                        if varT:
+                            providers[(a,z)].update(cs)
+
+                            for (soqn, sovn) in providers[(a,z)]:
+                                varZ = varsZ.get((soqn,sovn,numVista))
+                                #print "agregue para %s : %s la varz %s" % (varT,varV,varZ)
+                                #print "antes estaba asi: %s" % (ltaux.get(varT,varV))
+                                ltaux.setdefault((varT,varV),set([])).add(varZ)    
 
             # PARA D5
             for (y0, a) in currentmappings:
@@ -738,6 +753,7 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
         vtaz = varsT.get((int(a),int(z)))
 
         if vtaz and vtay and vtxy and vtxz:
+            #add d4-type clause
             d4.append([vv.negarVar(), vtay.negarVar(), vtxy.negarVar(), vtxz.negarVar(), vtaz])
 
     d5 = []
@@ -748,9 +764,8 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query):
         vtzx = varsT.get((int(z),int(x)))
         vtza = varsT.get((int(z),int(a)))
         
-        #print "cadd %s %s %s %s" % (str(a), str(y), str(x), str(z))
-        #print "considered %s %s %s %s" % (str(vtya), str(vtyx), str(vtzx), str(vtza))
         if vtza and vtya and vtyx and vtzx:
+            #add d5-type clause
             d5.append([vv.negarVar(), vtya.negarVar(), vtyx.negarVar(), vtzx.negarVar(), vtza])
 
     return d4, d5, lt_d4d5
