@@ -155,6 +155,20 @@ def generarTeoriaMCD(q, vistas):
     lv, c1, c2 = variablesV(q, vistas)
     lg, c3 = variablesG(q, lv)
     lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas)
+
+
+    # support for constants
+
+    d1, d2, d4, lt_d4d5, d5, d6 = clausulas_d1d2d4d5d6(q, vistas, ltaux)
+    d3 = clausulas_d3(q, vistas)
+
+    lt.update(lt_d4d5)
+
+    c10, c11 = clausulas11(lt, lv, ltaux)
+
+    variables = []
+    variables = lv+ lg+ list(lt)+ lz
+
 #    print "V",varsV,lv
 #    print "G",varsG,lg
 #    print "T",len(varsT),len(lt)
@@ -163,48 +177,35 @@ def generarTeoriaMCD(q, vistas):
     c4 = clausulas4(q,vistas,ltaux)
     
     c5, c13 = clausulas513(q,vistas,ltaux)
-    c10, c11 = clausulas11(lt, lv, ltaux)
     c15 = clausulas15(q, vistas)
-#    print "clausulas 1  \/ vi (por lo menos uno)"
-#    pprint.pprint(c1) 
-#    print "clausulas 2  -vi \/ -vj (maximo uno)"
-#    pprint.pprint(c2) 
-#    print "clausulas 3  \/ gk (por lo menos uno)"
-#    pprint.pprint(c3) 
-#    print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
-#    pprint.pprint(c4) 
-#    print "clausulas 5  vm => -tij (i Dist y j exist) "
-#    pprint.pprint(c5)
-#    print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
-#    pprint.pprint(c6) 
-#    print "clausulas 7  zir => tir"
-#    pprint.pprint(c7) 
-#    print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
-#    pprint.pprint(c8)
-#    print "clausulas 9  maximo una z por vm, gi"
-#    pprint.pprint(c9)
-#    print "clausulas 10 t explicito"
-#    pprint.pprint(c10)
-#    print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
-#    pprint.pprint(c11)
-#    print "clausulas 12  v_m & g_j => -g_k "
-#    pprint.pprint(c12)
-#    print "clausulas 13  t_ij => -t_kj"
-#    pprint.pprint(c13)
-#    print "clausulas 14  v_i => -gk cuando los preds son diff"
-#    pprint.pprint(c14)
-
-    clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
-
-    # support for constants
-
-    d1, d2, d4, lt_d4d5, d5, d6 = clausulas_d1d2d4d5d6(q, vistas)
-    d3 = clausulas_d3(q, vistas)
-
-    lt.update(lt_d4d5)
-
-    variables = []
-    variables = lv+ lg+ list(lt)+ lz
+    print "clausulas 1  \/ vi (por lo menos uno)"
+    pprint.pprint(c1) 
+    print "clausulas 2  -vi \/ -vj (maximo uno)"
+    pprint.pprint(c2) 
+    print "clausulas 3  \/ gk (por lo menos uno)"
+    pprint.pprint(c3) 
+    print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
+    pprint.pprint(c4) 
+    print "clausulas 5  vm => -tij (i Dist y j exist) "
+    pprint.pprint(c5)
+    print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
+    pprint.pprint(c6) 
+    print "clausulas 7  zir => tir"
+    pprint.pprint(c7) 
+    print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
+    pprint.pprint(c8)
+    print "clausulas 9  maximo una z por vm, gi"
+    pprint.pprint(c9)
+    print "clausulas 10 t explicito"
+    pprint.pprint(c10)
+    print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
+    pprint.pprint(c11)
+    print "clausulas 12  v_m & g_j => -g_k "
+    pprint.pprint(c12)
+    print "clausulas 13  t_ij => -t_kj"
+    pprint.pprint(c13)
+    print "clausulas 14  v_i => -gk cuando los preds son diff"
+    pprint.pprint(c14)
 
     #print "clausulas d1  t_{x,A} => -t_{x,B}"
     #pprint.pprint(d1)
@@ -219,6 +220,7 @@ def generarTeoriaMCD(q, vistas):
     #print "clausulas d6  vi => -t_{x,A} si A no aparece en cuerpo de vi"
     #pprint.pprint(d6)
 
+    clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
     clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
     #clausulas = clausulas + d1 + d2 + d3
 
@@ -386,7 +388,7 @@ def clausulas12(vistas, lv, lg):
                     c12.append([lv[i].negarVar(), lg[x].negarVar(), lg[y].negarVar()])                    
     return c12
 
-def clausulas_d1d2d4d5d6(q, vistas):
+def clausulas_d1d2d4d5d6(q, vistas, ltaux):
     global varsT
 
     variables_query = []
@@ -421,7 +423,7 @@ def clausulas_d1d2d4d5d6(q, vistas):
 
     d1 = clausulas_d1(variables_query, constantes_query, variables_vistas, constantes_vistas)
     d2 = clausulas_d2(variables_query, constantes_query, variables_vistas, constantes_vistas)
-    d4, d5, lt_d4d5 = clausulas_d4d5(q, vistas, variables_query, constantes_query)
+    d4, d5, lt_d4d5 = clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux)
 
     d6 = clausulas_d6(vistas, variables_query, constantes_vistas)
 
