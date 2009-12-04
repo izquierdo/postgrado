@@ -1,8 +1,11 @@
+import logging
+
 # Algoritmo de unificacion de variables del Lloyd (modificado)
 # Se unifican funciones de Vars en Vars. 
 # Si fun_i(x) != fun_2(x) entonces se escoge cualquiera de los dos como representante R
 # pero se unifican todas las variables fun_i(x) = fun_i(y) = R
 def unificar(listFun, listVars):
+  logging.debug("Unification.unificar(listFun=%s,listVars=%s)" % (listFun, listVars))
   mgu = {}
   sust = {}
   for x1 in listVars:

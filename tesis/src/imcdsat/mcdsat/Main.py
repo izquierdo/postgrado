@@ -14,13 +14,10 @@ from Traductor.GenerarReescrituras import *
 from random import *
 #from  import *
 
-
-
-
 if __name__ == "__main__":
     #import psyco  # only needed for improved performance
     #psyco.full()  # only needed for improved performance
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     op = sys.argv[1]
     exp = sys.argv[2]
     archVistas = sys.argv[3]

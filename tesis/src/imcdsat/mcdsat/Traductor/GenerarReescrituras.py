@@ -7,6 +7,7 @@ import random
 import cPickle  
 import pickle  
 import logging
+import inspect
 
 from Unification import unificar
 from Parser import *
@@ -23,6 +24,16 @@ from MCD import *
 archVistas = ''
 archCons = ''
 
+#def logged_method(m):
+    #(args, varargs, varkw, defaults) = inspect.getargspec(m)
+#
+    #module = inspect.getmodule(m)
+#
+    #logging.info("%s.%s()" % (m.__name__, vistas))
+#
+    #return m
+    #for a in args:
+
  
 def generarReescrituras(exp, archV, archC, archVars, archTiempo, stdin):
     tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
@@ -35,12 +46,9 @@ def generarReescrituras(exp, archV, archC, archVars, archTiempo, stdin):
 
 def generarReescrituras1(exp, archVistas, archCons, archVars, stdin):
     archVistas2 = archVistas.replace('.txt', '')
-    print "archVistas2: %s" % (archVistas2,)
-    vistas = cargarCQ(archVistas,rename=False)
-    print "V: %s" % (vistas,)
+    vistas = cargarCQ(archVistas)
     #print archMod
-    consultas = cargarCQ(archCons,rename=False)
-    print "Q: %s" % (consultas,)
+    consultas = cargarCQ(archCons)
     for q in consultas:
         numeros = leerVars(archVars)
         lenQuery = len(q.cuerpo)
@@ -87,10 +95,12 @@ def generarReescRWold(numeros, archMods, lenQuery, query, vistas):
     pprint.pprint(rs)
 
 def crearReescritura(mcdc, query):
+    logging.debug("crearReescritura()")
+    logging.debug("-> mcdc=%s" % mcdc)
+    logging.debug("-> query=%s" % query)
     r = []
     seq = Seq()
-    ecgeneral = unificar([k.ec for k in mcdc], [nombreReal(var) for var in query.variables()])
-    #print "ecgeneral", ecgeneral
+    ecgeneral = unificar([k.ec for k in mcdc], query.variables())
     for m in mcdc:
         unif = m.obtUnificacion(ecgeneral)
         vis = m.vistaH.map_variables2(unif, seq)
@@ -109,6 +119,7 @@ def nombreReal(var):
     return 'X'+str(int(var)%10000)
 
 def crearMCD(mod, vistas):
+    logging.debug("GenerarReescrituras.crearMCD(mod=%s,vistas=%s)" % (mod, vistas))
     phictodo = {}
     gc=set()
     for var in mod:
@@ -120,8 +131,8 @@ def crearMCD(mod, vistas):
                 vista = vistas[int(numVista)]
         elif var[0] == 't':
             i = var.find(',')
-            vq = nombreReal(var[2:i])
-            vv = nombreReal(var[i+2:len(var)-1])
+            vq = (var[2:i])
+            vv = (var[i+2:len(var)-1])
 
             phictodo.setdefault(vq,[]).append(vv)
         elif var[0] == 'g':
@@ -136,7 +147,6 @@ def generarReescRW(numeros, stdin, lenQuery, query, vistas):
     for x in infile:
         l = x.strip().split()
         if l[0] != 'main:':
-            print "MODELORW: %s QUERY: %s" % (obtModeloRW(numeros, n, l, lenQuery, vistas), query)
             print crearReescritura(obtModeloRW(numeros, n, l, lenQuery, vistas), query)
     return modelos
 

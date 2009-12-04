@@ -103,17 +103,26 @@ def clausulasCombinarMCD(transf, n, q, vistas):
 
     for v in vistas:
         for so in v.cuerpo:
+            print "varsVs.update de %s en so %s" % (set(so.orden),so)
             varsVs.update(set(so.orden))
 
+    print "so?"
     for x in varsQ:
+        print "0"
         for a in varsVs:
+            print "1"
             for b in varsVs:
+                print "2 a=%s b=%s" % (a,b)
                 if es_const(a) and es_const(b) and (a!=b):
+                    print "3"
                     for numCopiaT0 in xrange(n):
+                        print "4"
                         for numCopiaT1 in xrange(n):
                             if numCopiaT0 != numCopiaT1:
                                 varT0 = VariableSat(False, 't', [int(x), int(a)])
                                 varT1 = VariableSat(False, 't', [int(x), int(b)])
+
+                                print "varT0: %s, varT1: %s" % (varT0, varT1)
 
                                 try:
                                     numVarT0 = transf.var2NumSimple(varT0, numCopiaT0)

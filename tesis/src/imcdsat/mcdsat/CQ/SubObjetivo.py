@@ -2,7 +2,7 @@
 # los argumentos de un subobjetivo pueden ser variables o cttes
 # tipo = 0 (variable)
 # tipo = 1 (constante)
-
+import logging
 
 class SubObjetivo:
     argumentos = {}
@@ -41,10 +41,11 @@ class SubObjetivo:
     #igual que map_variables pero si encuentra una variable que no se encuentre en
     #el dominio de psi, la sustituye por una variable nueva
     def map_variables2(self, mapping, seq):
+        logging.debug("SubObjetivo.map_variables2(mapping=%s,seq=%s)" % (mapping, seq))
         ord = []
         args = {}
         for var1 in self.orden:
-            var = 'X'+var1
+            var = var1
             if mapping.has_key(var):
                 psi_var = mapping[var]
                 ord.append(psi_var)
