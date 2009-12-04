@@ -696,22 +696,33 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
                         if (x1 != x2) or (x2 == z):
                             continue
 
-                        if (z, a) not in currentmappings:
-                            cs = compatibles(providers[(y0,a)], providers[(y1,x1)], providers[(z,x2)])
+                        cs = compatibles(providers[(y0,a)], providers[(y1,x1)], providers[(z,x2)])
 
+                        if (z, a) not in currentmappings:
                             if len(cs) > 0:
                                 updated = True
                                 newmappings.add((z, a))
-                                providers[(z,a)] = cs
+                                providers[(z,a)] = set()
 
                                 #create the mapping var
-                                varT = varsT.get((z,a))
+                                varT = varsT.get((int(z),int(a)))
 
                                 if varT is None:
                                     varT = VariableSat(True, 't', [int(z), int(a)])
                                     varsT[(int(z), int(a))]=varT
                                     lt_d4d5.append(varT)
+                                    createdmappings.add(varT)
 
+                        varT = varsT.get((int(z),int(a)))
+
+                        if varT:
+                            providers[(z,a)].update(cs)
+
+                            for (soqn, sovn) in providers[(z,a)]:
+                                varZ = varsZ.get((soqn,sovn,numVista))
+                                #print "agregue para %s : %s la varz %s" % (varT,varV,varZ)
+                                #print "antes estaba asi: %s" % (ltaux.get(varT,varV))
+                                ltaux.setdefault((varT,varV),set([])).add(varZ)    
 
     d4set = set([])
     d5set = set([])
