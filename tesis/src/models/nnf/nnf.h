@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <limits.h>
 
 #include "mp.h"
 #include "utils.h"
@@ -104,9 +105,9 @@ namespace nnf {
     {
       os << "node: id=" << this << ", type=" << type_ << std::flush;
       if( type_ == Value )
-        os << ", value=" << (int)children_;
+        os << ", value=" << (long)children_;
       else if( type_ == Variable )
-        os << ", literal=" << (int)children_;
+        os << ", literal=" << (long)children_;
       else if( (type_ == And) || (type_ == Or) ) {
         os << ", children={";
         if( children_ ) for( const NodePtr *p = children_; *p != 0; ++p ) os << *p << ",";
@@ -135,8 +136,8 @@ namespace nnf {
     size_t hits() const { return(hits_); }
     float hit_rate() const { return((float)hits_/(float)lookups_); }
     const Node* lookup( int lit ) const { ++lookups_; const_iterator hi = find(lit); if( hi == end() ) return(0); ++hits_; return((*hi).second); }
-    void insert( const Node *n ) { assert( n->type_ == Variable ); basetype::insert( std::make_pair((int)n->children_,n) ); }
-    void remove( const Node *n ) { iterator hi = find((int)n->children_); erase(hi); }
+    void insert( const Node *n ) { assert( n->type_ == Variable ); basetype::insert( std::make_pair((long)n->children_,n) ); }
+    void remove( const Node *n ) { iterator hi = find((long)n->children_); erase(hi); }
     void clear() { basetype::clear(); lookups_ = 0; hits_ = 0; }
   };
 
@@ -459,8 +460,8 @@ namespace nnf {
 
     const Node* true_node() { if( !true_node_ ) true_node_ = get_node(Value,true); return(true_node_); }
     const Node* false_node() { if( !false_node_ ) false_node_ = get_node(Value,false); return(false_node_); }
-    bool is_constant_false( const Node* n ) const { return( (n->type_ == Value) && ((int)n->children_ == 0) ); }
-    bool is_constant_true( const Node* n ) const { return( (n->type_ == Value) && ((int)n->children_ == 1) ); }
+    bool is_constant_false( const Node* n ) const { return( (n->type_ == Value) && ((long)n->children_ == 0) ); }
+    bool is_constant_true( const Node* n ) const { return( (n->type_ == Value) && ((long)n->children_ == 1) ); }
 
     size_t count_nodes() const
     {

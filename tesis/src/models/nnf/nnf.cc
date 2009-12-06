@@ -92,9 +92,9 @@ Manager::count_models( float *output, const int *lit_map ) const
           }
         }
         else if( n->type_ == Value )
-          count = ((int)n->children_?1:0);
+          count = ((long)n->children_?1:0);
         else if( n->type_ == Variable ) {
-          if( lit_map && lit_map[(int)n->children_^1] )
+          if( lit_map && lit_map[(long)n->children_^1] )
             count = 0;
           else
             count = 1;
@@ -131,10 +131,10 @@ Manager::count_models( float *output, const int *lit_map ) const
         }
         n->cache_.second_ = *(const float**)&pd;
         if( n->type_ == Variable ) {
-          if( ((int)n->children_%2 == 0) && (!lit_map || !lit_map[(int)n->children_^1]) )
-            output[(int)n->children_>>1] = pd;
-          else if( output[(int)n->children_>>1] == -1 )
-            output[(int)n->children_>>1] = 0;
+          if( ((long)n->children_%2 == 0) && (!lit_map || !lit_map[(long)n->children_^1]) )
+            output[(long)n->children_>>1] = pd;
+          else if( output[(long)n->children_>>1] == -1 )
+            output[(long)n->children_>>1] = 0;
         }
       }
     }
@@ -167,9 +167,9 @@ Manager::mp_count_models( mp::Int **output, const int *lit_map ) const
           }
         }
         else if( n->type_ == Value )
-          *count = ((int)n->children_?1:0);
+          *count = ((long)n->children_?1:0);
         else if( n->type_ == Variable ) {
-          if( lit_map && lit_map[(int)n->children_^1] )
+          if( lit_map && lit_map[(long)n->children_^1] )
             *count = 0;
           else
             *count = 1;
@@ -206,10 +206,10 @@ Manager::mp_count_models( mp::Int **output, const int *lit_map ) const
         }
         n->cache_.second_ = (const void*)pd;
         if( n->type_ == Variable ) {
-          if( ((int)n->children_%2 == 0) && (!lit_map || !lit_map[(int)n->children_^1]) )
-            output[(int)n->children_>>1] = new mp::Int(*pd);
-          else if( output[(int)n->children_>>1] == 0 )
-            output[(int)n->children_>>1] = new mp::Int;
+          if( ((long)n->children_%2 == 0) && (!lit_map || !lit_map[(long)n->children_^1]) )
+            output[(long)n->children_>>1] = new mp::Int(*pd);
+          else if( output[(long)n->children_>>1] == 0 )
+            output[(long)n->children_>>1] = new mp::Int;
         }
       }
     }
@@ -233,17 +233,17 @@ Manager::enumerate_models_recursively( const Node *n, Model &m, const Node *last
     }
   }
   else if( n->type_ == Or ) {
-    int next = (int)n->cache_.first_;
+    long next = (long)n->cache_.first_;
     n->cache_.second_ = lor;
     std::pair<bool,const Node*> rc = enumerate_models_recursively(n->children_[next],m,n);
     stat = rc.first;
     lor = rc.second;
   }
   else if( n->type_ == Variable ) {
-    m.insert((int)n->children_);
+    m.insert((long)n->children_);
   }
   else if( n->type_ == Value ) {
-    stat = ((int)n->children_ != 0);
+    stat = ((long)n->children_ != 0);
   }
   return(std::make_pair(stat,lor));
 }
@@ -267,7 +267,7 @@ Manager::enumerate_models( std::ostream &os, size_t count, bool all ) const
     // advance state
     next = false;
     for( const Node *n = rc.second; !next && (n != 0); n = (const Node*)n->cache_.second_ ) {
-      int i = 1+(int)n->cache_.first_;
+      long i = 1+(long)n->cache_.first_;
       if( n->children_[i] == 0 )
         n->cache_.first_ = 0;
       else {
@@ -296,7 +296,7 @@ Manager::enumerate_models( ModelList &models, size_t count ) const
     // advance state
     next = false;
     for( const Node *n = rc.second; !next && (n != 0); n = (const Node*)n->cache_.second_ ) {
-      int i = 1+(int)n->cache_.first_;
+      long i = 1+(long)n->cache_.first_;
       if( n->children_[i] == 0 )
         n->cache_.first_ = 0;
       else {
@@ -320,9 +320,9 @@ Manager::min_cost( const int *costs ) const
         if( (n->type_ == And) || (n->type_ == Or) ) {
           bool first = true;
           for( const NodePtr *p = n->children_; *p != 0; ++p ) {
-            int c = (int)(*p)->cache_.first_;
+            long c = (long)(*p)->cache_.first_;
             if( n->type_ == And )
-              cost = (c==INT_MAX?INT_MAX:cost+c);
+              cost = (c==LONG_MAX?LONG_MAX:cost+c);
             else {
               if( first ) {
                 cost = c;
@@ -334,14 +334,14 @@ Manager::min_cost( const int *costs ) const
           }
         }
         else if( n->type_ == Value )
-          cost = ((int)n->children_?0:INT_MAX);
+          cost = ((long)n->children_?0:LONG_MAX);
         else if( n->type_ == Variable )
-          cost = (costs?costs[(int)n->children_]:0);
+          cost = (costs?costs[(long)n->children_]:0);
         n->cache_.set((void*)cost);
       }
     }
   }
-  int result = (int)root_->cache_.first_;
+  long result = (long)root_->cache_.first_;
   return(result);
 }
 
@@ -356,17 +356,17 @@ Manager::recursive_min_model( const Node *n, Model &model ) const
     int mincost = 0;
     const NodePtr *minchild = 0;
     for( const NodePtr *p = n->children_; *p != 0; ++p ) {
-      if( (minchild == 0) || ((int)(*p)->cache_.first_ < mincost) ) {
-        mincost = (int)(*p)->cache_.first_;
+      if( (minchild == 0) || ((long)(*p)->cache_.first_ < mincost) ) {
+        mincost = (long)(*p)->cache_.first_;
         minchild = p;
       }
     }
     recursive_min_model(*minchild,model);
   }
   else if( n->type_ == Value )
-    assert((int)n->children_);
+    assert((long)n->children_);
   else if( n->type_ == Variable )
-    model.insert((int)n->children_);
+    model.insert((long)n->children_);
 }
 
 void
@@ -387,9 +387,9 @@ Manager::sorted_dump( std::ostream &os ) const
       if( n->ref_ > 0 ) {
         n->cache_.set( (const void*)index++ );
         if( n->type_ == Value )
-          os << ((int)n->children_==0?"O 0 0":"A 0") << std::endl;
+          os << ((long)n->children_==0?"O 0 0":"A 0") << std::endl;
         else if( n->type_ == Variable )
-          os << "L " << ((int)n->children_%2?-(((int)n->children_)>>1):((int)n->children_)>>1) << std::endl;
+          os << "L " << ((long)n->children_%2?-(((long)n->children_)>>1):((long)n->children_)>>1) << std::endl;
         else if( (n->type_ == And) || (n->type_ == Or) ) {
           size_t size = 0;
           for( const NodePtr *p = n->children_; *p != 0; ++p, ++size );
@@ -406,11 +406,11 @@ Manager::sorted_dump( std::ostream &os ) const
 void
 Manager::recursive_dump( std::ostream &os, const Node *n, size_t &index ) const
 {
-  if( (int)n->cache_.second_ == 1 ) return;
+  if( (long)n->cache_.second_ == 1 ) return;
   if( n->type_ == Value )
-    os << ((int)n->children_==0?"O 0 0":"A 0") << std::endl;
+    os << ((long)n->children_==0?"O 0 0":"A 0") << std::endl;
   else if( n->type_ == Variable )
-    os << "L " << ((int)n->children_%2?-(((int)n->children_)>>1):((int)n->children_)>>1) << std::endl;
+    os << "L " << ((long)n->children_%2?-(((long)n->children_)>>1):((long)n->children_)>>1) << std::endl;
   else if( (n->type_ == And) || (n->type_ == Or) ) {
     size_t size = 0;
     for( const NodePtr *p = n->children_; *p != 0; ++p, ++size )

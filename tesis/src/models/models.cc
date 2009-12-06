@@ -20,6 +20,8 @@
 #include <satlib.h>
 #include <utils.h>
 
+#include <string.h>
+
 #include <iostream>
 #include <fstream>
 
