@@ -1,0 +1,36 @@
+Model enumerator for d-DNNF theories.
+This code has been tested in SOLARIS/SPARC and Linux systems..
+
+INSTALL
+
+1. if you have a working GMP library, uncomment -DMP and -lgmp in makefiles, and fix GMP variable
+   (if no MP is available, counting is performed with floats; some Linux come with GMP as standard library)
+2. at nnf dir, do make
+3. at top-level dir, do make
+
+USAGE
+
+1. try: ./models examples/ex1.nnf
+   should get something like:
+
+     Model enumerator for d-DNNF theories.
+     Universidad Simon Bolivar, 2006.
+     main: reading file 'examples/ex1.nnf' : 0.106533 seconds
+     main: #nodes=2754, #edges=42649, #models=326 : 0.001904 seconds
+     main: total time 0.108461 seconds
+
+2. read: './models --help' for instructions on how to output the models
+
+COPYRIGHT
+
+You can use all the code contained here for non-commercial research purposes.
+If you find it useful, let me know. Please, report any bugs.
+
+AUTHOR
+
+Blai Bonet
+E-mail: bonet@ldc.usb.ve
+WWW: http://www.ldc.usb.ve/~bonet
+
+Copyright (C) 2006 Universidad Simon Bolivar
+
