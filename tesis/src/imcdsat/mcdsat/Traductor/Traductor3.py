@@ -103,26 +103,17 @@ def clausulasCombinarMCD(transf, n, q, vistas):
 
     for v in vistas:
         for so in v.cuerpo:
-            print "varsVs.update de %s en so %s" % (set(so.orden),so)
             varsVs.update(set(so.orden))
 
-    print "so?"
     for x in varsQ:
-        print "0"
         for a in varsVs:
-            print "1"
             for b in varsVs:
-                print "2 a=%s b=%s" % (a,b)
                 if es_const(a) and es_const(b) and (a!=b):
-                    print "3"
                     for numCopiaT0 in xrange(n):
-                        print "4"
                         for numCopiaT1 in xrange(n):
                             if numCopiaT0 != numCopiaT1:
                                 varT0 = VariableSat(False, 't', [int(x), int(a)])
                                 varT1 = VariableSat(False, 't', [int(x), int(b)])
-
-                                print "varT0: %s, varT1: %s" % (varT0, varT1)
 
                                 try:
                                     numVarT0 = transf.var2NumSimple(varT0, numCopiaT0)
@@ -679,8 +670,6 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
 
                             for (soqn, sovn) in providers[(a,z)]:
                                 varZ = varsZ.get((soqn,sovn,numVista))
-                                #print "agregue para %s : %s la varz %s" % (varT,varV,varZ)
-                                #print "antes estaba asi: %s" % (ltaux.get(varT,varV))
                                 ltaux.setdefault((varT,varV),set([])).add(varZ)    
 
             # PARA D5
@@ -720,8 +709,6 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
 
                             for (soqn, sovn) in providers[(z,a)]:
                                 varZ = varsZ.get((soqn,sovn,numVista))
-                                #print "agregue para %s : %s la varz %s" % (varT,varV,varZ)
-                                #print "antes estaba asi: %s" % (ltaux.get(varT,varV))
                                 ltaux.setdefault((varT,varV),set([])).add(varZ)    
 
     d4set = set([])
@@ -759,7 +746,6 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
                             if es_var(a) or es_const(x):
                                 continue
 
-                            #print "add %s %s %s %s" % (str(a), str(y), str(x), str(z))
                             d5set.add((varsV[numVista],a,y,x,z))
 
         numVista += 1
@@ -812,8 +798,6 @@ def clausulas_d6(vistas, variables_query, constantes_vistas):
                 prohibidas.add((varsV[m], constante))
 
         m = m + 1
-
-    #print variables_query
 
     for variable in variables_query:
         for (varV, constante) in prohibidas:
