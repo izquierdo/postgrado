@@ -35,16 +35,16 @@ archCons = ''
     #for a in args:
 
  
-def generarReescrituras(exp, archV, archC, archVars, archTiempo, stdin):
+def generarReescrituras(exp, archV, archC, archVars, archTiempo, archCostos, stdin):
     tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
-    generarReescrituras1(exp, archV, archC, archVars, stdin)
+    generarReescrituras1(exp, archV, archC, archVars, archCostos, stdin)
     tiempof = resource.getrusage(resource.RUSAGE_SELF)[0]
     
     fileobject = open(archTiempo, 'w')
     fileobject.write(str(tiempof-tiempoi))
     fileobject.close()
 
-def generarReescrituras1(exp, archVistas, archCons, archVars, stdin):
+def generarReescrituras1(exp, archVistas, archCons, archVars, archCostos, stdin):
     archVistas2 = archVistas.replace('.txt', '')
     vistas = cargarCQ(archVistas)
     #print archMod
@@ -56,6 +56,8 @@ def generarReescrituras1(exp, archVistas, archCons, archVars, stdin):
             generarReescMCD(numeros, stdin, vistas)
         if exp == 'SatRW':
             generarReescRW(numeros, stdin, lenQuery,q, vistas)
+        if exp == 'SatBestRW':
+            generarMejorReescRW(numeros, stdin, lenQuery, q, vistas, archCostos)
 ##        llamarzchaff(transf, archSalida)
 
 def leerVars(archVars):
@@ -150,6 +152,16 @@ def generarReescRW(numeros, stdin, lenQuery, query, vistas):
             print crearReescritura(obtModeloRW(numeros, n, l, lenQuery, vistas), query)
     return modelos
 
+def generarMejorReescRW(numeros, stdin, lenQuery, query, vistas, archCostos):
+    infile = stdin
+    modelos = []
+    n = len(numeros)
+    for x in infile:
+        l = x.strip().split()
+        print l
+        continue
+        print crearReescritura(obtModeloRW(numeros, n, l, lenQuery, vistas), query)
+        break
 
 def obtModeloRW(numeros, n, lista, lenQuery, vistas):
     modp = []

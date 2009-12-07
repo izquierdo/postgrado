@@ -28,5 +28,8 @@ if __name__ == "__main__":
         archSalida = sys.argv[7]
         traducir(exp, archVistas, archCons, archVars, archTiempo, archSalida)
     elif op == 'G':
-        generarReescrituras(exp, archVistas, archCons, archVars, archTiempo, sys.stdin)
+        if len(sys.argv) > 7:
+            archCostos = sys.argv[7]
+
+        generarReescrituras(exp, archVistas, archCons, archVars, archTiempo, archCostos, sys.stdin)
 

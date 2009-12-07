@@ -38,7 +38,7 @@ def traducir1(exp, archVistas, archCons, archVars, archSalida): #(archVistas, ar
     vistas = cargarCQ(archVistas)
     consultas = cargarCQ(archCons)
     for q in consultas:
-        if exp == 'SatRW':
+        if exp == 'SatRW' or exp == 'SatBestRW':
             transf = traducirConsultaRW(q, vistas, archSalida)
         elif exp == 'Sat':
             transf = traducirConsultaMCD(q, vistas, archSalida)
