@@ -121,4 +121,35 @@ ORDER BY ?effectname
 
 \section{Medicamentos para enfermedades específicas}
 
+Si queremos encontrar los medicamentos que pueden atacar una enfermedad
+específica podemos utilizar la consulta que se ve en la figura
+\ref{src:DrugForDiseaseQuery}. Allí simplemente se obtienen todos las drogas que
+atacan la enfermedad según la propiedad {\bf drugbank:possibleDiseaseTarget} y
+sus etiquetas.
+
+\begin{SaveVerbatim}{VerbDrugForDiseaseQuery}
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+PREFIX tcm:      <http://purl.org/net/tcm/tcm.lifescience.ntu.edu.tw/>
+SELECT DISTINCT ?drug ?drugLabel WHERE {
+  ?drug drugbank:possibleDiseaseTarget <URI>.
+  ?drug rdfs:label ?drugLabel.
+}
+ORDER BY ?drugLabel
+\end{SaveVerbatim}
+
+\begin{figure}[htbp]
+ \fbox
+ {
+  \begin{minipage}{\textwidth}
+   \BUseVerbatim{VerbDrugForDiseaseQuery}
+   \caption{Consulta de búsqueda de medicamentos para enfermedades}
+   \label{src:DrugForDiseaseQuery}
+  \end{minipage}
+ }
+\end{figure}
+
+
 \end{document}

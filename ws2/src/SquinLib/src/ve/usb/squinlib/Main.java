@@ -13,7 +13,8 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        SparqlQuerySock sqs = new SparqlQuerySock("http://localhost:21786/SQUIN/query");
+        //SparqlQuerySock sqs = new SparqlQuerySock("http://localhost:21786/SQUIN/query");
+        SparqlQuerySock sqs = new SparqlQuerySock("http://ijaz.ldc.usb.ve:8080/SQUIN/query");
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         StringBuffer sb = new StringBuffer();

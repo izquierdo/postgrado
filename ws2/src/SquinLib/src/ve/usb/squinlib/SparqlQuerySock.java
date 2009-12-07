@@ -26,17 +26,17 @@ public class SparqlQuerySock {
     }
 
     public String call(final String query) throws MalformedURLException, IOException {
-        logger.log(Level.INFO, "SparqlQuerySock call");
+        logger.log(Level.INFO, "SparqlQuerySock.call(...)");
 
         Map<String, String> request_params = new HashMap<String, String>();
         request_params.put("query", query);
 
-        logger.log(Level.INFO, "query server: " + queryServer);
-        logger.log(Level.INFO, "query: " + query);
+        logger.log(Level.FINE, "query server: " + queryServer);
+        logger.log(Level.FINE, "query: " + query);
 
         String requestUrl = createQueryURLString(this.queryServer, request_params);
 
-        logger.log(Level.INFO, "request url: " + requestUrl);
+        logger.log(Level.FINE, "request url: " + requestUrl);
 
         URL url = new URL(requestUrl);
 
