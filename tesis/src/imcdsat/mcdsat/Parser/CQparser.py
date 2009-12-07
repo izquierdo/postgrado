@@ -79,14 +79,11 @@ def crearSO(pred, lista):
     ord = []
     arg = {}
     for (x,y) in lista:
-        print "x es " + str(x)
-
         if y == 1:
             nx = getConstantName(x)
         else:
             nx = getVariableName(x)
 
-        print "nx me dio " + str(nx)
         ord.append(nx)
         arg[nx]=y
     return SubObjetivo(pred, arg, ord)
@@ -100,8 +97,11 @@ def crearCQ(cabeza, cuerpo):
 
 def cargarCQ(nomArch,rename=True):
     global renameArguments
+    global cq_actual
 
-    logging.debug("loading CQ file=%s rename=%s" % (nomArch, rename))
+    cq_actual = 0
+
+    logging.debug("cargarCQ(nomArch=%s,rename=%s)" % (nomArch, rename))
     renameArguments = rename
     parser = CQparser()
     in_file = open(nomArch,"r")

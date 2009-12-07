@@ -670,8 +670,6 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
 
                             for (soqn, sovn) in providers[(a,z)]:
                                 varZ = varsZ.get((soqn,sovn,numVista))
-                                #print "agregue para %s : %s la varz %s" % (varT,varV,varZ)
-                                #print "antes estaba asi: %s" % (ltaux.get(varT,varV))
                                 ltaux.setdefault((varT,varV),set([])).add(varZ)    
 
             # PARA D5
@@ -687,22 +685,31 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
                         if (x1 != x2) or (x2 == z):
                             continue
 
-                        if (z, a) not in currentmappings:
-                            cs = compatibles(providers[(y0,a)], providers[(y1,x1)], providers[(z,x2)])
+                        cs = compatibles(providers[(y0,a)], providers[(y1,x1)], providers[(z,x2)])
 
+                        if (z, a) not in currentmappings:
                             if len(cs) > 0:
                                 updated = True
                                 newmappings.add((z, a))
-                                providers[(z,a)] = cs
+                                providers[(z,a)] = set()
 
                                 #create the mapping var
-                                varT = varsT.get((z,a))
+                                varT = varsT.get((int(z),int(a)))
 
                                 if varT is None:
                                     varT = VariableSat(True, 't', [int(z), int(a)])
                                     varsT[(int(z), int(a))]=varT
                                     lt_d4d5.append(varT)
+                                    createdmappings.add(varT)
 
+                        varT = varsT.get((int(z),int(a)))
+
+                        if varT:
+                            providers[(z,a)].update(cs)
+
+                            for (soqn, sovn) in providers[(z,a)]:
+                                varZ = varsZ.get((soqn,sovn,numVista))
+                                ltaux.setdefault((varT,varV),set([])).add(varZ)    
 
     d4set = set([])
     d5set = set([])
@@ -739,7 +746,6 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
                             if es_var(a) or es_const(x):
                                 continue
 
-                            #print "add %s %s %s %s" % (str(a), str(y), str(x), str(z))
                             d5set.add((varsV[numVista],a,y,x,z))
 
         numVista += 1
@@ -792,8 +798,6 @@ def clausulas_d6(vistas, variables_query, constantes_vistas):
                 prohibidas.add((varsV[m], constante))
 
         m = m + 1
-
-    #print variables_query
 
     for variable in variables_query:
         for (varV, constante) in prohibidas:
