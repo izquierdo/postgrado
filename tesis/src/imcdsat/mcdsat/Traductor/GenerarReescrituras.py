@@ -146,10 +146,26 @@ def generarReescRW(numeros, stdin, lenQuery, query, vistas):
     infile = stdin
     modelos = []
     n = len(numeros)
+
+    in_models = False
+
     for x in infile:
+        if not in_models:
+            if x.startswith('--- models begin ---'):
+                in_models = True
+
+            continue
+
+        if in_models:
+            if x.startswith('---- models end ----'):
+                break
+
         l = x.strip().split()
-        if l[0] != 'main:':
-            print crearReescritura(obtModeloRW(numeros, n, l, lenQuery, vistas), query)
+
+        model = l[1:len(l)-1]
+
+        print crearReescritura(obtModeloRW(numeros, n, model, lenQuery, vistas), query)
+
     return modelos
 
 def generarMejorReescRW(numeros, stdin, lenQuery, query, vistas, archCostos):
@@ -158,9 +174,14 @@ def generarMejorReescRW(numeros, stdin, lenQuery, query, vistas, archCostos):
     n = len(numeros)
     for x in infile:
         l = x.strip().split()
-        print l
-        continue
-        print crearReescritura(obtModeloRW(numeros, n, l, lenQuery, vistas), query)
+
+        if l[0] == 'main:':
+            continue
+
+        cost = int(l[0])
+        model = l[2:len(l)-1]
+
+        print (cost, crearReescritura(obtModeloRW(numeros, n, model, lenQuery, vistas), query))
         break
 
 def obtModeloRW(numeros, n, lista, lenQuery, vistas):
@@ -186,16 +207,21 @@ def generarReescMCD(numeros, stdin, vistas):
     infile = stdin
     modelos = []
     count = 0
-    x = infile.readline()
-    x = infile.readline()
+    for i in range(1,6):
+        x = infile.readline()
     while 1:
         if not(x):
             break
         x = infile.readline()
+
+        if x.startswith('---- models end ----'):
+            break
+
         l = x.strip().split()
-        n = len(l)
+        model = l[1:len(l)-1]
+        n = len(model)
         if n > 1: 
-            mod = obtModelo(numeros, l, n)
+            mod = obtModelo(numeros, model, n)
             mcd = crearMCD(mod, vistas)
             if mcd != None:
                 #print mod

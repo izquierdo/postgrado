@@ -21,10 +21,12 @@ LOG2=${EXP}${VIS}_t2.txt
 
 if [ "$OPTION" == "MCD" ] ; then 
   EXP="Sat"
-  MODS="$MCDSATDIR/../models/models -w $NNF"
+  #MODS="$MCDSATDIR/../models/models -w $NNF"
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/models --write-models $NNF"
 elif [ "$OPTION" == "RW" ] ; then 
   EXP="SatRW"
-  MODS="$MCDSATDIR/../models/models -w $NNF"
+  #MODS="$MCDSATDIR/../models/models -w $NNF"
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/models --write-models $NNF"
 elif [ "$OPTION" == "BESTRW" ] ; then 
   EXP="SatBestRW"
   #TODO cambiar a ../../models/bestmodel
