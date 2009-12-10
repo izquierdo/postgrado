@@ -1,22 +1,23 @@
 from qrp_structures import *
 
-def samecompany(argv):
-    companies = int(argv[0])
+def sameairline(argv):
+    airlines = int(argv[0])
     steps = int(argv[1])
+    return nsteps(airlines, steps, 'sameairline')
 
-def specificcompany(argv):
-    companies = int(argv[0])
+def specificairline(argv):
+    airlines = int(argv[0])
     steps = int(argv[1])
+    return nsteps(airlines, steps, 'specificairline')
 
-def samecompany(argv):
-    if len(argv) != 2:
-        #TODO
-        sys.exit(1)
-
-    flights_pred = "r0"
-
-    companies = int(argv[0])
+def sameairline_manyviews(argv):
+    airlines = int(argv[0])
     steps = int(argv[1])
+    views_per_airline = int(argv[2])
+    return nsteps(airlines, steps, views_per_airline)
+
+def nsteps(airlines, steps, views_per_airline=1):
+    flights_pred = "r1"
 
     # generate query
     company_var = Argument('var', steps)
@@ -36,17 +37,21 @@ def samecompany(argv):
     # generate views
     view_pred_prefix = 'v'
 
-    def gen_view(i):
+    def gen_view(num, a):
         varS = Argument('var', 1)
         varT = Argument('var', 2)
-        constCompany = Argument('const', i)
+        constAirline = Argument('const', a)
 
-        view_table = Table(view_pred_prefix + str(i), [varS, varT])
-        view_sos = [Table(flights_pred, [varS, varT, constCompany])]
+        view_table = Table(view_pred_prefix + str(num), [varS, varT])
+        view_sos = [Table(flights_pred, [varS, varT, constAirline])]
         view = Query(view_table, view_sos)
 
         return view
 
-    views = [gen_view(i) for i in range(100, 100+companies)]
+    views_base = 100
+    views = []
+
+    for n in range(views_per_airline):
+        views += [gen_view(n*airlines+i, i) for i in range(views_base, views_base+airlines)]
 
     return query, views

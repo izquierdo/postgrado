@@ -13,7 +13,8 @@ def main():
         usage_and_quit()
 
     commands = {}
-    commands['samecompany'] = generators.flights.samecompany
+    commands['sameairline'] = generators.flights.sameairline
+    commands['sameairline_manyviews'] = generators.flights.sameairline_manyviews
 
     viewsfilename = sys.argv[1]
     queryfilename = sys.argv[2]
