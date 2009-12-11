@@ -18,6 +18,7 @@ NNF=${CNF}.nnf
 LOG=${EXP}${VIS}.log.txt
 LOG1=${EXP}${VIS}_t1.txt
 LOG2=${EXP}${VIS}_t2.txt
+SATCOSTS=${CNF}.costs.txt
 
 if [ "$OPTION" == "MCD" ] ; then 
   EXP="Sat"
@@ -37,7 +38,7 @@ else
 fi
 
 echo "[Translate to CNF]" $CNF &&
-python $MCDSATDIR/Main.py T $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG1 $CNF && 
+python $MCDSATDIR/Main.py T $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG1 $CNF $SATCOSTS && 
 
 echo "[Compile to DNNF]" $DNNF &&
 $C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG && 

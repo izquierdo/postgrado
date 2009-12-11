@@ -24,7 +24,7 @@ varsT = {}
 varsZ = {}
 contribVT = {}
 
-def traducir(exp, archV, archC, archVars, archTiempo, archSalida):
+def traducir(exp, archV, archC, archVars, archTiempo, archSalida, archCostosSat):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
     tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
     traducir1(exp, archV, archC, archVars, archSalida)
