@@ -14,9 +14,9 @@ def sameairline_manyviews(argv):
     airlines = int(argv[0])
     steps = int(argv[1])
     views_per_airline = int(argv[2])
-    return nsteps(airlines, steps, views_per_airline)
+    return nsteps(airlines, steps, 'sameairline', views_per_airline)
 
-def nsteps(airlines, steps, views_per_airline=1):
+def nsteps(airlines, steps, type, views_per_airline=1):
     flights_pred = "r1"
 
     # generate query

@@ -2,6 +2,12 @@
 
 import sys
 import generators.flights
+import generators.structured
+
+commands = {}
+commands['sameairline'] = generators.flights.sameairline
+commands['sameairline_manyviews'] = generators.flights.sameairline_manyviews
+commands['chainquery'] = generators.structured.chainquery
 
 def writelist(l, filename):
     f = open(filename, 'w')
@@ -11,10 +17,6 @@ def writelist(l, filename):
 def main():
     if len(sys.argv) < 4:
         usage_and_quit()
-
-    commands = {}
-    commands['sameairline'] = generators.flights.sameairline
-    commands['sameairline_manyviews'] = generators.flights.sameairline_manyviews
 
     viewsfilename = sys.argv[1]
     queryfilename = sys.argv[2]
@@ -34,6 +36,11 @@ def main():
 
 def print_usage():
     print "Usage: %s <views_file> <query_file> <command> [command_arguments...]" % (sys.argv[0])
+    print
+    print "Available commands:"
+
+    for c in commands.keys():
+        print "  %s" % (c)
 
 if __name__ == "__main__":
     main()
