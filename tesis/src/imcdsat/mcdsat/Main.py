@@ -26,7 +26,11 @@ if __name__ == "__main__":
     archTiempo = sys.argv[6]
     if op == 'T':
         archSalida = sys.argv[7]
-        traducir(exp, archVistas, archCons, archVars, archTiempo, archSalida)
+
+        if len(sys.argv) > 8:
+            archCostosSat = sys.argv[8]
+
+        traducir(exp, archVistas, archCons, archVars, archTiempo, archSalida, archCostosSat)
     elif op == 'G':
         if len(sys.argv) > 7:
             archCostos = sys.argv[7]
