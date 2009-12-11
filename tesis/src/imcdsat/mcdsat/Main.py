@@ -29,11 +29,15 @@ if __name__ == "__main__":
 
         if len(sys.argv) > 8:
             archCostosSat = sys.argv[8]
+        else:
+            archCostosSat = None
 
         traducir(exp, archVistas, archCons, archVars, archTiempo, archSalida, archCostosSat)
     elif op == 'G':
         if len(sys.argv) > 7:
             archCostos = sys.argv[7]
+        else:
+            archCostos = None
 
         generarReescrituras(exp, archVistas, archCons, archVars, archTiempo, archCostos, sys.stdin)
 
