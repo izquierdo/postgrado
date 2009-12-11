@@ -5,9 +5,10 @@ import generators.flights
 import generators.structured
 
 commands = {}
-commands['sameairline'] = generators.flights.sameairline
-commands['sameairline_manyviews'] = generators.flights.sameairline_manyviews
-commands['chainquery'] = generators.structured.chainquery
+commands['flights.sameairline'] = generators.flights.sameairline
+commands['flights.sameairline_manyviews'] = generators.flights.sameairline_manyviews
+commands['structured.chainquery'] = generators.structured.chainquery
+commands['randomviews'] = generators.structured.randomviews
 
 def writelist(l, filename):
     f = open(filename, 'w')
