@@ -66,6 +66,7 @@ observa que  {\it McdSat}$^c$  escala a instancias grandes del problema de
 selección de servicios.
 
 \end{abstract}                
+
 \section{Introducción}
 Bajo la sombra de la Web Semántica y con el apoyo de arquitecturas orientadas a
 servicios, el número de fuentes de datos y servicios Web ha explotado en los
@@ -172,7 +173,10 @@ Washington.\\
 \caption{Servicios Abstractos y Concretos}
 \end{table}
 
-Using the  Local As View (LAV) approach~\cite{AmbiteISWC09}, concrete services in Table 1 are semantically described as views on the abstract services {\it flight} and {\it uscity} as follows:   
+Usando la aproximación \emph{Local As View} (LAV) ~\cite{AmbiteISWC09}, los
+servicios concretos en la tabla \ref{table:services} son descritos
+semánticamente como vistas sobre los servicios abstractos {\it flight} y
+{\it uscity} como sigue:   
 
 \begin{alignat*}{1}
 national(x1,y1)\ &\qrule\ flight(x1,y1),\,  uscity(x1),\,  uscity(y1)\,. \\
@@ -183,24 +187,33 @@ onestopToCCS(x3,y3)\ &\qrule\ flight(x3,y3),\, flight(y3,"CCS")\,. \\
 fromWAS("WAS",y3)\ &\qrule\ flight("WAS",x3)\,. \\
 \end{alignat*}
 
-
-Now suppose a user is interested in implementing a workflow able to retrieve the one-stop round trip flights from US cities to any city in the world, such that flights can stop at any city. 
-Consider the following conjunctive query that represents the workflow that defines this request in terms of abstract services. This workflow was defined in way the input parameters of each abstract service are bound by  constants in the workflow, or by attributes projected out by  previous abstract services.
+Ahora supongamos que un usuario está interesado en implementar un flujo de
+trabajo capaz de obtener los vuelos ida y vuelta con una escala de ciudades de
+Estados Unidos a cualquier ciudad en el mundo donde las escalas pueden ser
+hechas en cualquier ciudad. Consideremos la siguiente consulta conjuntiva que
+representa el flujo de trabajo que define esta solicitud en términos de
+servicios abstractos. Este flujo fue definido de manera que los parámetros de
+entrada de cada servicio abstracto están ligados a constantes o a
+atributos proyectados por servicios abstractos previos.
 
 \begin{alignat*}{1}
 w(x,y1,y2,y3)\ &\qrule\ flight(x,y1),\, flight(y1,y2),\,  flight(y2,y3),\,  flight(y3,x),\,  \\
                    \ & uscity(x)\,. \\
 \end{alignat*}
 
-Implementations of this workflow correspond to compositions of the concrete services where each concrete service can implement a subset of abstract services of the workflow, but each abstract service can be implemented by exactly one concrete service. The following composition of concrete services corresponds to one of the XX implementations of the workflow:
+Las implementaciones de este flujo de trabajo corresponden a composiciones de
+servicios concretos donde cada servicio concreto puede implementar un
+subconjunto de los servicios abstractos del flujo de trabajo, pero cada servicio
+abstracto puede ser implementado por exactamente un servicio concreto. La
+siguiente composición de servicios concretos corresponde a una de las XX
+implementaciones del flujo de trabajo.
 
 \begin{alignat*}{1}
 wi1(x,y1,"CCS",y3)\ &\qrule\ national(x,y1),\, flightToCCS(y1,"CCS"),\,  oneway("CCS",y3),\,  \\
 \ & national(y3,x)\,.  \\
 \end{alignat*}
 
-However, note that the following compositions are not valid:
-
+Sin embargo, nótese que las siguientes composiciones no son válidas:
 
 \begin{alignat*}{1}
 wi2(x,y1,"CCS"y3)\ &\qrule\ national(x,y1),\, flightToCCS(y1,"CCS"),\, \\
@@ -209,14 +222,32 @@ wi3(x,y1,y2,y3)\ &\qrule\ national(x1,y1),\, onestop(x1,y2),\,  oneway(y2,y3),\,
 \ & national(y3,x)\,. \\
 \end{alignat*}
 
-The composition {\it wi2} is not valid because  it maps the workflow variable
-{\it y2} into constants {\it "CCS"} and {\it "WAS"} which denote different cities.
-On the other hand, the composition {\it wi3} does not implement the workflow because the concrete service  {\it onestop} does not receive as input or produce as output, the city where the flight stops (represented by the variable {\it y1}); thus, it is not possible to ensure that the city where this flight stops and the end city  retrieved by the service {\it national}, are the same.
+La composición {\it wi2} no es válida porque asocia la variable del flujo de
+trabajo {\it y2} a las constantes {\it "CCS"} y {\it "WAS"} que denotan ciudades
+distintas. Por otra parte, la composición {\it wi3} no implementa el flujo de
+trabajo porque el servicio concreto {\it onestop} no recibe como entrada o
+produce como salida la ciudad donde el vuelo se detiene (representada por la
+variable {\it y1}); por esto, no es posible garantizar que la ciudad donde el
+vuelo se detiene y la ciudad final obtenida por el servicio {\it national} sean
+las mismas.
 
-To avoid producing not valid workflow implementations, it is required to handling constants in a way that different constants are not mapped into
-each other either directly or indirectly (via transitivity). In addition,  all the attributes in the workflow output  or needed to join other services in the workflow, have to be produced by the selected concrete service.
+Para evitar producir implementaciones del flujo de trabajo inválidas, se
+requiere manejar constantes de manera que constantes distintas no sean asociadas
+entre sí directa o indirectamente (por transitividad). Además, todos los
+atributos en la salida del flujo o necesarios para unir otros servicios en el
+flujo de trabajo deben ser producidos por el servicio concreto seleccionado.
 
-In addition, suppose each concrete service is annotated with a utility function that aggregates the values of different QoS that characterize the behavior of the service. Then, since the space of valid service compositions of an abstract workflow can be very large, it is required a technique able to identify the ones that maximize the utility function  without having to enumerate the whole set of valid compositions. In this paper, we propose a Propositional logic-based  approach that takes advantage of the  power of  modern SAT solvers, to efficiently enumerate the service compositions that correspond to valid implementations of a given abstract workflow, as well as the compositions that maximize a given utility function. 
+Adicionalmente, supongamos que cada servicio concreto está anotado con una
+función de utilidad que agrega los valores de parámetros diferentes de QoS que
+caracterizan el comportamiento del servicio. Entonces, como el espacio de
+composiciones de servicios válidas de un flujo abstracto puede ser muy grande,
+se requiere una técnica capaz de identificar aquellos que maximicen la función
+de utilidad sin tener que enumerar el conjunto completo de composiciones
+válidas. En este trabajo se propone una aproximación proposicional basada en
+lógica que toma provecho del poder de los \emph{SAT solvers} modernos para
+enumerar eficientemente las composiciones de servicios que corresponden a
+implementaciones válidas de un flujo de trabajo dado, así como las composiciones
+que maximizan una función de utilidad dada.
 
 \section{Related Work}
 In this section we summarize existing approaches that provide solutions to the problems of service selection, knowledge representation and query rewriting. 
@@ -481,8 +512,6 @@ otherwise.
 
 \section{Conclusions and Future Work}
 
-We have shown how the propositional theory used in McdSat can
-be extended to support constants, and how it can be used to 
 compute the best rewritings with respect to an additive
 cost model. The cost model is simple yet expressive.
 The computation of the best models relies on an arithmetic
@@ -491,5 +520,31 @@ theory.
 
 \bibliographystyle{abbrv}
 \bibliography{ref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PARTE DEL FORMATO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO PORTADA
+
+% TODO indice
+
+\section{Planteamiento del problema}
+\section{Justificación e importancia}
+\section{Objetivos}
+\section{Metodología propuesta}
+\section{Cronograma de actividades}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Referencias
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{section}{Referencias} 
+\bibliographystyle{abbrv}
+\bibliography{ref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIN PARTE DEL FORMATO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
