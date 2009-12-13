@@ -4,6 +4,7 @@
 \usepackage[boxed]{algorithm2e}
 \usepackage{amssymb}
 \usepackage[pdftex]{graphicx}
+\usepackage[utf8x]{inputenc}
 \usepackage{enumerate}
 \DeclareGraphicsExtensions{.jpg, .png, .mps, .bmp, .pdf}
 \usepackage{epsfig}
@@ -30,75 +31,145 @@
 
 \begin{document}
 \allowdisplaybreaks
-\title{Selecting the Maximum-Utility  Web Services  Using Circuits}
-\author{Daniel Izquierdo \inst{1}  and Blai Bonet \inst{1}  and Mar\'{\i}a-Esther Vidal \inst{1}}
+\title{Selección de Servicios Web De Máxima Utilidad Usando Circuitos}
+\author{Daniel Izquierdo}
 
 \institute{Universidad Sim\'on Bol\'{\i}var\\
                 Caracas, Venezuela\\
-                \{idaniel,bonet,mvidal\}ldc.usb.ve} \maketitle
+                idaniel@ldc.usb.ve} \maketitle
 \begin{abstract}
-In Service Oriented Architectures (SOA), concrete services are described in terms of functionality   and QoS parameters, while software applications are specified as workflows of abstract services and non-functional criteria that establish the  application desirable functionality and  expected quality, respectively.  During workflow execution time,  abstract services  are rewritten 
-with the concrete services  that meet the workflow  functional and non-functional restrictions. Since, service selection is done on-the-flight and the space of concrete services may be very large, efficiency and scalability are required.  In this paper we propose the {\it McdSat}$^c$ framework to efficiently solve the problem of service selection in presence of a large number of concrete services.
-First, we use the Local As View approach to describe the functionality  of the concrete services in terms of views of abstract services, the quality as an overall utility function that combines the different QoS values that describe the service, and  workflows as  conjunctive queries on abstract services. Based on this representation, we 
-model the problem of service selection as a known problem in the area of integration systems referred as query rewriting using views.  We encode the service selection problem as a propositional theory whose models correspond to the composition of the services that implement the abstract workflow and maximizes the overall utility function; known relationships between d-DNNF theories and arithmetic circuits are exploited to provide an efficient and scalable solution.  We report on the performance of our proposed approach, and we observe that  {\it McdSat}$^c$  efficiently scales up to large instances of the service selection problem.  
- 
- 
+En las arquitecturas orientadas a servicios (SOA), los servicios concretos se
+describen en términos de parámetros de funcionalidad y calidad de servicio,
+mientras que las aplicaciones de \emph{software} se especifican como flujos de
+trabajo de servicios abstractos y criterios no-funcionales que establecen la
+funcionalidad deseada y la calidad esperada respectivamente. En tiempo de
+ejecución de un flujo de trabajo, los servicios abstractos se reescriben con los
+servicios concretos que cumplen con las restricciones funcionales y no
+funcionales del flujo de trabajo. Dado que la selección de los servicios es
+hecha al momento y el espacio de servicios concretos puede ser muy grande, se
+requiere eficiencia y escalabilidad. En este trabajo se propone la
+infraestructura {\it McdSat}$^c$ para resolver eficientemente el problema de
+selección de servicios en presencia de un número grande de servicios concretos.
+En primer lugar se utiliza la aproximación \emph{Local As View} para describir
+la funcionalidad de los servicios concretos en términos de vistas de servicios
+abstractos, la calidad como una función de utilidad general que combina los
+distintos valores de calidad que describen cada servicio, y los flujos de
+trabajo como consultas conjuntivas sobre servicios abstractos. Basándose en esta
+representación, se modela el problema de selección de servicios como un problema
+conocido en el área de integración de sistemas conocido como reescritura de
+consultas usando vistas. Codificamos el problema de selección de servicios como
+una teoría proposicional cuyos modelos corresponden a la composición de los
+servicios que implementan el flujo abstracto; se explotan relaciones conocidas
+entre teorías d-DNNF y circuitos aritméticos para proveer una solución eficiente
+y escalable. Se reporta sobre el rendimiento de la aproximación propuesta y se
+observa que  {\it McdSat}$^c$  escala a instancias grandes del problema de
+selección de servicios.
+
 \end{abstract}                
-\section{Introduction}
-Under the umbrella of the Semantic Web and supported by Service Oriented architectures, the number of Web data sources and services has exploded during the last few years.  For example,  currently, the molecular biology databases
-collection includes 1,170 databases~\cite{Galperin09}, that is
-95 more than the previous year~\cite{Galperin2008} and 110 more than two years ago~\cite{Galperin2007};  tools
-and services as well as the number of instances published by these resources, follow a similar progression~\cite{Benson07}. Thanks
-to this wealth, users rely more on various
-digital tasks such as data retrieval from public data sources and
-data analysis with Web tools or services organized in
-complex workflows.  
+\section{Introducción}
+Bajo la sombra de la Web Semántica y con el apoyo de arquitecturas orientadas a
+servicios, el número de fuentes de datos y servicios Web ha explotado en los
+últimos años. Por ejemplo, actualmente la colección de bases de datos de
+biología molecular incluye 1.170 bases de datos~\cite{Galperin09}, lo cual es 95
+más que el año pasado~\cite{Galperin2008} y 110 más que hace dos
+años~\cite{Galperin2007}. Tanto las herramientas y servicios como el número de
+instancias publicadas por estos recursos siguen una progresión
+similar~\cite{Benson07}. Gracias a este tesoro de datos, los usuarios se apoyan
+más en varias tareas digitales como obtención de datos de fuentes públicas y
+análisis de datos con herramientas o servicios Web organizados en flujos de
+trabajo complejos.
 
-In order to design an application, users usually specify the functionality in terms of a workflow of abstract services, while the desirable quality  is defined by restricting the values of the QoS parameters that describe the concrete available services. To evaluate the proposed workflow,  abstract services are instantiated on concrete services in a way restrictions on the QoS parameters are satisfied.  However, the performance of this tasks is impacted by the number of available sources,  techniques enable to efficiently scale up to a large number of services are required. 
+Para diseñar una aplicación, los usuarios frecuentemente especifican la
+funcionalidad en términos de un flujo de trabajo de servicios abstractos,
+mientras que la calidad deseada se define restringiendo los valores de los
+parámetros QoS (calidad de servicio) que describen los servicios concretos
+disponibles. Para evaluar el flujo propuesto, se instancian los servicios
+abstractos con concretos de manera que se satisfagan las restricciones sobre
+parámetros QoS. Sin embargo, el rendimiento de estas tareas es impactado por el
+número de fuentes disponibles. Se requieren técnicas que permitan escalar
+eficientemente a un número grande de servicios.
 
-In this paper we aim to provide a solution to this problem and provide techniques that efficiently traverse the space of available services and select combinations that meet the functional and non-functional requirements that describe a designed application.  We name our proposed solution {\it MCDSat}$^c$. 
+En este trabajo se intenta proponer una solución a este problema y proveer
+técnicas que recorran eficientemente el espacio de servicios disponibles y
+seleccionen combinaciones que cumplan con los requerimientos funcionales y
+no-funcionales que describen una aplicación diseñada. Se llama 
+{\it MCDSat}$^c$ a la solución propuesta.
 
-In {\it MCDSat}$^c$, concrete service functionalities are decribed as views on abstract services and workflows are represented as conjunctive queries on abstract services; this service representation is similar to the one generated in a semi-automatic way for the {\cal DEIMOS} system ~\cite{AmbiteISWC09}.  In addition, rules that define workflows and  concrete services in the {\it MCDSat}$^c$ catalog,  are created in a way that input and output restrictions of the combined abstract services are satisfied. To represent the QoS measures, each concrete service description is annotated with a real number that represents an overall value of the QoS measures of this service.  Finally, {\it MCDSat}$^c$ models the web service selection problem as the problem of query rewriting using views \cite{halevy:survey}. This problem is important in the context of data integration
-\cite{Chen05,JaudoinPRST05}, and query optimization and data maintenance \cite{AfratiLU07,levy:bucket}, and several approaches have been defined to efficiently scale up to a large number of views~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}. In this paper we propose the {\it MCDSat}$^c$ framework which extends the approach proposed in ~\cite{arvelo:aaai06},  with the capability of dealing with constants and identifying the composition of services that maximizes a given utility function. 
+En {\it MCDSat}$^c$, las funcionalidades de servicios concretos se describen
+como vistas sobre servicios abstractos y los flujos de trabajo se representan
+como consultas conjuntivas sobre servicios abstractos; esta representación de
+los servicios es similar a la generada de manera semiautomática para el
+sistema {\cal DEIMOS}~\cite{AmbiteISWC09}. Adicionalmente, las reglas
+que definen flujos de trabajo y servicios concretos en el catálogo de
+{\it MCDSat}$^c$ son creadas de manera que las restricciones de entrada y salida
+de los servicios abstractos combinados sean satisfechas. Para representar las
+medidas de QoS, cada descripción de servicio concreto es anotada con un número
+real que representa un valor general para las medidas de QoS del servicio en
+particular. Finalmente, {\it MCDSat}$^c$ modela el problema de selección de
+servicios web como el problema de reescritura de consultas usando vistas
+\cite{halevy:survey}. Este problema es importante en el contexto de integración
+de datos \cite{Chen05,JaudoinPRST05} y de optimización de consultas y
+mantenimiento de datos \cite{AfratiLU07,levy:bucket} y se han definido varias
+aproximaciones para escalar eficientemente a un número grande de
+vistas~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
+En este trabajo se propone la infraestructura {\it MCDSat}$^c$ que extiende la
+aproximación propuesta en  ~\cite{arvelo:aaai06}, con la capacidad de trabajar
+con constantes y de identificar la composición de servicios que maximice una
+función de utilidad dada.
 
-{\it MCDSat}$^c$  translates an instance of the service selection problem into the problem of enumerating the models of a propositional theory that encodes information about the workflow, the concrete services and the conditions that need to be satisfied in order to generate a composition that maximizes the utility function. This theory is represented as a CNF formula which is compiled into a deterministic
-and decomposable negation normal form d-DNNF representation, from which the models that maximizes the overall utility function are obtained in linear time using modern SAT techniques~\cite{darwiche:dnnf}.   
-We empirically studied the quality of the {\it MCDSat}$^c$ on variety of benchmarks and we observed  that the proposed technique provides an efficient solution to the service selection problem which is able to scale up to large workflows as well to a large number of views.   
+{\it MCDSat}$^c$  traduce una instancia del problema de selección de servicios
+en el problema de enumerar los modelos de una teoría proposicional que codifica
+información sobre el flujo de trabajo, los servicios concretos y las condiciones
+que deben ser satisfechas para generar una composición que maximice la función
+de utilidad. Esta teoría se representa como una fórmula CNF que es compilada a
+su representación d-DNNF, a partir de la cual los modelos que maximicen la
+función global de utilidad se obtienen en tiempo lineal usando técnicas modernas
+de SAT~\cite{darwiche:dnnf}. Se estudia empíricamente la calidad de {\it
+MCDSat}$^c$ sobre una variedad de \emph{benchmarks} y se observa que la técnica
+propuesta provee una solución eficiente al problema de selección de servicios
+que es capaz de escalar a flujos de trabajo grandes así como a números de vistas
+grandes.
 
- This paper is comprised of six additional sections. The next section motivates our approach by using an example, and  we summarize existing related work in section 3. Section 4 describes the {\it MCDSat}$^c$ system architecture, and  the experimental study is reported in section 5. 
- In section 6 we present the formalization of the web service selection problem as a Propositional Logic theory, and finally, section 7 outlines our conclusions and future work.
+This paper is comprised of six additional sections. The next section motivates our approach by using an example, and  we summarize existing related work in section 3. Section 4 describes the {\it MCDSat}$^c$ system architecture, and  the experimental study is reported in section 5. 
+In section 6 we present the formalization of the web service selection problem as a Propositional Logic theory, and finally, section 7 outlines our conclusions and future work.
 
+\section{Motivación}
 
-\section{Motivating Example}
-Consider the abstract and concrete services in Table ~\ref{table:services}  which represent applications in the flight domain.
+Consideremos los servicios abstractos y concretos en la tabla
+~\ref{table:services} que representan aplicaciones en el dominio de vuelos.
 
 \begin{table}
 \begin{tabular}{| l| l |}
 \hline
-Abstract Service & Description \\
+Servicio Abstracto & Descripción \\
 \hline
-$fight(x1,x2)$ & relates cities x1 and x2 if there is a flight between them\\
+$fight(x1,x2)$ & relaciona las ciudades x1 y x2 si hay un vuelo entre ellas\\
 \hline
-$uscity(x1)$ &  determines if a city x1 is a US city\\
+$uscity(x1)$ &  determina si una ciudad x1 es una ciudad de Estados Unidos\\
 \hline \hline
-Concrete  Service & Description \\
+Servicio Concreto & Descripción \\
 \hline
-$national(x1,y1)$&  returns  two US cities that are connected by  direct flights \\
+$national(x1,y1)$&  retorna dos ciudades de Estados Unidos que están conectadas
+por vuelos directos \\
 \hline
-$oneway(x1,y1)$ & returns two cites that are connected by one way direct flights \\
+$oneway(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos directos
+de ida\\
 \hline
-$onestop(x1,y1)$ &  returns  two cites that are connected by one-stop flights \\
+$onestop(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos con una
+escala\\
 \hline
-$ flightToCCS(x1,"CCS")$ & returns a city that is connected to  Caracas by a direct flight\\
+$ flightToCCS(x1,"CCS")$ & retorna una ciudad que está conectada a Caracas por
+un vuelo directo\\
  \hline
-$ onestopToCCS(x1,y1)$ & returns two cites x1 and y1, such that there is  one-stop flight\\ 
- & from city x1 to Caracas stopping at city y1.\\
+$ onestopToCCS(x1,y1)$ & retorna dos ciudades x1 y y1 tales que hay un vuelo con
+una escala desde la ciudad x1 hasta Caracas con parada en la ciudad y1\\
  \hline
- $fromWAS("WAS",y1)$ &  returns a city y1 to which flights from Washington arrive. \\
+ $fromWAS("WAS",y1)$ &  retorna una ciudad y1 a la cual llegan vuelos desde
+Washington.\\
  \hline
 \end{tabular}
 \label{table:services}
-\caption{Abstract and Concrete Services}
+\caption{Servicios Abstractos y Concretos}
 \end{table}
 
 Using the  Local As View (LAV) approach~\cite{AmbiteISWC09}, concrete services in Table 1 are semantically described as views on the abstract services {\it flight} and {\it uscity} as follows:   
@@ -188,7 +259,7 @@ in the size of its DAG.  {\it MCDSat}$^c$  exploits the properties of a d-DNNF t
 
 \begin{figure}
 \centering
-\includegraphics[width=8cm]{odd}
+%\includegraphics[width=8cm]{odd}
 \caption{A decomposable and deterministic NNF.}
 \label{fig:dnnf}
 \end{figure}
@@ -226,7 +297,7 @@ for SAT but enhanced with advanced techniques such as clause
 learning and caching.
 \begin{figure}
 \centering
-\includegraphics[width=10cm]{mdcsatC.pdf}
+%COMENTADO\includegraphics[width=10cm]{mdcsatC.pdf}
 \caption{The McdSat$^c$ Architecture}
 \label{fig:dnnf}
 \end{figure}
@@ -243,7 +314,7 @@ We have conducted an empirical analysis  on the benefits of the techniques imple
  
 \begin{figure}
 \centering
-\includegraphics[width=8cm]{plot1.pdf}
+%COMENTADO\includegraphics[width=8cm]{plot1.pdf}
 \caption{Compilation Time Benchmark I}
 \label{fig:plot1}
 \end{figure}
