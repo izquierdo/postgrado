@@ -1,0 +1,186 @@
+\section{Planteamiento del problema}
+
+Bajo la sombra de la Web Semántica y con el apoyo de arquitecturas orientadas a
+servicios, el número de fuentes de datos y servicios Web ha explotado en los
+últimos años. Por ejemplo, actualmente la colección de bases de datos de
+biología molecular incluye 1.170 bases de datos~\cite{Galperin09}, lo cual es 95
+más que el año pasado~\cite{Galperin2008} y 110 más que hace dos
+años~\cite{Galperin2007}. Tanto las herramientas y servicios como el número de
+instancias publicadas por estos recursos siguen una progresión
+similar~\cite{Benson07}. Gracias a este tesoro de datos, los usuarios se apoyan
+más en varias tareas digitales como obtención de datos de fuentes públicas y
+análisis de datos con herramientas o servicios Web organizados en flujos de
+trabajo complejos.
+
+Para diseñar una aplicación, los usuarios frecuentemente especifican la
+funcionalidad en términos de un flujo de trabajo de servicios abstractos,
+mientras que la calidad deseada se define restringiendo los valores de los
+parámetros QoS (calidad de servicio) que describen los servicios concretos
+disponibles. Para evaluar el flujo propuesto, se instancian los servicios
+abstractos con concretos de manera que se satisfagan las restricciones sobre los
+parámetros QoS. Sin embargo, el rendimiento de estas tareas es impactado por el
+número de fuentes disponibles. Se requieren técnicas que permitan escalar
+eficientemente a un número grande de servicios.
+
+En este trabajo se intenta proponer una solución a este problema y proveer
+técnicas que recorran eficientemente el espacio de servicios disponibles y
+seleccionen combinaciones que cumplan con los requerimientos funcionales y
+no-funcionales que describen una aplicación diseñada. Se llama 
+\mcdsatc a la solución propuesta.
+
+En \mcdsatc, las funcionalidades de servicios concretos se describen
+como vistas sobre servicios abstractos y los flujos de trabajo se representan
+como consultas conjuntivas sobre servicios abstractos; esta representación de
+los servicios es similar a la generada de manera semiautomática para el
+sistema {\cal DEIMOS}~\cite{AmbiteISWC09}. Adicionalmente, las reglas
+que definen flujos de trabajo y servicios concretos en el catálogo de
+\mcdsatc son creadas de manera que las restricciones de entrada y salida
+de los servicios abstractos combinados sean satisfechas. Para representar las
+medidas de QoS, cada descripción de servicio concreto es anotada con un número
+real que representa un valor general para las medidas de QoS del servicio en
+particular. Finalmente, \mcdsatc modela el problema de selección de
+servicios web como el problema de reescritura de consultas usando vistas
+\cite{halevy:survey}. Este problema es importante en el contexto de integración
+de datos \cite{Chen05,JaudoinPRST05} y de optimización de consultas y
+mantenimiento de datos \cite{AfratiLU07,levy:bucket} y se han definido varias
+aproximaciones para escalar eficientemente a un número grande de
+vistas~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
+En este trabajo se propone la infraestructura \mcdsatc que extiende la
+aproximación propuesta en  ~\cite{arvelo:aaai06}, con la capacidad de trabajar
+con constantes y de identificar la composición de servicios que maximice una
+función de utilidad dada.
+
+\mcdsatc  traduce una instancia del problema de selección de servicios
+en el problema de enumerar los modelos de una teoría proposicional que codifica
+información sobre el flujo de trabajo, los servicios concretos y las condiciones
+que deben ser satisfechas para generar una composición que maximice la función
+de utilidad. Esta teoría se representa como una fórmula CNF que es compilada a
+su representación d-DNNF, a partir de la cual los modelos que maximicen la
+función global de utilidad se obtienen en tiempo lineal usando técnicas modernas
+de SAT~\cite{darwiche:dnnf}. Se estudia empíricamente la calidad de \mcdsatc
+sobre una variedad de \emph{benchmarks} y se observa que la técnica
+propuesta provee una solución eficiente al problema de selección de servicios
+que es capaz de escalar a flujos de trabajo grandes así como a números de vistas
+grandes.
+
+This paper is comprised of six additional sections. The next section motivates
+our approach by using an example, and  we summarize existing related work in
+section 3. Section 4 describes the \mcdsatc system architecture, and  the experimental study is reported in section 5. 
+In section 6 we present the formalization of the web service selection problem as a Propositional Logic theory, and finally, section 7 outlines our conclusions and future work.
+
+\section{Motivación}
+
+Consideremos los servicios abstractos y concretos en la tabla
+~\ref{table:services} que representan aplicaciones en el dominio de vuelos.
+
+\begin{table}
+\begin{tabular}{| l| l |}
+\hline
+Servicio Abstracto & Descripción \\
+\hline
+$fight(x1,x2)$ & relaciona las ciudades x1 y x2 si hay un vuelo entre ellas\\
+\hline
+$uscity(x1)$ &  determina si una ciudad x1 es una ciudad de Estados Unidos\\
+\hline \hline
+Servicio Concreto & Descripción \\
+\hline
+$national(x1,y1)$&  retorna dos ciudades de Estados Unidos que están conectadas
+por vuelos directos \\
+\hline
+$oneway(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos directos
+de ida\\
+\hline
+$onestop(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos con una
+escala\\
+\hline
+$ flightToCCS(x1,"CCS")$ & retorna una ciudad que está conectada a Caracas por
+un vuelo directo\\
+ \hline
+$ onestopToCCS(x1,y1)$ & retorna dos ciudades x1 y y1 tales que hay un vuelo con
+una escala desde la ciudad x1 hasta Caracas con parada en la ciudad y1\\
+ \hline
+ $fromWAS("WAS",y1)$ &  retorna una ciudad y1 a la cual llegan vuelos desde
+Washington.\\
+ \hline
+\end{tabular}
+\label{table:services}
+\caption{Servicios Abstractos y Concretos}
+\end{table}
+
+Usando la aproximación \emph{Local As View} (LAV) ~\cite{AmbiteISWC09}, los
+servicios concretos en la tabla \ref{table:services} son descritos
+semánticamente como vistas sobre los servicios abstractos {\it flight} y
+{\it uscity} como sigue:   
+
+\begin{alignat*}{1}
+national(x1,y1)\ &\qrule\ flight(x1,y1),\,  uscity(x1),\,  uscity(y1)\,. \\
+oneway(x2,y2)\ &\qrule\ flight(x2,y2)\,. \\
+onestop(x3,z3)\ &\qrule\ flight(x3,y3),\, flight(y3,z3)\,. \\
+flightToCCS(x2,"CCS")\ &\qrule\ flight(x2,"CCS")\,. \\
+onestopToCCS(x3,y3)\ &\qrule\ flight(x3,y3),\, flight(y3,"CCS")\,. \\
+fromWAS("WAS",y3)\ &\qrule\ flight("WAS",x3)\,. \\
+\end{alignat*}
+
+Ahora supongamos que un usuario está interesado en implementar un flujo de
+trabajo capaz de obtener los vuelos ida y vuelta con una escala de ciudades de
+Estados Unidos a cualquier ciudad en el mundo donde las escalas pueden ser
+hechas en cualquier ciudad. Consideremos la siguiente consulta conjuntiva que
+representa el flujo de trabajo que define esta solicitud en términos de
+servicios abstractos. Este flujo fue definido de manera que los parámetros de
+entrada de cada servicio abstracto están ligados a constantes o a
+atributos proyectados por servicios abstractos previos.
+
+\begin{alignat*}{1}
+w(x,y1,y2,y3)\ &\qrule\ flight(x,y1),\, flight(y1,y2),\,  flight(y2,y3),\,  flight(y3,x),\,  \\
+                   \ & uscity(x)\,. \\
+\end{alignat*}
+
+Las implementaciones de este flujo de trabajo corresponden a composiciones de
+servicios concretos donde cada servicio concreto puede implementar un
+subconjunto de los servicios abstractos del flujo de trabajo, pero cada servicio
+abstracto puede ser implementado por exactamente un servicio concreto. La
+siguiente composición de servicios concretos corresponde a una de las XX
+implementaciones del flujo de trabajo.
+
+\begin{alignat*}{1}
+wi1(x,y1,"CCS",y3)\ &\qrule\ national(x,y1),\, flightToCCS(y1,"CCS"),\,  oneway("CCS",y3),\,  \\
+\ & national(y3,x)\,.  \\
+\end{alignat*}
+
+Sin embargo, nótese que las siguientes composiciones no son válidas:
+
+\begin{alignat*}{1}
+wi2(x,y1,"CCS"y3)\ &\qrule\ national(x,y1),\, flightToCCS(y1,"CCS"),\, \\
+\ & fromWAS("WAS",y3),\,  national(y3,x)\,. \\
+wi3(x,y1,y2,y3)\ &\qrule\ national(x1,y1),\, onestop(x1,y2),\,  oneway(y2,y3),\,  \\
+\ & national(y3,x)\,. \\
+\end{alignat*}
+
+La composición {\it wi2} no es válida porque asocia la variable del flujo de
+trabajo {\it y2} a las constantes {\it ``CCS''} y {\it ``WAS''} que denotan
+ciudades
+distintas. Por otra parte, la composición {\it wi3} no implementa el flujo de
+trabajo porque el servicio concreto {\it onestop} no recibe como entrada o
+produce como salida la ciudad donde el vuelo se detiene (representada por la
+variable {\it y1}); por esto, no es posible garantizar que la ciudad donde el
+vuelo se detiene y la ciudad final obtenida por el servicio {\it national} sean
+las mismas.
+
+Para evitar producir implementaciones del flujo de trabajo inválidas, se
+requiere manejar constantes de manera que constantes distintas no sean asociadas
+entre sí directa o indirectamente (por transitividad). Además, todos los
+atributos en la salida del flujo o necesarios para unir otros servicios en el
+flujo de trabajo deben ser producidos por el servicio concreto seleccionado.
+
+Adicionalmente, supongamos que cada servicio concreto está anotado con una
+función de utilidad que agrega los valores de parámetros diferentes de QoS que
+caracterizan el comportamiento del servicio. Entonces, como el espacio de
+composiciones de servicios válidas de un flujo abstracto puede ser muy grande,
+se requiere una técnica capaz de identificar aquellos que maximicen la función
+de utilidad sin tener que enumerar el conjunto completo de composiciones
+válidas. En este trabajo se propone una aproximación proposicional basada en
+lógica que toma provecho del poder de los \emph{SAT solvers} modernos para
+enumerar eficientemente las composiciones de servicios que corresponden a
+implementaciones válidas de un flujo de trabajo dado, así como las composiciones
+que maximizan una función de utilidad dada.
+
