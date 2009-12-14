@@ -1,32 +1,69 @@
 \begin{titlepage}
 
 \begin{flushleft}
-\textsf{
+\includegraphics[scale=0.3]{logo_usb.png} \\
 Universidad Simón Bolívar \\
 Coordinación de Ciencias de la Computación \\
 Maestría en Ciencias de la Computación \\
-}
 \end{flushleft}
 
+\vspace{0.8cm}
+
 \begin{center}
-
-{\large \bf \textsf{Título tentativo del trabajo (max 100. chars)}}
-
+{\large \bf \textsf{Selección de Servicios Web De Máxima Utilidad Usando Circuitos}}
 \end{center}
 
-\vspace{5.0cm}
+\vspace{0.2cm}
 
-% Author(s)
-\textsf{
-Por \\
-pepe \\
-}
+\begin{abstract}
+En las arquitecturas orientadas a servicios (SOA), los servicios concretos se
+describen en términos de parámetros de funcionalidad y calidad de servicio,
+mientras que las aplicaciones de \emph{software} se especifican como flujos de
+trabajo de servicios abstractos y criterios no-funcionales que establecen la
+funcionalidad deseada y la calidad esperada respectivamente. En tiempo de
+ejecución de un flujo de trabajo, los servicios abstractos se reescriben con los
+servicios concretos que cumplen con las restricciones funcionales y no
+funcionales del flujo de trabajo. Dado que la selección de los servicios es
+hecha al momento y el espacio de servicios concretos puede ser muy grande, se
+requiere eficiencia y escalabilidad. En este trabajo se propone la
+infraestructura \mcdsatc para resolver eficientemente el problema de
+selección de servicios en presencia de un número grande de servicios concretos.
+En primer lugar se utiliza la aproximación \emph{Local As View} para describir
+la funcionalidad de los servicios concretos en términos de vistas de servicios
+abstractos, la calidad como una función de utilidad general que combina los
+distintos valores de calidad que describen cada servicio, y los flujos de
+trabajo como consultas conjuntivas sobre servicios abstractos. Basándose en esta
+representación, se modela el problema de selección de servicios como un problema
+conocido en el área de integración de sistemas conocido como reescritura de
+consultas usando vistas. Se codifica el problema de selección de servicios como
+una teoría proposicional cuyos modelos corresponden a la composición de los
+servicios que implementan el flujo abstracto; se explotan relaciones conocidas
+entre teorías d-DNNF y circuitos aritméticos para proveer una solución eficiente
+y escalable. Se reporta sobre el rendimiento de la aproximación propuesta y se
+observa que \mcdsatc escala a instancias grandes del problema de
+selección de servicios.
+\end{abstract}
 
 \vspace{\fill}
 
-\vspace{\fill}
-
-\vspace{1.0cm}
-\textsf{Sartenejas, diciembre de 2009}
+\begin{minipage}{0.3\textwidth}
+\begin{flushleft}
+\emph{Estudiante:} \\
+Daniel \textsc{Izquierdo} \\
+Carnet 08-86809 \\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{center}
+Fecha estimada de culminación: \\
+Marzo de 2010
+\end{center}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{flushright}
+\emph{Asesor:} \\
+Prof. María Esther \textsc{Vidal}
+\end{flushright}
+\end{minipage}
 
 \end{titlepage}

@@ -16,17 +16,18 @@ Para diseñar una aplicación, los usuarios frecuentemente especifican la
 funcionalidad en términos de un flujo de trabajo de servicios abstractos,
 mientras que la calidad deseada se define restringiendo los valores de los
 parámetros QoS (calidad de servicio) que describen los servicios concretos
-disponibles. Para evaluar el flujo propuesto, se instancian los servicios
-abstractos con concretos de manera que se satisfagan las restricciones sobre los
-parámetros QoS. Sin embargo, el rendimiento de estas tareas es impactado por el
+disponibles. Para evaluar el flujo propuesto, se deben instanciar los servicios
+abstractos con servicios concretos de manera que se satisfagan las restricciones
+sobre los
+parámetros QoS. Sin embargo, el rendimiento de esta tarea es impactado por el
 número de fuentes disponibles. Se requieren técnicas que permitan escalar
 eficientemente a un número grande de servicios.
 
 En este trabajo se intenta proponer una solución a este problema y proveer
 técnicas que recorran eficientemente el espacio de servicios disponibles y
 seleccionen combinaciones que cumplan con los requerimientos funcionales y
-no-funcionales que describen una aplicación diseñada. Se llama 
-\mcdsatc a la solución propuesta.
+no-funcionales que describen una aplicación diseñada. A la solución propuesta se
+le da el nombre de \mcdsatc.
 
 En \mcdsatc, las funcionalidades de servicios concretos se describen
 como vistas sobre servicios abstractos y los flujos de trabajo se representan
@@ -46,7 +47,7 @@ mantenimiento de datos \cite{AfratiLU07,levy:bucket} y se han definido varias
 aproximaciones para escalar eficientemente a un número grande de
 vistas~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
 En este trabajo se propone la infraestructura \mcdsatc que extiende la
-aproximación propuesta en  ~\cite{arvelo:aaai06}, con la capacidad de trabajar
+aproximación propuesta en  ~\cite{arvelo:aaai06} con la capacidad de trabajar
 con constantes y de identificar la composición de servicios que maximice una
 función de utilidad dada.
 
@@ -63,43 +64,39 @@ propuesta provee una solución eficiente al problema de selección de servicios
 que es capaz de escalar a flujos de trabajo grandes así como a números de vistas
 grandes.
 
-This paper is comprised of six additional sections. The next section motivates
-our approach by using an example, and  we summarize existing related work in
-section 3. Section 4 describes the \mcdsatc system architecture, and  the experimental study is reported in section 5. 
-In section 6 we present the formalization of the web service selection problem as a Propositional Logic theory, and finally, section 7 outlines our conclusions and future work.
+\subsection{Ejemplo}
 
-\section{Motivación}
-
-Consideremos los servicios abstractos y concretos en la tabla
-~\ref{table:services} que representan aplicaciones en el dominio de vuelos.
+Consideremos los servicios abstractos y concretos en el
+cuadro~\ref{table:services} que representan aplicaciones en el dominio de
+vuelos.
 
 \begin{table}
-\begin{tabular}{| l| l |}
+\begin{tabular}{|l|p{8.00cm}|}
 \hline
 Servicio Abstracto & Descripción \\
 \hline
-$fight(x1,x2)$ & relaciona las ciudades x1 y x2 si hay un vuelo entre ellas\\
+$vuelo(x1,x2)$ & relaciona las ciudades $x1$ y $x2$ si hay un vuelo entre ellas\\
 \hline
-$uscity(x1)$ &  determina si una ciudad x1 es una ciudad de Estados Unidos\\
+$ciudadEU(x1)$ &  determina si una ciudad $x1$ es una ciudad de Estados Unidos\\
 \hline \hline
 Servicio Concreto & Descripción \\
 \hline
-$national(x1,y1)$&  retorna dos ciudades de Estados Unidos que están conectadas
+$nacional(x1,y1)$&  retorna dos ciudades de Estados Unidos que están conectadas
 por vuelos directos \\
 \hline
-$oneway(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos directos
+$ida(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos directos
 de ida\\
 \hline
-$onestop(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos con una
+$unaescala(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos con una
 escala\\
 \hline
-$ flightToCCS(x1,"CCS")$ & retorna una ciudad que está conectada a Caracas por
+$vueloHaciaCCS(x1, ``CCS")$ & retorna una ciudad que está conectada a Caracas por
 un vuelo directo\\
  \hline
-$ onestopToCCS(x1,y1)$ & retorna dos ciudades x1 y y1 tales que hay un vuelo con
-una escala desde la ciudad x1 hasta Caracas con parada en la ciudad y1\\
- \hline
- $fromWAS("WAS",y1)$ &  retorna una ciudad y1 a la cual llegan vuelos desde
+$unaescalaHaciaCCS(x1,y1)$ & retorna dos ciudades $x1$ y $y1$ tales que hay un vuelo con
+una escala desde la ciudad $x1$ hasta Caracas con parada en la ciudad $y1$\\
+\hline
+$desdeWAS(``WAS",y1)$ &  retorna una ciudad $y1$ a la cual llegan vuelos desde
 Washington.\\
  \hline
 \end{tabular}
@@ -108,17 +105,17 @@ Washington.\\
 \end{table}
 
 Usando la aproximación \emph{Local As View} (LAV) ~\cite{AmbiteISWC09}, los
-servicios concretos en la tabla \ref{table:services} son descritos
-semánticamente como vistas sobre los servicios abstractos {\it flight} y
-{\it uscity} como sigue:   
+servicios concretos en el cuadro \ref{table:services} son descritos
+semánticamente como vistas sobre los servicios abstractos {\it vuelo} y
+{\it ciudadEU} como sigue:   
 
 \begin{alignat*}{1}
-national(x1,y1)\ &\qrule\ flight(x1,y1),\,  uscity(x1),\,  uscity(y1)\,. \\
-oneway(x2,y2)\ &\qrule\ flight(x2,y2)\,. \\
-onestop(x3,z3)\ &\qrule\ flight(x3,y3),\, flight(y3,z3)\,. \\
-flightToCCS(x2,"CCS")\ &\qrule\ flight(x2,"CCS")\,. \\
-onestopToCCS(x3,y3)\ &\qrule\ flight(x3,y3),\, flight(y3,"CCS")\,. \\
-fromWAS("WAS",y3)\ &\qrule\ flight("WAS",x3)\,. \\
+nacional(x1,y1)\ &\qrule\ vuelo(x1,y1),\,  ciudadEU(x1),\,  ciudadEU(y1)\,. \\
+ida(x2,y2)\ &\qrule\ vuelo(x2,y2)\,. \\
+unaescala(x3,z3)\ &\qrule\ vuelo(x3,y3),\, vuelo(y3,z3)\,. \\
+vueloHaciaCCS(x2,``CCS")\ &\qrule\ vuelo(x2,``CCS")\,. \\
+unaescalaHaciaCCS(x3,y3)\ &\qrule\ vuelo(x3,y3),\, vuelo(y3,``CCS")\,. \\
+desdeWAS(``WAS",y3)\ &\qrule\ vuelo(``WAS",x3)\,. \\
 \end{alignat*}
 
 Ahora supongamos que un usuario está interesado en implementar un flujo de
@@ -131,8 +128,8 @@ entrada de cada servicio abstracto están ligados a constantes o a
 atributos proyectados por servicios abstractos previos.
 
 \begin{alignat*}{1}
-w(x,y1,y2,y3)\ &\qrule\ flight(x,y1),\, flight(y1,y2),\,  flight(y2,y3),\,  flight(y3,x),\,  \\
-                   \ & uscity(x)\,. \\
+w(x,y1,y2,y3)\ &\qrule\ vuelo(x,y1),\, vuelo(y1,y2),\,  vuelo(y2,y3),\,  vuelo(y3,x),\,  \\
+                   \ & ciudadEU(x)\,. \\
 \end{alignat*}
 
 Las implementaciones de este flujo de trabajo corresponden a composiciones de
@@ -143,27 +140,27 @@ siguiente composición de servicios concretos corresponde a una de las XX
 implementaciones del flujo de trabajo.
 
 \begin{alignat*}{1}
-wi1(x,y1,"CCS",y3)\ &\qrule\ national(x,y1),\, flightToCCS(y1,"CCS"),\,  oneway("CCS",y3),\,  \\
-\ & national(y3,x)\,.  \\
+wi1(x,y1,``CCS",y3)\ &\qrule\ nacional(x,y1),\, vueloHaciaCCS(y1,``CCS"),\, ida(``CCS",y3),\,  \\
+\ & nacional(y3,x)\,.  \\
 \end{alignat*}
 
 Sin embargo, nótese que las siguientes composiciones no son válidas:
 
 \begin{alignat*}{1}
-wi2(x,y1,"CCS"y3)\ &\qrule\ national(x,y1),\, flightToCCS(y1,"CCS"),\, \\
-\ & fromWAS("WAS",y3),\,  national(y3,x)\,. \\
-wi3(x,y1,y2,y3)\ &\qrule\ national(x1,y1),\, onestop(x1,y2),\,  oneway(y2,y3),\,  \\
-\ & national(y3,x)\,. \\
+wi2(x,y1,``CCS"y3)\ &\qrule\ nacional(x,y1),\, vueloHaciaCCS(y1,``CCS"),\, \\
+\ & desdeWAS(``WAS",y3),\,  nacional(y3,x)\,. \\
+wi3(x,y1,y2,y3)\ &\qrule\ nacional(x1,y1),\, unaescala(x1,y2),\,  ida(y2,y3),\,  \\
+\ & nacional(y3,x)\,. \\
 \end{alignat*}
 
 La composición {\it wi2} no es válida porque asocia la variable del flujo de
 trabajo {\it y2} a las constantes {\it ``CCS''} y {\it ``WAS''} que denotan
 ciudades
 distintas. Por otra parte, la composición {\it wi3} no implementa el flujo de
-trabajo porque el servicio concreto {\it onestop} no recibe como entrada o
+trabajo porque el servicio concreto {\it unaescala} no recibe como entrada o
 produce como salida la ciudad donde el vuelo se detiene (representada por la
 variable {\it y1}); por esto, no es posible garantizar que la ciudad donde el
-vuelo se detiene y la ciudad final obtenida por el servicio {\it national} sean
+vuelo se detiene y la ciudad final obtenida por el servicio {\it nacional} sean
 las mismas.
 
 Para evitar producir implementaciones del flujo de trabajo inválidas, se
@@ -183,4 +180,3 @@ lógica que toma provecho del poder de los \emph{SAT solvers} modernos para
 enumerar eficientemente las composiciones de servicios que corresponden a
 implementaciones válidas de un flujo de trabajo dado, así como las composiciones
 que maximizan una función de utilidad dada.
-
