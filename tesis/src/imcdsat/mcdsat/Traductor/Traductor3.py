@@ -666,7 +666,7 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
                         varT = varsT.get((int(a),int(z)))
 
                         if varT:
-                            providers[(a,z)].update(cs)
+                            providers.setdefault((a,z), set()).update(cs)
 
                             for (soqn, sovn) in providers[(a,z)]:
                                 varZ = varsZ.get((soqn,sovn,numVista))
@@ -705,7 +705,7 @@ def clausulas_d4d5(q, vistas, variables_query, constantes_query, ltaux, lz):
                         varT = varsT.get((int(z),int(a)))
 
                         if varT:
-                            providers[(z,a)].update(cs)
+                            providers.setdefault((z,a), set()).update(cs)
 
                             for (soqn, sovn) in providers[(z,a)]:
                                 varZ = varsZ.get((soqn,sovn,numVista))
