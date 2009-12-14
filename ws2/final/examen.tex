@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8x]{inputenc}
+
+\begin{document}
+
+% Título
+
+\author{Daniel Izquierdo \\ \#08-86809}
+\title{Examen Final \\ Web Semántica 2}
+\maketitle
+
+% Contenido
+
+Con el rápido crecimiento que actualmente experimenta el ``Cloud of Linked
+Data'' surgen muchas nuevas aplicaciones que involucran la recuperación de datos
+de varias fuentes distintas, cada una con su propia estructura. Usuarios y
+aplicaciones necesitan cada vez más tener la capacidad de evaluar muchas consultas
+contra fuentes de datos heterogéneas. Las fuentes de datos se pueden
+caracterizar por tener estructuras distintas y contener resultados parciales de
+la consulta que se realiza. Además, escogiendo un criterio de calidad para las
+fuentes, resulta que todas pueden tener valores distintos para los parámetros de
+calidad. Para evaluar una consulta se deben conocer sus posibles reescrituras en
+términos de las fuentes disponibles.
+
+Por otra parte también existe la necesidad de componer servicios web
+descubiertos para implementar realizar flujos de trabajo. Un usuario puede
+definir un flujo de trabajo como una composición de servicios abstractos que son
+implementados por servicios concretos. Al hacerlo, requiere conocer las maneras
+de implementar los servicios abstractos con los concretos existentes. También
+existen criterios de calidad que se deben tomar en cuenta a la hora de elegir
+una implementación dada.
+
+Precisamente por la explosión de datos y servicios que se vive en los momentos,
+en ambos casos el espacio de soluciones a la pregunta de cuáles son las
+reescrituras buscadas puede llegar a ser muy grande. Se requiere entonces de un
+sistema que pueda resolver el problema de manera eficiente y escalable. El
+proyecto que estoy desarrollando es un intento de crearlo.
+
+La capacidad de escalar a números realistas de vistas (fuentes de datos o
+servicios concretos) y sub-objetivos (pasos del flujo de trabajo) al momento de
+reescribir las consultas dadas ya fue lograda por \ref{yarvelo}. Mi contribución
+ha sido añadir la capacidad a esta solución de tomar en cuenta constantes en las
+consultas y vistas, así como de manejar el concepto de rendimiento para
+seleccionar las mejores reescrituras según los parámetros de calidad en un
+problema dado.
+
+%En base a la tendencia actual que existe en la Web Semantica de publicar grandes datasets en el "Cloud of Linked Data", identifique las bondades y limitaciones del proyecto que esta desarrollando que permitan o limiten la manipulacion de este tipo de datasets.
+
+%Su respuesta debe estar documentada con referencias bibliograficas actuales, resultados experimentales y analisis del comportamiento observado durante el proceso de experimentacion. El documento debe tener al menos dos paginas o 2000 palabras.
+
+\end{document}
