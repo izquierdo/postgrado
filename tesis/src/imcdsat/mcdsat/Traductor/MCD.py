@@ -1,3 +1,6 @@
+from CQ.CQ import es_const
+from Parser.CQparser import getRealConstantName, getRealVariableName
+
 class MCD:
     ## hc: head homomorfismo (dict)
     ## phic: mapping vars(Q) en vars(V) (dict)
@@ -9,11 +12,33 @@ class MCD:
         self.vistaH = vista.map_variables(self.hc)
         self.gc = gc
         self.clave = "V:"  + self.vista.cabeza.predicado + " tau:" + str(self.phictodo) + " phic:" + str(self.phic) + " hc:" + str(self.hc) + " gc:" + str(list(self.gc))
-        self.string = "V:"  + self.vista.cabeza.predicado + " tau:" + str(self.phictodo) + " gc:" + str(list(self.gc))
         self.ec, self.phi_1 = self.calcularEc()
+
+        self.string = None
 
     # OJO CON ESTO PQ EL STRING DE UNA TABLA DE HASH NO ES NECESARIAMENTE EL MISMO SIEMPRE
     def __str__(self):
+        if not self.string:
+            display_phictodo = {}
+
+            for a in self.phictodo:
+                if es_const(a):
+                    na = getRealConstantName(a)
+                else:
+                    na = getRealVariableName(a)
+
+                display_phictodo[na] = []
+
+                for b in self.phictodo[a]:
+                    if es_const(b):
+                        nb = getRealConstantName(b)
+                    else:
+                        nb = getRealVariableName(b)
+
+                    display_phictodo[na].append(nb)
+
+            self.string = "V:"  + self.vista.cabeza.predicado + " tau:" + str(display_phictodo) + " gc:" + str(list(self.gc))
+
         return self.string
 
     __repr__ = __str__
@@ -23,7 +48,6 @@ class MCD:
 
     def __eq__(self, other):
         return self.clave == other.clave
-
 
 #     def calcularPhiH(self):
 #         h = {}

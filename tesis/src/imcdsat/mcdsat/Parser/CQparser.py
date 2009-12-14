@@ -75,6 +75,22 @@ def getVariableName(x):
 
     return x
 
+def getRealConstantName(n):
+    global renameArguments
+
+    if renameArguments:
+        return str(int(n)-1000000000)
+
+    return n
+
+def getRealVariableName(x):
+    global renameArguments
+
+    if renameArguments:
+        return 'X'+str(int(x) % 10000)
+
+    return x
+
 def crearSO(pred, lista):
     ord = []
     arg = {}

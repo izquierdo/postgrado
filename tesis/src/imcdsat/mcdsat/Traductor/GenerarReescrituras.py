@@ -224,7 +224,6 @@ def generarReescMCD(numeros, stdin, vistas):
             mod = obtModelo(numeros, model, n)
             mcd = crearMCD(mod, vistas)
             if mcd != None:
-                #print mod
                 print mcd
 
 
