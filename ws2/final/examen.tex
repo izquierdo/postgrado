@@ -1,7 +1,8 @@
-\documentclass[12pt]{article}
+\documentclass{article}
 
 \usepackage[spanish]{babel}
 \usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
 
 \begin{document}
 
@@ -9,6 +10,7 @@
 
 \author{Daniel Izquierdo \\ \#08-86809}
 \title{Examen Final \\ Web Semántica 2}
+\date{14 de diciembre de 2009}
 \maketitle
 
 % Contenido
@@ -46,8 +48,63 @@ consultas y vistas, así como de manejar el concepto de rendimiento para
 seleccionar las mejores reescrituras según los parámetros de calidad en un
 problema dado.
 
-%En base a la tendencia actual que existe en la Web Semantica de publicar grandes datasets en el "Cloud of Linked Data", identifique las bondades y limitaciones del proyecto que esta desarrollando que permitan o limiten la manipulacion de este tipo de datasets.
+A continuación muestro resultados experimentales que demuestran que la solución
+desarrollada puede manejar tomando en cuenta constantes y parámetros de calidad.
+Para evaluar el proyecto se ejecutaron pruebas con problemas reescritura de
+flujos de trabajo en el área de vuelos y aerolíneas con las siguientes
+características:
 
-%Su respuesta debe estar documentada con referencias bibliograficas actuales, resultados experimentales y analisis del comportamiento observado durante el proceso de experimentacion. El documento debe tener al menos dos paginas o 2000 palabras.
+\begin{itemize}
+
+\item Servicio abstracto {\it vuelo(x,y,a)} que relaciona las ciudades $x$ e $y$
+si hay un vuelo de la aerolínea $a$ entre ellas.
+
+\item Consultas que retornan escalas para vuelos entre una ciudad $a$ y otra
+ciudad $b$ dadas, con la condición de que todos los vuelos usan la misma
+aerolínea. Tienen la forma:
+
+$$
+q(x_0,x_1,\ldots,x_{n-1}) :- vuelo(a,x_0,z),\, vuelo(x_0,x_1,z), \ldots, vuelo(x_{n-2},x_{n-1},z), vuelo(x_{n-1},b,z)
+$$
+
+\item Servicios concretos $v_A$ que retornan vuelos con una aerolínea dada. Por
+ejemplo:
+
+$$
+v_{\mathrm{CO}} :- vuelo(x,y,\mathrm{CO})
+$$
+
+\end{itemize}
+
+Los parámetros variables en los experimentos fueron el número de vistas (de 5 a
+80 en incrementos de 5) y el
+número de objetivos de las consultas (de 2 a 5). Podemos ver los resultados en la
+figura \ref{grafico:plot1}.
+
+\begin{figure}[h!]
+  \caption{Resultados del primer experimento}
+  \centering
+   \includegraphics[width=0.5\textwidth]{plot1}
+  \label{grafico:plot1}
+\end{figure}
+
+A partir de estos resultados tenemos observaciones importantes. En primer lugar
+se nota la progresión polinomial de los tiempos de ejecución, por lo que podemos
+hablar de alta eficiencia, al menos para este tipo de problemas. Además vemos
+tiempos muy razonables para instancias con tamaños de la vida real. El caso más
+grande tiene ochenta aerolíneas y vuelos con cinco escalas --números bastante
+ajustados a lo que se vería en una agencia de viajes, por ejemplo-- fue resuelto
+en menos de cuatro minutos. Cabe acotar que, por la arquitectura de la solución
+desarrollada, se puede ``compilar'' una instancia del problema de manera de
+satisfacer múltiples consultas sobre la misma instancia pero con parámetros de
+calidad distinto de forma muy veloz; para el caso más grande toma menos de un
+segundo resolver una consulta una vez obtenida la versión compilada.
+
+A pesar de los buenos resultados, hay que aclarar que el sistema desarrollado
+está limitado en cuanto a escalabilidad a miles de vistas y decenas de objetivos
+de consulta. Al realizar pruebas con problemas de tamaño mucho mayor se
+encontraron tiempos de ejecución inmanejablemente grandes. Parte del trabajo
+futuro sobre el tema se puede realizar en la dirección de hacer accesible
+instancias de problemas con estos tamaños.
 
 \end{document}
