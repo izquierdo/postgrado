@@ -38,9 +38,9 @@
                 \{idaniel,bonet,mvidal\}ldc.usb.ve} \maketitle
 \begin{abstract}
 In Service Oriented Architectures (SOA), concrete services are described in terms of functionality   and QoS parameters, while software applications are specified as workflows of abstract services and non-functional criteria that establish the  application desirable functionality and  expected quality, respectively.  During workflow execution time,  abstract services  are rewritten 
-with the concrete services  that meet the workflow  functional and non-functional restrictions. Since, service selection is done on-the-flight and the space of concrete services may be very large, efficiency and scalability are required.  In this paper we propose the {\it McdSat}$^c$ framework to efficiently solve the problem of service selection in presence of a large number of concrete services.
+with the concrete services  that meet the workflow  functional and non-functional restrictions. Since, service selection is done on-the-flight and the space of concrete services may be very large, efficiency and scalability are required.  In this paper we propose the {\it SsdSat} framework to efficiently solve the problem of service selection in presence of a large number of concrete services.
 First, we use the Local As View approach to describe the functionality  of the concrete services in terms of views of abstract services, the quality as an overall utility function that combines the different QoS values that describe the service, and  workflows as  conjunctive queries on abstract services. Based on this representation, we 
-model the problem of service selection as a known problem in the area of integration systems referred as query rewriting using views.  We encode the service selection problem as a propositional theory whose models correspond to the composition of the services that implement the abstract workflow and have the same cost as the corresponding composition; known relationships between d-DNNF theories and arithmetic circuits are exploited to provide an efficient and scalable solution.  We report on the performance of our proposed approach, and we observe that  {\it McdSat}$^c$  efficiently scales up to large instances of the service selection problem.  
+model the problem of service selection as a known problem in the area of integration systems referred as query rewriting using views.  We encode the service selection problem as a propositional theory whose models correspond to the composition of the services that implement the abstract workflow and have the same cost as the corresponding composition; known relationships between d-DNNF theories and arithmetic circuits are exploited to provide an efficient and scalable solution.  We report on the performance of our proposed approach, and we observe that  {\it SsdSat}  efficiently scales up to large instances of the service selection problem.  
  
  
 \end{abstract}                
@@ -56,21 +56,21 @@ complex workflows.
 
 In order to design an application, users usually specify the functionality in terms of a workflow of abstract services, while the desirable quality  is defined by restricting the values of the QoS parameters that describe the concrete available services. To evaluate the proposed workflow,  abstract services are instantiated on concrete services in a way restrictions on the QoS parameters are satisfied.  However, since the number of available sources has an impact on the performance of this task, techniques that enable us to efficiently scale up to a large number of services are required. 
 
-In this paper we aim to provide a solution to this problem and provide techniques that efficiently traverse the space of available services and select combinations that meet the functional and non-functional requirements that describe a designed application.  We name our proposed solution {\it MCDSat}$^c$. 
+In this paper we aim to provide a solution to this problem and provide techniques that efficiently traverse the space of available services and select combinations that meet the functional and non-functional requirements that describe a designed application.  We name our proposed solution {\it SsdSat}. 
 
-In {\it MCDSat}$^c$, concrete service functionalities are described as views on abstract services and workflows are represented as conjunctive queries on abstract services; this service representation is similar to the one generated in a semi-automatic way for the {\cal DEIMOS} system ~\cite{AmbiteISWC09}.  In addition, rules that define workflows and  concrete services in the {\it MCDSat}$^c$ catalog,  are created in a way that input and output restrictions of the combined abstract services are satisfied. To represent the QoS measures, each concrete service description is annotated with a real number that represents an overall value of the QoS measures of this service.  Finally, {\it MCDSat}$^c$ models the web service selection problem as the problem of query rewriting using views \cite{halevy:survey}. This problem is important in the context of data integration
-\cite{Chen05,JaudoinPRST05}, and query optimization and data maintenance \cite{AfratiLU07,levy:bucket}, and several approaches have been defined to efficiently scale up to a large number of views~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}. In this paper we propose the {\it MCDSat}$^c$ framework which extends the approach proposed in ~\cite{arvelo:aaai06},  with the capability of dealing with constants and identifying the composition of services that maximizes a given utility function. 
+In {\it SsdSat}, concrete service functionalities are described as views on abstract services and workflows are represented as conjunctive queries on abstract services; this service representation is similar to the one semi-automatically generated for the {\cal DEIMOS} system ~\cite{AmbiteISWC09}.  In addition, rules that define workflows and  concrete services in the {\it SsdSat} catalog,  are created in a way that input and output restrictions of the combined abstract services are satisfied. To represent the QoS measures, each concrete service description is annotated with a real number that represents an overall value of the QoS measures of this service.  Finally, {\it SsdSat} models the web service selection problem as the problem of query rewriting using views \cite{halevy:survey}. This problem is important in the context of data integration
+\cite{Chen05,JaudoinPRST05}, and query optimization and data maintenance \cite{AfratiLU07,levy:bucket}, and several approaches have been defined to efficiently scale up to a large number of views~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}. In this paper we propose the {\it SsdSat} framework which extends the approach proposed in ~\cite{arvelo:aaai06},  with the capability of dealing with constants and identifying the composition of services that maximizes a given utility function. 
 
-{\it MCDSat}$^c$  translates an instance of the service selection problem into the problem of enumerating the models of a propositional theory that encodes information about the workflow, the concrete services and the conditions that need to be satisfied in order to generate a composition that maximizes the utility function. This theory is represented as a CNF formula which is compiled into a deterministic
+{\it SsdSat}  translates an instance of the service selection problem into the problem of enumerating the models of a propositional theory that encodes information about the workflow, the concrete services and the conditions that need to be satisfied in order to generate a composition that maximizes the utility function. This theory is represented as a CNF formula which is compiled into a deterministic
 and decomposable negation normal form d-DNNF representation, from which the models that maximizes the overall utility function are obtained in linear time using modern SAT techniques~\cite{darwiche:dnnf}.   
-We empirically studied the quality of the {\it MCDSat}$^c$ on variety of benchmarks and we observed  that the proposed technique provides an efficient solution to the service selection problem which is able to scale up to large workflows as well to a large number of views.   
+We empirically studied the quality of the {\it SsdSat} on variety of benchmarks and we observed  that the proposed technique provides an efficient solution to the service selection problem which is able to scale up to large workflows as well to a large number of views.   
 
- This paper is comprised of six additional sections. The next section motivates our approach by using an example, and  we summarize existing related work in section 3. Section 4 describes the {\it MCDSat}$^c$ system architecture, and  the experimental study is reported in section 5. 
+ This paper is comprised of six additional sections. The next section motivates our approach by using an example, and  we summarize existing related work in section 3. Section 4 describes the {\it SsdSat} system architecture, and  the experimental study is reported in section 5. 
  In section 6 we present the formalization of the web service selection problem as a Propositional Logic theory, and finally, section 7 outlines our conclusions and future work.
 
 
 \section{Motivating Example}
-Consider the abstract and concrete services in Table ~\ref{table:services}  which represent applications in the flight domain.
+Consider the abstract and concrete services in Table ~\ref{table:services}  that represent applications in the flight domain.
 
 \begin{table}
 \begin{tabular}{| l| l |}
@@ -182,7 +182,7 @@ are pairwise logically contradictory; i.e.,
 $\phi_i\Rightarrow\neg\phi_j$ for $i<j$.
 The NNF in Fig.~\ref{fig:dnnf}, for example, is decomposable
 and deterministic. A d-DNNF supports the model counting and enumeration in polynomial time
-in the size of its DAG.  {\it MCDSat}$^c$  exploits the properties of a d-DNNF theory, to efficiently provide a solution to the problem of enumerating the service compositions that correspond to models of the  theory, i.e., the service compositions that implement the abstract  workflow and best meet the utility function. DECIR ALGO SOBRE EL ALGORITMO QUE PRODUCE LOS MEJORES.
+in the size of its DAG.  {\it SsdSat}  exploits the properties of a d-DNNF theory, to efficiently provide a solution to the problem of enumerating the service compositions that correspond to models of the  theory, i.e., the service compositions that implement the abstract  workflow and best meet the utility function. DECIR ALGO SOBRE EL ALGORITMO QUE PRODUCE LOS MEJORES.
 
 
 
@@ -211,30 +211,35 @@ The {\it MCDSat} algorithm exploits the properties of d-DNNFs to efficiently
 compute the MCDs associated with theory $\Theory{\Q}$.
 The  {\it MCDSat} algorithm has demonstrated to scale better than the MiniCon
 algorithm over a large number of benchmarks often showing performance
-improvements of several orders of magnitude. However, the McdSat algorithm was not desgined for rewriting problems involving explicit constants,
+improvements of several orders of magnitude. However, the {\it MCDSat} algorithm was not desgined for rewriting problems involving explicit constants,
 nor to compute the best rewritings with respect to a given utility function or cost model, and this paper we propose a new encoding  that overcomes these limitations.
 
 
 \end{description}
 
-\section{The McdSat$^c$ Architecture}
+\section{The {\it SsdSat} Architecture}
+Figure ~\ref{fig:architecture} presents the architecture of{\it SsdSat}; it is comprised of a {\it Catalog} of service descriptions, the {\it SSP Translator},  the {\it c2d}, the {\it Minimal Model Enumerator}, and the {\it Model Translator}.   
 
-In order to do so, the theory $\Theory{\Q}$ is transformed into a d-DNNF
-theory $\Delta(\Q)$ with a CNF to d-DNNF compiler.
-The compiler's algorithm is similar to the DPLL algorithm
-for SAT but enhanced with advanced techniques such as clause
-learning and caching.
 \begin{figure}
 \centering
-\includegraphics[width=10cm]{mdcsatC.pdf}
-\caption{The McdSat$^c$ Architecture}
-\label{fig:dnnf}
+\includegraphics[height=90mm,width=3.5in]{mdcsatC.pdf}
+\caption{The {\it SsdSat} Architecture}
+\label{fig:architecture}
 \end{figure}
+
+First, an instance of the Service Selection Problem is defined as an abstract workflow represented by a conjunctive query on abstract services which is given as input, and a set of concrete services defined by views of abstract services. 
+
+The {\it SsdSat}  Catalog is populated with descriptions of abstract and concrete services; each service is described in terms of input and output attributes of the service, and a real value representing a utility function that aggregates the QoS parameters of the service. Additionally, concrete services are defined as views of abstract services following the paradigm Local As View proposed in ~\cite{levy:bucket}; these descriptions can be generated by the {\cal DEIMOS} system proposed by~\cite{AmbiteISWC09}. 
+
+The {\it SSP Translator} encodes an instance of the Service Selection Problem as a Conjunctive Normal Form formula that corresponds to the propositional logic theory that represents the instance of the problem.  {\it c2d}~\cite{c2d} is an off-the-shell component that compiles  the CNF formula that represents the input instance of the service selection problem into  d-DNNF. {\it c2d} uses conflict direct backtracking with clause learning, and information about the state of clauses to  index into a cache intermediate results. Thus, although the complexity of  compiling CNF into d-DNNF exponentially increases  with the connectivity  of the  CNF, {\it c2d} is able to compile large instances of SSP is few minutes. The {\it Minimal Model Enumerator} extracts the models from  the d-DNNF in linear time; also models counting and enumeration of the model that maximizes the utility function can be performed in linear time. Finally, 
+the {\it Model Translator} decodes the models into the service compositions that solve the input problem.
+
+
 
 
 
 \section{Experimental Results}
-We have conducted an empirical analysis  on the benefits of the techniques implemented in the   McdSat$^c$ system.
+We have conducted an empirical analysis  on the benefits of the techniques implemented in the  {\it SsdSat} system.
 
 \begin{description}
 \item[Dataset and Query Benchmark:]  we conducted our experiments over a benchmark that includes XX queries and a set of  YY views. Queries and views are starts and chains, and they have between ZZ and TT constants; queries have QQ sub-subgoals.
@@ -249,86 +254,126 @@ We have conducted an empirical analysis  on the benefits of the techniques imple
 \end{figure}
 
 
-\section{Formalization of the Service Selection Problem}
+\section{Formalization of the Service Selection Problem (SSP)}
+We consider service catalogs of the form $C=\tup{S,T}$ where
+$S$ is a set of predicates that represent abstract services and $T=\{T_s\}_{s\in S}$ is a collection
+of tables that represents the result of the evaluation of the abstract services. In the context of the Service Selection Problem, 
+a service catalog $C$ is an idealized description of 
+the output produced by abstract workflows  implemented by multiple concrete services described
+as views.
 
-We consider databases of the form $D=\tup{P,T}$ where
-$P$ is a set of predicates and $T=\{T_p\}_{p\in P}$ is a collection
-of tables that represents the predicates in extensional form.
-A conjunctive query $Q$ over $P$ is of the form 
+A workflow  $Q$ over $S$ is represented by a conjunctive query of the form 
 \begin{alignat*}{1}
-Q(\vvec{x})\ \qrule\ \  p_1(\vvec{x}_1),\, p_1(\vvec{x}_2),\, \ldots,\, p_m(\vvec{x}_m)\,,
+Q(\vvec{x})\ \qrule\ \  s_1(\vvec{x}_1),\, s_1(\vvec{x}_2),\, \ldots,\, s_m(\vvec{x}_m)\,,
 \end{alignat*}
-where $p_i\in P$, $\vvec{x}$ is a vector of variables, and each
+where $s_i\in S$, $\vvec{x}$ is a vector of variables, and each
 $\vvec{x}_i$ is a vector of variables and constants.
-The result of $Q$ over $D$, denoted as $Q(D)$, is the table with
+The result of $Q$ over $C$, denoted as $Q(C)$, is the table with
 $|\vvec{x}|$ columns that result of the projection of the relational
 join $\join\!\!\{T_{p_i}\}_{i=1}^m$ over $\vvec{x}$.
 The atoms in the body of $Q$ are called the (sub)goals of $Q$.
 
-A view $V$ over $D$ is a query over $P$. In the context of the service selection problem, 
-the database $D$ is an idealized description of 
-the output produced abstract workflow  implemented by multiple concrete services described
-as views.
-Given a database $D$, a query $Q$ and a collection of 
+A view $V$ over $C$ is a query over $S$. Given a database $C$, a query $Q$ and a collection of 
 views $E=\tup{\{V_i\}_i,\{E_i\}_i}$, we are required to find
-all the tuples in $Q(D)$ obtainable from the views in $E$.
-That is, we need to find all the \emph{compositions} of the form
+all the tuples in $Q(C)$ obtainable from the views in $E$.
+That is, we need to find all the \emph{service compositions} of the form
 \begin{alignat*}{1}
 R(\vvec{x})\ \qrule\ \ V_{i_1}(\vvec{x}_1),\, V_{i_2}(\vvec{x}_2),\, \ldots,\, V_{i_n}(\vvec{x}_n)
 \end{alignat*}
-such that $R(E) \subseteq Q(D)$.
-A service selection problem (SSP) is a tuple $\tup{P,Q,\{V_i\}}$ where $P$
-is a set of predicates that represent abstract services, $Q$ is a query over $P$ and $\{V_i\}$ is a collection of views that define the concrete services in terms of  abstract services. We assume \emph{safe} problems in the sense that all 
+such that $R(E) \subseteq Q(C)$.
+A service selection problem (SSP) is a tuple $\tup{S,Q,\{V_i\}}$ where $S$
+is a set of predicates that represent abstract services, $Q$ is a query over $S$ and $\{V_i\}$ is a collection of views that define the concrete services in terms of  abstract services. We assume \emph{safe} problems in the sense that all 
 variables mentioned in the head of the query (resp.\ in the head of each view)
 appear in the body of the query (resp.,\ in the body of each view); also the input and output restrictions of the abstract services used in the query are satisfied.
 Further, we only deal with SSPs with no arithmetic predicates inside the
 query or views.
-A composition $C$ is \emph{valid} if for all databases $D=\tup{P,T}$
-and extensions $\{E_i\}$, $R(E) \subseteq Q(D)$.
+A service composition $SC$ is \emph{valid} if for all catalogs $C=\tup{S,T}$
+and extensions $\{E_i\}$, $R(E) \subseteq Q(C)$.
 A collection $\R$ of valid compositions is a solution if
-for all databases $D=\tup{P,T}$ and extensions $\{E_i\}$, there
-is no other $\R'$ such that $\R(E)\subset\R'(E)\subseteq Q(D)$.
-We are interested in finding a composition $\R$.
+for all service catalogs $C=\tup{S,T}$ and extensions $\{E_i\}$, there
+is no other $\R'$ such that $\R(E)\subset\R'(E)\subseteq Q(C)$.
+We are interested in finding a service composition $\R$.
 
 \subsection{Logical Theories}
-
-In \cite{arvelo:aaai06}, we showed that a rewriting
-for a query $Q$ with $m$ goals can be obtained by enumerating the
-models of a logical theory
-$\Delta=\Delta_{rew}\cup\Delta_{mcd}^1\cup\cdots\Delta_{mcd}^m$
-where $\Delta_{rew}$ specified how to combine $m$ independent
-copies of MCD theories $\Delta_{mcd}$ that cover all goals in $Q$.
-Each $\Delta^i_{mcd}$ is a copy of the theory $\Delta_{mcd}$
-in which each literal $p$ is tagged as $p^i$.
-The theory $\Delta_{mcd}$ consists of different groups of 
+We use an approach similar to one described in ~\cite{arvelo:aaai06} to encode the Service Selection Problem, the reader is referred to \cite{arvelo:aaai06} for a comprehensive
+description of the propositional theory. We identify the service compositions by enumerating the
+models of a logical theory $\Delta=\Delta_{com}\cup\Delta_{ssd}^1\cup\cdots\Delta_{ssd}^m$
+where $\Delta_{com}$ specified how to combine $m$ independent
+copies of SSD theories $\Delta_{SSd}$ that cover all goals in $Q$.
+Each $\Delta^i_{ssd}$ is a copy of the theory $\Delta_{ssd}$
+in which each literal $s$ is tagged as $s^i$.
+The theory $\Delta_{ssd}$ consists of different groups of 
 clauses that guarantees that its models are in correspondence
-with the MCDs, while the theory $\Delta_{rew}$ contains additional
-clauses to guarantee a sound and complete composition of the MCDs.
-The reader is referred to \cite{arvelo:aaai06} for a comprehensive
-description of the propositional theory.
+with the SSDs, while the theory $\Delta_{com}$ contains additional
+clauses to guarantee a sound and complete composition of the SSDs.
+A Selection Service Description (SSD) is  $\tup{V,\tau,SS}$ for $\Q$, where $V$ is the concrete service used to cover the subset of abstract services $SS$, and  $\tau\subseteq Vars(Q)\times Vars(V)$ such that all variables in
+$\tau_x=\{ y\in Vars(V) : (x,y)\in\tau\}$ are distinguished in $V$. A SSD is a simplification of the MCDs proposed by ~\cite{pottinger:minicon} to characterize the views that can be used to subsets of sub-goals of a query. 
 
-Let us describe the difficulties that arise when constants
-are presents in a SSP with the following example:
-\begin{alignat*}{1}
-Q(x,z)\ &\qrule\ \ p_1(x,y),\, p_2(y,z)\,, \\
-V_1(x_1)\ &\qrule\ \ p_1(x_1,A)\,, \\
-V_2(x_2)\ &\qrule\ \ p_2(B,x_2)\,, \\
-V_3(x_3,y_3)\ &\qrule\ \ p_2(x_3,y_3)
-%V_4(x_4,y_4)\ &\qrule\ \ p_1(x_1,A),\, p_2(B,y_4)\,,
-\end{alignat*}
-where $Q$ is the query and $\{V_1,V_2,V_3\}$ are the 
-views. In this case, the only rewriting is 
-$R(x,z)\qrule V_1(x),V_3(A,z)$ because the candidate 
-$R(x,z)\qrule V_1(x),V_2(z)$ is not valid as it maps
-$y$ into constants $A$ and $B$ that denote different
-objects.
+The SSP theory for $\Q$,  denoted by $\Theory{\Q}$, consists
+of the following propositional variables:
+\begin{enumerate}\denselist
+\item $\{v_0,\ldots,v_n\}$ to indicate the SSD uses view $V_i$;
+      $v_0$ is used to indicate the \emph{null} SSD,
+\item $\{g_1,\ldots,g_m\}$ to indicate the goals in $SS$,
+\item $\{z_{j,k,i}\}$ to indicate the $j$th goal in $Q$ is
+      covered by the $k$th goal in $V_i$, and
+\item $\{t_{x,y}\}$ to indicate that $(x,y)\in\tau$.
+\item $t_{x,y}$
+to denote that the variable/constant $x$ in the query is mapped
+into the variable/constant $y$ in the view, and propositions $v_i$
+to indicate that the SSD uses view $V_i$.
+\end{enumerate}
+The range of indices for the $z$ variables depend on $\Q$;
+e.g. if $V_i$ has $K$ goals of the same type as goal
+$j$ in $Q$, then $1\leq k\leq K$ for $z_{j,k,i}$.
+For $t$ variables, $x$ ranges in the number of variables
+in $Q$ and $y$ ranges in the maximum number of variables
+in the views.
 
-The main problem when handling constants is to
-be sure that different constants are not mapped into
-each other either directly or indirectly (via transitivity).
+The following  clauses encode the SSP problem in terms of the SSDs. ~\cite{RajaramanSU95} showed that for queries without negation or arithmetic comparisons,  but with constants, and $m$ goals and $q$ variables, it is enough
+to consider service compositions of length at most  $m$ plus  $q$ subgoals ~\cite{Ullman00}.
 
-\subsection{Utility Functions}
+\begin{enumerate}[C1.]\denselist
+\item (At least of view is used): $\bigvee_{i=0}^n v_i$
+\item (At most one view is used): $v_i \Rightarrow \neg v_j$ for $0\leq i,j \leq n$,
+\item (Null view equals null): $v_0 \Rightarrow \neg g_j$ for $1\leq j\leq m$,
+\item (Views are useful): $v_i \Rightarrow \bigvee_{j=1}^m g_j$ for $1\leq i\leq n$,
+\item (Subgoals are covered at most once): $z_{j,k,i} \Rightarrow \neg z_{j,l,i}$ for
+      appropriate $i,j,k,l$ with $k\neq l$,
+\item (Scope of views): $v_i \Rightarrow \neg g_j$ for such goals that can't be covered by $V_i$,
+\item (Consistency): $v_i \land g_j \Leftrightarrow \bigvee z_{j,k,i}$ for appropriate $i,j,k$.
+\item[C8.] (Dead variables): $v_i \Rightarrow \neg t_{x,y}$ for all $x,y$ with $y\notin V_i$,
+\item[C9.] (1-1 for $\exists$ vars): $v_i \land t_{x,y} \Rightarrow \neg t_{x,y'}$ for all
+           existential variables $y,y'\in V_i$,
+\item[C10.] (Distinguished): $v_i \Rightarrow \neg t_{x,y}$ for all distinguished $x\in Q$ and
+            existential $y\in V_i$,
+\item[C11.] (Existential): $v_i \land t_{x,y} \Rightarrow g_j$ for all existential $y\in V_i$ and
+            goals $j$ that contain $x\in Q$,
+\item[C12.] (Matching): $v_i \land z_{j,k,i} \Rightarrow t_{x,y}$ for all $x$ and $y$ that
+            should match if goal $j$ in $Q$ is covered by goal $k$ in $V_i$.
+\item[C13.] (If all variables in the view are distinguished, then the SSD covers only one goal):
+            $v_i \land g_j \Rightarrow \neg g_k$.
+\end{enumerate}
 
+These first thirteen are the same clauses used by the {\it MCDSat} to encode the Query Rewriting Problem in propositional logic ~\cite{arvelo:aaai06}. The following clauses are required to allow constants in the workflows and the views. As we showed in Section 2, the main problem when handling constants is to
+be sure that different constants are not mapped into each other either directly or indirectly (via transitivity). These clauses ensure that two constants are mapped iff they are the same.
+
+\begin{enumerate}[S1.]\denselist
+\item (Inconsistent-1): $t_{x,A} \Rightarrow \neg t_{x,B}$,
+\item (Inconsistent-2): $t_{A,x} \Rightarrow \neg t_{B,x}$,
+\item (Inconsistent-3): $\neg t_{A,B}$,
+\item (Transitivity-1): $v_i\land t_{A,y}\land t_{x,y}\land t_{x,z}\Rightarrow t_{A,z}$,
+\item (Transitivity-2): $v_i\land t_{y,A}\land t_{y,x}\land t_{z,x}\Rightarrow t_{z,A}$.
+\end{enumerate}
+Clauses S1--S3 prune candidate service compositions in which one constant
+is directly mapped into a different one, and the last two implement
+a restricted propagation of transitivity.
+Similarly, $\Delta_{rew}$ must be extended with the clauses:
+\begin{enumerate}[S1.]\denselist
+\item[S6.] (Inconsistent-4): $t^i_{x,A} \Rightarrow \neg t^j_{x,B}$.
+\end{enumerate}
+
+\subsection{Maximum-Utility Function}
 We assume a simple additive utility function in which each view
 $V_i$ is associated with a utility measure $c(V_i)$, and the overall utility value of
 a composition is the sum of the utility values for the views in it.
@@ -339,52 +384,6 @@ utility value (if there are no compositions, its utility is $0$),
 but it may have multiple best service compositions.
 The service composition problem with utility consists in finding
 all the compositions of maximum utility value.
-
-%The cost model is simple yet expressive; e.g., if all
-%costs are unit, then best rewritings are those with
-%minimum number of views, yet in cases where views
-%represent different sources, it is natural
-%to associate them with different costs.
-
-
-\subsection{Extended Theories}
-
-The theory $\Delta_{mcd}$ makes use of propositions $t_{x,y}$
-to denote that the variable/constant $x$ in the query is mapped
-into the variable/constant $y$ in the view, and propositions $v_i$
-to indicate that the MCD uses view $V_i$.
-We obtain a sound and complete theory for SSPs with constants if
-$\Delta_{mcd}$ is extended with the clauses:
-
-\begin{enumerate}[C1.]\denselist
-\item (Inconsistent-1): $t_{x,A} \Rightarrow \neg t_{x,B}$,
-\item (Inconsistent-2): $t_{A,x} \Rightarrow \neg t_{B,x}$,
-\item (Inconsistent-3): $\neg t_{A,B}$,
-\item (Transitivity-1): $v_i\land t_{A,y}\land t_{x,y}\land t_{x,z}\Rightarrow t_{A,z}$,
-\item (Transitivity-2): $v_i\land t_{y,A}\land t_{y,x}\land t_{z,x}\Rightarrow t_{z,A}$.
-\end{enumerate}
-Clauses C1--C3 prune candidate service compositions in which one constant
-is directly mapped into a different one, and the last two implement
-a restricted propagation of transitivity.
-Similarly, $\Delta_{rew}$ must be extended with the clauses:
-\begin{enumerate}[C1.]\denselist
-\item[C6.] (Inconsistent-4): $t^i_{x,A} \Rightarrow \neg t^j_{x,B}$.
-\end{enumerate}
-~\cite{RajaramanSU95} showed that for queries without negation or arithmetic comparisons,  but with constants, and $m$ goals and $q$ variables, it is enough
-to consider service compositions of length at most  $m$ plus  $q$ subgoals ~\cite{Ullman00}.
-
-Given a SSP problem $\tup{Q,\{V_i\}}$ possibly with constant 
-symbols, we construct logical theories whose models are in
-correspondence with the service compositions. These theories are then
-compiled into d-DNNF from which all rewritings are extracted
-efficiently.
-Likewise, best service compositions can be computed by performing model
-enumeration twice: the first pass computes the optimal utility function,
-and the second filters out suboptimal service compositions.
-However, there is a better way, which we will describe in the next section.
-
-\subsection{Maximum-Utility Function}
-
 Darwiche \& Marquis \cite{darwiche:weighted} show how to compute the
 rank $r^*(\Delta)$ of a propositional theory $\Delta$
 efficiently when $r$ is a literal ranking function and
@@ -410,7 +409,7 @@ otherwise.
 
 \section{Conclusions and Future Work}
 
-We have shown how the propositional theory used in McdSat can
+We have shown how the propositional theory used in {\it MCDSat} can
 be extended to support constants, and how it can be used to 
 compute the best rewritings with respect to an additive
 cost model. The cost model is simple yet expressive.
