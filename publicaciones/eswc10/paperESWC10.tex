@@ -1,4 +1,4 @@
-  \documentclass{llncs}
+\documentclass{llncs}
 \usepackage{amsmath}
 \usepackage{txfonts}
 \usepackage[boxed]{algorithm2e}
@@ -24,6 +24,7 @@
 \newcommand{\arc}{\text{arc}}
 \newcommand{\Theory}[1]{T(#1)}
 \newcommand{\mcdsat}{\textsc{McdSat}}
+\newcommand{\ssdsat}{{\it SsdSat} }
 \newcommand{\minicon}{{MiniCon}}
 \newcommand{\Omit}[1]{}
 \newcommand{\citeX}[1]{\citeauthor{#1}~\citeyear{#1}}
@@ -239,13 +240,51 @@ the {\it Model Translator} decodes the models into the service compositions that
 
 
 \section{Experimental Results}
-We have conducted an empirical analysis  on the benefits of the techniques implemented in the  {\it SsdSat} system.
+We have conducted an empirical analysis on the benefits of the techniques
+implemented in the  {\it SsdSat} system. The characteristics of the experiment
+follow:
 
 \begin{description}
-\item[Dataset and Query Benchmark:]  we conducted our experiments over a benchmark that includes XX queries and a set of  YY views. Queries and views are starts and chains, and they have between ZZ and TT constants; queries have QQ sub-subgoals.
-\item[Evaluation Metrics:] we report on runtime performance which corresponds to the  {\it user time} produced by the {\it time} command of the Unix operation system. 
+\item[Dataset and Query Benchmark:] we evaluated the system on a set of three
+different benchmarks as described below. The objective was to assess the
+performance of \ssdsat on varying conditions.
+\item[Tests:] A benefit of the \ssdsat approach is that one can compile the
+logical theory of a given problem instance and then calculate all rewritings or
+the best ones any number of times in linear time. The cost model for finding
+best rewritings can even be changed with no need to recompile the logical
+theory, which is the costly phase of the process. Because of this, for each run
+benchmark we make a clear distinction on whether the reported times comprise
+theory compilation only or compilation plus enumeration rewriting.
+\item[Evaluation Metrics:] we report on runtime performance which corresponds to the {\it user time} produced by the {\it time} command of the Unix operating system. 
+\item[Environment:] the experiments were run on a machine with an Intel Core 2 Duo 2GHz processor and 4GB of RAM.
 \end{description}
- 
+
+The first benchmark consisted of a problem instance modeled on air
+travel queries. Concrete services were of the form
+
+\begin{alignat*}{1}
+v_i(\vvec{x}, \vvec{y})\ \qrule\ \  flight(\vvec{x},\vvec{y},i)
+\end{alignat*}
+
+Here, we suppose a service returns all flights between two cities with a specific
+airline. View $i$ describes flights for the airline $i$, since the abstract service
+$flight(x,y,a)$ is satisfied when a direct flight exists departing from city $x$
+and arriving at city $y$ with airline $a$. Workflows had the form
+
+\begin{alignat*}{1}
+q(\vvec{x}_1, \ldots, \vvec{x}_n)\ \qrule\ flight(CCS, \vvec{x}_1, \vvec{a}),
+flight(\vvec{x}_1, \vvec{x}_2, \vvec{a}),
+\ldots,
+flight(\vvec{x}_{n-1}, \vvec{x}_n, \vvec{a}),
+flight(\vvec{x}_n, WAS, \vvec{a})
+\end{alignat*}
+
+Our benchmark for this type of problem included workflows with two to five
+sub-goals and sets of five to eighty concrete services. We measured both compilation time
+and time to list all rewritings. As it turned out, listing all rewritings took
+less than half a second in the worst case. The results for compilation time can
+be seen in figure \ref{fig:plot1}.
+
 \begin{figure}
 \centering
 \includegraphics[width=8cm]{plot1.pdf}
@@ -253,13 +292,41 @@ We have conducted an empirical analysis  on the benefits of the techniques imple
 \label{fig:plot1}
 \end{figure}
 
+In an attempt to induce exponential growth in the number of rewritings so as to
+get longer rewriting generation times, we modified this benchmark setting the
+number of concrete services per airline to two. We ran tests with this modification and the
+same numbers of workflow sub-goals and concrete services (meaning we were now handling five to
+forty airlines). For this case we recorded full rewriting enumeration times,
+resulting in the graph in figure \ref{fig:plot2}.
+
+\begin{figure}
+\centering
+\includegraphics[width=8cm]{plot1.pdf}
+\caption{Rewriting Enumeration Time Benchmark I}
+\label{fig:plot2}
+\end{figure}
+
+Although both tests previously described showed good results, they suffered from
+a considerable issue which was lack of multiple sub-goals in concrete services.
+We therefore began running tests with unstructured, randomly generated instances
+with three variables per abstract service, ten distinct variables and ten
+distinct constants, four sub-goals in workflows and concrete services and a
+$50\%$ probability of constants appearing in each abstract service argument. We
+can observe results in figure \ref{fig:plot3}.
+
+\begin{figure}
+\centering
+\includegraphics[width=8cm]{plot1.pdf}
+\caption{Compilation Time Benchmark I}
+\label{fig:plot3}
+\end{figure}
 
 \section{Formalization of the Service Selection Problem (SSP)}
 We consider service catalogs of the form $C=\tup{S,T}$ where
 $S$ is a set of predicates that represent abstract services and $T=\{T_s\}_{s\in S}$ is a collection
 of tables that represents the result of the evaluation of the abstract services. In the context of the Service Selection Problem, 
 a service catalog $C$ is an idealized description of 
-the output produced by abstract workflows  implemented by multiple concrete services described
+the output produced by abstract workflows implemented by multiple concrete services described
 as views.
 
 A workflow  $Q$ over $S$ is represented by a conjunctive query of the form 
