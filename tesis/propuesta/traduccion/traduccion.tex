@@ -272,4 +272,51 @@ para usar estas descripciones para identificar los servicios que implementan un
 flujo de trabajo dado o que mejor cumplen los criterios no funcionales del
 usuario.
 
+\subsection{Reescritura de Consultas}
+
+Un número de algoritmos han sido desarrollados para encontrar las reescrituras
+de una consulta dada; los más prominentes son el algoritmo bucket XREF28W, el
+algoritmo de reglas inversas XREF18,30W, el algoritmo MiniCon XREF29, y el
+algoritmo McdSat XREF4W. Generalmente, la reescritura de consultas trabaja en
+dos fases. Durante la primera, el algoritmo identifica las vistas que reescriben
+al menos un subobjetivo de la consulta, y durante el segundo estas reescrituras
+parciales son combinadas en reescrituras completas. La diferencia principal
+entre los algoritmos es el conjunto de criterios usado para elegir las vistas
+relevantes para reducir el espacio de reescrituras no útiles.
+
+El algoritmo bucket reduce el número de posibilidades considerando sólo cada
+subobjetivo de la consulta aislado, y seleccionando las vistas que son capaces
+de producir al menos los atributos proyectados por la consulta. Como los
+atributos involucrados en los joins de la consulta no son verificados, un número
+grande de reescrituras comprendido por productos cartesianos puede ser generado.
+
+El algoritmo de reglas inversas construye un conjunto de reglas que invierten
+las definiciones de vistas y establecen cómo computar tuplas para las relaciones
+de la base de datos desde las tuplas de las vistas. Al igual que el algoritmo
+bucket, puede producir un gran número de reescrituras no útiles.
+
+El algoritmo MiniCon supera las limitaciones de los algoritmos previos
+identificando solamente vistas que reescriben un conjunto de los subobjetivos de
+la consulta, y que pueden ser combinados con el resto de los subobjetivos. La
+idea principal es identificar las asociaciones entre variables de cada
+subobjetivo a las variables en uno o más subojbetivos en las vistas, de manera
+que las variables de join de la consulta son asociadas a las variables de join
+del cuerpo de una vista o a variables distinguidas de la vista. Asociaciones
+entre variables y subojbetivos son representadas en las llamadas TODOemphMiniCon
+Descriptions (MCDs) XREF29W.
+
+Finalmente, el algoritmo McdSat es capaz de identificar las reescrituras de una
+consulta traduciendo el problema de reescritura al problema de enumeración de
+modelos de una teoría proposicional cuyos modelos están en correspondencia con
+las reescrituras de la consulta. El algoritmo explota las propiedades de los
+d-DNNF para enumerar eficientemente los modelos de la teoría. El algoritmo
+McdSat ha demostrado escalar mejor que el algoritmo MiniCon sobre un número
+grande de experimentos donde frecuentemente muestra mejoras de rendimiento de
+varios órdenes de magnitud. Sin embargo, el algoritmo McdSat no fue diseñado
+para problemas de reescritura que involucren constantes explícitas, ni para
+computar las mejores reescrituras respecto a una función de utilidad o modelo de
+costo dado. En este trabajo se propone una codificación extendida que supera
+estas limitaciones y se aplica la codificación al problema de instanciación de
+flujos de trabajo.
+
 \end{document}
