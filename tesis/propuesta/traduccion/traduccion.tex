@@ -319,4 +319,47 @@ costo dado. En este trabajo se propone una codificación extendida que supera
 estas limitaciones y se aplica la codificación al problema de instanciación de
 flujos de trabajo.
 
+\subsection{Compilación del conocimiento}
+TODO Fig1
+
+Compilación del conocimiento es el área en inteligencia artificial que se ocupa
+del problema de traducir teorías lógicas en fragmentos apropiados que hagan
+tratables ciertas operaciones deseadas XREF11W. Diferentes lenguajes de
+compilación han sido definidos. Por ejemplo están los TODOemphtodoesto Ordered
+Binary Decision Diagrams (OBDDs) XREF10W, Negation Normal Form (NNF) XREF5W, y
+Decomposable Negation Normal Form (DNNF) XREF16W. En este trabajo se usan las
+propiedades de los DNNFs determinísticos (d-DNNF) XREF14W para proveer una
+solución eficiente y escalable al problema de selección de serviccios.
+
+Una teoría en Negation Normal Form es construida desde literales usando sólo
+conjunciones y disjunciones XREF5W, y puede ser representada como un grafo
+acíclico dirigido en que las hojas son etiquetadas con literales y los nodos
+internos con $TODOand$ y $TODOor$; ver ejemplo en la figura  1TODOLABELREF. Este
+fragmento es universal, lo que significa que para cada fórmula lógica hay una
+equivalente en formato NNF. Se dice que un NNF es descomponible (DNNF) XREF14W
+si para cada conjunción $TODOformula$, sus variables son disjuntos por pares; es
+decir, $TODO formula vars y vars$ para $i TODOnoigual j$. Un DNNF soporta un
+número de operaciones en tiempo polinomial en el tamaño de su GAD. Por ejemplo,
+podemos probar si un DNNF es satisfactible haciendo una simple pasada de abajo
+hacia arriba sobre su GAD en tiempo linear. Se dice que un DNNF es
+determinístico (d-DNNF) XREF14W si para cada disjunción $TODOformula$, los
+disjuntos sob lógicamente contradictorios por pares, es decir, $TODO formula
+false idistintoj$. El NNF en la figura 1TODOLABELREF, por ejemplo, es
+decomposableTODOemph y determinístico. Un d-DNNF soporta conteo de modelos en
+tiempo polinomial en el tamaño de su GAD, y enumeración de modelos en tiempo
+polinomial en el tamaño de la salida. Además, dada una función de puntuación de
+literales $r$, se puede computar la puntuación del mejor modelo en tiempo
+polinomial para DNNFs XREF17W.
+
+Los fragmentos DNNF y d-DNNF son universales pero traducir una teoría CNF a
+formrato DNNF tiene costo exponencial en el peor caso. Esta traducción se
+llama compilación en este campo. Hay un compilador públicamente disponible,
+llamado c2d TODOfootnote que realiza este proceso de compilación y que hace uso
+de técnicas de SAT modernas como backtracking dirigido por conflictos,
+aprendizaje de cláusulas y caching XREF15W. Este compilador entra en el peor
+caso en espacio exponencial en un parámetro llamado el ancho del árbol de
+descomposición que está relacionado a la TODO"conectividad" de la teoría CNF.
+Sin embargo, en nuestros experimentos, las teorías CNF que son compiladas son de
+ancho pequeño.
+
 \end{document}
