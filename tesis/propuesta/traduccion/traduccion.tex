@@ -124,5 +124,152 @@ lineal. El valor de la raíz es la puntuación del mejor modelo XREF17W.
 
 En este trabajo, se explotan las propiedades de los d-DNNF construyendo una
 teoría lógica cuyos modelos codifican las instanciaciones del flujo de trabajo
+y cuyos mejores modelos codifican las instanciaciones óptimas (mejores). Así, la
+búsqueda combinatoria se reduce a la computación de un mejor modelo de una
+teoría lógica que puede ser realizada eficientemente una vez que la teoría sea
+transformada en formato d-DNNF.
+
+Esta propuesta contiene seis secciones más. La próxima sección ilustra y motiva
+WIP con un ejemplo simple pero típico. La sección 3 resume el trabajo existente
+relacionado en tres áreas de selección de servicios, reescritura de consultas y
+compilación del conocimiento. Entonces, las secciones 4 y 5 describen la
+arquitectura del sistema y reportan los resultados empíricos obtenidos hasta
+ahora sobre distintos problemas de prueba respectivamente. La sección 6 presenta
+una descripción formal de la aproximación propuesta junto con un análisis. La
+propuesta concluye con una discusión final en la sección 7.
+
+\section{Ejemplo motivante}
+
+Considere un sistema simple de información de vuelos que contiene información
+sobre vuelos entre ciudades e información sobre qué ciudades están en los
+Estados Unidos. Un sistema así puede ser descrito usando LAV con los dos servicios
+abstractos $flight$ y $uscity$. El primero relaciona dos ciudades $x$ e $y$ si
+hay un vuelo directo entre ellas, y el segundo dice si $x$ es una ciudad de
+E.E.U.U.  o no. Para los servicios concretos, supongamos que las fuentes de
+datos disponibles en Internet contienen la siguiente información:
+
+\begin{itemize}
+TODO
+-national
+\end{itemize}
+
+Adicionalmente, los servicios concretos se describen con los siguientes
+servicios abstractos:
+
+\begin{itemize}
+TODO
+-national
+\end{itemize}
+
+Ahora supongamos que un usuario está interesado en construir un flujo de trabajo
+capaz de recuperar los vuelos ida y vuelta con una parada hacia cualquier ciudad
+en el mundo, tales que los vuelos puedan detenerse en cualquier ciudad.
+
+$$
+W(x,w,y,z)
+$$
+
+La siguiente consulta conjuntiva representa el flujo de trabajo que define esta
+solicitud en términos de servicios abstractos. El flujo de trabajo es definido
+de manera que todo lo relacionado sobre el ligamiento de parámetros de
+entrada/salida es resuelto. Así, cualquier instanciación de los servicios
+abstractos en términos de los servicios concretos es una implementación válida
+del flujo de trabajo. Las implementaciones corresponden a composiciones de
+ervicios concretos en las cuales un servicio concreto puede implementar uno o
+más servicios abstractos del flujo, pero cada servicio abstracto puede ser
+implementado por exactamente un servicio concreto. Por ejemplo, la siguiente
+composición corresponde a una de estas implementaciones.
+
+$$
+I(x
+$$
+
+Sin embargo, las siguientes dos composiciones no son válidas.
+
+$$
+I'
+I''
+$$
+
+La primera composición no es válida porque asocia la variable del flujo $y$ a
+las constantes PA y NY que denotan ciudades diferentes. En la otra mano, $I''$
+no lo implementa porque el servicio concreto $ones-stop$ no recibe como entrada
+o produce como salida la ciudad intermedia donde el vuelo se detiene y entonces
+no es posible asegurarse de que esa ciudad esté asociada a la ciudad $w$ que es
+retornada por el flujo de trabajo.
+
+Estos ejemplos muestran que las instanciaciones correctas de un flujo deben
+manejar constantes de manera que ods constantes distintas no sean asociadas
+entre sí de manera directa o indirectamente vía transitividad, y que todos los
+atributos que aprezcan en un TODOemphjoin o en la salida sean producidos por los
+servicios concretos seleccionados.
+
+Los parámetros QoS son modelados anotando los servicios concretos con utilidades
+que caracterizan su comportamiento que luego son agregados durante la
+instanciación. Así, como se mencionó previamente, la mejor instanciación es la
+que minimiza (o maximiza) la agregación de utilidades.
+
+\emph{Trabajo Relacionado}
+
+En esta sección se resumen las aproximaciones existentes que proveen soluciones
+a los problemas de selección de servicios y reescritura de consultas y se
+discute el trabajo relacionado en el área de inteligencia artificial llamado
+compilación del conocimiento.
+
+\subsection{Selección de Servicios}
+
+El problema de seleccionar los servicios que implementan un flujo de trabajo
+abstracto y cumplen mejor los criterios basados en QoS es conocido como el
+problema de selección o composición de servicios consciente de QoS, que ha sido
+demostrado ser NP-difícil XREF34W. Este es un problema de optimización
+combinatoria y varias heurísticas han sido propuestas para conseguir una
+solución relativamente buena en un período razonablemente corto de tiempo.
+
+Rahmani et al. XREF31W presenta una heurística basada en métrica de distancia
+que guía un algoritmo de búsqueda hacia atrás; esta métrica induce un orden de
+los servicios en una manera en que los nodos vertedero tienen baja probabilidad
+de ser visitados. En una serie de artículos, Berardi y otros XREF7-9W describen
+servicios y flujos de trabajo en términos de máquinas de estados finitos
+determinísticas que son codificadas usando teorías de Lógica de Descripción
+cuyos modelos corresponden a soluciones del problema. Aunque se podrían explotar
+métodos para formalismos de Lógicas de Descripción, no han sido reportados la
+escalabilidad o el rendimiento de la solución propuesta.
+
+Ko et al. XREF25W propone una aproximación basada en restriccciones que codifica
+los valores permisibles no funcionales como un conjunto de restricciones cuya
+violación debe ser minimizada; para recorrer el espacio de soluciones
+posiblemente óptima, se implementa un algoritmo híbrido que combina las
+metaheurísticas TODOemphtabusearch y TODOemphsimulatedannealing. Los resultados
+experimentales muestran que la solución propuesta es capaz de escalar a un
+número grande de servicios y procesos abstractos. Cardellini et al. XREF12W
+codifican una parte del problema de composición de servicios consciente de QoS
+como un problema de programación lineal XREF12W. Por otra parte, Wada et al.
+XREF34W trata el problema como uno de optimización con múltiples objetivos donde
+los diferentes parámetros de QoS son considerados igualmente importanes en vez
+de ser agregados en una función. Luego se propone un algoritmo basado en
+algoritmos genéticos que identifica un conjunto de composiciones de servicios
+no dominadas que mejor encajan en los requerimientos QoS.
+
+Alrifai y Risse XREF2W proponen una solución de doble cara que usa un
+algoritmo de programación entera híbrido para obtener la descomposición de QoS
+globales en restricciones locales y luego selecciona los servicios que mejor
+cumplen las restricciones locales.
+
+Recientemente, dos aproximaciones basadas en planificación han sido propuestas.
+Kuter y Golbek XREF26W extienden el algoritmo de planificación SHOP2 para
+seleccionar la composición confiable de servicios que implementan un modelo de
+procesos OWL-S dado, mientras que Sohrabi y McIlraith XREF33W proponen una
+solución basada en planificación HTN donde las métricas de preferencia del
+usario y regulaciones de dominio son utilizadas para guíar el planificador hacia
+el espacio de composiciones relevantes. Finalmente, Lécué XREF27W propone un
+algoritmo basado en genética para identificar la composición de servicios que
+mejor cumple con los criterios de calidad para un conjunto de parámetros QoS.
+
+Aunque estas soluciones son capaces de resolver el problema de optimización y
+escalar a un número de procesos abstractos, ninguno de ellos está ajustado para
+describir semánticamente los servicios en términos de procesos abstractos, ni
+para usar estas descripciones para identificar los servicios que implementan un
+flujo de trabajo dado o que mejor cumplen los criterios no funcionales del
+usuario.
 
 \end{document}
