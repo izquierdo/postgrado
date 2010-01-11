@@ -40,4 +40,89 @@ instancias grandes como muestran resultados experimentales ya realizados, sino
 que también es correcta y completa dado que, estándo basada en la lógica, es
 amigable al análisis formal.
 
+\section{Introducción}
+
+Bajo la sombra de la Web Semántica, y soportado por Arquitecturas Orientadas a
+Servicios (SOA), el número de fuentes de datos y servicios Web ha explotado en
+los últimos años. Por ejemplo, la colección de bases de datos de biología
+molecular actualmente contiene 1170 bases de datos XREF22W, un número que es
+mayor que el del último año XREF21W por 95, y que el de hace dos años por 110
+XREF20W; las herramientas y servicios, así como el número de instancias
+publicados por estos recursos, siguen una progresión similar XREF6W. Gracias a
+este tesoro de datos, la tendencia de los usuarios es hacia depender cada vez
+más en métodos automáticos para manejarlos tales como recuperación de datos de
+fuentes públicas y análisis utilizando herramientas o servicios Web compuestos
+en flujos de trabajo complejos.
+
+La SOA típica consiste de dos capas. La capa concreta que está hecha de
+servicios concretos cuyas funcionalidades son descritas en términos de pre- y
+post-condiciones y propiedades no funcionales en términos de parámetros QoS, y
+la capa abstracta compuesta de aplicaciones de software cuyas funcionalidades
+son descritas en términos de flujos de trabajo abstractos y propiedades no
+funcionales en términos de restricciones de QoS. La ejecución de un flujo de
+trabajo abstracto involucra la instanciación de los servicios abstractos en
+servicios concretos que cumplen con los requerimientos funcionales y no
+funcionales. Este proceso de instanciación puede ser visto como una búsqueda de
+una instanciación objetivo en el espacio combinatorio de todas las
+instanciaciones válidas. Así, uno está interesado en técnicas eficientes para
+realizar esta búsqueda que sean capaces de escalar a medida que el número de
+servicios concretos o la complejidad del flujo de trabajo aumenta. Se llama al
+problema de instanciar un flujo de trabajo dado con servicios concretos, de un
+conjunto dado de servicios concretos, de manera que ciertas demandas de QoS sean
+cumplidas, el Workflow Instantiation Problem (WIP, "Problema de Instanciacion de
+Flujos de Trabajo").
+
+En este trabajo se considera una versión restringida de WIP que adopta la
+aproximación Local-As-View (LAV) XREF28W. En LAV, todos los elementos de un
+problema son especificados con un lenguaje común basado en servicios abstractos
+tal que los servicios concretos se describen como vistas de servicios
+abstractos, la calidad de una instanciación como una función de utilidad global
+que combina los diferentes parámetros QoS, y el flujo de trabajo abstracto como
+una consulta conjuntvia sobre los servicios abstractos; esta representación es
+similar a la que es generada de manera semiautomática para el sistema DEIMOS
+XREF3W. En esta versión de WIP, las reglas que definen flujos de trabajo
+(consultas conjuntivas) y servicios concretos (vistas) son creados de manera que
+todas las restricciones funcionales sobre pre- y post-condiciones de los
+servicios y sus combinaciones sean satisfechas, y las medidas de QoS son
+representadas anotando cada descripción de servicio concreto con un número real
+que representa la utilidad QoS global del servicio.
+
+Bajo estas suposiciones, WIP puede ser convertido en el bien conocido Problema
+de Reescritura de Consultas (QRP) para LAV que es central a los sistemas de
+integración XREF23W. QRP consiste de una consulta conjuntiva que debe ser
+respondida en términos de vistas donde la consulta y las vistas son descritas
+usando LAV con relaciones abstractas. Este problema es importante en el contexto
+de integración de datos XREF13X24W, y optimización de consultas y mantenimiento
+de datos XREF1,28W, y varias aproximaciones que escalan a un número grande de
+vistas han sido definidas XREF4,18,19,28,29W.
+
+La aproximación recente de Arvelo et al. XREF4W está basada en la enumeración
+eficiente de modelos de una teoría lógica proposicional. Dado unQRP, una teoría
+lógica es construída de manera que cada modelo de la teoría codifica una
+reescritura válida, y así todas las reescrituras son obtenidas enumerando los
+modelos de la teoría. Esta enumeración puede ser realizada eficientemente si la
+teoría lógica está en cierta forma normal llamada la forma normal de negación
+determinística y descomponible (d-DNNF por sus siglas en inglés) XREF14W. Así,
+la aproximación consiste en transformar (llamado compilar en el campo de
+compilación del conocimiento) la teoría lógica en el formato d-DNNF para
+enumerar sus modelos eficientemente.
+
+Pero las teorías d-DNNF no sólo soportan la enumeración eficiente de sus
+modelos, sino también otras operaciones. Entre ellas se encuentra la enumeración
+de los modelos con mejor puntuación. Dada una función de puntuación de literales
+$r(l)$ que asigne puntuaciones a cada literal $l$, se define la puntuación
+$r(w)$ de un modelo $w$ como la suma de las puntuaciones de los literales
+activados por $w$ (es decir, $r(w) = suma...$, y se dice que $w$ es un modelo
+mejor puntuado si no hay modelo $wpriemrie$ tal que $r(w)...$.
+
+Dada una teoría en d-DNNF, se computa la puntuación de los mejores modelos, y
+los mejores modelos, en tiempo lineal en el tamaño del d-DNNF. Este cómputo
+transforma el GAD del d-DNNF en un circuito aritmético reemplazando los nodos
+AND con '+' y los nodos OR con 'min'. La función de puntuación de literales
+asigna valores a las hojas del circuito que son propagados a la raíz en tiempo
+lineal. El valor de la raíz es la puntuación del mejor modelo XREF17W.
+
+En este trabajo, se explotan las propiedades de los d-DNNF construyendo una
+teoría lógica cuyos modelos codifican las instanciaciones del flujo de trabajo
+
 \end{document}
