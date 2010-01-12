@@ -1,41 +1,55 @@
 \documentclass{article}
 
-\usepackage[spanish,activeacute]{babel}
-\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage[boxed]{algorithm2e}
+\usepackage{amssymb}
+\usepackage[pdftex]{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{enumerate}
+\DeclareGraphicsExtensions{.jpg, .png, .mps, .bmp, .pdf}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\newtheorem{Definition}{Definition} 
+\newtheorem{Example}{Example} 
+\newtheorem{Theorem}{Theorem} 
+\newtheorem{Proof}{Proof} 
+\newcommand{\denselist}{\topsep 0pt \itemsep -4pt}
+\newcommand{\tup}[1]{\langle #1 \rangle}
+\newcommand{\vvec}[1]{\mathbf{#1}}
+\newcommand{\join}{\bowtie}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\body}{{body}}
+\newcommand{\head}{{head}}
+\newcommand{\qrule}{:\!\!-}
+\newcommand{\arc}{\text{arc}}
+\newcommand{\Theory}[1]{T(#1)}
+\newcommand{\mcdsat}{\textsc{McdSat}}
+\newcommand{\minicon}{{MiniCon}}
+\newcommand{\Omit}[1]{}
+\newcommand{\citeX}[1]{\citeauthor{#1}~\citeyear{#1}}
+
+\newcommand{\comment}[1]{}
+
+\newcommand{\mcdsatc}{{\it MCDSat}$^c$}
 
 \begin{document}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PORTADA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{portada}
 
-\thispagestyle{empty}
+\tableofcontents
+\newpage
 
-\textsf{
-Universidad Simón Bolívar \\
-Coordinación de Ciencias de la Computación \\
-Maestría en Ciencias de la Computación \\
-}
+\input{planteamiento}
+\input{justificacion}
+\input{objetivos}
+\input{metodologia}
+\input{cronograma}
 
-\begin{center}
-
-{\large \bf \textsf{Título tentativo del trabajo (max 100. chars)}}
-
-\end{center}
-
-\vspace{5.0cm}
-
-% Author(s)
-\textsf{
-Por \\
-pepe \\
-}
-
-\vspace{\fill}
-
-\vspace{\fill}
-
-\vspace{1.0cm}
-\textsf{Sartenejas, Abril de 2008}
+\addcontentsline{toc}{section}{Referencias} 
+\bibliographystyle{abbrv}
+\bibliography{ref}
 
 \end{document}
