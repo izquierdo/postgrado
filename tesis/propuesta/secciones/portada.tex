@@ -10,38 +10,42 @@ Maestría en Ciencias de la Computación \\
 \vspace{0.8cm}
 
 \begin{center}
-{\large \bf \textsf{Selección de Servicios Web De Máxima Utilidad Usando Circuitos}}
+{\large \bf \textsf{Instanciación Óptima de Flujos de Trabajo Abstractos Usando Lógica y Circuitos}}
 \end{center}
 
 \vspace{0.2cm}
 
 \begin{abstract}
-En las arquitecturas orientadas a servicios (SOA), los servicios concretos se
-describen en términos de parámetros de funcionalidad y calidad de servicio,
-mientras que las aplicaciones de \emph{software} se especifican como flujos de
-trabajo de servicios abstractos y criterios no-funcionales que establecen la
-funcionalidad deseada y la calidad esperada respectivamente. En tiempo de
-ejecución de un flujo de trabajo, los servicios abstractos se reescriben con los
-servicios concretos que cumplen con las restricciones funcionales y no
-funcionales del flujo de trabajo. Dado que la selección de los servicios es
-hecha al momento y el espacio de servicios concretos puede ser muy grande, se
-requiere eficiencia y escalabilidad. En este trabajo se propone la
-infraestructura \mcdsatc para resolver eficientemente el problema de
-selección de servicios en presencia de un número grande de servicios concretos.
-En primer lugar se utiliza la aproximación \emph{Local As View} para describir
-la funcionalidad de los servicios concretos en términos de vistas de servicios
-abstractos, la calidad como una función de utilidad general que combina los
-distintos valores de calidad que describen cada servicio, y los flujos de
-trabajo como consultas conjuntivas sobre servicios abstractos. Basándose en esta
-representación, se modela el problema de selección de servicios como un problema
-conocido en el área de integración de sistemas conocido como reescritura de
-consultas usando vistas. Se codifica el problema de selección de servicios como
-una teoría proposicional cuyos modelos corresponden a la composición de los
-servicios que implementan el flujo abstracto; se explotan relaciones conocidas
-entre teorías d-DNNF y circuitos aritméticos para proveer una solución eficiente
-y escalable. Se reporta sobre el rendimiento de la aproximación propuesta y se
-observa que \mcdsatc escala a instancias grandes del problema de
-selección de servicios.
+La Arquitectura Orientada a Servicios típica consiste de dos capas principales.
+La capa concreta con servicios concretos cuyas funcionalidades son descritas en
+términos de pre- y post-condiciones y propiedades no funcionales en términos de
+parámetros de calidad de servicio (Quality Of Service, QoS), y la capa abstracta
+con aplicaciones de software cuyas funcionalidades son descritas en términos de
+flujos de trabajo abstractos y propiedades no funcionales en términos de
+restricciones sobre QoS. Durante la ejecución de un flujo de trabajo, los
+servicios abstractos son instanciados en servicios concretos que cumplen con los
+requerimientos funcionales y no funcionales. Esta instanciación, que debe ser
+hecha en el momento, consiste de una búsqueda en un espacio de posibilidades
+combinatorio. En este trabajo se propone una infraestructura para resolver
+eficientemente el problema de instanciación que está firmemente basada en
+lógica. La infraestructura adopta la aproximación Local-As-View en la cual la
+funcionalidad de servicios concretos se describe usando vistas de servicios
+abstractos, la calidad de una instanciación como una función de utilidad global
+que combina los diferentes parámetros QoS, y los flujos de trabajo abstractos
+como consultas conjuntivas sobre servicios abstractos. Usando esta
+representación, el problema de instanciación de flujos de trabajo se convierte
+en un problema de reescritura de consultas, del área de sistemas de integración.
+Entonces, construyendo sobre trabajo relacionado, se idea una codificación del
+problema de instanciación de flujos de trabajo como una teoría lógica cuyos
+modelos están en correspondencia con las instanciaciones del flujo de trabajo, y
+los modelos mejor puntuados en correspondencia con instanciaciones óptimas del
+flujo de trabajo. Así, explotando propiedades conocidas de teorías lógicas en
+formato d-DNNF, se provee una solución eficiente y escalable al problema de
+instanciación de flujos de trabajo. Esta aproximación no sólo escala a
+instancias grandes como muestran resultados experimentales ya realizados, sino
+que también es correcta y completa dado que, estándo basada en la lógica, es
+amigable al análisis formal.
+
 \end{abstract}
 
 \vspace{\fill}

@@ -1,182 +1,93 @@
 \section{Planteamiento del problema}
 
-Bajo la sombra de la Web Semántica y con el apoyo de arquitecturas orientadas a
-servicios, el número de fuentes de datos y servicios Web ha explotado en los
-últimos años. Por ejemplo, actualmente la colección de bases de datos de
-biología molecular incluye 1.170 bases de datos~\cite{Galperin09}, lo cual es 95
-más que el año pasado~\cite{Galperin2008} y 110 más que hace dos
-años~\cite{Galperin2007}. Tanto las herramientas y servicios como el número de
-instancias publicadas por estos recursos siguen una progresión
-similar~\cite{Benson07}. Gracias a este tesoro de datos, los usuarios se apoyan
-más en varias tareas digitales como obtención de datos de fuentes públicas y
-análisis de datos con herramientas o servicios Web organizados en flujos de
-trabajo complejos.
+Bajo la sombra de la Web Semántica, y con el soporte de las Arquitecturas Orientadas a
+Servicios (SOA), el número de fuentes de datos y servicios Web ha explotado en
+los últimos años. Por ejemplo, la colección de bases de datos de biología
+molecular actualmente contiene 1.170 bases de datos~\cite{Galperin09}, un número
+que es
+mayor que el del último año por 95~\cite{Galperin2008}, y que el de hace dos
+años por 110~\cite{Galperin2007};
+las herramientas y servicios, así como el número de instancias
+publicados por estos recursos, siguen una progresión similar~\cite{Benson07}.
+Gracias a
+este tesoro de datos, la tendencia de los usuarios es hacia depender cada vez
+más de métodos automáticos para manejarlos tales como recuperación de datos de
+fuentes públicas y análisis utilizando herramientas o servicios Web compuestos
+en flujos de trabajo complejos.
 
-Para diseñar una aplicación, los usuarios frecuentemente especifican la
-funcionalidad en términos de un flujo de trabajo de servicios abstractos,
-mientras que la calidad deseada se define restringiendo los valores de los
-parámetros QoS (calidad de servicio) que describen los servicios concretos
-disponibles. Para evaluar el flujo propuesto, se deben instanciar los servicios
-abstractos con servicios concretos de manera que se satisfagan las restricciones
-sobre los
-parámetros QoS. Sin embargo, el rendimiento de esta tarea es impactado por el
-número de fuentes disponibles. Se requieren técnicas que permitan escalar
-eficientemente a un número grande de servicios.
+La SOA típica consiste de dos capas. La capa concreta que está hecha de
+servicios concretos cuyas funcionalidades son descritas en términos de pre- y
+post-condiciones y propiedades no funcionales en términos de parámetros de
+calidad de servicio (QoS), y
+la capa abstracta compuesta de aplicaciones de software cuyas funcionalidades
+son descritas en términos de flujos de trabajo abstractos y propiedades no
+funcionales en términos de restricciones de QoS. La ejecución de un flujo de
+trabajo abstracto involucra la instanciación de los servicios abstractos en
+servicios concretos que cumplan con los requerimientos funcionales y no
+funcionales. Este proceso de instanciación puede ser visto como una búsqueda de
+una instanciación objetivo en el espacio combinatorio de todas las
+instanciaciones válidas. Entonces se está interesado en técnicas eficientes para
+realizar esta búsqueda que sean capaces de escalar a medida que el número de
+servicios concretos o la complejidad del flujo de trabajo aumenta. Se llama al
+problema de instanciar un flujo de trabajo dado con servicios concretos de un
+conjunto de servicios concretos dado, de manera que ciertas demandas de QoS sean
+cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP).
 
-En este trabajo se intenta proponer una solución a este problema y proveer
-técnicas que recorran eficientemente el espacio de servicios disponibles y
-seleccionen combinaciones que cumplan con los requerimientos funcionales y
-no-funcionales que describen una aplicación diseñada. A la solución propuesta se
-le da el nombre de \mcdsatc.
+En este trabajo se considera una versión restringida de WIP que adopta la
+aproximación Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
+problema son especificados con un lenguaje común basado en servicios abstractos
+tal que los servicios concretos se describen como vistas de servicios
+abstractos, la calidad de una instanciación como una función de utilidad global
+que combina los diferentes parámetros QoS, y el flujo de trabajo abstracto como
+una consulta conjuntiva sobre los servicios abstractos; esta representación es
+similar a la que es generada de manera semiautomática para el sistema DEIMOS
+\cite{AmbiteISWC09}. En esta versión de WIP, las reglas que definen flujos de trabajo
+(consultas conjuntivas) y servicios concretos (vistas) son creados de manera que
+todas las restricciones funcionales sobre pre- y post-condiciones de los
+servicios y sus combinaciones sean satisfechas, y las medidas de QoS son
+representadas anotando cada descripción de servicio concreto con un número real
+que representa la utilidad QoS global del servicio.
 
-En \mcdsatc, las funcionalidades de servicios concretos se describen
-como vistas sobre servicios abstractos y los flujos de trabajo se representan
-como consultas conjuntivas sobre servicios abstractos; esta representación de
-los servicios es similar a la generada de manera semiautomática para el
-sistema {\cal DEIMOS}~\cite{AmbiteISWC09}. Adicionalmente, las reglas
-que definen flujos de trabajo y servicios concretos en el catálogo de
-\mcdsatc son creadas de manera que las restricciones de entrada y salida
-de los servicios abstractos combinados sean satisfechas. Para representar las
-medidas de QoS, cada descripción de servicio concreto es anotada con un número
-real que representa un valor general para las medidas de QoS del servicio en
-particular. Finalmente, \mcdsatc modela el problema de selección de
-servicios web como el problema de reescritura de consultas usando vistas
-\cite{halevy:survey}. Este problema es importante en el contexto de integración
-de datos \cite{Chen05,JaudoinPRST05} y de optimización de consultas y
-mantenimiento de datos \cite{AfratiLU07,levy:bucket} y se han definido varias
-aproximaciones para escalar eficientemente a un número grande de
-vistas~\cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
-En este trabajo se propone la infraestructura \mcdsatc que extiende la
-aproximación propuesta en  ~\cite{arvelo:aaai06} con la capacidad de trabajar
-con constantes y de identificar la composición de servicios que maximice una
-función de utilidad dada.
+Bajo estas suposiciones, WIP puede ser convertido en el bien conocido Problema
+de Reescritura de Consultas (QRP) para LAV que es central a los sistemas de
+integración \cite{halevy:survey}. QRP consiste de una consulta conjuntiva que debe ser
+respondida en términos de vistas donde la consulta y las vistas son descritas
+usando LAV con relaciones abstractas. Este problema es importante en el contexto
+de integración de datos \cite{Chen05,JaudoinPRST05}, y optimización de consultas y mantenimiento
+de datos \cite{AfratiLU07,levy:bucket}, y varias aproximaciones que escalan a un número grande de
+vistas han sido definidas \cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
 
-\mcdsatc  traduce una instancia del problema de selección de servicios
-en el problema de enumerar los modelos de una teoría proposicional que codifica
-información sobre el flujo de trabajo, los servicios concretos y las condiciones
-que deben ser satisfechas para generar una composición que maximice la función
-de utilidad. Esta teoría se representa como una fórmula CNF que es compilada a
-su representación d-DNNF, a partir de la cual los modelos que maximicen la
-función global de utilidad se obtienen en tiempo lineal usando técnicas modernas
-de SAT~\cite{darwiche:dnnf}. Se estudia empíricamente la calidad de \mcdsatc
-sobre una variedad de \emph{benchmarks} y se observa que la técnica
-propuesta provee una solución eficiente al problema de selección de servicios
-que es capaz de escalar a flujos de trabajo grandes así como a números de vistas
-grandes.
+La aproximación recente de Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
+eficiente de modelos de una teoría lógica proposicional. Dado un QRP, una teoría
+lógica es construída de manera que cada modelo de la teoría codifica una
+reescritura válida, y así todas las reescrituras son obtenidas enumerando los
+modelos de la teoría. Esta enumeración puede ser realizada eficientemente si la
+teoría lógica está en cierta forma normal llamada la forma normal de negación
+determinística y descomponible (d-DNNF) \cite{darwiche:d-dnnfs}. Así,
+la aproximación consiste en transformar (llamado compilar en el campo de
+compilación del conocimiento) la teoría lógica en el formato d-DNNF para
+enumerar sus modelos eficientemente.
 
-\subsection{Ejemplo}
+Pero las teorías d-DNNF no sólo soportan la enumeración eficiente de sus
+modelos, sino también otras operaciones. Entre ellas se encuentra la enumeración
+de los modelos con mejor puntuación. Dada una función de puntuación de literales
+$r(\ell)$ que asigne puntuaciones a cada literal $\ell$, se define la puntuación
+$r(\omega)$ de un modelo $\omega$ como la suma de las puntuaciones de los literales
+activados por $\omega$ (es decir,
+$r(\omega)\doteq\sum_{\omega\vDash\ell}r(\ell)$), y se dice que $\omega$ es un modelo
+mejor puntuado si no hay modelo $\omega'$ tal que $r(\omega')<r(\omega)$.
 
-Consideremos los servicios abstractos y concretos en el
-cuadro~\ref{table:services} que representan aplicaciones en el dominio de
-vuelos.
+Dada una teoría en d-DNNF, se computa la puntuación de los mejores modelos, y
+los mejores modelos, en tiempo lineal en el tamaño del d-DNNF. Este cómputo
+transforma el GAD del d-DNNF en un circuito aritmético reemplazando los nodos
+AND con `+' y los nodos OR con `min'. La función de puntuación de literales
+asigna valores a las hojas del circuito que son propagados a la raíz en tiempo
+lineal. El valor de la raíz es la puntuación del mejor modelo \cite{darwiche:weighted}.
 
-\begin{table}
-\begin{tabular}{|l|p{8.00cm}|}
-\hline
-Servicio Abstracto & Descripción \\
-\hline
-$vuelo(x1,x2)$ & relaciona las ciudades $x1$ y $x2$ si hay un vuelo entre ellas\\
-\hline
-$ciudadEU(x1)$ &  determina si una ciudad $x1$ es una ciudad de Estados Unidos\\
-\hline \hline
-Servicio Concreto & Descripción \\
-\hline
-$nacional(x1,y1)$&  retorna dos ciudades de Estados Unidos que están conectadas
-por vuelos directos \\
-\hline
-$ida(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos directos
-de ida\\
-\hline
-$unaescala(x1,y1)$ & retorna dos ciudades que están conectadas por vuelos con una
-escala\\
-\hline
-$vueloHaciaCCS(x1, ``CCS")$ & retorna una ciudad que está conectada a Caracas por
-un vuelo directo\\
- \hline
-$unaescalaHaciaCCS(x1,y1)$ & retorna dos ciudades $x1$ y $y1$ tales que hay un vuelo con
-una escala desde la ciudad $x1$ hasta Caracas con parada en la ciudad $y1$\\
-\hline
-$desdeWAS(``WAS",y1)$ &  retorna una ciudad $y1$ a la cual llegan vuelos desde
-Washington.\\
- \hline
-\end{tabular}
-\label{table:services}
-\caption{Servicios Abstractos y Concretos}
-\end{table}
+En este trabajo se propone explotar las propiedades de los d-DNNF construyendo una
+teoría lógica cuyos modelos codifican las instanciaciones del flujo de trabajo
+y cuyos mejores modelos codifican las instanciaciones óptimas (mejores). Así, la
+búsqueda combinatoria se reduce a la computación de un mejor modelo de una
+teoría lógica que puede ser realizada eficientemente una vez que la teoría sea
+transformada al formato d-DNNF.
 
-Usando la aproximación \emph{Local As View} (LAV) ~\cite{AmbiteISWC09}, los
-servicios concretos en el cuadro \ref{table:services} son descritos
-semánticamente como vistas sobre los servicios abstractos {\it vuelo} y
-{\it ciudadEU} como sigue:   
-
-\begin{alignat*}{1}
-nacional(x1,y1)\ &\qrule\ vuelo(x1,y1),\,  ciudadEU(x1),\,  ciudadEU(y1)\,. \\
-ida(x2,y2)\ &\qrule\ vuelo(x2,y2)\,. \\
-unaescala(x3,z3)\ &\qrule\ vuelo(x3,y3),\, vuelo(y3,z3)\,. \\
-vueloHaciaCCS(x2,``CCS")\ &\qrule\ vuelo(x2,``CCS")\,. \\
-unaescalaHaciaCCS(x3,y3)\ &\qrule\ vuelo(x3,y3),\, vuelo(y3,``CCS")\,. \\
-desdeWAS(``WAS",y3)\ &\qrule\ vuelo(``WAS",x3)\,. \\
-\end{alignat*}
-
-Ahora supongamos que un usuario está interesado en implementar un flujo de
-trabajo capaz de obtener los vuelos ida y vuelta con una escala de ciudades de
-Estados Unidos a cualquier ciudad en el mundo donde las escalas pueden ser
-hechas en cualquier ciudad. Consideremos la siguiente consulta conjuntiva que
-representa el flujo de trabajo que define esta solicitud en términos de
-servicios abstractos. Este flujo fue definido de manera que los parámetros de
-entrada de cada servicio abstracto están ligados a constantes o a
-atributos proyectados por servicios abstractos previos.
-
-\begin{alignat*}{1}
-w(x,y1,y2,y3)\ &\qrule\ vuelo(x,y1),\, vuelo(y1,y2),\,  vuelo(y2,y3),\,  vuelo(y3,x),\,  \\
-                   \ & ciudadEU(x)\,. \\
-\end{alignat*}
-
-Las implementaciones de este flujo de trabajo corresponden a composiciones de
-servicios concretos donde cada servicio concreto puede implementar un
-subconjunto de los servicios abstractos del flujo de trabajo, pero cada servicio
-abstracto puede ser implementado por exactamente un servicio concreto. La
-siguiente composición de servicios concretos corresponde a una de las XX
-implementaciones del flujo de trabajo.
-
-\begin{alignat*}{1}
-wi1(x,y1,``CCS",y3)\ &\qrule\ nacional(x,y1),\, vueloHaciaCCS(y1,``CCS"),\, ida(``CCS",y3),\,  \\
-\ & nacional(y3,x)\,.  \\
-\end{alignat*}
-
-Sin embargo, nótese que las siguientes composiciones no son válidas:
-
-\begin{alignat*}{1}
-wi2(x,y1,``CCS"y3)\ &\qrule\ nacional(x,y1),\, vueloHaciaCCS(y1,``CCS"),\, \\
-\ & desdeWAS(``WAS",y3),\,  nacional(y3,x)\,. \\
-wi3(x,y1,y2,y3)\ &\qrule\ nacional(x1,y1),\, unaescala(x1,y2),\,  ida(y2,y3),\,  \\
-\ & nacional(y3,x)\,. \\
-\end{alignat*}
-
-La composición {\it wi2} no es válida porque asocia la variable del flujo de
-trabajo {\it y2} a las constantes {\it ``CCS''} y {\it ``WAS''} que denotan
-ciudades
-distintas. Por otra parte, la composición {\it wi3} no implementa el flujo de
-trabajo porque el servicio concreto {\it unaescala} no recibe como entrada o
-produce como salida la ciudad donde el vuelo se detiene (representada por la
-variable {\it y1}); por esto, no es posible garantizar que la ciudad donde el
-vuelo se detiene y la ciudad final obtenida por el servicio {\it nacional} sean
-las mismas.
-
-Para evitar producir implementaciones del flujo de trabajo inválidas, se
-requiere manejar constantes de manera que constantes distintas no sean asociadas
-entre sí directa o indirectamente (por transitividad). Además, todos los
-atributos en la salida del flujo o necesarios para unir otros servicios en el
-flujo de trabajo deben ser producidos por el servicio concreto seleccionado.
-
-Adicionalmente, supongamos que cada servicio concreto está anotado con una
-función de utilidad que agrega los valores de parámetros diferentes de QoS que
-caracterizan el comportamiento del servicio. Entonces, como el espacio de
-composiciones de servicios válidas de un flujo abstracto puede ser muy grande,
-se requiere una técnica capaz de identificar aquellos que maximicen la función
-de utilidad sin tener que enumerar el conjunto completo de composiciones
-válidas. En este trabajo se propone una aproximación proposicional basada en
-lógica que toma provecho del poder de los \emph{SAT solvers} modernos para
-enumerar eficientemente las composiciones de servicios que corresponden a
-implementaciones válidas de un flujo de trabajo dado, así como las composiciones
-que maximizan una función de utilidad dada.
