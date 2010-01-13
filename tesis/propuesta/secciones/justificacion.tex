@@ -91,4 +91,35 @@ que minimiza (o maximiza) la agregación de utilidades.
 
 \subsection{Complejidad del Problema}
 
-Estamos tratando con un problema difícil \cite{lenzerini:dataintegration}
+Estamos tratando con un problema difícil \cite{lenzerini:dataintegration}. 
+El cuadro~\ref{cqcomplexity} ilustra la complejidad de distintos tipos de
+problemas de resolución de consultas basadas en vistas. El caso particular que
+se está tratando en este trabajo es CQ con búsqueda exacta, el cual está en
+coNP.
+
+\begin{table}
+\begin{center}
+  \begin{tabular}{|c||c|c|c|c|c|}
+\hline
+Sound  &  CQ  & CQ$\neq$  & PQ  &Datalog &FOL \\
+\hline
+  CQ  & PTIME &coNP  &PTIME &PTIME  &undec. \\
+ CQ$\neq$  & PTIME &coNP  &PTIME &PTIME  &undec. \\
+  PQ  &  coNP &coNP  & coNP & coNP  &undec. \\
+Datalog &coNP &undec.& coNP &undec. &undec. \\
+ FOL  & undec.&undec.&undec.&undec. &undec. \\
+\hline
+ Exact  & CQ &  CQ$\neq$     &  PQ  &Datalog &FOL \\
+\hline
+  CQ    &coNP &coNP  & coNP & coNP  &undec. \\
+ CQ$\neq$    &coNP &coNP  & coNP & coNP  &undec. \\
+  PQ    &coNP &coNP  & coNP & coNP  &undec. \\
+Datalog&undec.&undec.&undec.&undec. &undec. \\
+ FOL   &undec.&undec.&undec.&undec. &undec. \\
+\hline
+  \end{tabular}
+  \caption{Complejidad de responder consultas basadas en vistas (obtenido de
+\cite{lenzerini:dataintegration})}
+  \label{cqcomplexity}
+\end{center}
+\end{table}
