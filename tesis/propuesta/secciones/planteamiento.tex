@@ -34,7 +34,7 @@ conjunto de servicios concretos dado, de manera que ciertas demandas de QoS sean
 cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP).
 
 En este trabajo se considera una versión restringida de WIP que adopta la
-aproximación Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
+solución Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
 problema son especificados con un lenguaje común basado en servicios abstractos
 tal que los servicios concretos se describen como vistas de servicios
 abstractos, la calidad de una instanciación como una función de utilidad global
@@ -54,17 +54,17 @@ integración \cite{halevy:survey}. QRP consiste de una consulta conjuntiva que d
 respondida en términos de vistas donde la consulta y las vistas son descritas
 usando LAV con relaciones abstractas. Este problema es importante en el contexto
 de integración de datos \cite{Chen05,JaudoinPRST05}, y optimización de consultas y mantenimiento
-de datos \cite{AfratiLU07,levy:bucket}, y varias aproximaciones que escalan a un número grande de
+de datos \cite{AfratiLU07,levy:bucket}, y varias soluciones que escalan a un número grande de
 vistas han sido definidas \cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
 
-La aproximación recente de Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
+La solución recente de Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
 eficiente de modelos de una teoría lógica proposicional. Dado un QRP, una teoría
 lógica es construída de manera que cada modelo de la teoría codifica una
 reescritura válida, y así todas las reescrituras son obtenidas enumerando los
 modelos de la teoría. Esta enumeración puede ser realizada eficientemente si la
 teoría lógica está en cierta forma normal llamada la forma normal de negación
 determinística y descomponible (d-DNNF) \cite{darwiche:d-dnnfs}. Así,
-la aproximación consiste en transformar (llamado compilar en el campo de
+la solución consiste en transformar (llamado compilar en el campo de
 compilación del conocimiento) la teoría lógica en el formato d-DNNF para
 enumerar sus modelos eficientemente.
 
@@ -93,7 +93,7 @@ transformada al formato d-DNNF.
 
 \subsection{Trabajo Relacionado}
 
-En esta sección se resumen las aproximaciones existentes que proveen soluciones
+En esta sección se resumen las soluciones existentes que proveen soluciones
 a los problemas de selección de servicios y reescritura de consultas y se
 discute el trabajo relacionado en el área de inteligencia artificial llamado
 compilación del conocimiento.
@@ -118,7 +118,7 @@ cuyos modelos corresponden a soluciones del problema. Aunque se podrían explota
 métodos para formalismos de Lógicas de Descripción, no han sido reportados la
 escalabilidad o el rendimiento de la solución propuesta.
 
-Ko et al. \cite{myoung08} proponen una aproximación basada en restriccciones que codifica
+Ko et al. \cite{myoung08} proponen una solución basada en restriccciones que codifica
 los valores permisibles no funcionales como un conjunto de restricciones cuya
 violación debe ser minimizada; para recorrer el espacio de soluciones
 posiblemente óptima, se implementa un algoritmo híbrido que combina las
@@ -138,7 +138,7 @@ algoritmo de programación entera híbrido para obtener la descomposición de Qo
 globales en restricciones locales y luego selecciona los servicios que mejor
 cumplen las restricciones locales.
 
-Recientemente, dos aproximaciones basadas en planificación han sido propuestas.
+Recientemente, dos soluciones basadas en planificación han sido propuestas.
 Kuter y Golbeck \cite{kuterG09} extienden el algoritmo de planificación SHOP2 para
 seleccionar la composición confiable de servicios que implementan un modelo de
 procesos OWL-S dado, mientras que Sohrabi y McIlraith \cite{sohrabiM09} proponen una
@@ -302,7 +302,7 @@ existe $\R'$ tal que $\R(E)\subset\R'(E)\subseteq Q(C)$.
 
 \subsubsection{Teorías Lógicas}
 
-Se usa una aproximación similar a la descrita en
+Se usa una solución similar a la descrita en
 \cite{arvelo:aaai06} para codificar el WIP. 
 Se identifican instanciaciones del flujo de trabajo enumerando los modelos de
 una teoría lógica
