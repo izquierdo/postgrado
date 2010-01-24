@@ -10,7 +10,11 @@ class Ui_Main(object):
         Main.resize(602, 402)
 
         # CentralWidget
-        self.CentralWidget = QWidget(Main)
+        self.CentralWidget = QFrame(Main)
+
+        # menubar
+        menubar = Main.menuBar()
+        file = menubar.addMenu('&File')
 
         # top
         self.topSplitter = QSplitter(self.CentralWidget)
@@ -44,7 +48,7 @@ class Ui_Main(object):
 
         # top :: right side :: instance info :: views display label and box
         self.viewsDisplayLabel = QLabel(self.instanceInfo_LayoutWidget)
-        self.instanceInfo_Layout.addWidget(self.viewsDisplayLabel, 1, 0)
+        self.instanceInfo_Layout.addWidget(self.viewsDisplayLabel, 1, 0, QtCore.Qt.AlignTop)
 
         self.viewsDisplayBox = QListWidget(self.instanceInfo_LayoutWidget)
         self.viewsDisplayBox.setObjectName("viewsDisplayBox")
@@ -90,6 +94,9 @@ class Ui_Main(object):
 
         self.dnnfLoadFromFileButton = QPushButton("Load From File")
         self.dnnf_ButtonsLayout.addWidget(self.dnnfLoadFromFileButton)
+
+        self.dnnfUnloadButton = QPushButton("Unload")
+        self.dnnf_ButtonsLayout.addWidget(self.dnnfUnloadButton)
 
         # top :: right side :: solutions :: rewritings
         self.rewritings_Widget = QGroupBox()

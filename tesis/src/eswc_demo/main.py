@@ -26,9 +26,13 @@ class MyForm(QMainWindow):
         viewsDisplayBox = self.ui.CentralWidget.findChild(QListWidget, "viewsDisplayBox")
 
         f = open("views-60-5.txt")
+        lines = [l for l in f]
+        f.close()
 
-        for line in f:
-            viewsDisplayBox.insertItem(0, QListWidgetItem(line))
+        lines.reverse()
+
+        for s in lines:
+            viewsDisplayBox.insertItem(0, QListWidgetItem(s.strip()))
 
         f.close()
 
