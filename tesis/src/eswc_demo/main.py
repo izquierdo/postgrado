@@ -22,6 +22,16 @@ class MyForm(QMainWindow):
         listView.insertItem(0, QListWidgetItem("80 views", listView))
         listView.insertItem(0, QListWidgetItem("100 views", listView))
 
+        #parte de archivo TODO
+        viewsDisplayBox = self.ui.CentralWidget.findChild(QListWidget, "viewsDisplayBox")
+
+        f = open("views-60-5.txt")
+
+        for line in f:
+            viewsDisplayBox.insertItem(0, QListWidgetItem(line))
+
+        f.close()
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myapp = MyForm()

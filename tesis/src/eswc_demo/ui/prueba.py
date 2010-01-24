@@ -46,7 +46,7 @@ class Ui_Main(object):
         self.viewsDisplayLabel = QLabel(self.instanceInfo_LayoutWidget)
         self.instanceInfo_Layout.addWidget(self.viewsDisplayLabel, 1, 0)
 
-        self.viewsDisplayBox = QListView(self.instanceInfo_LayoutWidget)
+        self.viewsDisplayBox = QListWidget(self.instanceInfo_LayoutWidget)
         self.viewsDisplayBox.setObjectName("viewsDisplayBox")
         self.instanceInfo_Layout.addWidget(self.viewsDisplayBox, 1, 1)
 
@@ -84,7 +84,7 @@ class Ui_Main(object):
         self.dnnf_ButtonsLayout = QHBoxLayout()
         self.dnnf_ButtonsWidget.setLayout(self.dnnf_ButtonsLayout)
 
-        # top :: right side :: solutions :: dnnf :: dnnf buttons layout :: dnnf genandload button
+        # top :: right side :: solutions :: dnnf :: dnnf buttons layout :: dnnf buttons
         self.dnnfGenAndLoadButton = QPushButton("Generate && Load")
         self.dnnf_ButtonsLayout.addWidget(self.dnnfGenAndLoadButton)
 
@@ -99,10 +99,22 @@ class Ui_Main(object):
         self.rewritings_Layout = QVBoxLayout()
         self.rewritings_Widget.setLayout(self.rewritings_Layout)
 
-        # top :: right side :: solutions :: rewritings :: irx label
-        self.irxLabel = QLabel(self.dnnf_Widget)
-        self.rewritings_Layout.addWidget(self.irxLabel)
+        # top :: right side :: solutions :: rewritings :: rewritings buttons layout
+        self.rewritings_ButtonsWidget = QWidget()
+        self.rewritings_Layout.addWidget(self.rewritings_ButtonsWidget)
 
+        self.rewritings_ButtonsLayout = QHBoxLayout()
+        self.rewritings_ButtonsWidget.setLayout(self.rewritings_ButtonsLayout)
+
+        # top :: right side :: solutions :: rewritings :: rewritings buttons layout :: rewritings buttons
+        self.rewritingsGetAllButton = QPushButton("Get All")
+        self.rewritings_ButtonsLayout.addWidget(self.rewritingsGetAllButton)
+
+        self.rewritingsGetBestButton = QPushButton("Get Best")
+        self.rewritings_ButtonsLayout.addWidget(self.rewritingsGetBestButton)
+
+        self.rewritingsChangeCostModelButton = QPushButton("Change Cost Model")
+        self.rewritings_ButtonsLayout.addWidget(self.rewritingsChangeCostModelButton)
 
 #        self.horizontalLayoutWidget = QWidget(self.rightSplitter)
 #        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
@@ -133,6 +145,4 @@ class Ui_Main(object):
         self.dnnfLabel.setText(QApplication.translate("Main", "d-DNNF: loaded", None, QApplication.UnicodeUTF8))
         #TODO activate next label
         #self.dnnfStatusLabel.setText(QApplication.translate("Main", "loaded", None, QApplication.UnicodeUTF8))
-
-        self.irxLabel.setText(QApplication.translate("Main", "REP", None, QApplication.UnicodeUTF8))
 
