@@ -71,14 +71,14 @@ comparados con el tiempo para compilar el CNF. Por esto, el enfoque es en el tie
 necesario para compilar los problemas de los experimentos.
 
 El primer experimento consiste de problemas para consultas para viajes aéreos.
-Los servicios concretos son de la forma $V_i(x,y)\qrule\ \flight(x,y,\AL_i)$
+Los servicios concretos son de la forma $V_i(x,y)\qrule\ \vuelo(x,y,\AL_i)$
 donde $\AL_i$ es una
-constante que denota el nombre de una aerolínea, y $\flight(x,y,\AL_i)$ relaciona las
+constante que denota el nombre de una aerolínea, y $\vuelo(x,y,\AL_i)$ relaciona las
 ciudades $x$ e $y$ tales que hay un vuelo entre $x$ e $y$ servido por $\AL_i$.
 Se supone que este servicio concreto retorna todos los vuelos entre dos ciudades
 con una aerolínea específica. El flujo de trabajo tiene la forma
 
-\[ W(x_1,\ldots,x_n)\ \qrule\ \flight(\PA,x_1,z),\,\flight(x_1,x_2,z),\,\ldots,\,\flight(x_n,\NY,z)\,. \]
+\[ W(x_1,\ldots,x_n)\ \qrule\ \vuelo(\PA,x_1,z),\,\vuelo(x_1,x_2,z),\,\ldots,\,\vuelo(x_n,\NY,z)\,. \]
 
 \begin{figure}[t]
 \centering

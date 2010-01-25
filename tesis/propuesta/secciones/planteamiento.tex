@@ -1,6 +1,6 @@
 \section{Planteamiento del Problema}
 
-Bajo la sombra de la Web Semántica, y con el soporte de las Arquitecturas Orientadas a
+En el contexto de la Web Semántica, y con el soporte de las Arquitecturas Orientadas a
 Servicios (SOA), el número de fuentes de datos y servicios Web ha explotado en
 los últimos años. Por ejemplo, la colección de bases de datos de biología
 molecular actualmente contiene 1.170 bases de datos~\cite{Galperin09}, un número
@@ -10,14 +10,14 @@ años por 110~\cite{Galperin2007};
 las herramientas y servicios, así como el número de instancias
 publicados por estos recursos, siguen una progresión similar~\cite{Benson07}.
 Gracias a
-este tesoro de datos, la tendencia de los usuarios es hacia depender cada vez
+esta variedad de datos, la tendencia de los usuarios es hacia depender cada vez
 más de métodos automáticos para manejarlos tales como recuperación de datos de
 fuentes públicas y análisis utilizando herramientas o servicios Web compuestos
 en flujos de trabajo complejos.
 
 La SOA típica consiste de dos capas. La capa concreta que está hecha de
 servicios concretos cuyas funcionalidades son descritas en términos de pre- y
-post-condiciones y propiedades no funcionales en términos de parámetros de
+post-condiciones y propiedades no funcionales en conjuntos de parámetros de
 calidad de servicio (QoS), y
 la capa abstracta compuesta de aplicaciones de software cuyas funcionalidades
 son descritas en términos de flujos de trabajo abstractos y propiedades no
@@ -33,8 +33,8 @@ problema de instanciar un flujo de trabajo dado con servicios concretos de un
 conjunto de servicios concretos dado, de manera que ciertas demandas de QoS sean
 cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP).
 
-En este trabajo se considera una versión restringida de WIP que adopta la
-solución Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
+En este trabajo se considera una versión restringida de WIP que adopta el
+enfoque Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
 problema son especificados con un lenguaje común basado en servicios abstractos
 tal que los servicios concretos se describen como vistas de servicios
 abstractos, la calidad de una instanciación como una función de utilidad global
@@ -57,8 +57,8 @@ de integración de datos \cite{Chen05,JaudoinPRST05}, y optimización de consult
 de datos \cite{AfratiLU07,levy:bucket}, y varias soluciones que escalan a un número grande de
 vistas han sido definidas \cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
 
-La solución recente de Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
-eficiente de modelos de una teoría lógica proposicional. Dado un QRP, una teoría
+La solución propuesta por Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
+eficiente de modelos de una teoría lógica proposicional. Dada una consulta conjuntiva, una teoría
 lógica es construída de manera que cada modelo de la teoría codifica una
 reescritura válida, y así todas las reescrituras son obtenidas enumerando los
 modelos de la teoría. Esta enumeración puede ser realizada eficientemente si la
@@ -70,30 +70,31 @@ enumerar sus modelos eficientemente.
 
 Pero las teorías d-DNNF no sólo soportan la enumeración eficiente de sus
 modelos, sino también otras operaciones. Entre ellas se encuentra la enumeración
-de los modelos con mejor puntuación. Dada una función de puntuación de literales
-$r(\ell)$ que asigne puntuaciones a cada literal $\ell$, se define la puntuación
-$r(\omega)$ de un modelo $\omega$ como la suma de las puntuaciones de los literales
+de los modelos con mejor calidad. Dada una función de calidad de literales
+$r(\ell)$ que asigne calidades a cada literal $\ell$, se define la calidad
+$r(\omega)$ de un modelo $\omega$ como la suma de las calidades de los literales
 activados por $\omega$ (es decir,
 $r(\omega)\doteq\sum_{\omega\vDash\ell}r(\ell)$), y se dice que $\omega$ es un modelo
-mejor puntuado si no hay modelo $\omega'$ tal que $r(\omega')<r(\omega)$.
+de mejor calidad si no hay modelo $\omega'$ tal que $r(\omega')<r(\omega)$.
 
-Dada una teoría en d-DNNF, se computa la puntuación de los mejores modelos, y
+Dada una teoría en d-DNNF, se computa la calidad de los mejores modelos, y
 los mejores modelos, en tiempo lineal en el tamaño del d-DNNF. Este cómputo
 transforma el GAD del d-DNNF en un circuito aritmético reemplazando los nodos
-AND con `+' y los nodos OR con `min'. La función de puntuación de literales
-asigna valores a las hojas del circuito que son propagados a la raíz en tiempo
-lineal. El valor de la raíz es la puntuación del mejor modelo \cite{darwiche:weighted}.
+AND con `+' y los nodos OR con `min'. La función de calidad de literales
+asigna valores a las hojas del circuito aritmético (grafo acíclico dirigido usado
+para calcular polinomios) que son propagados a la raíz en tiempo
+lineal. El valor de la raíz es la calidad del mejor modelo \cite{darwiche:weighted}.
 
 En este trabajo se propone explotar las propiedades de los d-DNNF construyendo una
 teoría lógica cuyos modelos codifican las instanciaciones del flujo de trabajo
 y cuyos mejores modelos codifican las instanciaciones óptimas (mejores). Así, la
 búsqueda combinatoria se reduce a la computación de un mejor modelo de una
-teoría lógica que puede ser realizada eficientemente una vez que la teoría sea
+teoría lógica que puede ser realizada eficientemente una vez que la teoría es
 transformada al formato d-DNNF.
 
 \subsection{Trabajo Relacionado}
 
-En esta sección se resumen las soluciones existentes que proveen soluciones
+En esta sección se resumen los enfoques existentes que proveen soluciones
 a los problemas de selección de servicios y reescritura de consultas y se
 discute el trabajo relacionado en el área de inteligencia artificial llamado
 compilación del conocimiento.
@@ -103,35 +104,35 @@ compilación del conocimiento.
 El problema de seleccionar los servicios que implementan un flujo de trabajo
 abstracto y cumplen mejor los criterios basados en QoS es conocido como el
 problema de selección o composición de servicios consciente de QoS, que ha sido
-demostrado ser NP-difícil \cite{Hiroshi2008}. Este es un problema de optimización
+demostrado ser \emph{NP-hard} \cite{Hiroshi2008}. Este es un problema de optimización
 combinatoria y varias heurísticas han sido propuestas para conseguir una
-solución relativamente buena en un período razonablemente corto de tiempo.
+solución relativamente buena en un período razonable de tiempo.
 
-Rahmani et al. \cite{rahmani08} presentan una heurística basada en métrica de distancia
-que guía un algoritmo de búsqueda hacia atrás; esta métrica induce un orden de
-los servicios en una manera en que los nodos vertedero tienen baja probabilidad
+Rahmani et al. \cite{rahmani08} presentan una heurística basada en una métrica de distancia
+que guía un algoritmo de búsqueda; esta métrica induce un orden de
+los servicios en una manera en que los nodos vertedero (sin salida) tienen baja probabilidad
 de ser visitados. En una serie de artículos, Berardi y otros \cite{berardi05,berardi08,berardi06}
 describen
 servicios y flujos de trabajo en términos de máquinas de estados finitos
-determinísticas que son codificadas usando teorías de Lógica de Descripción
+determinísticas que son codificadas usando teorías de Lógicas Descriptivas
 cuyos modelos corresponden a soluciones del problema. Aunque se podrían explotar
-métodos para formalismos de Lógicas de Descripción, no han sido reportados la
+métodos para formalismos de Lógicas Descriptivas, no han sido reportados la
 escalabilidad o el rendimiento de la solución propuesta.
 
-Ko et al. \cite{myoung08} proponen una solución basada en restriccciones que codifica
+Ko et al. \cite{myoung08} proponen un enfoque basado en restriccciones que codifica
 los valores permisibles no funcionales como un conjunto de restricciones cuya
 violación debe ser minimizada; para recorrer el espacio de soluciones
 posiblemente óptima, se implementa un algoritmo híbrido que combina las
 metaheurísticas \emph{tabu search} y \emph{simulated annealing}. Los resultados
 experimentales muestran que la solución propuesta es capaz de escalar a un
 número grande de servicios y procesos abstractos. Cardellini et al. \cite{cardellini07}
-codifican una parte del problema de composición de servicios consciente de QoS
+codifican una parte del problema de composición de servicios caracterizados por QoS
 como un problema de programación lineal \cite{cardellini07}. Por otra parte, Wada et al.
 \cite{Hiroshi2008} trata el problema como uno de optimización con múltiples objetivos donde
 los diferentes parámetros de QoS son considerados igualmente importantes en vez
 de ser agregados en una función. Luego se propone un algoritmo basado en
 algoritmos genéticos que identifica un conjunto de composiciones de servicios
-no dominadas que mejor encajan en los requerimientos QoS.
+no dominadas que mejor satisfacen los requerimientos QoS.
 
 Alrifai y Risse \cite{alrifaiR09} proponen una solución de doble cara que usa un
 algoritmo de programación entera híbrido para obtener la descomposición de QoS
@@ -158,7 +159,7 @@ usuario.
 \subsubsection{Reescritura de Consultas}
 
 Un número de algoritmos han sido desarrollados para encontrar las reescrituras
-de una consulta dada; los más prominentes son el algoritmo bucket \cite{levy:bucket}, el
+de una consulta dada; los más prominentes son el algoritmo \emph{bucket} \cite{levy:bucket}, el
 algoritmo de reglas inversas \cite{pods:DuschkaG97,Qian96}, el algoritmo
 \minicon \cite{pottinger:minicon}, y el
 algoritmo \mcdsat \cite{arvelo:aaai06}. Generalmente, la reescritura de consultas trabaja en
@@ -168,7 +169,7 @@ parciales son combinadas en reescrituras completas. La diferencia principal
 entre los algoritmos es el conjunto de criterios usado para elegir las vistas
 relevantes para reducir el espacio de reescrituras no útiles.
 
-El algoritmo bucket reduce el número de posibilidades considerando sólo cada
+El algoritmo denominado \emph{bucket} reduce el número de posibilidades considerando sólo cada
 subobjetivo de la consulta aislado, y seleccionando las vistas que son capaces
 de producir al menos los atributos proyectados por la consulta. Como los
 atributos involucrados en los \emph{joins} de la consulta no son verificados, un número
@@ -215,7 +216,7 @@ Binary Decision Diagrams} (OBDDs) \cite{bryant:obdd},
 \emph{Negation Normal Form} (NNF) \cite{barwise:handbook}, y
 \emph{Decomposable Negation Normal Form} (DNNF) \cite{darwiche:map}. En este trabajo se usan las
 propiedades de los DNNF determinísticos (d-DNNF) \cite{darwiche:d-dnnfs} para proveer una
-solución eficiente y escalable al problema de selección de serviccios.
+solución eficiente y escalable al problema de selección de servicios.
 
 \begin{figure}[t]
 \centering
@@ -227,43 +228,43 @@ solución eficiente y escalable al problema de selección de serviccios.
 Una teoría en Negation Normal Form es construida desde literales usando sólo
 conjunciones y disjunciones \cite{barwise:handbook}, y puede ser representada como un grafo
 acíclico dirigido en que las hojas son etiquetadas con literales y los nodos
-internos con $\land$ y $\lor$; ver ejemplo en la figura~\ref{fig:dnnf}. Este
-fragmento es universal, lo que significa que para cada fórmula lógica hay una
+internos con $\land$ y $\lor$; ver ejemplo en la figura~\ref{fig:dnnf}. Esta
+forma normal es universal, lo que significa que para cada fórmula lógica hay una
 equivalente en formato NNF. Se dice que un NNF es descomponible (DNNF)
 \cite{darwiche:d-dnnfs}
 si para cada conjunción $\bigwedge_i\phi_i$, sus variables son disjuntas por pares; es
 decir, $Vars(\phi_i)\cap Vars(\phi_j)=\empty$ para $i\neq j$. Un DNNF soporta un
 número de operaciones en tiempo polinomial en el tamaño de su GAD. Por ejemplo,
-podemos probar si un DNNF es satisfactible haciendo una simple pasada de abajo
-hacia arriba sobre su GAD en tiempo linear. Se dice que un DNNF es
+podemos probar si un DNNF es satisfactible haciendo un sólo recorrido 
+sobre su GAD en tiempo linear. Se dice que un DNNF es
 determinístico (d-DNNF) \cite{darwiche:d-dnnfs} si para cada disjunción $\bigvee_i\phi_i$, los
 disjuntos son lógicamente contradictorios por pares, es decir,
 $\phi_i\land\phi_j\equiv\textbf{false}$ para $i\neq j$.
 El NNF en la figura~\ref{fig:dnnf}, por ejemplo, es
 descomponible y determinístico. Un d-DNNF soporta conteo de modelos en
 tiempo polinomial en el tamaño de su GAD, y enumeración de modelos en tiempo
-polinomial en el tamaño de la salida. Además, dada una función de puntuación de
-literales $r$, se puede computar la puntuación del mejor modelo en tiempo
+polinomial en el tamaño de la salida. Además, dada una función de calidad de
+literales $r$, se puede computar la calidad del mejor modelo en tiempo
 polinomial para DNNFs \cite{darwiche:weighted}.
 
-Los fragmentos DNNF y d-DNNF son universales pero traducir una teoría CNF a
+Toda teoría puede representarse en las formas DNNF y d-DNNF pero traducir una teoría CNF a
 formato DNNF tiene costo exponencial en el peor caso. Esta traducción se
 llama compilación en este campo. Hay un compilador públicamente disponible,
 llamado c2d\footnote{\url{http://reasoning.cs.ucla.edu/c2d}}, que realiza este proceso de compilación y que hace uso
 de técnicas de SAT modernas como backtracking dirigido por conflictos,
-aprendizaje de cláusulas y caching \cite{darwiche:compiler}. Este compilador entra en el peor
-caso en espacio exponencial en un parámetro llamado el ancho del árbol de
+aprendizaje de cláusulas y caching \cite{darwiche:compiler}. Este compilador incurre en el peor
+caso (peor gasto) en espacio exponencial en un parámetro llamado el ancho del árbol de
 descomposición que está relacionado a la ``conectividad'' de la teoría CNF.
 Sin embargo, en nuestros experimentos, las teorías CNF que son compiladas son de
 ancho pequeño.
 
 \subsection{Formalización}
 
-Consideramos cat[alogos de servicio de la forma $C=\tup{S,T}$ donde $S$ es un
+Consideramos catálogos de servicio de la forma $C=\tup{S,T}$ donde $S$ es un
 conjunto de predicados que representa servicios abstractos y $T=\{T_s\}_{s\in S}$ es una
 colección de tablas que representa el resultado de evaluar los servicios
 abstractos. En el contexto del WIP, un catálogo de servicio $C$ es una
-descripción idealizada de la salida producida por flujos abstractos
+descripción virtual de la salida producida por flujos abstractos
 implementados por servicios concretos descritos como vistas. Un flujo de trabajo
 $W$ sobre $S$ es una consulta conjuntiva de la forma
 
@@ -398,6 +399,6 @@ El WIP con costos consiste en encontrar todas las instanciaciones óptimas o una
 instanciación, esto depende de la aplicación particular.
 En la formulación propuesta, esto puede hacerse a partir del d-DNNF que codifica
 $\Delta$
-usando la función de puntuación de literales $r$ que asigna
+usando la función de calidad de literales $r$ que asigna
 $r(\ell)=c(V_i)$ si
 $\ell=v_i$, y $r(\ell)=0$ if $\ell\notin\{v_1,\ldots,v_n\}$.

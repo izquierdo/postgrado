@@ -3,53 +3,53 @@
 \subsection{Ejemplo Motivante}
 
 % flights
-\newcommand{\flight}{\text{\it flight}}
-\newcommand{\UScity}{\text{\it uscity}}
-\newcommand{\national}{\text{\it national}}
-\newcommand{\oneway}{\text{\it one-way}}
-\newcommand{\onestop}{\text{\it one-stop}}
-\newcommand{\flightPA}{\text{\it flight-to-pa}}
-\newcommand{\onestopPA}{\text{\it onestop-to-pa}}
-\newcommand{\fromNY}{\text{\it from-ny}}
-\newcommand{\PA}{\text{PA}}
-\newcommand{\NY}{\text{NY}}
+\newcommand{\vuelo}{\text{\it vuelo}}
+\newcommand{\ciudadVE}{\text{\it ciudadVE}}
+\newcommand{\nacional}{\text{\it nacional}}
+\newcommand{\ida}{\text{\it ida}}
+\newcommand{\unaescala}{\text{\it una-escala}}
+\newcommand{\vueloCCS}{\text{\it vuelo-hacia-ccs}}
+\newcommand{\unaparadaCCS}{\text{\it unaescala-hacia-ccs}}
+\newcommand{\desdeVAL}{\text{\it desde-val}}
+\newcommand{\PA}{\text{CCS}}
+\newcommand{\NY}{\text{VAL}}
 \newcommand{\AL}{\text{AL}}
 % end flights
 
 Considere un sistema simple de información de vuelos que contiene información
 sobre vuelos entre ciudades e información sobre qué ciudades están en los
 Estados Unidos. Un sistema así puede ser descrito usando LAV con los dos servicios
-abstractos $\flight(x,y)$ y $\UScity(x)$. El primero relaciona dos ciudades $x$ e $y$ si
+abstractos $\vuelo(x,y)$ y $\ciudadVE(x)$. El primero relaciona dos ciudades $x$ e $y$ si
 hay un vuelo directo entre ellas, y el segundo dice si $x$ es una ciudad de
-E.E.U.U.  o no. Para los servicios concretos, supongamos que las fuentes de
+Venezuela  o no. Para los servicios concretos, supongamos que las fuentes de
 datos disponibles en Internet contienen la siguiente información:
 
 \begin{enumerate}[--]
-\item $\national(x,y)$ relaciona dos ciudades de E.E.U.U. conectadas por un vuelo directo,
-\item $\oneway(x,y)$ relaciona dos ciudades conectadas por un vuelo de ida,
-\item $\onestop(x,y)$ relaciona dos ciudades conectadas por un vuelo con una escala,
-\item $\flightPA(x)$ dice si hay un vuelo directo desde $x$ a París,
-\item $\onestopPA(x,y)$ relaciona $x$ y $y$ si hay un vuelo desde $x$ a París con una escala en $y$, y
-\item $\fromNY(x)$ dice si hay un vuelo de Nueva York a $x$.
+\item $\nacional(x,y)$ relaciona dos ciudades de Venezuela conectadas por un vuelo directo,
+\item $\ida(x,y)$ relaciona dos ciudades conectadas por un vuelo de ida,
+\item $\unaescala(x,y)$ relaciona dos ciudades conectadas por un vuelo con una escala,
+\item $\vueloCCS(x)$ dice si hay un vuelo directo desde $x$ a Caracas,
+\item $\unaparadaCCS(x,y)$ relaciona $x$ y $y$ si hay un vuelo desde $x$ a Caracas con una escala en $y$, y
+\item $\desdeVAL(x)$ dice si hay un vuelo de Valencia a $x$.
 \end{enumerate}
 
 Adicionalmente, los servicios concretos se describen con los siguientes
 servicios abstractos:
 
 \begin{alignat*}{1}
-\national(x,y)\   &\qrule\ \flight(x,y),\,\UScity(x),\,\UScity(y)\,. \\
-\oneway(x,y)\     &\qrule\ \flight(x,y)\,. \\
-\onestop(x,z)\    &\qrule\ \flight(x,y),\,\flight(y,z)\,. \\
-\flightPA(x)\     &\qrule\ \flight(x,\PA)\,. \\
-\onestopPA(x,y)\  &\qrule\ \flight(x,y),\,\flight(y,\PA)\,. \\
-\fromNY(x)\       &\qrule\ \flight(\NY,x)\,.
+\nacional(x,y)\   &\qrule\ \vuelo(x,y),\,\ciudadVE(x),\,\ciudadVE(y)\,. \\
+\ida(x,y)\     &\qrule\ \vuelo(x,y)\,. \\
+\unaescala(x,z)\    &\qrule\ \vuelo(x,y),\,\vuelo(y,z)\,. \\
+\vueloCCS(x)\     &\qrule\ \vuelo(x,\PA)\,. \\
+\unaparadaCCS(x,y)\  &\qrule\ \vuelo(x,y),\,\vuelo(y,\PA)\,. \\
+\desdeVAL(x)\       &\qrule\ \vuelo(\NY,x)\,.
 \end{alignat*}
 
-Ahora supongamos que un usuario está interesado en construir un flujo de trabajo
+Ahora supongamos que un usuario está interesado en construir una aplicación
 capaz de recuperar los vuelos ida y vuelta con una parada hacia cualquier ciudad
 en el mundo, tales que los vuelos puedan detenerse en cualquier ciudad.
 
-\[ W(x,w,y,z) \qrule \UScity(x),\,\flight(x,w),\,\flight(w,y),\,\flight(y,z),\,\flight(z,x)\,. \]
+\[ W(x,w,y,z) \qrule \ciudadVE(x),\,\vuelo(x,w),\,\vuelo(w,y),\,\vuelo(y,z),\,\vuelo(z,x)\,. \]
 
 La siguiente consulta conjuntiva representa el flujo de trabajo que define esta
 solicitud en términos de servicios abstractos. El flujo de trabajo es definido
@@ -62,18 +62,18 @@ más servicios abstractos del flujo, pero cada servicio abstracto puede ser
 implementado por exactamente un servicio concreto. Por ejemplo, la siguiente
 composición corresponde a una de estas implementaciones.
 
-\[ I(x,w,y,z)\ \qrule\ \national(x,w),\,\flightPA(w),\,\oneway(\PA,z),\,\national(z,x)\,. \]
+\[ I(x,w,y,z)\ \qrule\ \nacional(x,w),\,\vueloCCS(w),\,\ida(\PA,z),\,\nacional(z,x)\,. \]
 
 Sin embargo, las siguientes dos composiciones no son válidas.
 
 \begin{alignat*}{1}
-I'(x,w,y,z)\  \qrule\ &\national(x,y),\,\flightPA(y),\,\fromNY(z),\,\national(z,x)\,. \\
-I''(x,w,y,z)\ \qrule\ &\onestop(x,y),\,\oneway(y,z),\,\national(z,x)\,.
+I'(x,w,y,z)\  \qrule\ &\nacional(x,y),\,\vueloCCS(y),\,\desdeVAL(z),\,\nacional(z,x)\,. \\
+I''(x,w,y,z)\ \qrule\ &\unaescala(x,y),\,\ida(y,z),\,\nacional(z,x)\,.
 \end{alignat*}
 
 La primera composición no es válida porque asocia la variable del flujo $y$ a
 las constantes \PA\ y \NY\ que denotan ciudades diferentes. En la otra mano, $I''$
-no lo implementa porque el servicio concreto $\onestop(x,y)$ no recibe como entrada
+no lo implementa porque el servicio concreto $\unaescala(x,y)$ no recibe como entrada
 o produce como salida la ciudad intermedia donde el vuelo se detiene y entonces
 no es posible asegurarse de que esa ciudad esté asociada a la ciudad $w$ que es
 retornada por el flujo de trabajo.
