@@ -72,16 +72,16 @@ the Local-As-View (LAV) approach \cite{levy:bucket} to specify the semantics of 
 one that is semi-automatically generated for the DEIMOS system
 \cite{AmbiteISWC09}. Additionally,  abstract workflows correspond  to conjunctive
 queries on the abstract services, and  the quality
-of an instantiation is an overall utility function that combine the
+of an instantiation is an overall utility function that combines the
 different QoS parameters of the selected concrete services.
 In this version of WIP, the rules that define workflows (conjunctive queries)
 and concrete services (views) are created in a way that all the 
 functional restrictions on pre- and post-conditions of services
 and their combinations are satisfied, and the QoS measures are
 represented by annotating each concrete service description with
-a real number that represent the overall QoS utility of the service.
+a real number that represents the overall QoS utility of the service.
 
-In addition to provide a novel approach to describe the WIP problem, SATWins is able to  efficiently identify an abstract workflow instantiations. 
+In addition to providing a novel approach to describe the WIP problem, SATWins is able to  efficiently identify an abstract workflow's instantiations. 
 Given a WIP, a logical theory is constructed such that each model of
 the theory encodes a valid instantiation, and thus all valid instantiations
 are obtained by enumerating all models of the theory. This enumeration
@@ -89,23 +89,24 @@ can be efficiently performed if the logical theory is in a certain
 normal form called deterministic and decomposable negation normal
 form (d-DNNF) \cite{darwiche:d-dnnfs}. Thus, the approach consists in
 transforming (called compiling in the field of knowledge compilation)
-the logical theory into d-DNNF format for enumerating its models efficiently; also, the  enumeration 
-the best ranked models can also be performed efficiently on d-DNNF and the complexity is independent of the utility function used to rank the optimal instantiation.
+the logical theory into d-DNNF format for enumerating its models efficiently; also, the  enumeration  of
+the best ranked models can also be performed efficiently on a theory in d-DNNF and
+the complexity is independent of the utility function used to rank the optimal instantiation.
 
 In this demonstration, we  attempt to show the following key aspects of the approach implemented by SATWins. We will use a real-world example based on a simple flight-information system.
 \begin{itemize}
 \item We show the expressiveness of representing concrete services as views on abstract services.
 \item We demonstrate the performance of the proposed techniques by computing the optimal instantiation of a given WIP in terms of different utility functions.  
-\item We show the scalability of our solution by demonstrating how SATWins is able to enumerate e realistic instances of the problem in less of one second.
+\item We show the scalability of our solution by demonstrating how SATWins is able to enumerate realistic instances of the problem in less than one second.
 \end{itemize}  
  
 \section{SatWins Architecture}
  The SatWins architecture  is comprised of a Catalog of service descriptions,
 the Encoder, the compiler c2d, the best model Finder, and the Decoder.
 Figure~\ref{fig:architecture} depicts the overall architecture of the system.
-In this framework, an instance of Workflow Instantiation Problem is defined as an
+In this framework, an instance of the Workflow Instantiation Problem is defined as an
 abstract workflow represented by a conjunctive query on abstract services which
-is given as input together with a set set of concrete services defined by views
+is given as input together with a set of concrete services defined by views
 of abstract services. 
 
 \begin{figure}[t]
@@ -147,7 +148,8 @@ number of them. Finally, if the user is interested in all instantiations,
 these can be also computed in linear time in the number of them.
 In the latter two cases, if such number is exponential (in the size of the
 input), the enumeration of the instantiations is also exponential but
-this complexity is intrinsic to the problem and thus cannot be avoided. Figure \~ref{fig:snapshot} shows a snapshot of an input instance of WIP and the functionality of SatWins. 
+this complexity is intrinsic to the problem and thus cannot be avoided.
+Figure \~ref{fig:snapshot} shows a snapshot of an input instance of WIP and the functionality of SatWins. 
 
 \begin{figure}[t]
 \centering
@@ -157,12 +159,14 @@ this complexity is intrinsic to the problem and thus cannot be avoided. Figure \
 \end{figure}
 
 \section{Demonstration Use Cases}
-In this demonstration, we will go through the different steps of the proposed approach. We illustrate our approach on  a simple flight-information system which contains information
+In this demonstration, we will go through the different steps of the proposed approach.
+We illustrate our approach on  a simple flight-information system which contains information
 about flights between cities and information about which cities are in
 the US. Such a system can be described using LAV with the two abstract
 services $\flight(x,y)$ and $\UScity(x)$. The former relates two cities
 $x$ and $y$ if there is a direct flight between them, and the latter tells
-whether $x$ is a US city or not. We also consider different sets of concrete services; functionality, complexity and size will be changed during the demonstration to show expressiveness, performance and scalability of our approach. An example of some of the concrete services to be used is as follows:
+whether $x$ is a US city or not. We also consider different sets of concrete services; functionality, complexity and size will be changed during the demonstration to show
+the expressiveness, performance and scalability of our approach. An example of some of the concrete services to be used is as follows:
 \begin{enumerate}[--]
 \item $\national(x,y)$ relates two US cities that are connected by a direct flight,
 \item $\oneway(x,y)$ relates two cities that are connected by a one-way flight,
@@ -198,7 +202,12 @@ I'(x,w,y,z)\  \qrule\ &\national(x,y),\,\flightPA(y),\,\fromNY(z),\,\national(z,
 
 Using this domain, we will demonstrate the following scenarios:
 \begin{itemize}
-\item To show the scalability of the proposed approach, we use the behavior of SATWins in three different benchmarks. In all the cases, we show time for compilation, size of the  d-DNNF, and time to enumerate all the models as well as the optimal one. We start with a benchmark of instances for workflows with 2 to 5 sub-goals and sets of 10 to 100 concrete services. Although, the observed time suggests a sub-exponential behavior,  in any case, the results
+\item To show the scalability of the proposed approach, we use the behavior of
+SATWins in three different benchmarks. In all the cases, we show time for
+compilation, size of the  d-DNNF, and time to enumerate all the models as well
+as the optimal one. We start with a benchmark of instances for workflows with 2
+to 5 sub-goals and sets of 10 to 100 concrete services. Although the observed
+time suggests a sub-exponential behavior, in any case, the results
 show good performance. For instance, sets of 100
 airlines with 5-stop flights can be compiled in 328 seconds; the size in disk of the d-DNNF is 3.4Mb;
 the best model can be computed in 0.29 seconds, and the enumeration of all models in 0.47 seconds.
