@@ -16,19 +16,20 @@ Maestría en Ciencias de la Computación \\
 \vspace{0.2cm}
 
 \begin{abstract}
-Una Arquitectura Orientada a Servicios típica consiste de dos capas principales.
+Una arquitectura orientada a servicios típica se separa en dos capas --grupos de
+componentes-- principales.
 La capa concreta con servicios concretos cuyas funcionalidades son descritas en
 términos de pre- y post-condiciones y propiedades no funcionales en términos de
 parámetros de calidad de servicio (Quality Of Service, QoS), y la capa abstracta
 con aplicaciones de software cuyas funcionalidades son descritas en términos de
 flujos de trabajo abstractos y propiedades no funcionales en términos de
-restricciones sobre QoS. Durante la ejecución de un flujo de trabajo, los
+restricciones sobre QoS. Durante la ejecución de un flujo de trabajo o \emph{workflow}, los
 servicios abstractos son instanciados en servicios concretos que cumplen con los
 requerimientos funcionales y no funcionales. Esta instanciación, que debe ser
 hecha en el momento, consiste de una búsqueda en un espacio de posibilidades
 combinatorio. En este trabajo se propone una infraestructura para resolver
-eficientemente el problema de instanciación que está firmemente basada en
-lógica. La infraestructura adopta la solución Local-As-View en la cual la
+eficientemente el problema de instanciación que está basada en
+la lógica proposicional. La infraestructura adopta el enfoque de definición denominado Local-As-View en la cual la
 funcionalidad de servicios concretos se describe usando vistas de servicios
 abstractos, la calidad de una instanciación como una función de utilidad global
 que combina los diferentes parámetros QoS, y los flujos de trabajo abstractos
