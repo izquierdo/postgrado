@@ -9,7 +9,7 @@
 \label{fig:architecture}
 \end{figure}
 
-Se utiliza una arquitectura comprendida por un catálogo de descripciones de
+Se propone una arquitectura comprendida por un catálogo de descripciones de
 servicio, el Codificador, el compilador c2d, el Buscador de mejores modelos, y
 el Decodificador. La figura~\ref{fig:architecture} muestra la arquitectura global del sistema.
 En esta infraestructura, una instancia del problema de instanciación de flujos
@@ -17,7 +17,7 @@ de trabajo se define como un flujo abstracto representado por una consulta
 conjuntiva sobre servicios abstractos que es dada como entrada junto con un
 conjunto de servicios concretos definidos por vistas de servicios abstractos.
 
-El catálogo se pobla con descripciones de servicios abstractos y concretos; cada
+El catálogo se carga con descripciones de servicios abstractos y concretos; cada
 servicio es descrito en términos de atributos de entrada y salida y anotado con
 un valor real que representa la utilidad QoS del servicio. La descripción de los
 servicios concretos, que son definidos como vistas de los servicios abstractos,
@@ -51,7 +51,7 @@ número es exponencial (en el tamaño de la entrada), la enumeración de las
 instanciaciones también lo es pero esta complejidad es intrínsica al problema y
 por lo tanto no puede ser evitada.
 
-\subsection{Resultados Experimentales}
+\subsection{Resultados Experimentales Iniciales}
 
 Se realizó un análisis empírico sobre tres experimentos. Todos los experimentos
 fueron realizados en una máquina de escritorio con un CPU Intel Core 2 Duo de
