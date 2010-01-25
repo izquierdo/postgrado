@@ -37,7 +37,7 @@
 \institute{Departamento de Computaci\'on \\
            Universidad Sim\'on Bol\'{\i}var \\
            Caracas 89000, Venezuela \\
-           \url{{idaniel,bonet,mvidal}@ldc.usb.ve}}
+           \url{{idaniel,mvidal,bonet}@ldc.usb.ve}}
 \maketitle
 
 \begin{abstract}
@@ -89,7 +89,7 @@ tendency is to rely more on automatic methods for handling them such as
 data retrieval from public sources and analysis using Web
 tools or services composed in complex workflows.
 
-The typical SOA consists of two layers. The concrete layers that is
+The typical SOA consists of two layers. The concrete layer that is
 made of concrete services whose functionalities are described in
 terms of pre- and post-conditions and non-functional properties in
 terms of QoS parameters, and the abstract layer that is made of 
@@ -142,7 +142,7 @@ on the efficient enumeration of models of a propositional logic theory.
 Given a QRP, a logical theory is constructed such that each model of
 the theory encodes a valid rewriting, and thus all valid rewritings
 are obtained by enumerating all models of the theory. This enumeration
-can be efficiently performed if the logical theory is in certain 
+can be efficiently performed if the logical theory is in a certain 
 normal form called deterministic and decomposable negation normal
 form (d-DNNF) \cite{darwiche:d-dnnfs}. Thus, the approach consists in
 transforming (called compiling in the field of knowledge compilation)
@@ -285,7 +285,7 @@ implemented. Experimental results show that the proposed solution is able to
 scale up to a large number of services and abstract processes.
 Cardellini et al.\ \cite{cardellini07} encode one part of the QoS-aware service
 composition problem as a Linear Programming problem \cite{cardellini07}.
-On the other hand, Wada el at.\ \cite{Hiroshi2008} treat the problem as a 
+On the other hand, Wada et al.\ \cite{Hiroshi2008} treat the problem as a 
 multi-objective optimization problem where the different QoS parameters are
 considered equally important instead of aggregating them into a single function.
 Then, a genetic-based algorithm is proposed to identify a set of non-dominated
@@ -339,7 +339,7 @@ The \minicon\ algorithm overcomes the limitations of the previous algorithms by 
 only views that rewrite a set of the sub-goals of the query, and that can be combined with
 the rest of the sub-goals. The key idea is to identify the mappings between the variables in
 each sub-goal to the variables in one or more sub-goals in the views, in a way
-that, join variables in the query are mapped to join variables in the body of a view or to
+that join variables in the query are mapped to join variables in the body of a view or to
 the distinguished variables of the view. Mappings between variables and sub-goals are
 represented in the so-called MiniCon Descriptions (MCDs) \cite{pottinger:minicon}.
 
@@ -380,7 +380,7 @@ are labeled with $\land$ and $\lor$; see Fig.~\ref{fig:dnnf} for an example.
 This fragment is universal meaning that for every logical formula there is an
 equivalent one in NNF format.
 An NNF is said to be decomposable (DNNF) \cite{darwiche:d-dnnfs} if for each conjunction
-$\bigwedge_i\phi_i$, the set of variables in each conjunct are pairwise disjoint; i.e,.
+$\bigwedge_i\phi_i$, its variables are pairwise disjoint; i.e,.
 $Vars(\phi_i)\cap Vars(\phi_j)=\empty$ for $i\neq j$.
 A DNNF supports a number of operations in polytime in the size of its DAG.
 For example, we can test whether a DNNF is satisfiable by a single bottom-up pass
@@ -398,7 +398,7 @@ The fragments DNNF and d-DNNF are universal yet translating a CNF theory
 to DNNF format has an exponential cost in the worst case. This translation
 is referred to as compilation in the field. There is a publicly available
 compiler, called c2d,\footnote{\url{http://reasoning.cs.ucla.edu/c2d}}
-that perform this compilation process and that make
+that performs this compilation process and that makes
 use of modern SAT techniques such as conflict-directed backtracking,
 clause learning and caching \cite{darwiche:compiler}.
 This compiler incurs in the worst case in exponential space in a parameter
@@ -434,12 +434,12 @@ The description of the concrete services, that are defined as views of abstract
 services, can be generated semi- or automatically using tools such as the DEIMOS
 system \cite{AmbiteISWC09}. 
 
-An input instance of WIP is encoded as a CNF theory whose models corresponds to
+An input instance of WIP is encoded as a CNF theory whose models correspond to
 the instantiations of the workflow by the Encoder. The compiler c2d, an off-the-shelf
 component, compiles the CNF formula into d-DNNF.
 The Encoder translates the WIP instances into CNF theories, that are then converted
 into d-DNNF using c2d. The Finder computes a best model given the QoS parameters
-in linear time in the size of the resulting d-DNNF. It is important to remark,
+in linear time in the size of the resulting d-DNNF. It is important to remark
 that the compilation process needs to be performed only once as it does not
 depend on the value of the QoS parameters. Thus, even if the compilation happens
 to be costly in terms of time, this cost can be amortized since the resulting
@@ -623,7 +623,7 @@ Rajaraman et al.\ \cite{RajaramanSU95} showed that for queries without negation 
 arithmetic comparisons, but with constants, and $m$ goals and $k$ variables in the
 head of the workflow, it is enough to consider instantiations of length at most $N=m+k$.
 \begin{enumerate}[C10.]
-\item[C1.] (At least of view is used): $\bigvee_{i=0}^n v_i$.
+\item[C1.] (At least one view is used): $\bigvee_{i=0}^n v_i$.
 \item[C2.] (At most one view is used): $\neg v_i\lor\neg v_j$ for $i\neq j$.
 \item[C3.] (Null view equals null): $v_0 \Rightarrow \neg g_j$ for $1\leq j\leq m$.
 \item[C4.] (Views are useful): $v_i \Rightarrow \bigvee_{j=1}^m g_j$ for $1\leq i\leq n$.
@@ -657,8 +657,8 @@ into each other either directly or indirectly.
 Clauses C14--C16 prune direct inconsistent mappings, while the last
 two clauses implement a restricted propagation of mappings that prune
 indirect inconsistencies.
-Likewise, the theory $\Delta_{com}$ that specifies how a complete
-instantiation contains the following clauses:
+Likewise, the theory $\Delta_{com}$ that specifies complete
+instantiations contains the following clauses:
 \begin{enumerate}[C10.]
 \item[C19.] (Cover all goals): $\bigvee_{j=1}^m g^i_j$ for $1\leq i\leq N$.
 \item[C20.] (Disjunctive cover): $g^i_k \Rightarrow \neg g^j_k$ for $i\neq j$.
@@ -666,7 +666,7 @@ instantiation contains the following clauses:
             for $1\leq j\leq m$ and $1\leq i\leq N$.
 \item[C22.] (Direct inconsistency 4): $t^i_{x,A} \Rightarrow \neg t^j_{x,B}$.
 \end{enumerate}
-These clauses provide sound and complete characterization of WIPs in the
+These clauses provide a sound and complete characterization of WIPs in the
 sense that their models are in correspondence with the
 instantiations of the workflow.
 
