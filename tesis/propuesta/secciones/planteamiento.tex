@@ -28,7 +28,8 @@ funcionales. Este proceso de instanciación puede ser visto como una búsqueda d
 una instanciación objetivo en el espacio combinatorio de todas las
 instanciaciones válidas. Entonces se está interesado en técnicas eficientes para
 realizar esta búsqueda que sean capaces de escalar a medida que el número de
-servicios concretos o la complejidad del flujo de trabajo aumenta. Se llama al
+servicios concretos o la complejidad (número
+de objetivos, tamaño) de la estructura del flujo de trabajo  aumenta. Se llama al
 problema de instanciar un flujo de trabajo dado con servicios concretos de un
 conjunto de servicios concretos dado, de manera que ciertas demandas de QoS sean
 cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP).
@@ -58,8 +59,9 @@ de datos \cite{AfratiLU07,levy:bucket}, y varias soluciones que escalan a un nú
 vistas han sido definidas \cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
 
 La solución propuesta por Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
-eficiente de modelos de una teoría lógica proposicional. Dada una consulta conjuntiva, una teoría
-lógica es construída de manera que cada modelo de la teoría codifica una
+eficiente de modelos de una teoría lógica proposicional. Dada una consulta conjuntiva
+y un conjunto de fuentes definidas como vistas, se construye una teoría
+lógica de manera que cada modelo de la teoría codifica una
 reescritura válida, y así todas las reescrituras son obtenidas enumerando los
 modelos de la teoría. Esta enumeración puede ser realizada eficientemente si la
 teoría lógica está en cierta forma normal llamada la forma normal de negación
