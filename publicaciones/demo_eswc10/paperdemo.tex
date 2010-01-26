@@ -30,7 +30,7 @@
 
 \begin{document}
 \allowdisplaybreaks
-\title{SatWins: A Sat-based tool to Optimal Instantiations of Abstract Workflows}
+\title{SatWins: A Sat-based Tool to Optimal Instantiations of Abstract Workflows}
 \author{Daniel Izquierdo \and Mar\'{\i}a-Esther Vidal \and Blai Bonet}
 \institute{Departamento de Computaci\'on \\
            Universidad Sim\'on Bol\'{\i}var \\
@@ -39,17 +39,17 @@
 \maketitle
 
 \begin{abstract}
-We present SatWins a system to efficiently solve the abstract workflow
+We present SatWins, a system to efficiently solve the abstract workflow
 instantiation problem that is firmly grounded on logic.
 SatWins adopts the Local-As-View approach in which
 the functionality of concrete services is described using views
 of abstract services, the quality of an instantiation as an
-overall utility function that combines the different QoS parameters,
+overall utility function that combines different QoS parameters,
 and the abstract workflows as conjunctive queries on abstract services.
 We discuss the encoding of the workflow instantiation problem as a logical theory whose models
-are in correspondence with the instantiations of the workflow,
+correspond to the instantiations of the workflow,
 and the best ranked models are in correspondence with the
-optimal instantiations of the workflow. We demonstrate how by exploiting known properties of logical theories in 
+optimal instantiations. We demonstrate how by exploiting known properties of logical theories in 
 d-DNNF format, SatWins provides an efficient and scalable solution
 to the workflow instantiation problem. 
 \end{abstract}
@@ -63,10 +63,10 @@ the combinatorial space of all valid instantiations.
 Thus, one is interested in efficient techniques for performing
 this search that are able to scale up as the number of concrete
 services or the complexity of the workflow increases. We call the problem of instantiating a given abstract workflow with concrete services, from a given pool of concrete services,
-such that certain QoS demands are meet, the Workflow Instantiation
+such that certain QoS demands are met, the Workflow Instantiation
 Problem (WIP). 
 
-In this paper, we describe SatWins a system that considers
+In this paper we describe SatWins, a system that considers
  a restricted version of WIP that adopts
 the Local-As-View (LAV) approach \cite{levy:bucket} to specify the semantics of the concrete services as views of abstract services; this representation is similar to the
 one that is semi-automatically generated for the DEIMOS system
@@ -74,14 +74,12 @@ one that is semi-automatically generated for the DEIMOS system
 queries on the abstract services, and  the quality
 of an instantiation is an overall utility function that combines the
 different QoS parameters of the selected concrete services.
-In this version of WIP, the rules that define workflows (conjunctive queries)
-and concrete services (views) are created in a way that all the 
+Rules that define workflows (conjunctive queries)
+and concrete services (views) are created in a way such that all the 
 functional restrictions on pre- and post-conditions of services
-and their combinations are satisfied, and the QoS measures are
-represented by annotating each concrete service description with
-a real number that represents the overall QoS utility of the service.
+and their combinations are satisfied; the QoS measures correspond to real numbers that represent the overall QoS utility of the services.
 
-In addition to providing a novel approach to describe the WIP problem, SATWins is able to  efficiently identify an abstract workflow's instantiations. 
+In addition to providing a novel approach to describe the WIP problem, SATWins is able to  efficiently identify abstract workflow's instantiations. 
 Given a WIP, a logical theory is constructed such that each model of
 the theory encodes a valid instantiation, and thus all valid instantiations
 are obtained by enumerating all models of the theory. This enumeration
@@ -89,29 +87,29 @@ can be efficiently performed if the logical theory is in a certain
 normal form called deterministic and decomposable negation normal
 form (d-DNNF) \cite{darwiche:d-dnnfs}. Thus, the approach consists in
 transforming (called compiling in the field of knowledge compilation)
-the logical theory into d-DNNF format for enumerating its models efficiently; also, the  enumeration  of
-the best ranked models can also be performed efficiently on a theory in d-DNNF and
-the complexity is independent of the utility function used to rank the optimal instantiation.
+the logical theory into d-DNNF format for enumerating its models efficiently. The  enumeration  of
+the best models can also be performed efficiently on a theory in d-DNNF, and the same d-DNNF can be reused for different utility functions.
 
-In this demonstration, we  attempt to show the following key aspects of the approach implemented by SATWins. We will use a real-world example based on a simple flight-information system.
+In the demonstration, we will use a simple flight-information system to show the following key issues of the proposed approach.
 \begin{itemize}
-\item We show the expressiveness of representing concrete services as views on abstract services.
-\item We demonstrate the performance of the proposed techniques by computing the optimal instantiation of a given WIP in terms of different utility functions.  
-\item We show the scalability of our solution by demonstrating how SATWins is able to enumerate realistic instances of the problem in less than one second.
+\item We demonstrate expressiveness of representing concrete services as views on abstract services.
+\item We discuss scalability  by demonstrating how SATWins is able to enumerate realistic instances of the problem in less than one second.
+\item We demonstrate the performance  by enumerating in the same d-DNNF, the optimal models based on different utility functions.  
+
 \end{itemize}  
  
 \section{SatWins Architecture}
  The SatWins architecture  is comprised of a Catalog of service descriptions,
 the Encoder, the compiler c2d, the best model Finder, and the Decoder.
 Figure~\ref{fig:architecture} depicts the overall architecture of the system.
-In this framework, an instance of the Workflow Instantiation Problem is defined as an
+In SATWins, an instance of the Workflow Instantiation Problem is defined as an
 abstract workflow represented by a conjunctive query on abstract services which
 is given as input together with a set of concrete services defined by views
 of abstract services. 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=.9\textwidth]{architecture}
+\includegraphics[height=20mm,width=.6\textwidth]{architecture}
 \caption{The SatWins Architecture}
 \label{fig:architecture}
 \end{figure}
@@ -149,11 +147,11 @@ these can be also computed in linear time in the number of them.
 In the latter two cases, if such number is exponential (in the size of the
 input), the enumeration of the instantiations is also exponential but
 this complexity is intrinsic to the problem and thus cannot be avoided.
-Figure \~ref{fig:snapshot} shows a snapshot of an input instance of WIP and the functionality of SatWins. 
+Figure ~\ref{fig:snapshot} shows a snapshot of an input instance of WIP and the functionality of SatWins. 
 
 \begin{figure}[t]
 \centering
-\includegraphics[height=30mm,width=.7\textwidth]{demo}
+\includegraphics[height=85mm,width=.8\textwidth]{demo}
 \caption{A snapshot of the SatWins interface}
 \label{fig:snapshot}
 \end{figure}
@@ -165,8 +163,7 @@ about flights between cities and information about which cities are in
 the US. Such a system can be described using LAV with the two abstract
 services $\flight(x,y)$ and $\UScity(x)$. The former relates two cities
 $x$ and $y$ if there is a direct flight between them, and the latter tells
-whether $x$ is a US city or not. We also consider different sets of concrete services; functionality, complexity and size will be changed during the demonstration to show
-the expressiveness, performance and scalability of our approach. An example of some of the concrete services to be used is as follows:
+whether $x$ is a US city or not. Some concrete services are as follows:
 \begin{enumerate}[--]
 \item $\national(x,y)$ relates two US cities that are connected by a direct flight,
 \item $\oneway(x,y)$ relates two cities that are connected by a one-way flight,
@@ -200,12 +197,10 @@ However, the following composition is not valid.
 I'(x,w,y,z)\  \qrule\ &\national(x,y),\,\flightPA(y),\,\fromNY(z),\,\national(z,x)\,. \\
 \end{alignat*}
 
-Using this domain, we will demonstrate the following scenarios:
+Using this flight-based system, we will demonstrate the following scenarios:
 \begin{itemize}
-\item To show the scalability of the proposed approach, we use the behavior of
-SATWins in three different benchmarks. In all the cases, we show time for
-compilation, size of the  d-DNNF, and time to enumerate all the models as well
-as the optimal one. We start with a benchmark of instances for workflows with 2
+\item To show the scalability of the proposed approach, we run SATWins in three different benchmarks. In each scenario, we show time for
+compilation, size of the  d-DNNF, and time to enumerate all the models and the optimal one. We start with a benchmark of instances for workflows with 2
 to 5 sub-goals and sets of 10 to 100 concrete services. Although the observed
 time suggests a sub-exponential behavior, in any case, the results
 show good performance. For instance, sets of 100
@@ -218,11 +213,11 @@ a problem with 45 views each with 5 sub-goals is of size 5.1Mb and has
 $1.26\times 10^8$ models. The time to find the best model for
 this d-DNNF is 0.46 seconds while the time to enumerate all models
 is about 17 hours.
-\item To show the performance of the approach and reusability of existing d-DNNF, we will allow users to choose different utility metrics to compute the best solution.  We will show that the existing d-DNNF can be used to compute the best model with different utility functions, while the execution time remains the same for the different functions. 
+\item To show the performance of the approach and reusability of existing d-DNNF, we will allow users to choose different utility metrics to compute the best solution.  We will show that the existing d-DNNF can be used to compute the best model with different utility functions, while the execution time remains similar for the different functions. 
 \end{itemize}
 
 \section{Conclusions}
-In this demonstration, we will present a Local-As-View (LAV)-based approach \cite{levy:bucket} to WIP. We will show how by using simple conjunctive rules the functionality of concrete services and abstract workflows can be defined. In addition, we will show how a propositional-based approach can be used to represent instances of WIP and different scenarios where the performance and scalability of the technique will be observed by the users.  We will demonstrate that the approach can be applied to
+In this demonstration, we will present a Local-As-View (LAV)-based approach \cite{levy:bucket} to WIP. We will show how by using simple conjunctive rules, the functionality of concrete services and abstract workflows can be defined. In addition, we will show how a propositional logic-based approach can be used to represent instances of WIP, and different scenarios where the performance and scalability of the technique will be observed by  users.  We will demonstrate that the approach can be applied to
 real-sized workflow problems, while the whole approach is only possible
 when the compilation of the CNF theory into d-DNNF format succeeds.
 \bibliographystyle{abbrv}
