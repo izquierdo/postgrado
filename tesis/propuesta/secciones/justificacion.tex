@@ -1,12 +1,14 @@
 \section{Justificación e Importancia}
 
-\subsection{Complejidad del Problema}
-
-Estamos tratando con un problema difícil \cite{lenzerini:dataintegration}. 
-El cuadro~\ref{cqcomplexity} ilustra la complejidad de distintos tipos de
+Estamos tratando con un problema difícil \cite{lenzerini:dataintegration} en el
+sentido de que es computacionalmente complejo. Más formalmente, el problema
+pertenece a coNP.
+coNP es la clase de los problemas tales que se puede verificar eficientemente (en
+tiempo polinomial) demostraciones de que no tienen ninguna solucion.
+El cuadro~\ref{cqcomplexity}
+ilustra la complejidad de distintos tipos de
 problemas de resolución de consultas basadas en vistas. El caso particular que
-se está tratando en este trabajo es CQ con búsqueda exacta, el cual está en
-coNP.
+se está tratando en este trabajo es CQ con búsqueda exacta.
 
 \begin{table}
 \begin{center}
@@ -34,3 +36,5 @@ Datalog&undec.&undec.&undec.&undec. &undec. \\
   \label{cqcomplexity}
 \end{center}
 \end{table}
+
+Debido

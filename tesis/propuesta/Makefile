@@ -6,8 +6,10 @@ DVIPDF=dvipdf
 
 DOCUMENTO=propuesta
 
-CAPITULOS=cronograma justificacion metodologia objetivos planteamiento portada
+CAPITULOS=cronograma justificacion metodologia objetivos planteamiento portada resultados solucion trabajorelacionado
 EXT_BASURA={log,aux,toc,dvi,pdf,bbl,blg,out,lot}
+
+
 
 all: ${DOCUMENTO}.pdf
 
