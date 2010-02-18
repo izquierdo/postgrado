@@ -24,6 +24,7 @@ class CQ:
         self.comparacion = comp
         self.vars,self.varsExist,self.varsDist = self.obtVariables();
         self.varsExistL = list(self.varsExist)
+        self.string = None
 
     def variables(self):
         return self.vars
@@ -57,6 +58,28 @@ class CQ:
 
     def __str__(self):
         return str(self.cabeza) + " :- " + ", ".join(str(x) for x in self.cuerpo)
+        if not self.string:
+            display_cabeza = self.cabeza
+            display_cuerpo = self.cuerpo
+            
+            display_cabeza.orden = []
+            display_cabeza.argumentos = {}
+
+            for v in self.cabeza.orden:
+                if es_const(v):
+                    nv = getConstantName(v)
+
+                    display_cabeza.orden.append(nv)
+                    display_cabeza.argumentos[nv] = '1'
+                else:
+                    nv = getVariableName(v)
+
+                    display_cabeza.orden.append(nv)
+                    display_cabeza.argumentos[nv] = '0'
+
+            self.string = str(display_cabeza) + " :- " + ", ".join(str(x) for x in display_cuerpo)
+
+        return str(self.cabeza) 
 
     __repr__ = __str__
 

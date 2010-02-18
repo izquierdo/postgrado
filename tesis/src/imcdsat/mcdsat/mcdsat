@@ -31,7 +31,7 @@ elif [ "$OPTION" == "RW" ] ; then
 elif [ "$OPTION" == "BESTRW" ] ; then 
   EXP="SatBestRW"
   #TODO cambiar a ../../models/bestmodel
-  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/bestmodel -f ../forgetfile -c $COSTFILE $NNF"
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/bestmodel -f forgetfile -c $COSTFILE $NNF"
 else
   echo "Invalid option" $OPTION
   exit

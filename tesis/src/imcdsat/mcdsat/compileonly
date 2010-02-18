@@ -36,7 +36,7 @@ $C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG &&
 CTIME=`awk '$0~"Total Time" {t=substr($3,1);sub("s","",t);print t;}'<$LOG`
 TIME1=`cat $LOG1`
 #TIME2=`cat $LOG2`
-rm -f $LOG $LOG1 $VIS.pyo
+rm -f $LOG $LOG1
 #rm -f $LOG $LOG1 $LOG2 $VIS.pyo
 #rm $CNF $NNF
 

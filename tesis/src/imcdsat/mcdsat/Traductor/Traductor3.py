@@ -121,7 +121,7 @@ def clausulasCombinarMCD(transf, n, q, vistas):
                                 except KeyError:
                                     continue
 
-                                #clausulas para constantes en teoria extendida
+                                #clausulas para constantes en teoria extendida (S6)
                                 clausulas2.append("%s %s 0\n" % (str(numVarT0), str(numVarT1)))
 
 
@@ -178,50 +178,51 @@ def generarTeoriaMCD(q, vistas):
     
     c5, c13 = clausulas513(q,vistas,ltaux)
     c15 = clausulas15(q, vistas)
-    #print "clausulas 1  \/ vi (por lo menos uno)"
+    #print "clausulas C1  \/ vi (por lo menos uno)"
     #pprint.pprint(c1) 
-    #print "clausulas 2  -vi \/ -vj (maximo uno)"
+    #print "clausulas C2  -vi \/ -vj (maximo uno)"
     #pprint.pprint(c2) 
-    #print "clausulas 3  \/ gk (por lo menos uno)"
+    #print "clausulas C3 y C4 \/ gk (por lo menos uno)"
     #pprint.pprint(c3) 
-    #print "clausulas 4  Vm /\ tij => -tik y property 1 C2 "
+    #print "clausulas C9 Vm /\ tij => -tik y property 1 C2 "
     #pprint.pprint(c4) 
-    #print "clausulas 5  vm => -tij (i Dist y j exist) "
+    #print "clausulas C10 vm => -tij (i Dist y j exist) "
     #pprint.pprint(c5)
-    #print "clausulas 6  gi /\ vm => \/ zir (r subob de Vm)"
+    #print "clausulas C7 (=>) gi /\ vm => \/ zir (r subob de Vm)"
     #pprint.pprint(c6) 
-    #print "clausulas 7  zir => tir"
+    #print "clausulas C12 zir => tir"
     #pprint.pprint(c7) 
-    #print "clausulas 8  gi /\ vm <= \/ zir (r subob de Vm)"
+    #print "clausulas C7 (<=) gi /\ vm <= \/ zir (r subob de Vm)"
     #pprint.pprint(c8)
-    #print "clausulas 9  maximo una z por vm, gi"
+    #print "clausulas C5 maximo una z por vm, gi"
     #pprint.pprint(c9)
-    #print "clausulas 10 t explicito"
+    #print "clausulas C15? t explicito"
     #pprint.pprint(c10)
-    #print "clausulas 11  tik => \/ vm (si tik entonces alguna vm)"
+    #print "clausulas C8  tik => \/ vm (si tik entonces alguna vm)"
     #pprint.pprint(c11)
-    #print "clausulas 12  v_m & g_j => -g_k "
+    #print "clausulas C13 v_m & g_j => -g_k "
     #pprint.pprint(c12)
-    #print "clausulas 13  t_ij => -t_kj"
+    #print "clausulas C11  t_ij => -t_kj"
     #pprint.pprint(c13)
-    #print "clausulas 14  v_i => -gk cuando los preds son diff"
+    #print "clausulas C6  v_i => -gk cuando los preds son diff"
     #pprint.pprint(c14)
 
-    #print "clausulas d1  t_{x,A} => -t_{x,B}"
+    #print "clausulas S1  t_{x,A} => -t_{x,B}"
     #pprint.pprint(d1)
-    #print "clausulas d2  t_{A,x} => -t_{B,x}"
+    #print "clausulas S2  t_{A,x} => -t_{B,x}"
     #pprint.pprint(d2)
-    #print "clausulas d3  -t_{A,B}"
+    #print "clausulas S3  -t_{A,B}"
     #pprint.pprint(d3)
-    #print "clausulas d4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
+    #print "clausulas S4  v_i /\\ t_{A,y} /\\ t_{x,y} /\\ t_{x,z} => t_{A,z}"
     #pprint.pprint(d4)
-    #print "clausulas d5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
+    #print "clausulas S5  v_i /\\ t_{y,A} /\\ t_{y,x} /\\ t_{z,x} => t_{z,A}"
     #pprint.pprint(d5)
     #print "clausulas d6  vi => -t_{x,A} si A no aparece en cuerpo de vi"
     #pprint.pprint(d6)
 
+    #c10=[]
     clausulas =  c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c10 + c11 + c12 + c13 + c14 + c15
-    clausulas = clausulas + d1 + d2 + d3 + d4 + d5 + d6
+    clausulas = clausulas + d1 + d2 + d3 + d4 + d5# + d6
     #clausulas = clausulas + d1 + d2 + d3
 
     return variables, clausulas
@@ -330,6 +331,7 @@ def clausulas513(q, vistas, lt):
                     for y in xrange(x+1,n):
                         varty = varsT.get((int(varsE[y]), int(varv)))
                         if (varty, varvt) in lt:
+                            continue #TODO disabled
                             c13.append([vartx.negarVar(),
                                         varty.negarVar(),
                                         varvt.negarVar()
