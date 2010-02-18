@@ -34,21 +34,6 @@ problema de instanciar un flujo de trabajo dado con servicios concretos de un
 conjunto de servicios concretos dado, de manera que ciertas restricciones sobre QoS sean
 cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP).
 
-En este trabajo se considera una versión restringida de WIP que adopta el
-enfoque Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
-problema son especificados con un lenguaje común basado en servicios abstractos
-tal que los servicios concretos se describen como vistas de servicios
-abstractos, la calidad de una instanciación como una función de utilidad global
-que combina los diferentes parámetros QoS, y el flujo de trabajo abstracto como
-una consulta conjuntiva sobre los servicios abstractos; esta representación es
-similar a la que es generada de manera semiautomática para el sistema DEIMOS
-\cite{AmbiteISWC09}. En esta versión de WIP, las reglas que definen flujos de trabajo
-(consultas conjuntivas) y servicios concretos (vistas) son creados de manera que
-todas las restricciones funcionales sobre pre- y post-condiciones de los
-servicios y sus combinaciones sean satisfechas, y las medidas de QoS son
-representadas anotando cada descripción de servicio concreto con un número real
-que representa la utilidad QoS global del servicio.
-
 Bajo estas suposiciones, WIP puede ser convertido en el bien conocido Problema
 de Reescritura de Consultas (QRP) para LAV que es central a los sistemas de
 integración \cite{halevy:survey}. QRP consiste de una consulta conjuntiva que debe ser
@@ -182,3 +167,28 @@ Los parámetros QoS son modelados anotando los servicios concretos con utilidade
 que caracterizan su comportamiento y que luego son agregados durante la
 instanciación. Así, como se mencionó previamente, la mejor instanciación es la
 que minimiza (o maximiza) la agregación de utilidades.
+
+\subsection{Propuesta}
+
+En este trabajo se considera una versión restringida de WIP que adopta el
+enfoque Local-As-View (LAV) \cite{levy:bucket}. En LAV, todos los elementos de un
+problema son especificados con un lenguaje común basado en servicios abstractos
+tal que los servicios concretos se describen como vistas de servicios
+abstractos, la calidad de una instanciación como una función de utilidad global
+que combina los diferentes parámetros QoS, y el flujo de trabajo abstracto como
+una consulta conjuntiva sobre los servicios abstractos; esta representación es
+similar a la que es generada de manera semiautomática para el sistema DEIMOS
+\cite{AmbiteISWC09}. En esta versión de WIP, las reglas que definen flujos de trabajo
+(consultas conjuntivas) y servicios concretos (vistas) son creados de manera que
+todas las restricciones funcionales sobre pre- y post-condiciones de los
+servicios y sus combinaciones sean satisfechas, y las medidas de QoS son
+representadas anotando cada descripción de servicio concreto con un número real
+que representa la utilidad QoS global del servicio.
+
+El resto de esta propuesta está distribuido como sigue. En la sección 2 se
+discute trabajo previo relacionado a la propuesta y conseguido en la literatura
+actual. En la sección 3 se justifica el trabajo sobre este problema. En la
+sección 4 se exponen los objetivos del trabajo. En la sección 5 se propone una
+metodología para alcanzar los objetivos. En la sección 6 se presenta un
+cronograma de actividades que permitan desarrollar el trabajo. Por último, en la
+sección 7 se dan a conocer los resultados del trabajo ya realizado.
