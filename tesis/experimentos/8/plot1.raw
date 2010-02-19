@@ -1,0 +1,106 @@
+################################################################################
+100 2
+real 27.80
+user 27.46
+sys 0.31
+100 3
+real 92.18
+user 91.40
+sys 0.67
+100 4
+real 198.83
+user 197.33
+sys 1.42
+100 5
+real 330.72
+user 328.36
+sys 1.89
+120 2
+real 60.36
+user 59.73
+sys 0.53
+120 3
+real 182.67
+user 181.42
+sys 1.18
+120 4
+real 386.90
+user 384.27
+sys 2.24
+120 5
+real 639.79
+user 635.79
+sys 3.31
+140 2
+################################################################################
+90 2
+real 0.19
+user 0.15
+sys 0.03
+90 3
+real 0.19
+user 0.15
+sys 0.03
+90 4
+real 0.19
+user 0.13
+sys 0.03
+90 5
+real 0.20
+user 0.16
+sys 0.02
+real 114.87
+user 113.44
+sys 0.84
+140 3
+################################################################################
+90 2
+real 28.26
+user 25.90
+sys 0.24
+90 3
+Command exited with non-zero status 130
+real 90.92
+user 85.33
+sys 1.10
+140 4
+Command exited with non-zero status 1
+real 0.40
+user 0.29
+sys 0.05
+140 5
+Command exited with non-zero status 130
+real 0.52
+user 0.50
+sys 0.03
+160 2
+Command exited with non-zero status 1
+real 3.58
+user 3.04
+sys 0.05
+90 4
+Command exited with non-zero status 130
+real 0.42
+user 0.35
+sys 0.05
+90 5
+################################################################################
+90 2
+real 8.89
+user 8.82
+sys 0.07
+real 18.42
+user 17.82
+sys 0.21
+90 3
+real 60.99
+user 60.52
+sys 0.38
+90 4
+real 137.25
+user 136.08
+sys 0.80
+90 5
+real 228.84
+user 227.49
+sys 1.23

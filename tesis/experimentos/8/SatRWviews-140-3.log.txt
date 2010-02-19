@@ -1,0 +1,10 @@
+
+c2d compiler version 2.20
+Copyright (c) Automated Reasoning Group, UCLA 2004-2005
+Licensed only for non-commercial, research and educational use
+
+Loaded cnf: 4632 vars 221159 clauses (0 eclauses)
+1 unit clauses, 211490 binary clauses, max clause size: 141
+Generating dtree... done.
+Max Cluster=422, Cutset=3, Context=421, Separator=420, Height=4046
+Compiling...50.

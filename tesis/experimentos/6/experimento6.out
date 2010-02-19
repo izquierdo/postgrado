@@ -1,0 +1,129 @@
+########
+5 2 2
+real 0.18
+user 0.12
+sys 0.07
+5 3 2
+real 0.23
+user 0.21
+sys 0.04
+5 4 2
+real 0.31
+user 0.27
+sys 0.03
+5 5 2
+real 0.42
+user 0.37
+sys 0.06
+10 2 2
+real 0.28
+user 0.22
+sys 0.06
+10 3 2
+real 0.59
+user 0.45
+sys 0.07
+10 4 2
+real 0.75
+user 0.65
+sys 0.08
+10 5 2
+real 1.23
+user 1.08
+sys 0.06
+15 2 2
+real 0.44
+user 0.42
+sys 0.04
+15 3 2
+real 0.89
+user 0.84
+sys 0.05
+15 4 2
+real 1.62
+user 1.38
+sys 0.09
+15 5 2
+real 2.72
+user 2.53
+sys 0.09
+20 2 2
+real 0.70
+user 0.63
+sys 0.05
+20 3 2
+real 1.68
+user 1.48
+sys 0.13
+20 4 2
+real 2.82
+user 2.64
+sys 0.13
+20 5 2
+real 5.64
+user 5.24
+sys 0.21
+25 2 2
+real 1.16
+user 1.05
+sys 0.11
+25 3 2
+real 2.52
+user 2.28
+sys 0.16
+25 4 2
+real 4.68
+user 4.52
+sys 0.08
+25 5 2
+real 9.38
+user 9.03
+sys 0.27
+30 2 2
+real 1.62
+user 1.55
+sys 0.05
+30 3 2
+real 3.76
+user 3.65
+sys 0.14
+30 4 2
+real 6.97
+user 6.70
+sys 0.14
+30 5 2
+real 15.54
+user 14.71
+sys 0.30
+35 2 2
+real 2.29
+user 2.21
+sys 0.09
+35 3 2
+real 5.42
+user 5.11
+sys 0.23
+35 4 2
+real 10.67
+user 10.42
+sys 0.21
+35 5 2
+real 23.23
+user 22.45
+sys 0.75
+40 2 2
+real 3.12
+user 3.02
+sys 0.10
+40 3 2
+real 7.87
+user 7.40
+sys 0.25
+40 4 2
+real 16.10
+user 15.64
+sys 0.38
+40 5 2
+real 33.45
+user 32.19
+sys 0.93
