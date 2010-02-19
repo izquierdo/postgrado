@@ -477,6 +477,7 @@ namespace nnf {
     mp::Int* mp_count_models( mp::Int **output = 0, const int *lit_map = 0 ) const;
     std::pair<bool,const Node*> enumerate_models_recursively( const Node *n, Model &m, const Node *last_or ) const;
     void enumerate_models( std::ostream &os, size_t count = 0, bool all = false ) const;
+    void enumerate_and_project_models( std::ostream &os, size_t count = 0, bool all = false, const std::vector<int>& forgets = std::vector<int>() ) const;
     void enumerate_models( ModelList &models, size_t count = 0 ) const;
     int min_cost( const int *costs = 0 ) const;
     void min_model( Model &model ) const;

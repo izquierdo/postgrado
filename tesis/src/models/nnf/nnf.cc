@@ -279,6 +279,42 @@ Manager::enumerate_models( std::ostream &os, size_t count, bool all ) const
 }
 
 void
+Manager::enumerate_and_project_models( std::ostream &os, size_t count, bool all, const std::vector<int>& forgets ) const
+{
+  Model m;
+  bool next = true;
+  size_t i = 0;
+  while( next && ((count == 0) || (i < count)) ) {
+    // generate model
+    std::pair<bool,const Node*> rc = enumerate_models_recursively(root_,m,0);
+    if( rc.first ) {
+        for( int i = 0, isz = forgets.size(); i < isz; ++i ) {
+            int var = forgets[i]<<1;
+            m.erase(var);
+            m.erase(var+1);
+        }
+
+        m.print(os,all);
+        os << std::endl;
+        ++i;
+    }
+    m.clear();
+
+    // advance state
+    next = false;
+    for( const Node *n = rc.second; !next && (n != 0); n = (const Node*)n->cache_.second_ ) {
+      long i = 1+(long)n->cache_.first_;
+      if( n->children_[i] == 0 )
+        n->cache_.first_ = 0;
+      else {
+        n->cache_.first_ = (const void*)i;
+        next = true;
+      }
+    }
+  }
+}
+
+void
 Manager::enumerate_models( ModelList &models, size_t count ) const
 {
   Model m;
@@ -364,7 +400,7 @@ Manager::recursive_min_model( const Node *n, Model &model ) const
     recursive_min_model(*minchild,model);
   }
   else if( n->type_ == Value )
-    assert((long)n->children_);
+    0;//assert((long)n->children_);
   else if( n->type_ == Variable )
     model.insert((long)n->children_);
 }
