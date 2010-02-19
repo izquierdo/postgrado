@@ -100,7 +100,7 @@ class Ui_Main(object):
 
         # top :: right side :: solutions :: rewritings
         self.rewritings_Widget = QGroupBox()
-        self.rewritings_Widget.setTitle("Rewritings")
+        self.rewritings_Widget.setTitle("Instantiations")
         self.solutions_Layout.addWidget(self.rewritings_Widget)
 
         self.rewritings_Layout = QVBoxLayout()
@@ -145,11 +145,11 @@ class Ui_Main(object):
         QtCore.QMetaObject.connectSlotsByName(Main)
 
     def retranslateUi(self, Main):
-        Main.setWindowTitle(QApplication.translate("Main", "SsdSat Demo", None, QApplication.UnicodeUTF8))
+        Main.setWindowTitle(QApplication.translate("Main", "SATWins", None, QApplication.UnicodeUTF8))
         self.queryDisplayLabel.setText(QApplication.translate("Main", "Workflow", None, QApplication.UnicodeUTF8))
         self.viewsDisplayLabel.setText(QApplication.translate("Main", "Concrete Services", None, QApplication.UnicodeUTF8))
 
-        self.dnnfLabel.setText(QApplication.translate("Main", "d-DNNF: loaded", None, QApplication.UnicodeUTF8))
+        self.dnnfLabel.setText(QApplication.translate("Main", "d-DNNF: loaded (28K)", None, QApplication.UnicodeUTF8))
         #TODO activate next label
         #self.dnnfStatusLabel.setText(QApplication.translate("Main", "loaded", None, QApplication.UnicodeUTF8))
 

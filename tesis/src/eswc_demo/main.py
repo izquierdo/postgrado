@@ -11,7 +11,7 @@ class MyForm(QMainWindow):
         self.ui.setupUi(self)
 
         queryDisplay = self.ui.CentralWidget.findChild(QLineEdit, "queryDisplayBox")
-        queryDisplay.setText("q(X1,X2) :- r(X1,X3),r(X3,X4),r(X4,X5),r(X5,X2)")
+        queryDisplay.setText("W(x, w, y, z) :- uscity(x), flight(x, w), flight(w, y), flight(y, z), flight(z, x)")
 
         listView = self.ui.CentralWidget.findChild(QListWidget, "listView")
 
@@ -25,7 +25,8 @@ class MyForm(QMainWindow):
         #parte de archivo TODO
         viewsDisplayBox = self.ui.CentralWidget.findChild(QListWidget, "viewsDisplayBox")
 
-        f = open("views-60-5.txt")
+        #f = open("views-60-5.txt")
+        f = open("views-paper.txt")
         lines = [l for l in f]
         f.close()
 

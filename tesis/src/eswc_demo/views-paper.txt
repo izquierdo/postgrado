@@ -1,0 +1,6 @@
+national(x, y) :- flight(x, y), uscity(x), uscity(y)
+one-way(x, y) :- flight(x, y)
+one-stop(x, z) :- flight(x, y), flight(y, z)
+flight-to-pa(x) :- flight(x, PA)
+onestop-to-pa(x, y) :- flight(x, y), flight(y, PA)
+from-ny(x) :- flight(NY, x)
