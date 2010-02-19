@@ -10,7 +10,8 @@ set arrow from 0.0028,250 to 0.003,280
 set xr [0:80]
 set yr [0.1:200]
 set logscale y                       # scale axes automatically
-set terminal png
+set terminal postscript
+set output "| ps2pdf - plot2.pdf"
 plot "2sgs.dat" using 1:2 title '2 sub-goals' with linespoints , \
      "3sgs.dat" using 1:3 title '3 sub-goals' with linespoints , \
      "4sgs.dat" using 1:3 title '4 sub-goals' with linespoints , \
