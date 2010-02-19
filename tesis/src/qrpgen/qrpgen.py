@@ -17,7 +17,8 @@ def writelist(l, filename):
 
 def main():
     if len(sys.argv) < 4:
-        usage_and_quit()
+        print_usage()
+        sys.exit(1)
 
     viewsfilename = sys.argv[1]
     queryfilename = sys.argv[2]

@@ -37,7 +37,7 @@ def randomviews(argv):
 
     for n in xrange(1, nviews+1):
         view_table = Table("v%s" % n, [Argument('var', i+1) for i in xrange(n_vars)])
-        view_sos = [Table(pred, [rand_constvar(i+1) for i in random.sample(range(n_vars)*n_vars, n_varsperpred)]) for pred in random.sample(predicates * n_preds, nquery_sos)]
+        view_sos = [Table(pred, [rand_constvar(i+1) for i in random.sample(range(n_vars)*n_vars, n_varsperpred)]) for pred in random.sample(predicates * n_preds, nview_sos)]
         view = Query(view_table, view_sos)
         views.append(view)
 
