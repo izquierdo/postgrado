@@ -27,14 +27,24 @@ contribVT = {}
 def traducir(exp, archV, archC, archVars, archTiempo, archSalida, archCostosSat):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
     tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
-    traducir1(exp, archV, archC, archVars, archSalida)
+    traducir1(exp, archV, archC, archVars, archSalida, archCostosSat)
     tiempof = resource.getrusage(resource.RUSAGE_SELF)[0]
     
     fileobject = open(archTiempo, 'w')
     fileobject.write(str(tiempof-tiempoi))
     fileobject.close()
 
-def traducir1(exp, archVistas, archCons, archVars, archSalida): #(archVistas, archCons):
+def traducirBig(exp, archV, archC, archVars, archTiempo, archSalida, archCostos):
+    #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
+    tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
+    traducir1Big(exp, archV, archC, archVars, archSalida, archCostos)
+    tiempof = resource.getrusage(resource.RUSAGE_SELF)[0]
+    
+    fileobject = open(archTiempo, 'w')
+    fileobject.write(str(tiempof-tiempoi))
+    fileobject.close()
+
+def traducir1(exp, archVistas, archCons, archVars, archSalida, archCostosSat): #(archVistas, archCons):
     vistas = cargarCQ(archVistas)
     consultas = cargarCQ(archCons)
     for q in consultas:
@@ -44,6 +54,11 @@ def traducir1(exp, archVistas, archCons, archVars, archSalida): #(archVistas, ar
             transf = traducirConsultaMCD(q, vistas, archSalida)
         guardarVars(transf, archVars)
 
+def traducir1Big(exp, archVistas, archCons, archVars, archSalida, archCostos): #(archVistas, archCons):
+    vistas = cargarCQ(archVistas)
+    consultas = cargarCQ(archCons)
+    for q in consultas:
+        traducirConsultaBigBestRW(q, vistas, archSalida, archCostos)
 
 def guardarVars(transf, archVars):
     fh = open(archVars,'w')
@@ -67,7 +82,25 @@ def traducirConsultaRW(q, vistas, archSalida):
     imprimirCopias(variables, clausulas, clausulas2, n, transf, archSalida)
     return transf
 
+def traducirConsultaBigBestRW(q, vistas, archSalida, archCostos):
+    #costos
+    costFile = open(archCostos, 'r')
+    costStr = costFile.read()
+    costFile.close()
+    costList = costStr.split()[1:]
+    costDict = {}
 
+    for i in range(0, len(costList), 2):
+        costDict[costList[i]] = costList[i+1]
+
+    #impresion
+
+    variables, clausulas = generarTeoriaMCD(q, vistas)
+    transf = TransformarFormula(variables)
+    n = len(q.cuerpo)
+    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas)
+    imprimirCopiasPeso(variables, clausulas, clausulas2, n, costDict, transf, archSalida)
+    return transf
 
 def clausulasCombinarMCD(transf, n, q, vistas):
     clausulas2 = []
@@ -145,7 +178,21 @@ def imprimirCopias(variables, clausulas, clausulas2, numCopias, transf, archSali
     arch.write('%\n')
     arch.close()
 
- 
+def imprimirCopiasPeso(variables, clausulas, clausulas2, numCopias, pesos, transf, archSalida):
+    arch = file(archSalida, 'w+')
+    numVars = len(variables)*numCopias
+    numCl = len(clausulas)*numCopias + len(clausulas2)
+    top = 2**20-1
+    arch.write('p wcnf '+ str(numVars) + ' ' + str(numCl) + ' ' + str(top) + '\n')
+
+    for cls in clausulas2:
+        arch.write(str(top) + ' ' + cls)
+
+    for numCopia in xrange(numCopias):
+        transf.formula2NumWeighted(clausulas, numCopia, arch, pesos, top)
+
+    #arch.write('%\n')
+    arch.close()
 
 def generarTeoriaMCD(q, vistas):
     global varsV
