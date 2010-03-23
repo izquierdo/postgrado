@@ -1,0 +1,38 @@
+#  -alg irots -w
+#  -runs 1 
+#  -cutoff 100000 
+#  -timeout 0 
+#  -target 0 
+#  -wtarget 0.000000 
+#  -seed 633975134 
+#  -solve 0 
+#  -find|-numsol 0 
+#  -prestart 0 
+#  -rrestart 0.000000 
+#  -srestart 0 
+#  -noimprove 0 
+# 
+#  -ltabu 504 
+#  -tabuinterval 25 
+#  -esteps 6260004 
+#  -psteps 4503 
+#  -ptabu 2251 
+#  -pnoise 0.100000 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to supress, 'ubcsat -hc' to customise
+# 
+# 
+# Output Columns: |run|found|bestw|beststepw|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found (1 => yes)
+# bestw: Best Weighted Solution Quality Found
+# beststepw: Step of Best Weighted Solution Quality Found
+# steps: Total Number of Search Steps
+# 
+#       F         Best       Step      Total 
+#   Run N     Solution         of     Search 
+#   No. D      Quality     W Best      Steps 
+# 
+      1 0 30588458.00000000       5324     100000 

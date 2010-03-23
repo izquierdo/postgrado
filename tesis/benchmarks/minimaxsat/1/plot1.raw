@@ -1,0 +1,46 @@
+################################################################################
+20 3 10 10 10 3 30
+Command exited with non-zero status 20
+real 2.53
+user 2.52
+sys 0.00
+30 3 10 10 10 3 30
+Command exited with non-zero status 20
+real 10.03
+user 9.76
+sys 0.05
+40 3 10 10 10 3 30
+Command exited with non-zero status 20
+real 531.05
+user 526.46
+sys 1.17
+20 3 11 10 10 3 30
+Command exited with non-zero status 20
+real 3.92
+user 3.85
+sys 0.04
+30 3 11 10 10 3 30
+Command exited with non-zero status 20
+real 192.54
+user 190.54
+sys 1.56
+40 3 11 10 10 3 30
+Command terminated by signal 24
+real 607.08
+user 604.77
+sys 0.02
+20 3 12 10 10 3 30
+Command exited with non-zero status 20
+real 6.03
+user 5.71
+sys 0.08
+30 3 12 10 10 3 30
+real 172.06
+user 171.45
+sys 0.04
+40 3 12 10 10 3 30
+Command exited with non-zero status 1
+real 0.00
+user 0.00
+sys 0.00
+20 3 13 10 10 3 30
