@@ -4,15 +4,18 @@ INDIR=casos
 OUTFILE=plot1.raw
 
 TIME="/usr/bin/time -apo ${OUTFILE}"
+PROGRAM=/home/daniel/proyectos/postgrado/tesis/src/imcdsat/mcdsat/compileonly
 QRPGEN=/home/daniel/proyectos/postgrado/tesis/src/qrpgen/qrpgen.py
 
 echo '################################################################################' | tee -a ${OUTFILE}
+
+$QRPGEN vtest qtest randomviews 10 4 3 10 6 2 25
 
 nview_sos=3
 n_preds=10
 n_vars=10
 n_varsperpred=3
-perc_constants=30
+perc_constants=25
 
 for nquery_sos in `seq 10 1 15`; do
     for nviews in `seq 20 10 100`; do

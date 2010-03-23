@@ -17,8 +17,8 @@ n_vars=10
 n_varsperpred=3
 perc_constants=25
 
-for nquery_sos in `seq 10 1 15`; do
-    for nviews in `seq 20 10 100`; do
+for nviews in `seq 20 10 100`; do
+    for nquery_sos in `seq 10 5 30`; do
         viewsfile=casos/views-$nviews-$nview_sos-$nquery_sos-$n_preds-$n_vars-$n_varsperpred-$perc_constants
         queryfile=casos/query-$nviews-$nview_sos-$nquery_sos-$n_preds-$n_vars-$n_varsperpred-$perc_constants
 

@@ -17,7 +17,7 @@ def randomviews(argv):
 
     n_varsperpred = int(argv[5])
 
-    perc_constants = float(argv[6])/100.0
+    perc_constants = float(argv[6])
 
     def rand_constvar(i):
         r = random.random()
@@ -30,7 +30,7 @@ def randomviews(argv):
     predicates = ["r%d" % i for i in xrange(1, n_preds+1)]
 
     query_table = Table("q", [Argument('var', i+1) for i in xrange(n_vars)])
-    query_sos = [Table(pred, [rand_constvar(i+1) for i in random.sample(range(n_vars)*n_vars, n_varsperpred)]) for pred in random.sample(predicates * nquery_sos, nquery_sos)]
+    query_sos = [Table(pred, [rand_constvar(i+1) for i in random.sample(range(n_vars)*n_vars, n_varsperpred)]) for pred in random.sample(predicates * n_preds, nquery_sos)]
     query = Query(query_table, query_sos)
 
     views = []

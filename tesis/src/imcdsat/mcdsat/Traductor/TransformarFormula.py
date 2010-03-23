@@ -51,6 +51,8 @@ class TransformarFormula:
         return ret
 
     def formula2NumWeighted(self, formula, numCopia, arch, pesos, pesoD):
+        print pesos
+
         ret = ''
         varsCopia = {}
         desp = self.n*numCopia

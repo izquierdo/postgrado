@@ -9,9 +9,7 @@ PROGRAM=/home/daniel/proyectos/postgrado/tesis/src/imcdsat/mcdsat/compileonly
 echo '################################################################################' | tee -a ${OUTFILE}
 
 for vistas in `seq 90 10 90`; do
-    vistas=45
     for pasos in `seq 2 5`; do
-        pasos=5
         VIEWSFILE=${INDIR}/views-${vistas}-${pasos}.txt
         QUERYFILE=${INDIR}/query-${vistas}-${pasos}.txt
 
