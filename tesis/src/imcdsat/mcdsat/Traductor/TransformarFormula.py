@@ -50,6 +50,28 @@ class TransformarFormula:
             arch.write(self.cl2Num(x, varsCopia))
         return ret
 
+    def formula2NumWeighted(self, formula, numCopia, arch, pesos, pesoD):
+        print pesos
+
+        ret = ''
+        varsCopia = {}
+        desp = self.n*numCopia
+        for x, y in self.variables.iteritems():
+            varsCopia[x]=str(desp + y)
+            
+        for x in formula:
+            arch.write(str(pesoD) + ' ' + self.cl2Num(x, varsCopia))
+
+        #pesos variables
+        for v, s in self.variables.iteritems():
+            if v.nombreVar == 'v':
+                si = str(v.indices[0])
+
+                if pesos.has_key(si):
+                    arch.write(pesos[si] + ' ' + varsCopia[v] + ' 0\n')
+
+        return ret
+
     # Hace el cambio de vuelta a partir del modelo generado por zchaff
     def num2Var(self, num2):
         if num2[0] == '-':

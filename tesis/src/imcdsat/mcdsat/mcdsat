@@ -20,6 +20,17 @@ LOG1=${EXP}${VIS}_t1.txt
 LOG2=${EXP}${VIS}_t2.txt
 SATCOSTS=${CNF}.costs.txt
 
+run_bigbestrw()
+{
+    EXP=$1
+    MODS=$2
+
+    echo "[Translate to CNF]" $CNF &&
+    python $MCDSATDIR/MainBig.py T $EXP $VIEWSFILE $QUERYFILE $COSTFILE $VIS.pyo $LOG1 $CNF $SATCOSTS && 
+
+    exit 0
+}
+
 if [ "$OPTION" == "MCD" ] ; then 
   EXP="Sat"
   #MODS="$MCDSATDIR/../models/models -w $NNF"
@@ -32,6 +43,11 @@ elif [ "$OPTION" == "BESTRW" ] ; then
   EXP="SatBestRW"
   #TODO cambiar a ../../models/bestmodel
   MODS="/home/daniel/proyectos/postgrado/tesis/src/models/bestmodel -f forgetfile -c $COSTFILE $NNF"
+elif [ "$OPTION" == "BIGBESTRW" ] ; then 
+  EXP="SatBigBestRW"
+  #TODO cambiar a ../../models/bestmodel
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/bestmodel -f forgetfile -c $COSTFILE $NNF"
+  run_bigbestrw $EXP $MODS $COSTFILE
 else
   echo "Invalid option" $OPTION
   exit
