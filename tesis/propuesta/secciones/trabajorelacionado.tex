@@ -142,7 +142,7 @@ si para cada conjunción $\bigwedge_i\phi_i$, sus variables son disjuntas por pa
 decir, $Vars(\phi_i)\cap Vars(\phi_j)=\empty$ para $i\neq j$. Un DNNF soporta un
 número de operaciones en tiempo polinomial en el tamaño de su GAD. Por ejemplo,
 podemos probar si un DNNF es satisfactible haciendo un sólo recorrido 
-sobre su GAD en tiempo linear. Se dice que un DNNF es
+sobre su GAD en tiempo lineal. Se dice que un DNNF es
 determinístico (d-DNNF) \cite{darwiche:d-dnnfs} si para cada disjunción $\bigvee_i\phi_i$, los
 disjuntos son lógicamente contradictorios por pares, es decir,
 $\phi_i\land\phi_j\equiv\textbf{false}$ para $i\neq j$.
@@ -161,6 +161,6 @@ de técnicas de SAT modernas como backtracking dirigido por conflictos,
 aprendizaje de cláusulas y caching \cite{darwiche:compiler}. Este compilador incurre en el peor
 caso (peor gasto) en espacio exponencial en un parámetro llamado el ancho del árbol de
 descomposición que está relacionado a la ``conectividad'' de la teoría CNF.
-Sin embargo, en nuestros experimentos, las teorías CNF que son compiladas son de
-ancho pequeño.
+Sin embargo, en los experimentos realizados para esta propuesta las teorías CNF
+que fueron compiladas tuvieron ancho pequeño.
 

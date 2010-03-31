@@ -1,7 +1,7 @@
 \section{Planteamiento del Problema}
 
 En el contexto de la Web Semántica, y con el soporte de las Arquitecturas Orientadas a
-Servicios (SOA), el número de fuentes de datos y servicios Web ha explotado en
+Servicios (SOA), el número de fuentes de datos y servicios Web ha crecido rápidamente en
 los últimos años. Por ejemplo, la colección de bases de datos de biología
 molecular actualmente contiene 1.170 bases de datos~\cite{Galperin09}, un número
 que es
@@ -11,7 +11,7 @@ las herramientas y servicios, así como el número de instancias
 publicados por estos recursos, siguen una progresión similar~\cite{Benson07}.
 Gracias a
 esta variedad de datos, la tendencia de los usuarios es hacia depender cada vez
-más de métodos automáticos para manejarlos tales como recuperación de datos de
+más de métodos automáticos para manejarlos, tales como recuperación de datos de
 fuentes públicas y análisis utilizando herramientas o servicios Web compuestos
 en flujos de trabajo complejos.
 
@@ -29,31 +29,30 @@ una instanciación objetivo en el espacio combinatorio de todas las
 instanciaciones válidas. Entonces se está interesado en técnicas eficientes para
 realizar esta búsqueda que sean capaces de escalar a medida que el número de
 servicios concretos o la complejidad (número
-de objetivos, tamaño) de la estructura del flujo de trabajo  aumenta. Se llama al
+de objetivos, tamaño) de la estructura del flujo de trabajo  aumenta. Se denomina al
 problema de instanciar un flujo de trabajo dado con servicios concretos de un
 conjunto de servicios concretos dado, de manera que ciertas restricciones sobre QoS sean
-cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP).
+cumplidas, el Problema de Instanciación de Flujos de Trabajo (WIP, por sus siglas en inglés \emph{Workflow Instantiation Problem}).
 
 Bajo estas suposiciones, WIP puede ser convertido en el bien conocido Problema
-de Reescritura de Consultas (QRP) para LAV que es central a los sistemas de
+de Reescritura de Consultas (QRP, por sus siglas en inglés \emph{Query Rewriting Problem}) para Local-As-View (LAV) que es central a los sistemas de
 integración \cite{halevy:survey}. QRP consiste de una consulta conjuntiva que debe ser
 respondida en términos de vistas donde la consulta y las vistas son descritas
 usando LAV con relaciones abstractas. Este problema es importante en el contexto
 de integración de datos \cite{Chen05,JaudoinPRST05}, y optimización de consultas y mantenimiento
-de datos \cite{AfratiLU07,levy:bucket}, y varias soluciones que escalan a un número grande de
+de datos \cite{AfratiLU07,levy:bucket}. Varias soluciones que escalan a un número grande de
 vistas han sido definidas \cite{arvelo:aaai06,pods:DuschkaG97,sac:DuschkaG97,levy:bucket,pottinger:minicon}.
 
 La solución propuesta por Arvelo et al. \cite{arvelo:aaai06} está basada en la enumeración
 eficiente de modelos de una teoría lógica proposicional. Dada una consulta conjuntiva
 y un conjunto de fuentes definidas como vistas, se construye una teoría
-lógica de manera que cada modelo de la teoría codifica una
-reescritura válida, y así todas las reescrituras son obtenidas enumerando los
+lógica de manera que cada modelo de la teoría está en correspondencia con una
+reescritura válida distinta, y así todas las reescrituras son obtenidas enumerando los
 modelos de la teoría. Esta enumeración puede ser realizada eficientemente si la
 teoría lógica está en cierta forma normal llamada la forma normal de negación
-determinística y descomponible (d-DNNF) \cite{darwiche:d-dnnfs}. Así,
-la solución consiste en transformar (llamado compilar en el campo de
-compilación del conocimiento) la teoría lógica en el formato d-DNNF para
-enumerar sus modelos eficientemente.
+determinística y descomponible (d-DNNF, por sus siglas en inglés \emph{Decomposable Deterministic Negation Normal Form}) \cite{darwiche:d-dnnfs}. Así,
+la solución consiste en construir la teoría lógica, transformarla al formato d-DNNF para
+enumerar sus modelos eficientemente, y recuperar las reescrituras a partir de los modelos.
 
 Pero las teorías d-DNNF no sólo soportan la enumeración eficiente de sus
 modelos, sino también otras operaciones. Entre ellas se encuentra la enumeración
@@ -66,7 +65,7 @@ de mejor calidad si no hay modelo $\omega'$ tal que $r(\omega')<r(\omega)$.
 
 Dada una teoría en d-DNNF, se computa la calidad de los mejores modelos, y
 los mejores modelos, en tiempo lineal en el tamaño del d-DNNF. Este cómputo
-transforma el GAD del d-DNNF en un circuito aritmético reemplazando los nodos
+transforma el grafo acíclico dirigido del d-DNNF en un circuito aritmético reemplazando los nodos
 AND con `+' y los nodos OR con `min'. La función de calidad de literales
 asigna valores a las hojas del circuito aritmético (grafo acíclico dirigido usado
 para calcular polinomios) que son propagados a la raíz en tiempo
@@ -95,21 +94,21 @@ transformada al formato d-DNNF.
 \newcommand{\AL}{\text{AL}}
 % end flights
 
-Considere un sistema simple de información de vuelos que contiene información
+Considere un sistema sencillo de información de vuelos que contiene información
 sobre vuelos entre ciudades e información sobre qué ciudades están en los
-Estados Unidos. Un sistema así puede ser descrito usando LAV con los dos servicios
+Venezuela. Un sistema así puede ser descrito usando LAV con los dos servicios
 abstractos $\vuelo(x,y)$ y $\ciudadVE(x)$. El primero relaciona dos ciudades $x$ e $y$ si
 hay un vuelo directo entre ellas, y el segundo dice si $x$ es una ciudad de
 Venezuela  o no. Para los servicios concretos, supongamos que las fuentes de
 datos disponibles en Internet contienen la siguiente información:
 
 \begin{enumerate}[--]
-\item $\nacional(x,y)$ relaciona dos ciudades de Venezuela conectadas por un vuelo directo,
-\item $\ida(x,y)$ relaciona dos ciudades conectadas por un vuelo de ida,
-\item $\unaescala(x,y)$ relaciona dos ciudades conectadas por un vuelo con una escala,
-\item $\vueloCCS(x)$ dice si hay un vuelo directo desde $x$ a Caracas,
-\item $\unaparadaCCS(x,y)$ relaciona $x$ y $y$ si hay un vuelo desde $x$ a Caracas con una escala en $y$, y
-\item $\desdeVAL(x)$ dice si hay un vuelo de Valencia a $x$.
+\item $\nacional(x,y)$ relaciona dos ciudades de Venezuela conectadas por un vuelo directo
+\item $\ida(x,y)$ relaciona dos ciudades conectadas por un vuelo de ida
+\item $\unaescala(x,y)$ relaciona dos ciudades conectadas por un vuelo con una escala
+\item $\vueloCCS(x)$ dice si hay un vuelo directo desde $x$ a Caracas
+\item $\unaparadaCCS(x,y)$ relaciona $x$ y $y$ si hay un vuelo desde $x$ a Caracas con una escala en $y$
+\item $\desdeVAL(x)$ dice si hay un vuelo de Valencia a $x$
 \end{enumerate}
 
 Adicionalmente, los servicios concretos se describen con los siguientes
