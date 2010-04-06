@@ -2,8 +2,8 @@
 
 INDIR=casos
 
-OUT_MCD=plot_mcd0.raw
-OUT_MMS=plot_mms0.raw
+OUT_MCD=plot_mcd1.raw
+OUT_MMS=plot_mms1.raw
 
 TIME_MCD="/usr/bin/time -apo ${OUT_MCD}"
 TIME_MMS="/usr/bin/time -apo ${OUT_MMS}"
@@ -16,7 +16,9 @@ MINIMAXSAT="/home/daniel/proyectos/postgrado/tesis/src/MiniMaxSat/minimaxsat1.0 
 echo '################################################################################' | tee -a ${OUT_MCD}
 echo '################################################################################' | tee -a ${OUT_MMS}
 
-for nquery_sos in `seq 10 1 20`; do
+ulimit -t 600
+
+for nquery_sos in `seq 11 1 20`; do
     for nviews in `seq 10 10 100`; do
         VIEWSFILE=casos/views-$nviews-$nquery_sos.in
         QUERYFILE=casos/query-$nviews-$nquery_sos.in
