@@ -14,7 +14,7 @@ class Argument {
   int    type;  // VAR or CONST
   String name;
   
-  Argument(String name) {
+  Argument(String name, boolean isConstant) {
     if (name == null) {
       UserLib.myerror("Argument:constructor, name == null");
     }
@@ -23,7 +23,15 @@ class Argument {
       type = VAR;
     else
       type = CONST;
+
+    if(isConstant)
+        type = CONST;
+
     this.name = name;
+  }
+
+  Argument(String name) {
+      this(name, false);
   }
 
   /**

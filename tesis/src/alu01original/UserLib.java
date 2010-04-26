@@ -18,76 +18,25 @@ class UserLib {
       System.out.println(str);
   }
 
-  /**
-   * Gets the i^th character.  A "stupid" implementation.
-   */
-  public static String getChar(int index) {
-    /*Character ch = new Character((char)(Character.getNumericValue('A') + 
-					index));
-    return ch.toString();*/
+  public static String getChar(int index, boolean isConstant) {
+      if (isConstant)
+          return "" + index;
 
+      return "X" + index;
 
+      /*
       if (GoodPlan.isView)
 	  return "X" + index;
       else
-	  return "Z" + index;
+	  return "X" + index;
+      */
+  }
 
-    /*    if (index == 1)
-      return (new String("A"));
-    if (index == 2)
-      return (new String("B"));
-    if (index == 3)
-      return (new String("C"));
-    if (index == 4)
-      return (new String("D"));
-    if (index == 5)
-      return (new String("E"));
-    if (index == 6)
-      return (new String("F"));
-    if (index == 7)
-      return (new String("G"));
-    if (index == 8)
-      return (new String("H"));
-    if (index == 9)
-      return (new String("I"));
-    if (index == 10)
-      return (new String("J"));
-    if (index == 11)
-      return (new String("K"));
-    if (index == 12)
-      return (new String("L"));
-    if (index == 13)
-      return (new String("M"));
-    if (index == 14)
-      return (new String("N"));
-    if (index == 15)
-      return (new String("O"));
-    if (index == 16)
-      return (new String("P"));
-    if (index == 17)
-      return (new String("Q"));
-    if (index == 18)
-      return (new String("R"));
-    if (index == 19)
-      return (new String("S"));
-    if (index == 20)
-      return (new String("T"));
-    if (index == 21)
-      return (new String("U"));
-    if (index == 22)
-      return (new String("V"));
-    if (index == 23)
-      return (new String("W"));
-    if (index == 24)
-      return (new String("X"));
-    if (index == 25)
-      return (new String("Y"));
-    if (index == 26)
-      return (new String("Z"));
-    
-    myerror("Relation.getAttrPrefix(), wrong relId.\n" +
-	    "relId = " + index);
-    return null;*/
+  /**
+   * Gets the i^th character.
+   */
+  public static String getChar(int index) {
+      return getChar(index, false);
   }
 
   /**

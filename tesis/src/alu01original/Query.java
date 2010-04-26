@@ -7,6 +7,7 @@
 
 import java.util.*;
 import java.io.*;
+import java.lang.*;
 
 class Query {
   public static int renameCounter = 0;
@@ -138,7 +139,7 @@ class Query {
       for (int i = 0; i < args.size(); i ++) {
 	// make sure we add the same arg only once
 	Argument subgoalArg = (Argument) args.elementAt(i);
-	if (bodyArgs.indexOf(subgoalArg) == -1)
+	if (bodyArgs.indexOf(subgoalArg) == -1 && !subgoalArg.isConst())
 	  bodyArgs.add(subgoalArg);
       }
     }
@@ -187,17 +188,26 @@ class Query {
     int relSize = relations.size();
     int relSubgoalNum = GoodPlan.random.nextInt(bodySubgoalNum-1) + 2;
 
+    Map<Integer,Boolean> isConstant = new HashMap<Integer,Boolean>();
+
     for (int i = 0; i < bodySubgoalNum; i ++) {
         //for (int i = 0; i < relSubgoalNum; i ++) {
       int relIndex = GoodPlan.random.nextInt(relSize); 
       //int relIndex = random.nextInt(relSize);
 
       Relation relation = ((Relation) relations.elementAt(relIndex));
+
       String subgoalName = relation.getName();
       Vector args = new Vector();
       for (int j = 0; j < relation.getAttrNum(); j ++) {
-          String argName = UserLib.getChar(argCounter + j);
-          args.add(new Argument(argName));
+          int number = argCounter + j;
+
+          if (!isConstant.containsKey(number)) {
+              isConstant.put(number, GoodPlan.random.nextBoolean());
+          }
+
+          String argName = UserLib.getChar(argCounter + j, isConstant.get(number));
+          args.add(new Argument(argName, isConstant.get(number)));
       }
 
       // TODO
@@ -640,7 +650,8 @@ class Query {
     //test1();
      int m= Integer.parseInt(args[0]);
      int n= Integer.parseInt(args[1]);
-     test2(20, m, n, args[2], args[4], args[3]);
+     test2(1, m, n, args[2], args[4], args[3]);
+     //test2(20, m, n, args[2], args[4], args[3]);
   }
   static void test1() {
     // generates a conjunctive query
