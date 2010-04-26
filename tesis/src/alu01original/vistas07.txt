@@ -1,0 +1,4 @@
+v1(X1, X2, X3) :- arc(X1, X2), arc(X2, X3)
+
+v2(X1, X2) :- arc(X1, X2)
+

@@ -1,0 +1,108 @@
+import java_cup.runtime.*;
+import java.util.*;
+import java.lang.* ;
+import java.io.*;
+
+action code 
+{:
+
+
+
+	:};
+
+
+
+parser code
+{:
+
+
+    public void syntax_error(Symbol cur_token) {
+	String linea = obtText();
+	report_error("Error de Sintaxis en la linea "+obtLine()+": "+ linea,cur_token);
+    }
+    
+    
+    public void unrecovered_syntax_error(Symbol cur_token){
+	report_error("Error irrecuperable. No se pudo generar el migrador.",cur_token);
+    } 
+
+    public int obtLine(){
+	return lex.obtYyline();
+    }
+
+    public int obtChar(){
+	return lex.obtYychar();
+    }
+
+    public String obtText(){
+	return lex.obtYytext();
+    }
+
+    Yylex lex;
+
+	:};
+
+
+init with 
+{: 
+    lex=new Yylex(System.in);
+	:};
+
+scan with
+{:
+    return lex.next_token();
+	:};
+
+
+
+terminal String var, ctte, nomb;
+terminal oparen, cparen;
+terminal imp, coma;
+
+non terminal Vector EXPERIMENTO, CUERPO, LIST;
+non terminal Query CQ;
+non terminal Subgoal SO;
+non terminal Argument ITEM;
+
+start with EXPERIMENTO;
+
+EXPERIMENTO::= 
+            CQ:a            
+                          {: Vector l = new Vector();
+                             l.add(a);
+                             RESULT = l; :}
+            | EXPERIMENTO:l CQ:a          
+                          {: l.add(a); 
+                             RESULT = l; :}
+        ;
+
+CQ ::= SO:h imp CUERPO:c {: RESULT = new Query(h.getName(), h, c); :}
+        ;
+        
+CUERPO ::=  
+            SO:a            
+                          {: Vector l = new Vector();
+                             l.add(a);
+                             RESULT = l; :}
+            | CUERPO:l coma SO:a             
+                          {: l.add(a); 
+                             RESULT = l; :}
+        ;
+
+ SO ::= nomb:n oparen LIST:l cparen     {: RESULT = new Subgoal(n,l); :}
+                ;
+
+ LIST ::=  
+            ITEM:a            
+                          {: Vector l = new Vector();
+                             l.add(a);
+                             RESULT = l; :}
+            | LIST:l coma ITEM:a 
+                          {: l.add(a); 
+                             RESULT = l; :}
+        ;
+
+ITEM ::=
+                    var:v   {: RESULT = new Argument(v);:}
+                |   ctte:c  {: RESULT = new Argument(c);:}
+                ;

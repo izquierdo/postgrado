@@ -1,0 +1,834 @@
++----------------------------------------------------------------------
+|  File: profile.txt
+|  Date: 2006.09.11 14:54:37 PM
++----------------------------------------------------------------------
+
++------------------------------
+| Thread depth limit: Unlimited
++------------------------------
++------------------------------
+| Thread: 1
++------------------------------
+              Time            Percent    
+       ----------------- ---------------
+ Count    Total      Net   Total     Net  Location
+ =====    =====      ===   =====     ===  =========
+     1 2089372.4      6.3   100.0          +--GoodPlan:main	()
+     1 2089366.1      0.1   100.0          | +--GoodPlan:doOneTestYoli2	()
+     2   1188.3     62.2     0.1          | | +--GoodPlan:readViews	()
+     3      0.3      0.3     0.0          | | | +--lr_parser:unpackFromStrings	(java_cup.runtime)
+     2      0.2      0.1     0.0          | | | +--parser:<init>	()
+     2      0.1      0.1     0.0          | | | | +--lr_parser:<init>	(java_cup.runtime)
+     2   1125.6    169.5     0.1          | | | +--lr_parser:parse	(java_cup.runtime)
+     2      0.1      0.1     0.0          | | | | +--parser:production_table	()
+     2      0.1      0.1     0.0          | | | | +--parser:action_table	()
+     2      0.1      0.1     0.0          | | | | +--parser:reduce_table	()
+     2      3.8      3.7     0.0          | | | | +--parser:init_actions	()
+     2      0.1      0.1     0.0          | | | | | +--CUP$parser$actions:<init>	()
+     2     24.1     13.5     0.0          | | | | +--parser:user_init	()
+     2     10.6      1.4     0.0          | | | | | +--Yylex:<init>	()
+     2      9.2      1.9     0.0          | | | | | | +--Yylex:<init>	()
+     6      7.3      7.3     0.0          | | | | | | | +--Yylex:unpackFromString	()
+  2631    623.1     53.1     0.0          | | | | +--parser:scan	()
+  2631    570.1    281.5     0.0          | | | | | +--Yylex:next_token	()
+  2917     17.2     17.2     0.0          | | | | | | +--Yylex:yy_mark_start	()
+  4272     27.5     27.5     0.0          | | | | | | +--Yylex:yy_mark_end	()
+  7116     48.9     48.9     0.0          | | | | | | +--Yylex:yy_advance	()
+  2913     18.2     18.2     0.0          | | | | | | +--Yylex:yy_to_mark	()
+  2627     17.5     17.5     0.0          | | | | | | +--Yylex:yytext	()
+  2631    159.2     47.5     0.0          | | | | | | +--Symbol:<init>	(java_cup.runtime)
+  2631    111.7     48.9     0.0          | | | | | | | +--Symbol:<init>	(java_cup.runtime)
+  2627     62.9     46.9     0.0          | | | | | | | | +--Symbol:<init>	(java_cup.runtime)
+  2627     16.0     16.0     0.0          | | | | | | | | | +--Symbol:<init>	(java_cup.runtime)
+     4      0.1      0.1     0.0          | | | | | | +--Yylex:yy_do_eof	()
+     2      0.0      0.0     0.0          | | | | +--parser:start_state	()
+     2      0.0      0.0     0.0          | | | | +--Symbol:<init>	(java_cup.runtime)
+  5116     32.8     32.8     0.0          | | | | +--lr_parser:get_action	(java_cup.runtime)
+  2487    255.1     55.8     0.0          | | | | +--parser:do_action	()
+  2487    199.3     87.1     0.0          | | | | | +--CUP$parser$actions:CUP$parser$do_action	()
+   923      8.0      8.0     0.0          | | | | | | +--Argument:<init>	()
+  2487    101.3     42.7     0.0          | | | | | | +--Symbol:<init>	(java_cup.runtime)
+  2487     58.6     42.6     0.0          | | | | | | | +--Symbol:<init>	(java_cup.runtime)
+  2487     16.0     16.0     0.0          | | | | | | | | +--Symbol:<init>	(java_cup.runtime)
+   284      1.8      1.8     0.0          | | | | | | +--Subgoal:<init>	()
+    71      0.5      0.5     0.0          | | | | | | +--Subgoal:getName	()
+    71      0.5      0.5     0.0          | | | | | | +--Query:<init>	()
+     2      0.0      0.0     0.0          | | | | | | +--lr_parser:done_parsing	(java_cup.runtime)
+  2487     17.1     17.1     0.0          | | | | +--lr_parser:get_reduce	(java_cup.runtime)
+     1 2088177.7     12.8    99.9          | | +--GoodPlan:genPlan2	()
+     2      0.1      0.1     0.0          | | | +--UserLib:myprintln	()
+     1      0.9      0.3     0.0          | | | +--Query:toString	()
+     9      0.1      0.1     0.0          | | | | +--Subgoal:size	()
+     4      0.0      0.0     0.0          | | | | +--Subgoal:getArgs	()
+     4      0.1      0.1     0.0          | | | | +--Argument:toString	()
+     4      0.0      0.0     0.0          | | | | | +--Argument:getName	()
+     3      0.4      0.2     0.0          | | | | +--Subgoal:toString	()
+     9      0.2      0.1     0.0          | | | | | +--Argument:toString	()
+     9      0.1      0.1     0.0          | | | | | | +--Argument:getName	()
+     1 2088164.0      4.6    99.9          | | | +--MiniCon:genPlan2	()
+     1      0.1      0.1     0.0          | | | | +--MiniCon$Prof:<init>	()
+     1      0.0      0.0     0.0          | | | | | +--JCProf:<init>	()
+     1      0.1      0.1     0.0          | | | | +--MiniCon$Prof:start	()
+     1   2237.2      3.7     0.1          | | | | +--MiniCon:formMCDs	()
+     1      0.0      0.0     0.0          | | | | | +--UserLib:myprintln	()
+    70   2232.3     26.0     0.1          | | | | | +--MiniCon:formMCDs	()
+    70     50.1     15.5     0.0          | | | | | | +--Query:toString	()
+   630      4.0      4.0     0.0          | | | | | | | +--Subgoal:size	()
+   280      1.7      1.7     0.0          | | | | | | | +--Subgoal:getArgs	()
+   280      6.1      4.5     0.0          | | | | | | | +--Argument:toString	()
+   280      1.6      1.6     0.0          | | | | | | | | +--Argument:getName	()
+   210     22.8      8.6     0.0          | | | | | | | +--Subgoal:toString	()
+   630     14.2     10.6     0.0          | | | | | | | | +--Argument:toString	()
+   630      3.6      3.6     0.0          | | | | | | | | | +--Argument:getName	()
+    70      0.4      0.4     0.0          | | | | | | +--UserLib:myprintln	()
+    70      0.4      0.4     0.0          | | | | | | +--Query:getBody	()
+    70      9.3      1.3     0.0          | | | | | | +--UserLib:genSubsets	()
+    70      8.0      2.5     0.0          | | | | | | | +--UserLib:buildSubsets	()
+    70      5.4      2.2     0.0          | | | | | | | | +--UserLib:buildSubsets	()
+    70      3.2      2.1     0.0          | | | | | | | | | +--UserLib:buildSubsets	()
+    70      1.1      1.1     0.0          | | | | | | | | | | +--UserLib:buildSubsets	()
+   490      5.1      4.3     0.0          | | | | | | +--MiniCon:containsQuerySubgoalSubset	()
+    86      0.8      0.8     0.0          | | | | | | | +--MCD:getMappedQuerySubgoals	()
+   443   1219.3     36.3     0.1          | | | | | | +--Query:rename	()
+  1772   1177.5    241.5     0.1          | | | | | | | +--Subgoal:rename	()
+  5759    675.2    225.2     0.0          | | | | | | | | +--Argument:rename	()
+  8417     49.4     49.4     0.0          | | | | | | | | | +--Argument:hashCode	()
+  3101     20.4     20.4     0.0          | | | | | | | | | +--Argument:<init>	()
+  5316    380.2    254.9     0.0          | | | | | | | | | +--Argument:equals	()
+ 10632     61.5     61.5     0.0          | | | | | | | | | | +--Argument:getName	()
+ 10632     63.8     63.8     0.0          | | | | | | | | | | +--Argument:getType	()
+  8860     52.0     52.0     0.0          | | | | | | | | +--Argument:hashCode	()
+  1772     10.4     10.4     0.0          | | | | | | | | +--Subgoal:getName	()
+  1772     10.7     10.7     0.0          | | | | | | | | +--Subgoal:<init>	()
+  2658    187.6    126.3     0.0          | | | | | | | | +--Argument:equals	()
+  5316     30.6     30.6     0.0          | | | | | | | | | +--Argument:getName	()
+  5316     30.8     30.8     0.0          | | | | | | | | | +--Argument:getType	()
+   443      2.6      2.6     0.0          | | | | | | | +--Query:getName	()
+   443      2.9      2.9     0.0          | | | | | | | +--Query:<init>	()
+   443    920.5    166.8     0.0          | | | | | | +--MiniCon:extend	()
+   443      2.6      2.6     0.0          | | | | | | | +--Query:getBody	()
+   443     61.3      7.7     0.0          | | | | | | | +--UserLib:genSubsets	()
+   443     53.6     22.5     0.0          | | | | | | | | +--UserLib:buildSubsets	()
+   443     31.1     13.6     0.0          | | | | | | | | | +--UserLib:buildSubsets	()
+   443     17.5     14.0     0.0          | | | | | | | | | | +--UserLib:buildSubsets	()
+   443      3.5      3.5     0.0          | | | | | | | | | | | +--UserLib:buildSubsets	()
+  2083     13.9     13.8     0.0          | | | | | | | +--MiniCon:containsViewSubgoalSubset	()
+    18      0.1      0.1     0.0          | | | | | | | | +--MCD:getViewSubgoals	()
+  2083    675.1     63.6     0.0          | | | | | | | +--MiniCon:formOneMCD	()
+  2083    240.2     39.1     0.0          | | | | | | | | +--UserLib:getAllSeqs	()
+  2083    201.2     58.3     0.0          | | | | | | | | | +--UserLib:buildAllSeq	()
+  1219    127.4     25.9     0.0          | | | | | | | | | | +--UserLib:genPermutations	()
+  1219    101.4     40.5     0.0          | | | | | | | | | | | +--UserLib:buildPermutations	()
+  1863     60.9     40.3     0.0          | | | | | | | | | | | | +--UserLib:buildPermutations	()
+  1398     20.6     17.3     0.0          | | | | | | | | | | | | | +--UserLib:buildPermutations	()
+   330      3.3      3.3     0.0          | | | | | | | | | | | | | | +--UserLib:buildPermutations	()
+  1029     15.4     11.8     0.0          | | | | | | | | | | +--UserLib:buildAllSeq	()
+   330      3.6      3.6     0.0          | | | | | | | | | | | +--UserLib:buildAllSeq	()
+  2028    371.2    136.3     0.0          | | | | | | | | +--MiniCon:buildMCD	()
+  4056     26.4     26.4     0.0          | | | | | | | | | +--Mapping:<init>	()
+  4236     24.7     24.7     0.0          | | | | | | | | | +--Subgoal:getName	()
+   326      1.9      1.9     0.0          | | | | | | | | | +--Subgoal:getArgs	()
+   489     11.0      8.2     0.0          | | | | | | | | | +--Query:getDistVars	()
+   489      2.9      2.9     0.0          | | | | | | | | | | +--Subgoal:getArgs	()
+   489     55.6     19.5     0.0          | | | | | | | | | +--Argument:unifiable	()
+   489      3.0      3.0     0.0          | | | | | | | | | | +--Argument:isConst	()
+   489     12.3      8.3     0.0          | | | | | | | | | | +--Mapping:apply	()
+   489      2.8      2.8     0.0          | | | | | | | | | | | +--Argument:hashCode	()
+     8      1.2      0.4     0.0          | | | | | | | | | | | +--Argument:equals	()
+    16      0.1      0.1     0.0          | | | | | | | | | | | | +--Argument:getName	()
+    16      0.7      0.7     0.0          | | | | | | | | | | | | +--Argument:getType	()
+   481     18.3     12.8     0.0          | | | | | | | | | | +--Mapping:put	()
+   962      5.5      5.5     0.0          | | | | | | | | | | | +--Argument:hashCode	()
+    46      2.5      1.4     0.0          | | | | | | | | | | +--Argument:equals	()
+    92      1.1      1.1     0.0          | | | | | | | | | | | +--Argument:getName	()
+     4      0.0      0.0     0.0          | | | | | | | | | | | +--Argument:getType	()
+    65     74.7      8.3     0.0          | | | | | | | | | +--MiniCon:satisfyProperty	()
+    65      0.4      0.4     0.0          | | | | | | | | | | +--Mapping:getMap	()
+   209     48.6     12.7     0.0          | | | | | | | | | | +--Query:isDistVar	()
+   209      1.2      1.2     0.0          | | | | | | | | | | | +--Argument:isConst	()
+   209      1.2      1.2     0.0          | | | | | | | | | | | +--Subgoal:getArgs	()
+   690     33.4     24.0     0.0          | | | | | | | | | | | +--Argument:equals	()
+  1380      8.1      8.1     0.0          | | | | | | | | | | | | +--Argument:getName	()
+   210      1.3      1.3     0.0          | | | | | | | | | | | | +--Argument:getType	()
+    62      0.4      0.4     0.0          | | | | | | | | | | +--UserLib:myprintln	()
+   106      0.7      0.7     0.0          | | | | | | | | | | +--Query:getSubgoalNum	()
+    85      0.6      0.6     0.0          | | | | | | | | | | +--Query:getSubgoal	()
+    85     12.5      2.8     0.0          | | | | | | | | | | +--Subgoal:contains	()
+   209      9.7      6.8     0.0          | | | | | | | | | | | +--Argument:equals	()
+   418      2.4      2.4     0.0          | | | | | | | | | | | | +--Argument:getName	()
+    78      0.5      0.5     0.0          | | | | | | | | | | | | +--Argument:getType	()
+    28      3.2      1.2     0.0          | | | | | | | | | | +--Subgoal:toString	()
+    84      2.1      1.5     0.0          | | | | | | | | | | | +--Argument:toString	()
+    84      0.5      0.5     0.0          | | | | | | | | | | | | +--Argument:getName	()
+    17     18.4      1.7     0.0          | | | | | | | | | +--Mapping:apply	()
+    17      0.1      0.1     0.0          | | | | | | | | | | +--Query:getBody	()
+    17      0.1      0.1     0.0          | | | | | | | | | | +--Query:getHead	()
+    68     16.1      5.1     0.0          | | | | | | | | | | +--Mapping:apply	()
+    68      0.4      0.4     0.0          | | | | | | | | | | | +--Subgoal:getArgs	()
+   221      9.7      3.7     0.0          | | | | | | | | | | | +--Mapping:applyTryIdentity	()
+   221      6.0      3.5     0.0          | | | | | | | | | | | | +--Mapping:apply	()
+   221      2.5      2.5     0.0          | | | | | | | | | | | | | +--Argument:hashCode	()
+    68      0.5      0.5     0.0          | | | | | | | | | | | +--Subgoal:getName	()
+    68      0.4      0.4     0.0          | | | | | | | | | | | +--Subgoal:<init>	()
+    17      0.1      0.1     0.0          | | | | | | | | | | +--Query:getName	()
+    17      0.2      0.2     0.0          | | | | | | | | | | +--Query:<init>	()
+    17      0.1      0.1     0.0          | | | | | | | | | +--MCD:<init>	()
+    17     21.8      1.5     0.0          | | | | | | | | | +--MCD:toString	()
+    17     12.3      3.7     0.0          | | | | | | | | | | +--Query:toString	()
+   153      0.9      0.9     0.0          | | | | | | | | | | | +--Subgoal:size	()
+    68      0.4      0.4     0.0          | | | | | | | | | | | +--Subgoal:getArgs	()
+    68      1.7      1.1     0.0          | | | | | | | | | | | +--Argument:toString	()
+    68      0.6      0.6     0.0          | | | | | | | | | | | | +--Argument:getName	()
+    51      5.6      2.1     0.0          | | | | | | | | | | | +--Subgoal:toString	()
+   153      3.5      2.6     0.0          | | | | | | | | | | | | +--Argument:toString	()
+   153      0.9      0.9     0.0          | | | | | | | | | | | | | +--Argument:getName	()
+    34      4.3      2.1     0.0          | | | | | | | | | | +--Subgoal:toString	()
+   102      2.2      1.6     0.0          | | | | | | | | | | | +--Argument:toString	()
+   102      0.6      0.6     0.0          | | | | | | | | | | | | +--Argument:getName	()
+    34      3.7      1.5     0.0          | | | | | | | | | | +--Mapping:toString	()
+   102      2.2      1.6     0.0          | | | | | | | | | | | +--Argument:toString	()
+   102      0.6      0.6     0.0          | | | | | | | | | | | | +--Argument:getName	()
+    17      0.2      0.2     0.0          | | | | | | | | | +--UserLib:myprintln	()
+    17      0.8      0.6     0.0          | | | | | | | +--MCD:hashCode	()
+    34      0.2      0.2     0.0          | | | | | | | | +--Query:getName	()
+    17      0.7      0.5     0.0          | | | | | | +--MCD:hashCode	()
+    34      0.2      0.2     0.0          | | | | | | | +--Query:getName	()
+     2      0.5      0.2     0.0          | | | | | | +--MCD:equals	()
+     4      0.0      0.0     0.0          | | | | | | | +--MCD:getQuery	()
+     4      0.2      0.1     0.0          | | | | | | | +--Query:equals	()
+     8      0.1      0.1     0.0          | | | | | | | | +--Query:getName	()
+     4      0.0      0.0     0.0          | | | | | | | +--MCD:getView	()
+     4      0.0      0.0     0.0          | | | | | | | +--MCD:getMappedQuerySubgoals	()
+    17      0.7      0.5     0.0          | | | | | +--MCD:hashCode	()
+    34      0.2      0.2     0.0          | | | | | | +--Query:getName	()
+     2      0.4      0.2     0.0          | | | | | +--MCD:equals	()
+     4      0.0      0.0     0.0          | | | | | | +--MCD:getQuery	()
+     4      0.2      0.1     0.0          | | | | | | +--Query:equals	()
+     8      0.1      0.1     0.0          | | | | | | | +--Query:getName	()
+     4      0.0      0.0     0.0          | | | | | | +--MCD:getView	()
+     4      0.0      0.0     0.0          | | | | | | +--MCD:getMappedQuerySubgoals	()
+     1      0.0      0.0     0.0          | | | | +--MiniCon$Prof:stop	()
+     1 2085922.0   1523.2    99.8          | | | | +--MiniCon:combineMCDs	()
+     1      0.0      0.0     0.0          | | | | | +--UserLib:myprintln	()
+     1 832027.8      0.0    39.8          | | | | | +--UserLib:genSubsets	()
+     1 832027.8      0.0    39.8          | | | | | | +--UserLib:genSubsets	()
+     1 832027.8  89525.0    39.8     4.3  | | | | | | | +--UserLib:buildSubsets	()
+     1 265425.1  26899.3    12.7     1.3  | | | | | | | | +--UserLib:buildSubsets	()
+     1  86371.6   9705.6     4.1     0.5  | | | | | | | | | +--UserLib:buildSubsets	()
+     1  37159.3   4346.9     1.8     0.2  | | | | | | | | | | +--UserLib:buildSubsets	()
+     1  14405.5   1639.9     0.7          | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1   5764.2    620.6     0.3          | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1   2235.8    262.7     0.1          | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1    805.8    102.4     0.0          | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1    356.3     43.0     0.0          | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1    160.6     20.7     0.0          | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1     73.3      9.3     0.0          | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1     34.9      3.7     0.0          | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1     12.1      1.6     0.0          | | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1      5.1      0.7     0.0          | | | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1      2.1      0.3     0.0          | | | | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1      0.7      0.1     0.0          | | | | | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1      0.2      0.1     0.0          | | | | | | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     1      0.0      0.0     0.0          | | | | | | | | | | | | | | | | | | | | | | | | +--UserLib:buildSubsets	()
+     3      0.1      0.1     0.0          | | | | | | | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+     6      0.0      0.0     0.0          | | | | | | | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+     9      0.4      0.2     0.0          | | | | | | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+    18      0.1      0.1     0.0          | | | | | | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+    24      1.1      0.8     0.0          | | | | | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+    48      0.3      0.3     0.0          | | | | | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+    60      2.3      1.6     0.0          | | | | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+   120      0.8      0.8     0.0          | | | | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+   144      5.4      3.7     0.0          | | | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+   288      1.6      1.6     0.0          | | | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+   336     19.2      9.3     0.0          | | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+   672      9.8      9.8     0.0          | | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+   768     29.0     20.2     0.0          | | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+  1536      8.9      8.9     0.0          | | | | | | | | | | | | | | | | | | | +--Query:getName	()
+  1766     66.6     46.4     0.0          | | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+  3532     20.2     20.2     0.0          | | | | | | | | | | | | | | | | | | +--Query:getName	()
+  3972    152.7    105.4     0.0          | | | | | | | | | | | | | | | | +--MCD:hashCode	()
+  7944     47.4     47.4     0.0          | | | | | | | | | | | | | | | | | +--Query:getName	()
+  9183    347.1    241.3     0.0          | | | | | | | | | | | | | | | +--MCD:hashCode	()
+ 18366    105.8    105.8     0.0          | | | | | | | | | | | | | | | | +--Query:getName	()
+ 22146    860.7    604.3     0.0          | | | | | | | | | | | | | | +--MCD:hashCode	()
+ 44292    256.5    256.5     0.0          | | | | | | | | | | | | | | | +--Query:getName	()
+  1458    306.6    146.8     0.0          | | | | | | | | | | | | | | +--MCD:equals	()
+  2916     17.9     17.9     0.0          | | | | | | | | | | | | | | | +--MCD:getQuery	()
+  2916    108.2     74.7     0.0          | | | | | | | | | | | | | | | +--Query:equals	()
+  5832     33.5     33.5     0.0          | | | | | | | | | | | | | | | | +--Query:getName	()
+  2916     16.8     16.8     0.0          | | | | | | | | | | | | | | | +--MCD:getView	()
+  2916     16.7     16.7     0.0          | | | | | | | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+ 53799   2234.4   1612.1     0.1          | | | | | | | | | | | | | +--MCD:hashCode	()
+107598    622.3    622.3     0.0          | | | | | | | | | | | | | | +--Query:getName	()
+  3000    673.4    271.4     0.0          | | | | | | | | | | | | | +--MCD:equals	()
+  6000     35.2     35.2     0.0          | | | | | | | | | | | | | | +--MCD:getQuery	()
+  6000    297.0    154.9     0.0          | | | | | | | | | | | | | | +--Query:equals	()
+ 12000    142.1    142.1     0.0          | | | | | | | | | | | | | | | +--Query:getName	()
+  6000     34.3     34.3     0.0          | | | | | | | | | | | | | | +--MCD:getView	()
+  6000     35.5     35.5     0.0          | | | | | | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+138534   5487.2   3843.0     0.3     0.2  | | | | | | | | | | | | +--MCD:hashCode	()
+277068   1644.2   1644.2     0.1          | | | | | | | | | | | | | +--Query:getName	()
+  7578   1514.2    680.7     0.1          | | | | | | | | | | | | +--MCD:equals	()
+ 15156     88.8     88.8     0.0          | | | | | | | | | | | | | +--MCD:getQuery	()
+ 15156    569.1    394.9     0.0          | | | | | | | | | | | | | +--Query:equals	()
+ 30312    174.3    174.3     0.0          | | | | | | | | | | | | | | +--Query:getName	()
+ 15156     89.0     89.0     0.0          | | | | | | | | | | | | | +--MCD:getView	()
+ 15156     86.7     86.7     0.0          | | | | | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+382817  14512.5  10011.6     0.7     0.5  | | | | | | | | | | | +--MCD:hashCode	()
+765634   4500.9   4500.9     0.2     0.2  | | | | | | | | | | | | +--Query:getName	()
+ 19199   3894.5   1735.6     0.2          | | | | | | | | | | | +--MCD:equals	()
+ 38398    221.6    221.6     0.0          | | | | | | | | | | | | +--MCD:getQuery	()
+ 38398   1441.8    997.8     0.1          | | | | | | | | | | | | +--Query:equals	()
+ 76796    443.9    443.9     0.0          | | | | | | | | | | | | | +--Query:getName	()
+ 38398    273.6    273.6     0.0          | | | | | | | | | | | | +--MCD:getView	()
+ 38398    221.9    221.9     0.0          | | | | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+865124  32988.2  22759.4     1.6     1.1  | | | | | | | | | | +--MCD:hashCode	()
+1730248  10228.8  10228.8     0.5     0.5  | | | | | | | | | | | +--Query:getName	()
+ 33046   6518.5   2897.6     0.3     0.1  | | | | | | | | | | +--MCD:equals	()
+ 66092    384.8    384.8     0.0          | | | | | | | | | | | +--MCD:getQuery	()
+ 66092   2473.5   1705.4     0.1          | | | | | | | | | | | +--Query:equals	()
+132184    768.1    768.1     0.0          | | | | | | | | | | | | +--Query:getName	()
+ 66092    381.6    381.6     0.0          | | | | | | | | | | | +--MCD:getView	()
+ 66092    381.0    381.0     0.0          | | | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+2137097  81245.4  56217.8     3.9     2.7  | | | | | | | | | +--MCD:hashCode	()
+4274194  25027.6  25027.6     1.2     1.2  | | | | | | | | | | +--Query:getName	()
+357774  70908.8  31698.9     3.4     1.5  | | | | | | | | | +--MCD:equals	()
+715548   4132.3   4132.3     0.2     0.2  | | | | | | | | | | +--MCD:getQuery	()
+715548  26805.8  18465.6     1.3     0.9  | | | | | | | | | | +--Query:equals	()
+1431096   8340.2   8340.2     0.4     0.4  | | | | | | | | | | | +--Query:getName	()
+715548   4129.6   4129.6     0.2     0.2  | | | | | | | | | | +--MCD:getView	()
+715548   4142.1   4142.1     0.2     0.2  | | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+7084440 278549.8 192667.8    13.3     9.2  | | | | | | | | +--MCD:hashCode	()
+14168880  85882.0  85882.0     4.1     4.1  | | | | | | | | | +--Query:getName	()
+948653 198527.8  87458.7     9.5     4.2  | | | | | | | | +--MCD:equals	()
+1897306  11731.6  11731.6     0.6     0.6  | | | | | | | | | +--MCD:getQuery	()
+1897306  76329.7  52350.9     3.7     2.5  | | | | | | | | | +--Query:equals	()
+3794612  23978.7  23978.7     1.1     1.1  | | | | | | | | | | +--Query:getName	()
+1897306  11648.3  11648.3     0.6     0.6  | | | | | | | | | +--MCD:getView	()
+1897306  11359.6  11359.6     0.5     0.5  | | | | | | | | | +--MCD:getMappedQuerySubgoals	()
+ 43961 153202.6  47725.3     7.3     2.3  | | | | | +--MiniCon:containsMCDSubset	()
+1938539  11644.8  11644.8     0.6     0.6  | | | | | | +--Rewriting:getMCDs	()
+2251070  88909.9  62161.8     4.3     3.0  | | | | | | +--MCD:hashCode	()
+4502140  26748.1  26748.1     1.3     1.3  | | | | | | | +--Query:getName	()
+ 24150   4922.6   2173.9     0.2     0.1  | | | | | | +--MCD:equals	()
+ 48300    288.0    288.0     0.0          | | | | | | | +--MCD:getQuery	()
+ 48300   1885.7   1323.5     0.1          | | | | | | | +--Query:equals	()
+ 96600    562.2    562.2     0.0          | | | | | | | | +--Query:getName	()
+ 48300    289.3    289.3     0.0          | | | | | | | +--MCD:getView	()
+ 48300    285.7    285.7     0.0          | | | | | | | +--MCD:getMappedQuerySubgoals	()
+ 28465 1095493.0   3443.6    52.4     0.2  | | | | | +--MiniCon:computeEC	()
+ 56929    357.0    357.0     0.0          | | | | | | +--Mapping:<init>	()
+174397 1091521.3  39414.3    52.2     1.9  | | | | | | +--MiniCon:computeECPsi	()
+174397   1045.5   1045.5     0.1          | | | | | | | +--MCD:getPhi	()
+174397   1017.5   1017.5     0.0          | | | | | | | +--MCD:getView	()
+174397   1124.1   1124.1     0.1          | | | | | | | +--Mapping:<init>	()
+174397   1033.4   1033.4     0.0          | | | | | | | +--Mapping:getMap	()
+523191   3086.7   3086.7     0.1     0.1  | | | | | | | +--MCD:getHH	()
+523191  20602.8   8550.8     1.0     0.4  | | | | | | | +--Mapping:applyTryIdentity	()
+523191  12051.9   8576.4     0.6     0.4  | | | | | | | | +--Mapping:apply	()
+523191   3475.5   3475.5     0.2     0.2  | | | | | | | | | +--Argument:hashCode	()
+523191 990598.3  34082.7    47.4     1.6  | | | | | | | +--Query:containsArg	()
+523191 845390.5 186043.6    40.5     8.9  | | | | | | | | +--Query:getBodyArgs	()
+1569573   9221.1   9221.1     0.4     0.4  | | | | | | | | | +--Subgoal:getArgs	()
+15695720 650125.9 449249.9    31.1    21.5  | | | | | | | | | +--Argument:equals	()
+31391439 188195.4 188195.4     9.0     9.0  | | | | | | | | | | +--Argument:getName	()
+2092760  12680.5  12680.5     0.6     0.6  | | | | | | | | | | +--Argument:getType	()
+2398630 111125.1  76346.0     5.3     3.7  | | | | | | | | +--Argument:equals	()
+4797260  28640.8  28640.8     1.4     1.4  | | | | | | | | | +--Argument:getName	()
+1046380   6138.3   6138.3     0.3     0.3  | | | | | | | | | +--Argument:getType	()
+523190  11836.6   8562.1     0.6     0.4  | | | | | | | +--Mapping:apply	()
+523190   3274.5   3274.5     0.2     0.2  | | | | | | | | +--Argument:hashCode	()
+523190  20726.9  14412.4     1.0     0.7  | | | | | | | +--Mapping:put	()
+1046380   6314.5   6314.5     0.3     0.3  | | | | | | | | +--Argument:hashCode	()
+174396   1035.4   1035.4     0.0          | | | | | | | +--MCD:setPsi	()
+ 28464    171.1    171.1     0.0          | | | | | | +--Mapping:getMap	()
+ 28464   3675.4   1973.1     0.2          | | | | | +--MiniCon:buildRewriting	()
+ 73471    495.0    495.0     0.0          | | | | | | +--MCD:getMappedQuerySubgoals	()
+ 73471   1064.7   1064.7     0.1          | | | | | | +--UserLib:disjoint	()
+   161      1.2      1.2     0.0          | | | | | | +--Query:getBody	()
+    64    141.5     21.7     0.0          | | | | | | +--MiniCon:createRewriting	()
+    64      0.4      0.4     0.0          | | | | | | | +--Query:getName	()
+   256      1.6      1.6     0.0          | | | | | | | +--Query:getHead	()
+   448    114.6     37.4     0.0          | | | | | | | +--Mapping:apply	()
+   448      2.8      2.8     0.0          | | | | | | | | +--Subgoal:getArgs	()
+  1792     68.9     29.9     0.0          | | | | | | | | +--Mapping:applyTryIdentity	()
+  1792     39.1     28.7     0.0          | | | | | | | | | +--Mapping:apply	()
+  1792     10.4     10.4     0.0          | | | | | | | | | | +--Argument:hashCode	()
+   448      2.6      2.6     0.0          | | | | | | | | +--Subgoal:getName	()
+   448      2.9      2.9     0.0          | | | | | | | | +--Subgoal:<init>	()
+   192      1.2      1.2     0.0          | | | | | | | +--MCD:getView	()
+   192      1.2      1.2     0.0          | | | | | | | +--MCD:getPsi	()
+    64      0.4      0.4     0.0          | | | | | | | +--Query:<init>	()
+    64      0.4      0.4     0.0          | | | | | | | +--Rewriting:<init>	()
+
++--------------------------------------
+| Most expensive methods (by net time)
+| Frame Count Limit: Unlimited
++--------------------------------------
+
+               Net
+          ------------
+ Count     Time    Pct  Location
+ =====     ====    ===  ========
+15695720 449249.9   21.5  Argument:equals
+7084440 192667.8    9.2  MCD:hashCode
+31391439 188195.4    9.0  Argument:getName
+523191 186043.6    8.9  Query:getBodyArgs
+     1  89525.0    4.3  UserLib:buildSubsets
+948653  87458.7    4.2  MCD:equals
+14168880  85882.0    4.1  Query:getName
+2398630  76346.0    3.7  Argument:equals
+2251070  62161.8    3.0  MCD:hashCode
+2137097  56217.8    2.7  MCD:hashCode
+1897306  52350.9    2.5  Query:equals
+ 43961  47725.3    2.3  MiniCon:containsMCDSubset
+174397  39414.3    1.9  MiniCon:computeECPsi
+523191  34082.7    1.6  Query:containsArg
+357774  31698.9    1.5  MCD:equals
+4797260  28640.8    1.4  Argument:getName
+     1  26899.3    1.3  UserLib:buildSubsets
+4502140  26748.1    1.3  Query:getName
+4274194  25027.6    1.2  Query:getName
+3794612  23978.7    1.1  Query:getName
+865124  22759.4    1.1  MCD:hashCode
+715548  18465.6    0.9  Query:equals
+523190  14412.4    0.7  Mapping:put
+2092760  12680.5    0.6  Argument:getType
+1897306  11731.6    0.6  MCD:getQuery
+1897306  11648.3    0.6  MCD:getView
+1938539  11644.8    0.6  Rewriting:getMCDs
+1897306  11359.6    0.5  MCD:getMappedQuerySubgoals
+1730248  10228.8    0.5  Query:getName
+382817  10011.6    0.5  MCD:hashCode
+     1   9705.6    0.5  UserLib:buildSubsets
+1569573   9221.1    0.4  Subgoal:getArgs
+523191   8576.4    0.4  Mapping:apply
+523190   8562.1    0.4  Mapping:apply
+523191   8550.8    0.4  Mapping:applyTryIdentity
+1431096   8340.2    0.4  Query:getName
+1046380   6314.5    0.3  Argument:hashCode
+1046380   6138.3    0.3  Argument:getType
+765634   4500.9    0.2  Query:getName
+     1   4346.9    0.2  UserLib:buildSubsets
+715548   4142.1    0.2  MCD:getMappedQuerySubgoals
+715548   4132.3    0.2  MCD:getQuery
+715548   4129.6    0.2  MCD:getView
+138534   3843.0    0.2  MCD:hashCode
+523191   3475.5    0.2  Argument:hashCode
+ 28465   3443.6    0.2  MiniCon:computeEC
+523190   3274.5    0.2  Argument:hashCode
+523191   3086.7    0.1  MCD:getHH
+ 33046   2897.6    0.1  MCD:equals
+ 24150   2173.9    0.1  MCD:equals
+ 28464   1973.1    0.1  MiniCon:buildRewriting
+ 19199   1735.6    0.1  MCD:equals
+ 66092   1705.4    0.1  Query:equals
+277068   1644.2    0.1  Query:getName
+     1   1639.9    0.1  UserLib:buildSubsets
+ 53799   1612.1    0.1  MCD:hashCode
+     1   1523.2    0.1  MiniCon:combineMCDs
+ 48300   1323.5    0.1  Query:equals
+174397   1124.1    0.1  Mapping:<init>
+ 73471   1064.7    0.1  UserLib:disjoint
+174397   1045.5    0.1  MCD:getPhi
+174396   1035.4    0.0  MCD:setPsi
+174397   1033.4    0.0  Mapping:getMap
+174397   1017.5    0.0  MCD:getView
+ 38398    997.8    0.0  Query:equals
+132184    768.1    0.0  Query:getName
+  7578    680.7    0.0  MCD:equals
+107598    622.3    0.0  Query:getName
+     1    620.6    0.0  UserLib:buildSubsets
+ 22146    604.3    0.0  MCD:hashCode
+ 96600    562.2    0.0  Query:getName
+ 73471    495.0    0.0  MCD:getMappedQuerySubgoals
+ 76796    443.9    0.0  Query:getName
+ 15156    394.9    0.0  Query:equals
+ 66092    384.8    0.0  MCD:getQuery
+ 66092    381.6    0.0  MCD:getView
+ 66092    381.0    0.0  MCD:getMappedQuerySubgoals
+ 56929    357.0    0.0  Mapping:<init>
+ 48300    289.3    0.0  MCD:getView
+ 48300    288.0    0.0  MCD:getQuery
+ 48300    285.7    0.0  MCD:getMappedQuerySubgoals
+  2631    281.5    0.0  Yylex:next_token
+ 38398    273.6    0.0  MCD:getView
+  3000    271.4    0.0  MCD:equals
+     1    262.7    0.0  UserLib:buildSubsets
+ 44292    256.5    0.0  Query:getName
+  5316    254.9    0.0  Argument:equals
+  1772    241.5    0.0  Subgoal:rename
+  9183    241.3    0.0  MCD:hashCode
+  5759    225.2    0.0  Argument:rename
+ 38398    221.9    0.0  MCD:getMappedQuerySubgoals
+ 38398    221.6    0.0  MCD:getQuery
+ 30312    174.3    0.0  Query:getName
+ 28464    171.1    0.0  Mapping:getMap
+     2    169.5    0.0  java_cup.runtime.lr_parser:parse
+   443    166.8    0.0  MiniCon:extend
+  6000    154.9    0.0  Query:equals
+  1458    146.8    0.0  MCD:equals
+ 12000    142.1    0.0  Query:getName
+  2028    136.3    0.0  MiniCon:buildMCD
+  2658    126.3    0.0  Argument:equals
+ 18366    105.8    0.0  Query:getName
+  3972    105.4    0.0  MCD:hashCode
+     1    102.4    0.0  UserLib:buildSubsets
+ 15156     89.0    0.0  MCD:getView
+ 15156     88.8    0.0  MCD:getQuery
+  2487     87.1    0.0  CUP$parser$actions:CUP$parser$do_action
+ 15156     86.7    0.0  MCD:getMappedQuerySubgoals
+  2916     74.7    0.0  Query:equals
+ 10632     63.8    0.0  Argument:getType
+  2083     63.6    0.0  MiniCon:formOneMCD
+     2     62.2    0.0  GoodPlan:readViews
+ 10632     61.5    0.0  Argument:getName
+  2083     58.3    0.0  UserLib:buildAllSeq
+  2487     55.8    0.0  parser:do_action
+  2631     53.1    0.0  parser:scan
+  8860     52.0    0.0  Argument:hashCode
+  8417     49.4    0.0  Argument:hashCode
+  2631     48.9    0.0  java_cup.runtime.Symbol:<init>
+  7116     48.9    0.0  Yylex:yy_advance
+  2631     47.5    0.0  java_cup.runtime.Symbol:<init>
+  7944     47.4    0.0  Query:getName
+  2627     46.9    0.0  java_cup.runtime.Symbol:<init>
+  1766     46.4    0.0  MCD:hashCode
+     1     43.0    0.0  UserLib:buildSubsets
+  2487     42.7    0.0  java_cup.runtime.Symbol:<init>
+  2487     42.6    0.0  java_cup.runtime.Symbol:<init>
+  1219     40.5    0.0  UserLib:buildPermutations
+  1863     40.3    0.0  UserLib:buildPermutations
+  2083     39.1    0.0  UserLib:getAllSeqs
+   448     37.4    0.0  Mapping:apply
+   443     36.3    0.0  Query:rename
+  6000     35.5    0.0  MCD:getMappedQuerySubgoals
+  6000     35.2    0.0  MCD:getQuery
+  6000     34.3    0.0  MCD:getView
+  5832     33.5    0.0  Query:getName
+  5116     32.8    0.0  java_cup.runtime.lr_parser:get_action
+  5316     30.8    0.0  Argument:getType
+  5316     30.6    0.0  Argument:getName
+  1792     29.9    0.0  Mapping:applyTryIdentity
+  1792     28.7    0.0  Mapping:apply
+  4272     27.5    0.0  Yylex:yy_mark_end
+  4056     26.4    0.0  Mapping:<init>
+    70     26.0    0.0  MiniCon:formMCDs
+  1219     25.9    0.0  UserLib:genPermutations
+  4236     24.7    0.0  Subgoal:getName
+   690     24.0    0.0  Argument:equals
+   443     22.5    0.0  UserLib:buildSubsets
+    64     21.7    0.0  MiniCon:createRewriting
+     1     20.7    0.0  UserLib:buildSubsets
+  3101     20.4    0.0  Argument:<init>
+  3532     20.2    0.0  Query:getName
+   768     20.2    0.0  MCD:hashCode
+   489     19.5    0.0  Argument:unifiable
+  2913     18.2    0.0  Yylex:yy_to_mark
+  2916     17.9    0.0  MCD:getQuery
+  2627     17.5    0.0  Yylex:yytext
+  1398     17.3    0.0  UserLib:buildPermutations
+  2917     17.2    0.0  Yylex:yy_mark_start
+  2487     17.1    0.0  java_cup.runtime.lr_parser:get_reduce
+  2916     16.8    0.0  MCD:getView
+  2916     16.7    0.0  MCD:getMappedQuerySubgoals
+  2627     16.0    0.0  java_cup.runtime.Symbol:<init>
+  2487     16.0    0.0  java_cup.runtime.Symbol:<init>
+    70     15.5    0.0  Query:toString
+   443     14.0    0.0  UserLib:buildSubsets
+  2083     13.8    0.0  MiniCon:containsViewSubgoalSubset
+   443     13.6    0.0  UserLib:buildSubsets
+     2     13.5    0.0  parser:user_init
+   481     12.8    0.0  Mapping:put
+     1     12.8    0.0  GoodPlan:genPlan2
+   209     12.7    0.0  Query:isDistVar
+  1029     11.8    0.0  UserLib:buildAllSeq
+  1772     10.7    0.0  Subgoal:<init>
+   630     10.6    0.0  Argument:toString
+  1772     10.4    0.0  Subgoal:getName
+  1792     10.4    0.0  Argument:hashCode
+   672      9.8    0.0  Query:getName
+     1      9.3    0.0  UserLib:buildSubsets
+   336      9.3    0.0  MCD:hashCode
+  1536      8.9    0.0  Query:getName
+   210      8.6    0.0  Subgoal:toString
+    65      8.3    0.0  MiniCon:satisfyProperty
+   489      8.3    0.0  Mapping:apply
+   489      8.2    0.0  Query:getDistVars
+  1380      8.1    0.0  Argument:getName
+   923      8.0    0.0  Argument:<init>
+   443      7.7    0.0  UserLib:genSubsets
+     6      7.3    0.0  Yylex:unpackFromString
+   209      6.8    0.0  Argument:equals
+     1      6.3    0.0  GoodPlan:main
+   962      5.5    0.0  Argument:hashCode
+    68      5.1    0.0  Mapping:apply
+     1      4.6    0.0  MiniCon:genPlan2
+   280      4.5    0.0  Argument:toString
+   490      4.3    0.0  MiniCon:containsQuerySubgoalSubset
+   630      4.0    0.0  Subgoal:size
+   144      3.7    0.0  MCD:hashCode
+    17      3.7    0.0  Query:toString
+     1      3.7    0.0  MiniCon:formMCDs
+     2      3.7    0.0  parser:init_actions
+     1      3.7    0.0  UserLib:buildSubsets
+   221      3.7    0.0  Mapping:applyTryIdentity
+   330      3.6    0.0  UserLib:buildAllSeq
+   630      3.6    0.0  Argument:getName
+   221      3.5    0.0  Mapping:apply
+   443      3.5    0.0  UserLib:buildSubsets
+   330      3.3    0.0  UserLib:buildPermutations
+   489      3.0    0.0  Argument:isConst
+   443      2.9    0.0  Query:<init>
+   448      2.9    0.0  Subgoal:<init>
+   489      2.9    0.0  Subgoal:getArgs
+   489      2.8    0.0  Argument:hashCode
+   448      2.8    0.0  Subgoal:getArgs
+    85      2.8    0.0  Subgoal:contains
+   448      2.6    0.0  Subgoal:getName
+   153      2.6    0.0  Argument:toString
+   443      2.6    0.0  Query:getBody
+   443      2.6    0.0  Query:getName
+    70      2.5    0.0  UserLib:buildSubsets
+   221      2.5    0.0  Argument:hashCode
+   418      2.4    0.0  Argument:getName
+    70      2.2    0.0  UserLib:buildSubsets
+    70      2.1    0.0  UserLib:buildSubsets
+    34      2.1    0.0  Subgoal:toString
+    51      2.1    0.0  Subgoal:toString
+   326      1.9    0.0  Subgoal:getArgs
+     2      1.9    0.0  Yylex:<init>
+   284      1.8    0.0  Subgoal:<init>
+   280      1.7    0.0  Subgoal:getArgs
+    17      1.7    0.0  Mapping:apply
+   288      1.6    0.0  Query:getName
+     1      1.6    0.0  UserLib:buildSubsets
+   102      1.6    0.0  Argument:toString
+   102      1.6    0.0  Argument:toString
+   280      1.6    0.0  Argument:getName
+    60      1.6    0.0  MCD:hashCode
+   256      1.6    0.0  Query:getHead
+    84      1.5    0.0  Argument:toString
+    34      1.5    0.0  Mapping:toString
+    17      1.5    0.0  MCD:toString
+     2      1.4    0.0  Yylex:<init>
+    46      1.4    0.0  Argument:equals
+   210      1.3    0.0  Argument:getType
+    70      1.3    0.0  UserLib:genSubsets
+   209      1.2    0.0  Argument:isConst
+   209      1.2    0.0  Subgoal:getArgs
+   192      1.2    0.0  MCD:getView
+   161      1.2    0.0  Query:getBody
+    28      1.2    0.0  Subgoal:toString
+   192      1.2    0.0  MCD:getPsi
+    92      1.1    0.0  Argument:getName
+    68      1.1    0.0  Argument:toString
+    70      1.1    0.0  UserLib:buildSubsets
+   153      0.9    0.0  Subgoal:size
+   153      0.9    0.0  Argument:getName
+    24      0.8    0.0  MCD:hashCode
+    86      0.8    0.0  MCD:getMappedQuerySubgoals
+   120      0.8    0.0  Query:getName
+    16      0.7    0.0  Argument:getType
+   106      0.7    0.0  Query:getSubgoalNum
+     1      0.7    0.0  UserLib:buildSubsets
+    68      0.6    0.0  Argument:getName
+   102      0.6    0.0  Argument:getName
+   102      0.6    0.0  Argument:getName
+    17      0.6    0.0  MCD:hashCode
+    85      0.6    0.0  Query:getSubgoal
+    68      0.5    0.0  Subgoal:getName
+    84      0.5    0.0  Argument:getName
+    71      0.5    0.0  Subgoal:getName
+    71      0.5    0.0  Query:<init>
+    17      0.5    0.0  MCD:hashCode
+    78      0.5    0.0  Argument:getType
+    17      0.5    0.0  MCD:hashCode
+    64      0.4    0.0  Rewriting:<init>
+    70      0.4    0.0  UserLib:myprintln
+    70      0.4    0.0  Query:getBody
+    64      0.4    0.0  Query:<init>
+    68      0.4    0.0  Subgoal:<init>
+    68      0.4    0.0  Subgoal:getArgs
+    68      0.4    0.0  Subgoal:getArgs
+    62      0.4    0.0  UserLib:myprintln
+    65      0.4    0.0  Mapping:getMap
+     8      0.4    0.0  Argument:equals
+    64      0.4    0.0  Query:getName
+    48      0.3    0.0  Query:getName
+     1      0.3    0.0  Query:toString
+     1      0.3    0.0  UserLib:buildSubsets
+     3      0.3    0.0  java_cup.runtime.lr_parser:unpackFromStrings
+    17      0.2    0.0  Query:<init>
+     9      0.2    0.0  MCD:hashCode
+    34      0.2    0.0  Query:getName
+     2      0.2    0.0  MCD:equals
+    17      0.2    0.0  UserLib:myprintln
+    34      0.2    0.0  Query:getName
+    34      0.2    0.0  Query:getName
+     2      0.2    0.0  MCD:equals
+     3      0.2    0.0  Subgoal:toString
+     9      0.1    0.0  Argument:toString
+    17      0.1    0.0  MCD:<init>
+     4      0.1    0.0  Query:equals
+    16      0.1    0.0  Argument:getName
+     1      0.1    0.0  GoodPlan:doOneTestYoli2
+    18      0.1    0.0  MCD:getViewSubgoals
+    17      0.1    0.0  Query:getBody
+    17      0.1    0.0  Query:getName
+     2      0.1    0.0  java_cup.runtime.lr_parser:<init>
+    17      0.1    0.0  Query:getHead
+    18      0.1    0.0  Query:getName
+     1      0.1    0.0  UserLib:buildSubsets
+     2      0.1    0.0  CUP$parser$actions:<init>
+     4      0.1    0.0  Query:equals
+     4      0.1    0.0  Yylex:yy_do_eof
+     2      0.1    0.0  parser:<init>
+     3      0.1    0.0  MCD:hashCode
+     1      0.1    0.0  UserLib:buildSubsets
+     4      0.1    0.0  Argument:toString
+     9      0.1    0.0  Subgoal:size
+     1      0.1    0.0  MiniCon$Prof:<init>
+     9      0.1    0.0  Argument:getName
+     2      0.1    0.0  UserLib:myprintln
+     1      0.1    0.0  MiniCon$Prof:start
+     8      0.1    0.0  Query:getName
+     2      0.1    0.0  parser:production_table
+     8      0.1    0.0  Query:getName
+     2      0.1    0.0  parser:action_table
+     2      0.1    0.0  parser:reduce_table
+     2      0.0    0.0  parser:start_state
+     2      0.0    0.0  java_cup.runtime.lr_parser:done_parsing
+     2      0.0    0.0  java_cup.runtime.Symbol:<init>
+     6      0.0    0.0  Query:getName
+     1      0.0    0.0  MiniCon$Prof:stop
+     1      0.0    0.0  UserLib:genSubsets
+     4      0.0    0.0  Subgoal:getArgs
+     4      0.0    0.0  Argument:getName
+     4      0.0    0.0  MCD:getView
+     4      0.0    0.0  MCD:getQuery
+     4      0.0    0.0  MCD:getMappedQuerySubgoals
+     4      0.0    0.0  Argument:getType
+     4      0.0    0.0  MCD:getMappedQuerySubgoals
+     4      0.0    0.0  MCD:getQuery
+     4      0.0    0.0  MCD:getView
+     1      0.0    0.0  JCProf:<init>
+     1      0.0    0.0  UserLib:genSubsets
+     1      0.0    0.0  UserLib:myprintln
+     1      0.0    0.0  UserLib:myprintln
+     1      0.0    0.0  UserLib:buildSubsets
+
++--------------------------------------+
+| Most expensive methods summarized    |
++--------------------------------------+
+
+               Net
+          ------------
+ Count     Time    Pct  Location
+ =====     ====    ===  ========
+18103277 526009.7   25.2  Argument:equals
+12951343 350308.2   16.8  MCD:hashCode
+36207985 216948.5   10.4  Argument:getName
+31482658 189552.2    9.1  Query:getName
+523191 186043.6    8.9  Query:getBodyArgs
+  2070 133243.4    6.4  UserLib:buildSubsets
+1394862 127064.1    6.1  MCD:equals
+2789724  75467.9    3.6  Query:equals
+ 43961  47725.3    2.3  MiniCon:containsMCDSubset
+174397  39414.3    1.9  MiniCon:computeECPsi
+523191  34082.7    1.6  Query:containsArg
+3155396  18915.8    0.9  Argument:getType
+2964313  17881.3    0.9  MCD:getView
+1049416  17223.1    0.8  Mapping:apply
+2863281  17025.0    0.8  MCD:getMappedQuerySubgoals
+2789724  16900.3    0.8  MCD:getQuery
+523671  14425.2    0.7  Mapping:put
+2113502  13187.1    0.6  Argument:hashCode
+1938539  11644.8    0.6  Rewriting:getMCDs
+1571465   9232.5    0.4  Subgoal:getArgs
+525204   8584.4    0.4  Mapping:applyTryIdentity
+ 28465   3443.6    0.2  MiniCon:computeEC
+523191   3086.7    0.1  MCD:getHH
+ 28464   1973.1    0.1  MiniCon:buildRewriting
+     1   1523.2    0.1  MiniCon:combineMCDs
+235382   1507.5    0.1  Mapping:<init>
+202926   1204.9    0.1  Mapping:getMap
+ 73471   1064.7    0.1  UserLib:disjoint
+174397   1045.5    0.1  MCD:getPhi
+174396   1035.4    0.0  MCD:setPsi
+  2631    281.5    0.0  Yylex:next_token
+ 17979    260.5    0.0  java_cup.runtime.Symbol:<init>
+  1772    241.5    0.0  Subgoal:rename
+  5759    225.2    0.0  Argument:rename
+     2    169.5    0.0  java_cup.runtime.lr_parser:parse
+   443    166.8    0.0  MiniCon:extend
+  2028    136.3    0.0  MiniCon:buildMCD
+  4810    101.4    0.0  UserLib:buildPermutations
+  2487     87.1    0.0  CUP$parser$actions:CUP$parser$do_action
+  3442     73.8    0.0  UserLib:buildAllSeq
+  2083     63.6    0.0  MiniCon:formOneMCD
+     2     62.2    0.0  GoodPlan:readViews
+  2487     55.8    0.0  parser:do_action
+  2631     53.1    0.0  parser:scan
+  7116     48.9    0.0  Yylex:yy_advance
+  2083     39.1    0.0  UserLib:getAllSeqs
+  6595     38.8    0.0  Subgoal:getName
+   443     36.3    0.0  Query:rename
+  5116     32.8    0.0  java_cup.runtime.lr_parser:get_action
+    71     29.7    0.0  MiniCon:formMCDs
+  4024     28.4    0.0  Argument:<init>
+  4272     27.5    0.0  Yylex:yy_mark_end
+  1219     25.9    0.0  UserLib:genPermutations
+  1432     23.9    0.0  Argument:toString
+    64     21.7    0.0  MiniCon:createRewriting
+   489     19.5    0.0  Argument:unifiable
+    88     19.5    0.0  Query:toString
+  2913     18.2    0.0  Yylex:yy_to_mark
+  2627     17.5    0.0  Yylex:yytext
+  2917     17.2    0.0  Yylex:yy_mark_start
+  2487     17.1    0.0  java_cup.runtime.lr_parser:get_reduce
+  2572     15.9    0.0  Subgoal:<init>
+   326     14.1    0.0  Subgoal:toString
+  2083     13.8    0.0  MiniCon:containsViewSubgoalSubset
+     2     13.5    0.0  parser:user_init
+     1     12.8    0.0  GoodPlan:genPlan2
+   209     12.7    0.0  Query:isDistVar
+   515      9.1    0.0  UserLib:genSubsets
+    65      8.3    0.0  MiniCon:satisfyProperty
+   489      8.2    0.0  Query:getDistVars
+     6      7.3    0.0  Yylex:unpackFromString
+     1      6.3    0.0  GoodPlan:main
+   792      5.0    0.0  Subgoal:size
+     1      4.6    0.0  MiniCon:genPlan2
+   691      4.3    0.0  Query:getBody
+   490      4.3    0.0  MiniCon:containsQuerySubgoalSubset
+   698      4.2    0.0  Argument:isConst
+   595      4.0    0.0  Query:<init>
+     2      3.7    0.0  parser:init_actions
+     4      3.3    0.0  Yylex:<init>
+    85      2.8    0.0  Subgoal:contains
+   273      1.7    0.0  Query:getHead
+    34      1.5    0.0  Mapping:toString
+    17      1.5    0.0  MCD:toString
+   153      1.2    0.0  UserLib:myprintln
+   192      1.2    0.0  MCD:getPsi
+   106      0.7    0.0  Query:getSubgoalNum
+    85      0.6    0.0  Query:getSubgoal
+    64      0.4    0.0  Rewriting:<init>
+     3      0.3    0.0  java_cup.runtime.lr_parser:unpackFromStrings
+    17      0.1    0.0  MCD:<init>
+     1      0.1    0.0  GoodPlan:doOneTestYoli2
+    18      0.1    0.0  MCD:getViewSubgoals
+     2      0.1    0.0  java_cup.runtime.lr_parser:<init>
+     2      0.1    0.0  CUP$parser$actions:<init>
+     4      0.1    0.0  Yylex:yy_do_eof
+     2      0.1    0.0  parser:<init>
+     1      0.1    0.0  MiniCon$Prof:<init>
+     1      0.1    0.0  MiniCon$Prof:start
+     2      0.1    0.0  parser:production_table
+     2      0.1    0.0  parser:action_table
+     2      0.1    0.0  parser:reduce_table
+     2      0.0    0.0  parser:start_state
+     2      0.0    0.0  java_cup.runtime.lr_parser:done_parsing
+     1      0.0    0.0  MiniCon$Prof:stop
+     1      0.0    0.0  JCProf:<init>
