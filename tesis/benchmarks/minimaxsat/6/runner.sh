@@ -2,28 +2,25 @@
 
 INDIR=casos
 
-OUT_MCD=plot_mcd5_4.raw
-OUT_MMS=plot_mms5_4.raw
+OUT_MCD=plot_mcd6.raw
+OUT_MMS=plot_mms6.raw
 
-TIME_MCD="timeout 120 /usr/bin/time -apo ${OUT_MCD}"
-TIME_MMS="timeout 120 /usr/bin/time -apo ${OUT_MMS}"
+TIME_MCD="timeout 180 /usr/bin/time -apo ${OUT_MCD}"
+TIME_MMS="timeout 180 /usr/bin/time -apo ${OUT_MMS}"
 
 PROGRAM=/home/daniel/proyectos/postgrado/tesis/src/imcdsat/mcdsat/compileonly
 
 MCDSAT=/home/daniel/proyectos/postgrado/tesis/src/imcdsat/mcdsat/mcdsat
 MINIMAXSAT="/home/daniel/proyectos/postgrado/tesis/src/MiniMaxSat/minimaxsat1.0 -F=2"
 
-echo 'costs pot2 ################################################################################' | tee -a ${OUT_MCD}
-echo 'costs pot2 ################################################################################' | tee -a ${OUT_MMS}
-
-#ulimit -t 120
-#ulimit -d 512000
+echo '################################################################################' | tee -a ${OUT_MCD}
+echo '################################################################################' | tee -a ${OUT_MMS}
 
 for nquery_sos in `seq 2 1 20`; do
     for nviews in `seq 20 20 100`; do
-        VIEWSFILE=casos/views-$nviews-$nquery_sos.in
-        QUERYFILE=casos/query-$nviews-$nquery_sos.in
-        COSTFILE=../../../src/costs-pot2.txt
+        VIEWSFILE=casos/views-${nviews}-${nquery_sos}.in_0.txt
+        QUERYFILE=casos/query-${nviews}-${nquery_sos}.in_0.txt
+        COSTFILE=../../../src/costs-20.txt
 
         CNF=`basename $VIEWSFILE`.cnf
 
