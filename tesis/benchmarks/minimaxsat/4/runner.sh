@@ -17,9 +17,11 @@ echo '##########################################################################
 echo '################################################################################' | tee -a ${OUT_MMS}
 
 ulimit -t 600
+ulimit -d 512000
 
-for nquery_sos in `seq 15 1 20`; do
-    for nviews in `seq 10 10 100`; do
+for nquery_sos in `seq 16 1 20`; do
+    #for nviews in `seq 10 10 100`; do
+    for nviews in 20 40 60 80 100; do
         VIEWSFILE=casos/views-$nviews-$nquery_sos.in
         QUERYFILE=casos/query-$nviews-$nquery_sos.in
         COSTFILE=../../../src/micosts.txt

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MCDSAT="$1"
+VIEWSFILE="$2"
+QUERYFILE="$3"
+COSTFILE="$4"
+MINIMAXSAT="$5"
+CNF="$6"
+
+${MCDSAT} BIGBESTRW ${VIEWSFILE} ${QUERYFILE} ${COSTFILE} > /dev/null && ${MINIMAXSAT} ${CNF} > /dev/null
+true
