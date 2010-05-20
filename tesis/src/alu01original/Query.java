@@ -203,7 +203,11 @@ class Query {
           int number = argCounter + j;
 
           if (!isConstant.containsKey(number)) {
-              isConstant.put(number, GoodPlan.random.nextBoolean());
+              /* TODO request constant percentage from user */
+              int constantPercentage = 0;
+              boolean setConstant = (GoodPlan.random.nextInt(100) < constantPercentage);
+
+              isConstant.put(number, setConstant);
           }
 
           String argName = UserLib.getChar(argCounter + j, isConstant.get(number));
@@ -748,7 +752,8 @@ class Query {
     int dropHeadArgTemp = GoodPlan.dropHeadArgNum;
     GoodPlan.isView = true;
     for(int i = 0; i < n; i++){
-    query = new Query("v"+i, relations, viewType, GoodPlan.querySubgoalNum);
+    //query = new Query("v"+i, relations, viewType, GoodPlan.querySubgoalNum);
+    query = new Query("v"+i, relations, viewType, 3);
     views.add(query);
     GoodPlan.dropHeadArgNum = dropHeadArgTemp;
     }

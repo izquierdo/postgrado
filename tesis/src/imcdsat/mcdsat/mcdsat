@@ -12,7 +12,8 @@ VIEWSFILE=$2
 QUERYFILE=$3
 COSTFILE=$4
 
-VIS=`basename ${2} .txt`
+#VIS=`basename ${2} .txt`
+VIS=`basename ${2}`
 CNF=${EXP}${VIS}.cnf
 NNF=${CNF}.nnf
 LOG=${EXP}${VIS}.log.txt
