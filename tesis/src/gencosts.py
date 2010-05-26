@@ -11,4 +11,4 @@ random.seed()
 print n,
 
 for i in range(n):
-    print ("%d %d" % (i, 100*random.randint(1,top))),
+    print ("%d %d" % (i, random.randint(0,top))),
