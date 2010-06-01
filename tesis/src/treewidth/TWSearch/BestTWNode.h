@@ -1,0 +1,245 @@
+#ifndef BESTTWNODE_H_
+#define BESTTWNODE_H_
+
+#include "preproc_flags.h"
+#include "TWNode.h"
+#include "TWState.h"
+#include "ALMGraph.h"
+
+#define MAX2(a,b) (((a)<(b)) ? (b) : (a))
+
+using namespace Adjacency_List_Matrix_Graph;
+
+namespace Treewidth_Namespace {
+
+	enum SetHValue_Mode { SHV_PARENTS_GRAPH, SHV_OWN_GRAPH };
+
+	class BestTWNode : public TWNode
+	{
+	private:
+		BestTWNode *parent;
+		TWState state;
+		ushort nelim;
+		short id;
+		ushort gval;
+		ushort hval;
+	public:
+
+		BestTWNode() {}
+
+		BestTWNode(ushort gv, ushort hv) : parent(NULL), nelim(0), id(-1),
+		  gval(gv), hval(hv) {}
+
+		ushort gValue() const;
+		ushort hValue() const;
+		ushort fValue() const;
+		ushort nVertsElim() const;
+		ushort nVertsRemaining() const;
+		short vid() const;
+
+		const TWState* statePtr() const;
+		BestTWNode* parentPtr() const;
+
+		bool isState(const TWState &s) const;
+
+		bool operator==(const TWNode &rhs) const;
+
+		size_t hash() const;
+
+		void expand(const ALMGraph &graph, ushort ub,
+				const vector<int> &adjacentVerts,
+				vector<BestTWNode> &dummyChildren);
+
+		void generateDummy (BestTWNode *p, short vid, ushort vdeg);
+
+		void setHValue(SetHValue_Mode mode, const ALMGraph &base_graph,
+			HeuristicVersion hversion, ushort ub, ALMGraph &graph_buffer);
+
+		void setHValue(const BestTWNode *duplicate);
+
+		void setHValue(ushort h)
+		{
+			hval = h;
+		}
+
+		void recoverSolutionPath(vector<int> &solution) const;
+
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode gValue accessor
+///////////////////////////////////////////////////////////////////////////////
+	inline ushort BestTWNode::gValue() const
+	{
+		return gval;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode hValue accessor
+///////////////////////////////////////////////////////////////////////////////
+	inline ushort BestTWNode::hValue() const
+	{
+		return hval;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode fValue accessor
+///////////////////////////////////////////////////////////////////////////////
+	inline ushort BestTWNode::fValue() const
+	{
+		return (gval>hval) ? gval : hval;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode nVertsElim - returns number of vertices eliminated in state
+///////////////////////////////////////////////////////////////////////////////
+	inline ushort BestTWNode::nVertsElim() const
+	{
+		return nelim;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	// BestTWNode nVertsRemaining - returns no of vertices remaining in state
+	///////////////////////////////////////////////////////////////////////////////
+		inline ushort BestTWNode::nVertsRemaining() const
+		{
+			return (uint)TWState::nVerts()-nelim;
+		}
+
+	///////////////////////////////////////////////////////////////////////////////
+	// BestTWNode vid - return id of vertex eliminated to generate node
+	///////////////////////////////////////////////////////////////////////////////
+		inline short BestTWNode::vid() const
+		{
+			return id;
+		}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode statePtr - returns a pointer to node's state
+///////////////////////////////////////////////////////////////////////////////
+	inline const TWState* BestTWNode::statePtr() const
+	{
+		return &state;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode parentPtr - returns a pointer to node's parent node
+///////////////////////////////////////////////////////////////////////////////
+	inline BestTWNode* BestTWNode::parentPtr() const
+	{
+		return parent;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode isState - is s the same as node's state
+///////////////////////////////////////////////////////////////////////////////
+	inline bool BestTWNode::isState(const TWState &s) const
+	{
+		return state==s;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode equivalence operator - checks is rhs has same state as this node
+///////////////////////////////////////////////////////////////////////////////
+	inline bool BestTWNode::operator==(const TWNode &rhs) const
+	{
+		return rhs.isState(state);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode hash - calls the node's state's hash function
+///////////////////////////////////////////////////////////////////////////////
+	inline size_t BestTWNode::hash() const
+	{
+		return state.hash();
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode generateDummy - sets the values of this node to be the child of
+//   the given parent, generated by eliminating vertex vid that has degree
+//   vdeg. The hvalue is not computed at this point, unless it can be
+//   inherited from the parent.
+// Inputs:
+//   p - parent node
+//   vid - index of eliminated vertex
+//   vdeg - degree of eliminated vertex (or some other lb on node's gvalue)
+///////////////////////////////////////////////////////////////////////////////
+	inline void BestTWNode::generateDummy (BestTWNode *p, short vid,
+	  ushort vdeg)
+	{
+		parent = p;
+		id = vid;
+		state = p->state;
+		state.setVert(id);
+		nelim = p->nelim+1;
+		gval = MAX2(p->gval,vdeg);
+#ifdef MONOTONIC_H
+		hval = 0;
+#else
+		if (vdeg < p->hval)
+			hval = p->hval;
+		else
+			hval = 0;
+#endif
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode setHValue - uses base_graph to get node's intermediate graph,
+//   then computes node's hvalue. Depending on mode base_graph is taken to be
+//   either the node's own or its parent's intermediate graph. Either way
+//   the base_graph is copied to the graph_buffer. If it's the parent's graph
+//   then the node's own graph is derived by eliminating the appropraite
+//   vertex. A destructive version of hMMD+ heuristic is run to compute the
+//   hvalue.
+// Inputs:
+//   mode - SHV_PARENTS_GRAPH or SHV_OWN_GRAPH
+//   base_graph - either parent's or own graph depending on mode
+//   hversion - version of MMD+ heuristic to run
+//   ub - upper bound on f-value, used for short-cicuiting h-value computation
+//     in case of exceeding ub
+//   graph_buffer - pre-allocated graph used in computation
+// Postcondition:
+//   node's hValue is set
+///////////////////////////////////////////////////////////////////////////////
+	inline void BestTWNode::setHValue(SetHValue_Mode mode,
+	  const ALMGraph &base_graph, HeuristicVersion hversion, ushort ub,
+	  ALMGraph &graph_buffer)
+	{
+		ushort tmp_h;
+
+		// minDeg and minPairMax are non-destructive, so don't need graph
+		// buffer when mode==SHV_OWN_GRAPH
+		if (mode==SHV_OWN_GRAPH && (hversion==H_MINDEG ||
+				hversion==H_MINPAIRMAX))
+		{
+			tmp_h = base_graph.heuristic(hversion,ub);
+		}
+		else
+		{
+			// setup and derive node's intermediate graph
+			graph_buffer.copy_nopSAAS(base_graph);
+			if (mode==SHV_PARENTS_GRAPH)
+				graph_buffer.elimVertex_nopSAAS(id);
+
+			// compute h-value
+			tmp_h = graph_buffer.heuristic_UNSAFE(hversion,ub);
+		}
+
+		if (tmp_h > hval)
+			hval = tmp_h;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// BestTWNode setHvalue from a duplicate - sets this node's hvalue to the
+//   duplicate's hvalue.
+///////////////////////////////////////////////////////////////////////////////
+	inline void BestTWNode::setHValue(const BestTWNode *duplicate)
+	{
+		if (duplicate->hval > hval)
+			hval = duplicate->hval;
+	}
+
+};
+
+#endif /*BESTTWNODE_H_*/
+

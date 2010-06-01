@@ -1,0 +1,52 @@
+As of 5/23/2010 this code contains several incomplete and undocumented
+features. For now, consider the following the only defined and
+reliable behavior.
+
+This code will run either DFBNB or DFID to find the treewidth and an
+optimal elimination order for a graph in the ELG format.
+
+The minimum and maximum number of vertices for a graph is hard-coded,
+therefore the code may need to be recompiled in order to solve graphs
+of different sizes. To do this, in the file preproc_flags change the
+value of the preprocessor directory TW_MAX_VERTS to be a mulitple of
+32 no less than the number of vertices in the graph.
+
+Alternatively, you can uncomment the directive TW_ANY_VERTS in
+preproc_flag.h to allow a single compilation to run on graphs of any
+size. Note that this may result is a significant performance penalty.
+
+To compile just run make. The code makes use of several Boost
+libraries. After successfully compiling the program, run it with one
+of the following suggested parameters.
+
+TWSearch --dfbnb --contractionMinDeg-leastC -e graph_file
+TWSearch --dfid --contractionMinDeg-leastC -e graph_file
+
+Also, you can use the --lb and --ub parameters to set lower and upper
+bounds on the solutions you are interested in.
+
+Other than those I haven't run this with other parameters in a while,
+and I'm not making any promises about how it will work.
+
+When you run TWSearch a number of output files will be created. These
+are the byproducts of different evaluations and most of them should be
+eliminated. Most of what you would want to know will be output to the
+console. You can also look at dfbnb.out (yes, it is named dfbnb.out
+even if you run DFID instead of DFBNB), which will show some stats
+about the graph an "exit status" (which is 0 is the treewidth was
+found), the treewidth, and an optimal elimination order.
+
+As TWSearch runs, it will periodically output the number of nodes
+generated and expanded. Also, if you are running DFBNB and it finds a
+new upper bound on the treewidth, it will append to a file named
+new_ub_output.txt the following: name of the graph, the new upper
+bound, number of nodes expanded, number of nodes generated, number of
+seconds elapsed, and the maximum memory allocation so far.
+
+Let me know if you have any comments or questions.
+
+Alex Dow
+alexdow@gmail.com
+
+San Francisco, CA
+5/23/2010

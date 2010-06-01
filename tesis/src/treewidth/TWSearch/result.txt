@@ -1,0 +1,11 @@
+../g1.elg complete
+Iteration Time: 0 seconds
+UB: 8
+TW: 8
+
+STATS 1 overview
+total_expanded 	generated 	expanded_by_reduction
+863 	2332 	0
+
+DVPR Enabled
+DEBUG_TW Disabled
