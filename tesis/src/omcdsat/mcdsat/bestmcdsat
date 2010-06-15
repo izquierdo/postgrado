@@ -1,0 +1,45 @@
+#!/bin/bash
+trap exit sigint
+
+# EDIT THE FOLLOWING  TWO VARIABLES TO INDICATE LOCATION OF C2D AND MODELS
+MCDSATDIR=`dirname $0`
+C2D=$MCDSATDIR/../c2d/c2d_linux
+MODS=$MCDSATDIR/../models/models
+
+# DO NOT EDIT PAST THIS POINT
+
+if [ "$1" == "MCD" ] ; then 
+  EXP="Sat"
+elif [ "$1" == "RW" ] ; then 
+  EXP="SatRW"
+elif [ "$1" == "BESTRW" ] ; then 
+  EXP="SatBestRW"
+else
+  echo "Invalid option" $1
+  exit
+fi
+
+VIS=`basename ${2} .txt`
+CNF=${EXP}${VIS}.cnf
+NNF=${CNF}.nnf
+LOG=${EXP}${VIS}.log.txt
+LOG1=${EXP}${VIS}_t1.txt
+LOG2=${EXP}${VIS}_t2.txt
+
+echo "[Translate to CNF]" $CNF &&
+python $MCDSATDIR/Main.py T $EXP $2 $3 $VIS.pyo $LOG1 $CNF && 
+
+echo "[Compile to DNNF]" $DNNF &&
+$C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG && 
+
+echo "[Generate models]" &&
+$MODS -w $NNF | python $MCDSATDIR/Main.py G $EXP $2 $3 $VIS.pyo $LOG2 && 
+
+CTIME=`awk '$0~"Total Time" {t=substr($3,1);sub("s","",t);print t;}'<$LOG`
+TIME1=`cat $LOG1`
+TIME2=`cat $LOG2`
+rm -f $LOG $LOG1 $LOG2 $VIS.pyo
+rm $CNF $NNF
+
+echo "[Done] $TIME1 $CTIME $TIME2"
+

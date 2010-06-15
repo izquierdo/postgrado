@@ -1,0 +1,2 @@
+#!/bin/sh
+python `dirname $0`/Main.py $1 $2 $3

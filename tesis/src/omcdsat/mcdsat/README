@@ -1,0 +1,14 @@
+Requirements
+------------
+  Python 2.4.2 or newer and the following libraries:
+
+    TPG -> http://christophe.delord.free.fr/en/tpg/
+      (included)
+    psyco -> http://psyco.sourceforge.net/
+      (not included, only needed for improved performace)
+      if used, must uncomment the psyco lines in Main.py
+
+Installation
+------------
+  Edit mcdsat to indicate the location of the c2d compiler (default values supplied)
+

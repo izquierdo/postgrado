@@ -1,0 +1,73 @@
+#!/bin/bash
+trap exit sigint
+
+# EDIT THE FOLLOWING  TWO VARIABLES TO INDICATE LOCATION OF C2D AND MODELS
+MCDSATDIR=`dirname $0`
+C2D=$MCDSATDIR/../c2d/c2d_linux
+
+# DO NOT EDIT PAST THIS POINT
+
+OPTION=$1
+VIEWSFILE=$2
+QUERYFILE=$3
+COSTFILE=$4
+
+#VIS=`basename ${2} .txt`
+VIS=`basename ${2}`
+CNF=${EXP}${VIS}.cnf
+NNF=${CNF}.nnf
+LOG=${EXP}${VIS}.log.txt
+LOG1=${EXP}${VIS}_t1.txt
+LOG2=${EXP}${VIS}_t2.txt
+SATCOSTS=${CNF}.costs.txt
+
+run_bigbestrw()
+{
+    EXP=$1
+    MODS=$2
+
+    echo "[Translate to CNF]" $CNF &&
+    python $MCDSATDIR/MainBig.py T $EXP $VIEWSFILE $QUERYFILE $COSTFILE $VIS.pyo $LOG1 $CNF $SATCOSTS && 
+
+    exit 0
+}
+
+if [ "$OPTION" == "MCD" ] ; then 
+  EXP="Sat"
+  #MODS="$MCDSATDIR/../models/models -w $NNF"
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/models --write-models $NNF"
+elif [ "$OPTION" == "RW" ] ; then 
+  EXP="SatRW"
+  #MODS="$MCDSATDIR/../models/models -w $NNF"
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/models --write-models $NNF"
+elif [ "$OPTION" == "BESTRW" ] ; then 
+  EXP="SatBestRW"
+  #TODO cambiar a ../../models/bestmodel
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/bestmodel -f forgetfile -c $COSTFILE $NNF"
+elif [ "$OPTION" == "BIGBESTRW" ] ; then 
+  EXP="SatBigBestRW"
+  #TODO cambiar a ../../models/bestmodel
+  MODS="/home/daniel/proyectos/postgrado/tesis/src/models/bestmodel -f forgetfile -c $COSTFILE $NNF"
+  run_bigbestrw $EXP $MODS $COSTFILE
+else
+  echo "Invalid option" $OPTION
+  exit
+fi
+
+echo "[Translate to CNF]" $CNF &&
+python $MCDSATDIR/Main.py T $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG1 $CNF $SATCOSTS && 
+
+echo "[Compile to DNNF]" $DNNF &&
+$C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG && 
+
+echo "[Generate models]" &&
+$MODS | python $MCDSATDIR/Main.py G $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG2 $COSTFILE && 
+
+CTIME=`awk '$0~"Total Time" {t=substr($3,1);sub("s","",t);print t;}'<$LOG`
+TIME1=`cat $LOG1`
+TIME2=`cat $LOG2`
+rm -f $LOG $LOG1 $LOG2 $VIS.pyo
+rm $CNF $NNF
+
+echo "[Done] $TIME1 $CTIME $TIME2"
+
