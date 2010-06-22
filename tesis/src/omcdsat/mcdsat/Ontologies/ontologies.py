@@ -14,22 +14,20 @@ def generate_bichos(filename):
     tc = set()
 
     for rel in o:
-        R = (rel.cabeza.predicado, rel.cabeza.orden)
-        P = (rel.cuerpo[0].predicado, rel.cuerpo[0].orden)
-        
-        tc.add((R, P))
+        tc.add((rel.cabeza, rel.cuerpo[0]))
 
     # transitive closure
+
+    print tc
 
     while True:
         new = set()
 
-        for (a, b) in product(tc):
-            pass
+        for (a, b) in product(tc, repeat=2):
+            if a != b:
+                print (a, b)
 
         if len(new) == 0:
             break
 
         tc.update(new)
-
-    print pares
