@@ -1,20 +1,35 @@
 #!/usr/bin/env python
 
+from itertools import product
 from Parser.CQparser import cargarCQ
 
 def load_ontology(filename):
     o = cargarCQ(filename)
 
+    return o
+
 def generate_bichos(filename):
     o = load_ontology(filename)
 
-    pares = []
+    tc = set()
 
     for rel in o:
-        # R [ P
-        R = (rel.cabeza.nombre, rel.cabeza.argumentos)
-        P = (rel.cuerpo[0].nombre, rel.cuerpo[0].argumentos)
+        R = (rel.cabeza.predicado, rel.cabeza.orden)
+        P = (rel.cuerpo[0].predicado, rel.cuerpo[0].orden)
         
-        pares.append(R, P)
+        tc.add((R, P))
+
+    # transitive closure
+
+    while True:
+        new = set()
+
+        for (a, b) in product(tc):
+            pass
+
+        if len(new) == 0:
+            break
+
+        tc.update(new)
 
     print pares
