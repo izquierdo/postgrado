@@ -18,16 +18,8 @@ class Spec:
         self.class_name = class_name
         self.class_args = class_args
 
-        self.mapping = defaultdict(set)
-
-        for i, arg in enumerate(subclass_args):
-            self.mapping[arg].add((0, i))
-
-        for i, arg in enumerate(class_args):
-            self.mapping[arg].add((1, i))
-
     def __repr__(self):
-        return "%s [ %s (%s)" % (self.subclass_name, self.class_name, self.mapping)
+        return "%s(%s) =[ %s(%s)" % (self.subclass_name, self.subclass_args, self.class_name, self.class_args)
 
     def join(self, other):
         unified = self._unify(self, other)
@@ -35,8 +27,10 @@ class Spec:
         if not unified:
             return None
 
-        joined = Spec(self.subclass_name, other.class_name, [], [])
-        joined.mapping = unified
+        subclass_args = unified[0]
+        class_args = unified[1]
+
+        joined = Spec(self.subclass_name, subclass_args, other.class_name, class_args)
 
         return joined
 
@@ -48,6 +42,7 @@ class Spec:
             return None
 
         usets = []
+        usets_repr = []
 
         for i in xrange(len(a.class_args)):
             found = False
@@ -63,6 +58,14 @@ class Spec:
                 us = set()
                 us.add(a.class_args[i])
                 us.add(b.subclass_args[i])
+
+                # add uset representative
+                if es_const(a.class_args[i]):
+                    usets_repr.append(a.class_args[i])
+                else:
+                    usets_repr.append(b.subclass_args[i])
+
+                # add uset
                 usets.append(us)
 
         # check for incompatible mappings
@@ -72,16 +75,23 @@ class Spec:
             if len(cus) > 1:
                 return None
 
+        new_subclass_args = a.subclass_args
+        new_class_args = b.class_args
+
+        for i in xrange(len(new_subclass_args)):
+            for (usi, us) in enumerate(usets):
+                if new_subclass_args[i] in us:
+                    new_subclass_args[i] = usets_repr[usi]
 
         print "^^"
-        print "attempting to unify"
-        print a.mapping
-        print "WITH"
-        print b.mapping
+        print "result of attempting to unify:"
+        print new_subclass_args
+        print "TO"
+        print new_class_args
         print "USETS ARE"
         print usets
         print "$$"
-        return None
+        return (new_subclass_args, new_class_args)
 
 def generate_specs(filename):
     o = load_ontology(filename)
@@ -106,7 +116,9 @@ def generate_specs(filename):
                 print "adding %s" % (c,)
                 new.add(c)
 
-        if len(new) == 0:
-            break
-
+        pre_len = len(tc)
         tc.update(new)
+        pos_len = len(tc)
+
+        if pre_len < pos_len:
+            break
