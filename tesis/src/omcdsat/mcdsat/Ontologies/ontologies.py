@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import cPickle
 from itertools import product
 from collections import defaultdict
 
@@ -83,14 +84,6 @@ class Spec:
                 if new_subclass_args[i] in us:
                     new_subclass_args[i] = usets_repr[usi]
 
-        print "^^"
-        print "result of attempting to unify:"
-        print new_subclass_args
-        print "TO"
-        print new_class_args
-        print "USETS ARE"
-        print usets
-        print "$$"
         return (new_subclass_args, new_class_args)
 
 def generate_specs(filename):
@@ -113,7 +106,6 @@ def generate_specs(filename):
             c = a.join(b)
 
             if c is not None:
-                print "adding %s" % (c,)
                 new.add(c)
 
         pre_len = len(tc)
@@ -122,3 +114,8 @@ def generate_specs(filename):
 
         if pre_len < pos_len:
             break
+
+    tc_filename = "%s.ontology" % (filename)
+    tc_file = open(tc_filename, 'w')
+
+    cPickle.dump(tc, tc_file)
