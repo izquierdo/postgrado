@@ -5,4 +5,4 @@ import sys
 from Ontologies.ontologies import *
 
 if __name__ == "__main__":
-    generate_bichos(sys.argv[1])
+    generate_specs(sys.argv[1])

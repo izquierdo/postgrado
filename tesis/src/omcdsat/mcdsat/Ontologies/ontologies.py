@@ -2,9 +2,8 @@
 
 from itertools import product
 from collections import defaultdict
-from copy import deepcopy
 
-from Parser.CQparser import cargarCQ
+from Parser.CQparser import cargarCQ, es_const
 
 def load_ontology(filename):
     o = cargarCQ(filename)
@@ -14,7 +13,10 @@ def load_ontology(filename):
 class Spec:
     def __init__(self, subclass_name, subclass_args, class_name, class_args):
         self.subclass_name = subclass_name
+        self.subclass_args = subclass_args
+
         self.class_name = class_name
+        self.class_args = class_args
 
         self.mapping = defaultdict(set)
 
@@ -28,7 +30,7 @@ class Spec:
         return "%s [ %s (%s)" % (self.subclass_name, self.class_name, self.mapping)
 
     def join(self, other):
-        unified = self._unify(self.mapping, other.mapping)
+        unified = self._unify(self, other)
 
         if not unified:
             return None
@@ -38,10 +40,50 @@ class Spec:
 
         return joined
 
-    def _unify(self, ma, mb):
+    def _unify(self, a, b):
+        if a.class_name != b.subclass_name:
+            return None
+
+        if len(a.class_args) != len(b.subclass_args):
+            return None
+
+        usets = []
+
+        for i in xrange(len(a.class_args)):
+            found = False
+
+            for us in usets:
+                if (a.class_args[i] in us) or (b.subclass_args[i] in us):
+                    found = True
+                    us.add(a.class_args[i])
+                    us.add(b.subclass_args[i])
+                    break
+
+            if not found:
+                us = set()
+                us.add(a.class_args[i])
+                us.add(b.subclass_args[i])
+                usets.append(us)
+
+        # check for incompatible mappings
+        for us in usets:
+            cus = [x for x in us if es_const(x)]
+
+            if len(cus) > 1:
+                return None
+
+
+        print "^^"
+        print "attempting to unify"
+        print a.mapping
+        print "WITH"
+        print b.mapping
+        print "USETS ARE"
+        print usets
+        print "$$"
         return None
 
-def generate_bichos(filename):
+def generate_specs(filename):
     o = load_ontology(filename)
 
     tc = set()
@@ -55,7 +97,7 @@ def generate_bichos(filename):
         new = set()
 
         for (a, b) in product(tc, repeat=2):
-            if a == b or a.class_name != b.subclass_name:
+            if a == b:
                 continue
 
             c = a.join(b)
