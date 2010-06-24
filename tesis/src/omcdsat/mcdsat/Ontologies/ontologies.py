@@ -2,6 +2,7 @@
 
 from itertools import product
 from collections import defaultdict
+from copy import deepcopy
 
 from Parser.CQparser import cargarCQ
 
@@ -26,6 +27,20 @@ class Spec:
     def __repr__(self):
         return "%s [ %s (%s)" % (self.subclass_name, self.class_name, self.mapping)
 
+    def join(self, other):
+        unified = self._unify(self.mapping, other.mapping)
+
+        if not unified:
+            return None
+
+        joined = Spec(self.subclass_name, other.class_name, [], [])
+        joined.mapping = unified
+
+        return joined
+
+    def _unify(self, ma, mb):
+        return None
+
 def generate_bichos(filename):
     o = load_ontology(filename)
 
@@ -40,8 +55,14 @@ def generate_bichos(filename):
         new = set()
 
         for (a, b) in product(tc, repeat=2):
-            if a != b:
-                print (a, b)
+            if a == b or a.class_name != b.subclass_name:
+                continue
+
+            c = a.join(b)
+
+            if c is not None:
+                print "adding %s" % (c,)
+                new.add(c)
 
         if len(new) == 0:
             break
