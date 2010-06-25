@@ -32,7 +32,13 @@ if __name__ == "__main__":
         else:
             archCostosSat = None
 
-        traducir(exp, archVistas, archCons, archVars, archTiempo, archSalida, archCostosSat)
+        if len(sys.argv) > 9:
+            archOntology = sys.argv[9]
+        else:
+            archOntology = None
+
+
+        traducir(exp, archVistas, archCons, archVars, archTiempo, archSalida, archCostosSat, archOntology)
     elif op == 'G':
         if len(sys.argv) > 7:
             archCostos = sys.argv[7]

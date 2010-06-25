@@ -4,6 +4,7 @@ import resource
 import pprint
 import random
 import cPickle
+import pickle
 
 from Parser import *
 from Parser.CQparser import *
@@ -24,10 +25,10 @@ varsT = {}
 varsZ = {}
 contribVT = {}
 
-def traducir(exp, archV, archC, archVars, archTiempo, archSalida, archCostosSat):
+def traducir(exp, archV, archC, archVars, archTiempo, archSalida, archCostosSat, archOntology=None):
     #tiempo = timeit.Timer('traducir1()', "from __main__ import traducir1; import psyco; psyco.full()").timeit(1)/1
     tiempoi = resource.getrusage(resource.RUSAGE_SELF)[0]
-    traducir1(exp, archV, archC, archVars, archSalida, archCostosSat)
+    traducir1(exp, archV, archC, archVars, archSalida, archCostosSat, archOntology)
     tiempof = resource.getrusage(resource.RUSAGE_SELF)[0]
     
     fileobject = open(archTiempo, 'w')
@@ -44,14 +45,19 @@ def traducirBig(exp, archV, archC, archVars, archTiempo, archSalida, archCostos)
     fileobject.write(str(tiempof-tiempoi))
     fileobject.close()
 
-def traducir1(exp, archVistas, archCons, archVars, archSalida, archCostosSat): #(archVistas, archCons):
+def traducir1(exp, archVistas, archCons, archVars, archSalida, archCostosSat, archOntology): #(archVistas, archCons):
     vistas = cargarCQ(archVistas)
     consultas = cargarCQ(archCons)
+
+    ao = open(archOntology, 'r')
+    ontology = pickle.load(ao)
+    ao.close()
+
     for q in consultas:
         if exp == 'SatRW' or exp == 'SatBestRW':
-            transf = traducirConsultaRW(q, vistas, archSalida)
+            transf = traducirConsultaRW(q, vistas, ontology, archSalida)
         elif exp == 'Sat':
-            transf = traducirConsultaMCD(q, vistas, archSalida)
+            transf = traducirConsultaMCD(q, vistas, ontology, archSalida)
         guardarVars(transf, archVars)
 
 def traducir1Big(exp, archVistas, archCons, archVars, archSalida, archCostos): #(archVistas, archCons):
@@ -66,19 +72,19 @@ def guardarVars(transf, archVars):
     fh.close()
 
 
-def traducirConsultaMCD(q, vistas, archSalida):
-    variables, clausulas = generarTeoriaMCD(q, vistas)
+def traducirConsultaMCD(q, vistas, ontologia, archSalida):
+    variables, clausulas = generarTeoriaMCD(q, vistas, ontologia)
     transf = TransformarFormula(variables)
     n = 1
     imprimirCopias(variables, clausulas, [], n, transf, archSalida)
     return transf
 
 
-def traducirConsultaRW(q, vistas, archSalida):
+def traducirConsultaRW(q, vistas, ontologia, archSalida):
     variables, clausulas = generarTeoriaMCD(q, vistas)
     transf = TransformarFormula(variables)
     n = len(q.cuerpo)
-    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas)
+    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas, ontologia)
     imprimirCopias(variables, clausulas, clausulas2, n, transf, archSalida)
     return transf
 
@@ -102,7 +108,7 @@ def traducirConsultaBigBestRW(q, vistas, archSalida, archCostos):
     imprimirCopiasPeso(variables, clausulas, clausulas2, n, costDict, transf, archSalida)
     return transf
 
-def clausulasCombinarMCD(transf, n, q, vistas):
+def clausulasCombinarMCD(transf, n, q, vistas, ontologia):
     clausulas2 = []
     for numG in xrange(n):
         varG = VariableSat(False, 'g', [numG])
@@ -194,7 +200,7 @@ def imprimirCopiasPeso(variables, clausulas, clausulas2, numCopias, pesos, trans
     #arch.write('%\n')
     arch.close()
 
-def generarTeoriaMCD(q, vistas):
+def generarTeoriaMCD(q, vistas, ontologia):
     global varsV
     global varsG
     global varsT
@@ -203,6 +209,7 @@ def generarTeoriaMCD(q, vistas):
     lg, c3 = variablesG(q, lv)
     lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas)
 
+    print ontologia
 
     # support for constants
 
@@ -538,6 +545,9 @@ def clausulas_d3(q, vistas):
 
     return [[vt] for vt in clausulas]
 
+def can_specialize(preda, predb, ontology):
+    for (a, b) in ontology:
+
 def clausulas678(q, vistas):
     global varsT
     global varsZ
@@ -566,7 +576,7 @@ def clausulas678(q, vistas):
             subObCubre = False
             for subObtemp in v.cuerpo:
                 predtemp = subObtemp.predicado
-                if pred == predtemp:
+                if pred == predtemp or :
                     varz = VariableSat(True, 'z', [i,j,m])
                     lz.append(varz)
                     varsZ[(i,j,m)]=varz

@@ -11,6 +11,7 @@ OPTION=$1
 VIEWSFILE=$2
 QUERYFILE=$3
 COSTFILE=$4
+ONTOLOGYFILE=$5
 
 #VIS=`basename ${2} .txt`
 VIS=`basename ${2}`
@@ -55,7 +56,7 @@ else
 fi
 
 echo "[Translate to CNF]" $CNF &&
-python $MCDSATDIR/Main.py T $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG1 $CNF $SATCOSTS && 
+python $MCDSATDIR/Main.py T $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG1 $CNF $SATCOSTS $ONTOLOGYFILE && 
 
 echo "[Compile to DNNF]" $DNNF &&
 $C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG && 
