@@ -72,19 +72,19 @@ def guardarVars(transf, archVars):
     fh.close()
 
 
-def traducirConsultaMCD(q, vistas, ontologia, archSalida):
-    variables, clausulas = generarTeoriaMCD(q, vistas, ontologia)
+def traducirConsultaMCD(q, vistas, ontology, archSalida):
+    variables, clausulas = generarTeoriaMCD(q, vistas, ontology)
     transf = TransformarFormula(variables)
     n = 1
     imprimirCopias(variables, clausulas, [], n, transf, archSalida)
     return transf
 
 
-def traducirConsultaRW(q, vistas, ontologia, archSalida):
+def traducirConsultaRW(q, vistas, ontology, archSalida):
     variables, clausulas = generarTeoriaMCD(q, vistas)
     transf = TransformarFormula(variables)
     n = len(q.cuerpo)
-    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas, ontologia)
+    clausulas2 = clausulasCombinarMCD(transf, n, q, vistas, ontology)
     imprimirCopias(variables, clausulas, clausulas2, n, transf, archSalida)
     return transf
 
@@ -108,7 +108,7 @@ def traducirConsultaBigBestRW(q, vistas, archSalida, archCostos):
     imprimirCopiasPeso(variables, clausulas, clausulas2, n, costDict, transf, archSalida)
     return transf
 
-def clausulasCombinarMCD(transf, n, q, vistas, ontologia):
+def clausulasCombinarMCD(transf, n, q, vistas, ontology):
     clausulas2 = []
     for numG in xrange(n):
         varG = VariableSat(False, 'g', [numG])
@@ -200,16 +200,16 @@ def imprimirCopiasPeso(variables, clausulas, clausulas2, numCopias, pesos, trans
     #arch.write('%\n')
     arch.close()
 
-def generarTeoriaMCD(q, vistas, ontologia):
+def generarTeoriaMCD(q, vistas, ontology):
     global varsV
     global varsG
     global varsT
     global varsZ
     lv, c1, c2 = variablesV(q, vistas)
     lg, c3 = variablesG(q, lv)
-    lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas)
+    lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas, ontology)
 
-    print ontologia
+    print ontology
 
     # support for constants
 
@@ -546,9 +546,16 @@ def clausulas_d3(q, vistas):
     return [[vt] for vt in clausulas]
 
 def can_specialize(preda, predb, ontology):
-    for (a, b) in ontology:
+    for spec in ontology:
+        print "checking spec"
+        print "spec: %s [ %s" % (spec.subclass_name, spec.class_name)
+        print "pred: %s [ %s" % (preda, predb)
+        if spec.subclass_name == preda and spec.class_name == predb:
+            return True
 
-def clausulas678(q, vistas):
+    return False
+
+def clausulas678(q, vistas, ontology):
     global varsT
     global varsZ
     global varsG
@@ -576,7 +583,9 @@ def clausulas678(q, vistas):
             subObCubre = False
             for subObtemp in v.cuerpo:
                 predtemp = subObtemp.predicado
-                if pred == predtemp or :
+                print "checking %s against %s" % (pred,predtemp)
+                if pred == predtemp or can_specialize(pred, predtemp, ontology):
+                    print "success"
                     varz = VariableSat(True, 'z', [i,j,m])
                     lz.append(varz)
                     varsZ[(i,j,m)]=varz
