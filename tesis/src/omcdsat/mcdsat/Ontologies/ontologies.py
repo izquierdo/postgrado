@@ -112,7 +112,7 @@ def generate_specs(filename):
         tc.update(new)
         pos_len = len(tc)
 
-        if pre_len < pos_len:
+        if pre_len == pos_len:
             break
 
     tc_filename = "%s.ontology" % (filename)
