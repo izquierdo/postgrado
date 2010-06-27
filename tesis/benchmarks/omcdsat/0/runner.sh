@@ -8,7 +8,7 @@ OMCDSAT=/home/daniel/proyectos/postgrado/tesis/src/omcdsat/mcdsat/mcdsat
 
 echo '################################################################################' | tee -a ${OUT_MMS}
 
-for levels in `seq 2 3`; do
+for levels in `seq 2 7`; do
     ONTOLOGY=casos/${levels}levels.ontology
     VIEWS=casos/vistas.txt
     QUERY=casos/query.txt
