@@ -209,7 +209,7 @@ def generarTeoriaMCD(q, vistas, ontology):
     lg, c3 = variablesG(q, lv)
     lt, lz, c6, c7, c8, c9, c14, ltaux = clausulas678(q, vistas, ontology)
 
-    print ontology
+    #print ontology
 
     # support for constants
 
@@ -547,9 +547,6 @@ def clausulas_d3(q, vistas):
 
 def can_specialize(preda, predb, ontology):
     for spec in ontology:
-        print "checking spec"
-        print "spec: %s [ %s" % (spec.subclass_name, spec.class_name)
-        print "pred: %s [ %s" % (preda, predb)
         if spec.subclass_name == preda and spec.class_name == predb:
             return True
 
@@ -583,15 +580,13 @@ def clausulas678(q, vistas, ontology):
             subObCubre = False
             for subObtemp in v.cuerpo:
                 predtemp = subObtemp.predicado
-                print "checking %s against %s" % (pred,predtemp)
                 if pred == predtemp or can_specialize(pred, predtemp, ontology):
-                    print "success"
                     varz = VariableSat(True, 'z', [i,j,m])
                     lz.append(varz)
                     varsZ[(i,j,m)]=varz
                     c6temp.append(varz)
                     c9temp.append(varz)
-                    lttemp = clausula78a(varz, varg, varm, subOb, subObtemp, m, ltaux, c7, c8, v)
+                    lttemp = clausula78a(varz, varg, varm, subOb, subObtemp, m, ltaux, c7, c8, v, pred != predtemp)
                     lt |= lttemp
                     subObCubre = True
                 j = j + 1
@@ -620,7 +615,7 @@ def clausula9(c9temp):
            c9.append([c9temp[x].negarVar(), c9temp[y].negarVar()])
     return c9
 
-def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
+def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista, is_spec):
     global varsT
     global contribVT
     c8temp1 = [varz, varm.negarVar()]
@@ -635,6 +630,9 @@ def clausula78a(varz, varg, varm, subObQ, subObV, vis, ltaux, c7, c8, vista):
         contribVT.setdefault(vista, set([])).add((int(x), int(y)))
         c7temp = [varm.negarVar(), varz.negarVar(), varT]
         c7.append(c7temp)
+        #if is_spec:
+            #c7temp = [varm.negarVar(), varz.negarVar(), varT]
+            #c7.append(c7temp)
         c8temp1.append(varT.negarVar())
         c8temp2.append(varT.negarVar())
         i = i + 1

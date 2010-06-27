@@ -86,6 +86,23 @@ class Spec:
 
         return (new_subclass_args, new_class_args)
 
+    def __eq__(self, other):
+        return self.subclass_name == other.subclass_name and \
+               self.subclass_args == other.subclass_args and \
+               self.class_name == other.class_name       and \
+               self.class_args == other.class_args
+
+    def __ne__(self, other):
+        return not (self == other)
+
+    def __hash__(self):
+        th = "(%s):(%s):(%s):(%s)" % (self.subclass_name,
+                                      self.subclass_args,
+                                      self.class_name,
+                                      self.class_args)
+
+        return hash(th)
+
 def generate_specs(filename):
     o = load_ontology(filename)
 
