@@ -81,7 +81,7 @@ def traducirConsultaMCD(q, vistas, ontology, archSalida):
 
 
 def traducirConsultaRW(q, vistas, ontology, archSalida):
-    variables, clausulas = generarTeoriaMCD(q, vistas)
+    variables, clausulas = generarTeoriaMCD(q, vistas, ontology)
     transf = TransformarFormula(variables)
     n = len(q.cuerpo)
     clausulas2 = clausulasCombinarMCD(transf, n, q, vistas, ontology)
@@ -101,7 +101,7 @@ def traducirConsultaBigBestRW(q, vistas, archSalida, archCostos):
 
     #impresion
 
-    variables, clausulas = generarTeoriaMCD(q, vistas)
+    variables, clausulas = generarTeoriaMCD(q, vistas, ontology)
     transf = TransformarFormula(variables)
     n = len(q.cuerpo)
     clausulas2 = clausulasCombinarMCD(transf, n, q, vistas)
@@ -547,7 +547,7 @@ def clausulas_d3(q, vistas):
 
 def can_specialize(preda, predb, ontology):
     for spec in ontology:
-        if spec.subclass_name == preda and spec.class_name == predb:
+        if spec.subclass_name == predb and spec.class_name == preda:
             return True
 
     return False
