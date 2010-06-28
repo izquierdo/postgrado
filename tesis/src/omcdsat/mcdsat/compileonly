@@ -6,6 +6,9 @@ MCDSATDIR=`dirname $0`
 C2D=$MCDSATDIR/../c2d/c2d_linux
 MODS=$MCDSATDIR/../models/models
 
+COSTFILE=$4
+ONTOLOGYFILE=$5
+
 # DO NOT EDIT PAST THIS POINT
 
 if [ "$1" == "MCD" ] ; then 
@@ -25,7 +28,7 @@ LOG1=${EXP}${VIS}_t1.txt
 LOG2=${EXP}${VIS}_t2.txt
 
 echo "[Translate to CNF]" $CNF &&
-python $MCDSATDIR/Main.py T $EXP $2 $3 $VIS.pyo $LOG1 $CNF && 
+python $MCDSATDIR/Main.py T $EXP $2 $3 $VIS.pyo $LOG1 $CNF $COSTFILE $ONTOLOGYFILE && 
 
 echo "[Compile to DNNF]" $DNNF &&
 $C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG && 
@@ -40,5 +43,6 @@ rm -f $LOG $LOG1
 #rm -f $LOG $LOG1 $LOG2 $VIS.pyo
 #rm $CNF $NNF
 
+echo $LOG1
 echo "[Done] $TIME1 $CTIME $TIME2"
 
