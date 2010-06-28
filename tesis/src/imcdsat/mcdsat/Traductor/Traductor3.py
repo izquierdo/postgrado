@@ -163,17 +163,61 @@ def clausulasCombinarMCD(transf, n, q, vistas):
 
 
 def imprimirCopias(variables, clausulas, clausulas2, numCopias, transf, archSalida):
-    arch = file(archSalida, 'w+')
-    numVars = len(variables)*numCopias
-    numCl = len(clausulas)*numCopias + len(clausulas2)
-    arch.write('p cnf '+ str(numVars) + ' ' + str(numCl) + '\n')
+    global varsV
 
+    arch = file(archSalida, 'w+')
+    cl_prefs = []
+
+    #INI BENCHMARK PREFERENCIAS
+    #esto supone el -1 al final
+
+    #variables P
+    P_ini = len(variables)*numCopias+1
+    P_idx = len(variables)*numCopias
+
+    for v in varsV:
+        if v < 0:
+            continue
+
+        vv = transf.variables[varsV[v]]
+        P_idx += 1
+
+        for numCopia in xrange(numCopias):
+            cl_prefs.append("%d %d 0" % (-(transf.n*numCopia + vv), P_idx))
+
+        cl_prefs.append("%d %s 0" % (-P_idx, " ".join([str(transf.n*numCopia + vv) for numCopia in xrange(numCopias)])))
+
+    Q_ini = P_idx+1
+    Q_idx = P_idx
+
+    for ii, vi in enumerate(varsV):
+        for ij, vj in enumerate(varsV):
+            if ii==ij or vi < 0 or vj < 0:
+                continue
+
+            Q_idx += 1
+
+            cl_prefs.append("%d %d %d 0" % (-Q_idx, -(P_ini+ii), -(P_ini+ij)))
+            cl_prefs.append("%d %d 0" % (-(P_ini+ii), Q_idx))
+            cl_prefs.append("%d %d 0" % (-(P_ini+ij), Q_idx))
+
+    for i in xrange(Q_ini, Q_idx+1):
+        cl_prefs.append("%d 0" % (i))
+    #FIN BENCHMARK PREFERENCIAS
+
+    #numVars = len(variables)*numCopias
+    numVars = Q_idx
+    numCl = len(clausulas)*numCopias + len(clausulas2) + len(cl_prefs)
+    arch.write('p cnf '+ str(numVars) + ' ' + str(numCl) + '\n')
 
     for cls in clausulas2:
         arch.write(cls)
 
     for numCopia in xrange(numCopias):
         transf.formula2Num(clausulas, numCopia, arch)
+
+    for s in cl_prefs:
+        arch.write("%s\n" % s)
 
     arch.write('%\n')
     arch.close()

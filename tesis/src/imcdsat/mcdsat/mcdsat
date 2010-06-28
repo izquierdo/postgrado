@@ -57,6 +57,7 @@ fi
 echo "[Translate to CNF]" $CNF &&
 python $MCDSATDIR/Main.py T $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG1 $CNF $SATCOSTS && 
 
+echo $CNF
 echo "[Compile to DNNF]" $DNNF &&
 $C2D -in $CNF -smooth -reduce -dt_method 4 > $LOG && 
 
@@ -66,8 +67,9 @@ $MODS | python $MCDSATDIR/Main.py G $EXP $VIEWSFILE $QUERYFILE $VIS.pyo $LOG2 $C
 CTIME=`awk '$0~"Total Time" {t=substr($3,1);sub("s","",t);print t;}'<$LOG`
 TIME1=`cat $LOG1`
 TIME2=`cat $LOG2`
-rm -f $LOG $LOG1 $LOG2 $VIS.pyo
-rm $CNF $NNF
+#rm -f $LOG $LOG1 $LOG2 $VIS.pyo
+rm -f $LOG $LOG1 $LOG2
+#rm $CNF $NNF
 
 echo "[Done] $TIME1 $CTIME $TIME2"
 
