@@ -1,12 +1,12 @@
 #!/bin/bash
 
 INDIR=casos
-OUT=omcdsat_0.raw
+OUT=omcdsat_1.raw
 TIME="timeout 600 /usr/bin/time -apo ${OUT}"
 GENONTOLOGIES=/home/daniel/proyectos/postgrado/tesis/src/omcdsat/mcdsat/GenOntologies.py
 OMCDSAT=/home/daniel/proyectos/postgrado/tesis/src/omcdsat/mcdsat/mcdsat
 
-echo '################################################################################' | tee -a ${OUT_MMS}
+echo '################################################################################' | tee -a ${OUT}
 
 for levels in `seq 2 7`; do
     ONTOLOGY=casos/${levels}levels.ontology
