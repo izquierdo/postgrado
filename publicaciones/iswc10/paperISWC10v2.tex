@@ -135,14 +135,14 @@ We propose a solution that extends the recent approach of Arvelo et
 al.\ \cite{arvelo:aaai06} which is based on the efficient enumeration
 of models of a propositional logic  theory. Similarly, given an
 instance of SSP, a logical theory is constructed such  that each model
-of the theory encodes a valid rewriting; the theory can be con-
-structed in polynomial time from the instance of the SSP. All valid
+of the theory encodes a valid rewriting; the theory can be constructed
+in polynomial time from the instance of the SSP. All valid
 rewritings  are obtained by enumerating all models of the theory in
 linear time by using  off-the-shelf model enumeration solvers such as
-c2d~\cite{c2d} and Relsat~\cite{relsat}; off-the-  seft SAT solvers
+c2d~\cite{c2d} and Relsat~\cite{relsat}; off-the-shelf SAT solvers
 such as Minisat~\cite{minisat} can be used to produce all the minimal
 rewritings. Thus, we exploit known properties of modern SAT solvers
-that  implement non-chronological backtacking via clause learning,
+that  implement non-chronological backtracking via clause learning,
 caching of common  subproblems and heuristics, to provide an efficient
 and scalable solution to SSP. 
 
@@ -166,7 +166,7 @@ We consider service selection problems comprised of the
 description $IS$ of the integration framework and of a
 user request $R$ over the $IS$.
 
-Our setting is based on the assuption that services are
+Our setting is based on the assumption that services are
 semantically described in terms of a domain ontology. 
 Formally, the integration framework corresponds to a tuple
 $IS=\tup{D,S,M}$ where $D$ is the domain ontology, $S$ describes
@@ -208,7 +208,7 @@ as they allow us to specify diverse relationships among predicates.
 For example,
 \begin{itemize}
 \item \textbf{Hierarchy of classes and subclasses} (or types and subtypes):
-classes are specified with unary predicates. A subclass relantionship
+classes are specified with unary predicates. A subclass relationship
 among two classes is directly specified with a simple rule; e.g., the
 rule $\textit{penguin}(x) \orule \textit{bird}(x)$ declares that every
 penguin is a bird.
@@ -221,7 +221,7 @@ For example, the rule:
 \end{equation}
 tells that any descendant of Queen Elizabeth II is a noble.
 \item \textbf{Indirect subsumption:} it is even possible to specify
-a subrelation via another seemengly unrelated predicate. For example,
+a subrelation via another seemingly unrelated predicate. For example,
 the rule:
 \[ \textit{citizen-of}(x,\textit{Montreal})\ \orule\ \textit{lives-in}(x,\textit{Canada}) \]
 says that when the second argument of `CitizenOf' is fixed to the
@@ -392,7 +392,7 @@ Mappings in $M$ correspond to semantic descriptions expressed
 following the  Local as View paradigm (LAV). We assume that
 services are not complete, i.e., every tuple produced by the
 source in the head of the rule must satisfy the body, but not
-viceversa. LAV rules are commonly used in integration systems
+vice versa. LAV rules are commonly used in integration systems
 in order to scale up to new sources, in contrast to the Global
 As View paradigm (GAV) where domain ontology predicates are
 defined in terms of conjunctive formulas in the service predicates.
@@ -461,13 +461,13 @@ $\nationalFlight(x,y)$ also meet the conjunctive formula:
 However, there may be tuples that satisfy this formula that are not
 produced by the service represented by $\nationalFlight(x,y)$.
 These elements make up the integration framework $IS$. In the rest of this section.
-we give examples of possible user requests and their solutions.
+We give examples of possible user requests and their solutions.
 
 Suppose that a user is interested in identifying the services able to retrieve
 one-stop round trips from a US city $x$ to any city $y$ in the world. Notice
 that the trip from $x$ to $y$ stops at a city $u$, that the back trip from $y$
 to $v$ stops at a city $v$, and that $u$ may not be equal to $v$.
-This request can be modeled as the following connjunctive query:
+This request can be modeled as the following conjunctive query:
 \[ Q(x,u,y,v)\ \qrule\ \UScity(x),\,\trip(x,u),\,\trip(u,y),\,\trip(y,v),\,\trip(v,x)\,. \]
 Any rewriting of the ontology predicates in terms of the services correspond
 to a \emph{composition of services} that implements the user request.
@@ -506,7 +506,7 @@ and show how to model them in the proposed framework:
       modeled by assigning a high reward to the symbol $\flight$. Likewise, a
       preference of trains over airplanes can be modeled by assigning a high
       reward to the symbol $\train$.
-\item The user is indiferent with respect to trains or airplanes, yet
+\item The user is indifferent with respect to trains or airplanes, yet
       s/he does not want to mix both. This preference is an at-most-one preference
       over the set $\{\flight,\train\}$ that corresponds to the formula
       $\neg\flight \lor \neg\train$ and a cost for the violation of the
@@ -695,7 +695,7 @@ $P(d,x,z)$ unifies with $N(z,x)$ with the binding $\{z=d\}$,
 and these bindings are non-unifiable since constants
 are assumed to denote unique objects.
 
-We incorporate the subsumtion relation into \mcdsat\ by means
+We incorporate the subsumption relation into \mcdsat\ by means
 of the dependency graph $G(D)$. Once the graph is built using
 the subsumption rules, its transitive closure is computed along
 with the bindings associated with each edge: edges generated by
@@ -717,7 +717,7 @@ bindings associated with it become active as well.
 
 In order to account for the preferences, we shall use the
 concepts literal-ranking functions and best-ranked models for
-propositonal logic. A literal ranking function $r$ is a function
+propositional logic. A literal ranking function $r$ is a function
 that assign ranks (real numbers) to propositional literals.
 Given a literal-ranking function $r$, the rank $r(\omega)$ of
 a model $\omega$ is the aggregation of the ranks for each literal
@@ -729,7 +729,7 @@ best-ranked models of a propositional theory.
 Likewise, Weighted-Max-SAT solvers such as MiniMaxSAT~\cite{HerasetalJAIR2008}
 can be used to find a best ranked model of a propositional theory.
 
-For SSPs, we accomodate the preferences by using a suitably defined
+For SSPs, we accommodate the preferences by using a suitably defined
 literal-ranking function $r^*$ and by computing best-ranked models
 \cite{darwiche:weighted}.
 First, a new propositional variable is created for each relational
@@ -898,7 +898,7 @@ where $trip(x,y)$ was the root of the ontologies.  The results are reported in p
 (b) of Fig.~\ref{fig:plot4}. The time to enumerate all the rewritings suggests a sub-exponential behavior, while the time to find the best models does not grow monotonically. On the other hand, 
 the size of the theories and the number of models grow exponentially.  For example, the d-DNNF for 
 this user request and the ontology with 7 levels is of size 1.7Mb and has
-$2.6\times 10^8$ models. ÊThe time to enumerate all models is about 147 hours. 
+$2.6\times 10^8$ models. The time to enumerate all models is about 147 hours. 
 
 These are preliminary experiments, yet the results show that the
 proposed approach efficiently scales for problems with several goals
