@@ -63,17 +63,17 @@
 \maketitle
 
 \begin{abstract}
-We present STEREO, a system that offers an expressive formalism and implements techniques firmly grounded on logic, to solve the Service Selection Problem (SSP).
-STEREO adopts the Local-As-View approach to represent service's functionality as 
-views of ontology concepts, while user requests are expressed as conjunctive queries on these concepts. Additionally,  users can describe their preferences, which  are  used to rank the solutions. 
+We present STEREO, a system that offers an expressive formalism and implements techniques firmly grounded on logic to solve the Service Selection Problem (SSP).
+STEREO adopts the Local-As-View approach to represent services' functionality as 
+views on ontology concepts, while user requests are expressed as conjunctive queries on these concepts. Additionally,  users can describe their preferences, which  are  used to rank the solutions. 
 We discuss the LAV formulation  of SSP; then, we illustrate the encoding of SSP  as a logical theory  whose models are in correspondence with the problem solutions, and in presence of preferences, whose best models are in correspondence with the best-ranked solutions.  We demonstrate how by exploiting properties of  modern SAT solvers, STEREO provides an efficient and scalable solution  to  SSP. 
 \end{abstract}
 
 \section{Introduction}
-Nowadays, several annotation tools like the one proposed by Ambite et al.\ \cite{AmbiteISWC09}, are able to labeled and convert existing Web data sources into Semantic Web Services.
-Once these tremendous among of services become available, users
-will require approaches  more than ever, to precisely express their selection needs and to effectively identify the services that best meet their requirements.
-In order to achieve this goal, we developed  STEREO, a system that offers an expressive formalism for describing Web services and user requests,  and implements a logic-based solution to efficiently select the services that best meet the user requirements. STEREO formalism and the techniques have been reported in  \cite{IVB2010}.
+Nowadays, several annotation tools like the one proposed by Ambite et al.\ \cite{AmbiteISWC09}, are able to label and convert existing Web data sources into Semantic Web Services.
+Once this tremendous amount of services becomes available, users
+will more than ever require approaches to precisely express their selection needs and to effectively identify the services that best meet their requirements.
+In order to achieve this goal, we developed  STEREO, a system that offers an expressive formalism for describing Web services and user requests,  and implements a logic-based solution to efficiently select the services that best meet the user requirements. The STEREO formalism and the techniques have been reported in  \cite{IVB2010}.
  
  STEREO is tailored to constantly changing Web service datasets and a relatively stable set of ontology concepts. STEREO adopts  the recent approach of Ambite et al.\ \cite{AmbiteISWC09}
 that describes services as views on ontology concepts following the Local-As-View (LAV) approach that is widely used in integration
@@ -91,8 +91,7 @@ valid rewritings of the corresponding QRP. STEREO  constructs a propositional lo
 the features associated with SSPs; each model of the theory encodes a valid combination of services, and these models are ordered by their rank and the best-ranked
 models are the models with minimum rank. Knowledge encoded in the ontology is used to extend the rules in the logical theory to permit the cover of ontology symbols in
 the query with symbols in the views according to subsumption relationships represented in the ontology. 
-We will demonstrate the benefits of the propose approach and show the following key issues: (a) we illustrate the expressiveness of the approach; we discuss scalability  by demonstrating how STEREO is able to enumerate realistic instances of SSP in few seconds; and finally, we demonstrate the performance  by enumerating in the same logical theory, the optimal models based on different cost/rewards of the users' preferences.  The demo is published at \url{www.ldc.usb.ve/STEREO}.
- 
+We will demonstrate the benefits of the proposed approach and show the following key issues: (a) we illustrate the expressiveness of the approach; we discuss scalability  by demonstrating how STEREO is able to enumerate realistic instances of SSP in a few seconds; and finally, we demonstrate the performance  by enumerating in the same logical theory, the optimal models based on different cost/rewards of the users' preferences.  The demo is published at \url{www.ldc.usb.ve/STEREO}.
  
 \section{STEREO Architecture}
 \begin{figure}[t]
@@ -106,7 +105,7 @@ We will demonstrate the benefits of the propose approach and show the following 
  an Ontology Reasoner, the Encoder, the best model Finder,
 and the Decoder.
 Figure~\ref{fig:architecture} depicts the overall architecture. In STEREO, an instance of SSP consists of an integration framework $IS=\tup{D,S,M}$ where $D$ is an ontology, $S$ is the set
-of services, and $M$ is the set LAV mappings. A user request is a tuple $R=\tup{Q,P}$ comprised of a query $Q$  and a set of preferences $P$. STEREO Catalog is populated with the components of the integration framework. The Ontology Reasoner computes the transitive
+of services, and $M$ is the set LAV mappings. A user request is a tuple $R=\tup{Q,P}$ comprised of a query $Q$  and a set of preferences $P$. The STEREO Catalog is populated with the components of the integration framework. The Ontology Reasoner computes the transitive
 closure of the ontology subsumption relationships, and the Encoder module makes used of this information in conjunction with the LAV mappings,  constant symbols,   and user's preferences to encode  an input instance of SSP as a CNF theory.
 STEREO uses  c2d (\url{http://reasoning.cs.ucla.edu/c2d}) to compute all the
 best-ranked models of a propositional theory  in a certain 
